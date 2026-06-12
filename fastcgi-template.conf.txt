@@ -1,0 +1,12 @@
+#lưu ý đây chỉ là tham khảo cho bãn php 7.4, nếu bạn dùng php 8 thì cần chỉnh sửa lại đường dẫn socket cho phù hợp
+<IfModule mod_fastcgi.c>
+  AddHandler fastcgi-script .fcgi
+  FastCgiIpcDir /var/lib/apache2/fastcgi
+  AddType application/x-httpd-fastphp .php
+  Action application/x-httpd-fastphp /php-fcgi
+  Alias /php-fcgi /usr/lib/cgi-bin/php-fcgi
+  FastCgiExternalServer /usr/lib/cgi-bin/php-fcgi -socket /run/php/php7.4-fpm.sock -pass-header Authorization
+  <Directory /usr/lib/cgi-bin>
+    Require all granted
+  </Directory>
+</IfModule>

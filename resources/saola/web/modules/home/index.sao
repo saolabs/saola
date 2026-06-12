@@ -1,0 +1,44 @@
+@states({
+    counter: 0,
+    title: 'Hello Saola',
+    message: 'Welcome to Saola Web'
+})
+@const(MAX_ITEMS = 10)
+<template>
+    @extends(__layout__ + "base")
+    @block('content')
+        <h1>{{ title }}</h1>
+        <button @click(setCounter(counter + 1))>Click me ({{ counter }})</button>
+        <p>Counter: {{ counter }}</p>
+        <p>Max items: {{ MAX_ITEMS }}</p>
+        <div @attr({"data-counter": counter})>
+            @for(i = 1; i <= MAX_ITEMS; i++)
+                <p>Item {{ i }}</p>
+            @endfor
+        </div>
+        <p>{{ message }}</p>
+        <div @class(["input", "empty": counter === 0])>
+            <textarea placeholder="Type something..." name="message" @bind(message)></textarea>
+            <br />
+            <button @click(sendMessage())>Send</button>
+        </div>
+    @endblock
+</template>
+
+<script setup lang="ts">
+    export default {
+        name: 'HomePage',
+        sendMessage(){
+            alert(message);
+        }
+    };
+</script>
+
+<style scoped>
+    .input {
+        margin-top: 20px;
+    }
+    .empty textarea {
+        border-color: red;
+    }
+</style>

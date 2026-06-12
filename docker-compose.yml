@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # Redis service cho cache và session
+  redis:
+    image: redis:7-alpine
+    container_name: one-laravel_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf --appendonly yes
+    restart: unless-stopped
+    networks:
+      - one-laravel_network
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+
+  # Redis Commander - Web UI để quản lý Redis
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: one-laravel_redis_commander
+    ports:
+      - "8081:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+      - HTTP_USER=admin
+      - HTTP_PASSWORD=admin123
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - one-laravel_network
+
+  # PostgreSQL database
+  postgres:
+    image: postgres:15-alpine
+    container_name: one-laravel_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: one_laravel
+      POSTGRES_USER: one_laravel
+      POSTGRES_PASSWORD: one_laravel123
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - one-laravel_network
+
+  # pgAdmin để quản lý PostgreSQL
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: one-laravel_pgadmin
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@onelaravel.local
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - one-laravel_network
+
+volumes:
+  redis_data:
+    driver: local
+  postgres_data:
+    driver: local
+
+networks:
+  one-laravel_network:
+    driver: bridge 

@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Providers;
+
+use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
+use Saola\Core\Engines\ViewContextManager;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        $this->configureDefaults();
+    }
+
+    protected function configureDefaults(): void
+    {
+        Date::use(CarbonImmutable::class);
+
+        DB::prohibitDestructiveCommands(app()->isProduction());
+
+        Password::defaults(fn (): ?Password => app()->isProduction()
+            ? Password::min(12)
+                ->mixedCase()
+                ->letters()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()
+            : null,
+        );
+    }
+
+    public function configureViews(): void
+    {
+        // Example of using ViewContextManager to share data across all views in a context
+        $viewContextManager = app(ViewContextManager::class);
+
+        // register a global view context for the 'web' context
+        $viewContextManager->registerContext('web', [
+            'base' => 'web'
+        ]);
+
+    }
+}

@@ -1,0 +1,88 @@
+server {
+    server_name nhakhoavietbi.demo.vcc.vn nhakhoavietbi.vn ;
+
+     root /var/www/home/vcc907b1b02aac8f3a8/home/public;
+
+     index index.php index.html index.htm;
+
+
+    location ~* ^.+\.(?:css|cur|js|jpe?g|gif|htc|ico|png|otf|ttf|eot|woff|woff2|svg)$ {
+        access_log off;
+        expires 30d;
+        add_header Cache-Control public;
+
+        ## No need to bleed constant updates. Send the all shebang in one
+        ## fell swoop.
+        tcp_nodelay off;
+
+        ## Set the OS file cache.
+        open_file_cache max=3000 inactive=120s;
+        open_file_cache_valid 45s;
+        open_file_cache_min_uses 2;
+        open_file_cache_errors off;
+    }
+
+    location ^~ /nieng-rang-invisalign/ { #landing page
+        root /var/www/home/vcc907b1b02aac8f3a8/home/public;
+        index index.html;
+
+        try_files $uri $uri/ /nieng-rang-invisalign/index.html;
+
+        access_log off;
+    }
+    location ^~ /nieng-rang-invisalign$ { #landing page
+        root /var/www/home/vcc907b1b02aac8f3a8/home/public;
+        index index.html;
+
+        try_files $uri $uri/ /nieng-rang-invisalign/index.html;
+
+        access_log off;
+    }
+    location ^~ /nieng-rang-vo-hinh-invisalign(/|$) { #landing page
+        root /var/www/home/vcc907b1b02aac8f3a8/home/public;
+        index index.html;
+
+        try_files $uri $uri/ /nieng-rang-invisalign$uri /nieng-rang-invisalign/index.html;
+
+        access_log off;
+    }
+
+
+    location / {
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_pass http://127.0.0.1:8080;
+        client_max_body_size 1024M;
+    }
+
+    location ~ /\.ht {
+           deny all;
+    }
+
+    listen [::]:443 ssl; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/nhakhoavietbi.demo.vcc.vn/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/nhakhoavietbi.demo.vcc.vn/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+
+server {
+    if ($host = nhakhoavietbi.demo.vcc.vn) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = nhakhoavietbi.vn) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    listen [::]:80;
+    server_name nhakhoavietbi.demo.vcc.vn nhakhoavietbi.vn ;
+    return 404; # managed by Certbot
+}

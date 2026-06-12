@@ -1,0 +1,8 @@
+{
+  "resources/js/saola/app.js": {
+    "file": "js/app.js",
+    "name": "app",
+    "src": "resources/js/saola/app.js",
+    "isEntry": true
+  }
+}

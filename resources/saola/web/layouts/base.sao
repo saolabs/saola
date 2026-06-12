@@ -1,0 +1,13 @@
+<template>
+    @pageStart
+    <header>
+        <h1>Base Layout</h1>
+    </header>
+    <main>
+        @useBlock('content')
+    </main>
+    <footer>
+        <p>&copy; 2026 SaoLabs. All rights reserved.</p>
+    </footer>
+    @pageEnd
+</template>

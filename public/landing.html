@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Laravel - One System, Infinite Scale</title>
+    <meta name="description"
+        content="One Laravel - Một hệ thống duy nhất, mở rộng vô hạn. Hợp nhất Web, Mobile và Desktop với kiến trúc Module-First.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e', // Laravelish Red
+                            600: '#e11d48',
+                            900: '#881337',
+                        },
+                        dark: {
+                            950: '#020617', // Darker background
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #f43f5e, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-gradient-hero {
+            background: radial-gradient(circle at top center, #3f1d26 0%, #020617 50%, #020617 100%);
+        }
+
+        .code-window {
+            background: #0f172a;
+            border-radius: 0.75rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(244, 63, 94, 0.15);
+            border-color: #f43f5e;
+        }
+
+        details>summary {
+            list-style: none;
+        }
+
+        details>summary::-webkit-details-marker {
+            display: none;
+        }
+
+        /* Grid pattern background */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+    </style>
+</head>
+
+<body class="bg-dark-950 text-slate-300 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-brand-600 to-rose-800 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg border border-brand-500/20">
+                        1L
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-white">One Laravel</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
+                    <a href="#vision" class="hover:text-brand-500 transition duration-300">Giải pháp</a>
+                    <a href="#architecture" class="hover:text-brand-500 transition duration-300">Kiến trúc</a>
+                    <a href="#features" class="hover:text-brand-500 transition duration-300">Nền tảng</a>
+                    <a href="#comparison" class="hover:text-brand-500 transition duration-300">So sánh</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="https://github.com/onelaravel/onelaravel" target="_blank"
+                        class="hidden md:flex items-center text-slate-400 hover:text-white transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#contact"
+                        class="bg-white text-dark-900 hover:bg-slate-200 px-5 py-2.5 rounded-full font-bold text-sm transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                        Nhà đầu tư
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <!-- Added ID="vision" for navigation -->
+    <header id="vision" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-gradient-hero overflow-hidden">
+        <div class="absolute inset-0 bg-grid opacity-20 pointer-events-none"></div>
+
+        <!-- Background Orbs -->
+        <div
+            class="absolute top-1/4 right-0 w-[500px] h-[500px] bg-brand-600/10 rounded-full blur-[120px] animate-pulse-slow">
+        </div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div
+                class="inline-flex items-center px-4 py-1.5 rounded-full border border-brand-500/30 bg-brand-900/20 text-brand-100 text-xs font-medium mb-8 backdrop-blur-sm">
+                <span class="flex h-2 w-2 rounded-full bg-brand-500 mr-2 animate-pulse"></span>
+                Sẵn sàng cho môi trường Enterprise
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-[1.15] text-white">
+                One Laravel.<br>
+                <span class="text-brand-500">One System.</span><br>
+                <span class="text-gradient">Infinite Scale.</span>
+            </h1>
+
+            <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-slate-400 mb-10 leading-relaxed">
+                Hợp nhất Web, Mobile và Desktop vào một hệ thống duy nhất. Kiến trúc <strong>Module-First</strong> kết
+                hợp với <strong>Hybrid Rendering</strong> giúp bạn mở rộng quy mô không giới hạn.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#architecture"
+                    class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-full font-bold transition shadow-lg shadow-brand-600/25 flex items-center justify-center gap-2">
+                    <i class="fas fa-layer-group"></i> Xem Kiến Trúc
+                </a>
+                <a href="#contact"
+                    class="px-8 py-4 bg-dark-800 border border-slate-700 hover:border-slate-500 text-white rounded-full font-bold transition flex items-center justify-center gap-2 backdrop-blur-md">
+                    <i class="fas fa-download"></i> Pitch Deck
+                </a>
+            </div>
+
+            <!-- Hero Code Window & Visuals -->
+            <div class="mt-20 relative mx-auto max-w-5xl animate-float">
+                <!-- Abstract 3D Image Behind -->
+                <div
+                    class="absolute -top-20 -right-20 w-64 h-64 md:w-96 md:h-96 opacity-60 mix-blend-screen pointer-events-none z-0">
+                    <img src="https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1000&auto=format&fit=crop"
+                        alt="Abstract 3D Shape" class="w-full h-full object-cover rounded-full blur-2xl">
+                </div>
+                <div
+                    class="absolute -bottom-10 -left-10 w-48 h-48 md:w-72 md:h-72 opacity-40 mix-blend-screen pointer-events-none z-0">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000&auto=format&fit=crop"
+                        alt="Abstract Cyber Shape" class="w-full h-full object-cover rounded-full blur-3xl">
+                </div>
+
+                <!-- Window Frame -->
+                <div class="code-window border-slate-700/50 bg-dark-900/90 backdrop-blur-xl relative z-10">
+                    <div
+                        class="flex items-center justify-between px-4 py-3 border-b border-slate-700/50 bg-dark-950/50 rounded-t-lg">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="text-xs text-slate-500 font-mono">resources/views/components/counter.blade.php</div>
+                        <div class="w-16"></div> <!-- Spacer for center alignment -->
+                    </div>
+                    <div class="p-6 text-left overflow-x-auto">
+                        <pre class="text-sm md:text-base font-mono leading-relaxed">
+<span class="text-slate-500 italic">// 1. Centralized State Logic (Quản lý tại một nguồn)</span>
+<span class="text-purple-400">@useState</span>(<span class="text-sky-400">$count</span>, <span class="text-yellow-300">0</span>)
+<span class="text-slate-500 italic">// Auto create setter ($setCount) - tự động tạo setter</span>
+
+<span class="text-slate-500 italic">// 2. Unified UI Definition (Hiển thị đa nền tảng)</span>
+<span class="text-rose-500">&lt;div</span> <span class="text-green-400">class</span>=<span class="text-yellow-300">"dashboard-card"</span><span class="text-rose-500">&gt;</span>
+    <span class="text-rose-500">&lt;h2&gt;</span>Doanh thu: <span class="text-purple-400">{{</span> <span class="text-sky-400">$count</span> <span class="text-purple-400">}}</span><span class="text-rose-500">&lt;/h2&gt;</span>
+    
+    <span class="text-slate-500 italic">// 3. Native Event Binding (Tự động thích ứng touch/click)</span>
+    <span class="text-rose-500">&lt;button</span> <span class="text-purple-400">@click</span>(<span class="text-sky-400">$setCount</span>(<span class="text-sky-400">$count</span> + <span class="text-yellow-300">1</span>))<span class="text-rose-500">&gt;</span>
+        Cập nhật số liệu
+    <span class="text-rose-500">&lt;/button&gt;</span>
+<span class="text-rose-500">&lt;/div&gt;</span>
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Trusted By Section -->
+    <div class="bg-dark-900 border-b border-gray-800 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500 text-sm font-semibold uppercase tracking-wider mb-6">Được tin dùng bởi các đội ngũ
+                công nghệ tiên phong</p>
+            <div
+                class="flex justify-center items-center flex-wrap gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                <!-- Fake Logos -->
+                <div class="flex items-center gap-2 text-2xl font-bold text-white"><i class="fab fa-aws text-3xl"></i>
+                    CloudTech</div>
+                <div class="flex items-center gap-2 text-2xl font-bold text-white"><i
+                        class="fab fa-stripe text-3xl"></i> PaymentOS</div>
+                <div class="flex items-center gap-2 text-2xl font-bold text-white"><i
+                        class="fab fa-airbnb text-3xl"></i> StayBase</div>
+                <div class="flex items-center gap-2 text-2xl font-bold text-white"><i
+                        class="fab fa-spotify text-3xl"></i> MusicStream</div>
+                <div class="flex items-center gap-2 text-2xl font-bold text-white"><i
+                        class="fab fa-docker text-3xl"></i> ContainerX</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Architecture Deep Dive Section -->
+    <section id="architecture" class="py-24 bg-dark-950 border-b border-gray-800 relative">
+        <!-- Decoration Image -->
+        <div
+            class="absolute top-0 right-0 w-1/2 h-full bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-5 pointer-events-none mix-blend-luminosity">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-16">
+                <h2 class="text-brand-500 font-semibold tracking-wide uppercase text-sm mb-2">Technical Deep Dive</h2>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white">Hybrid Rendering & Dual-Response</h2>
+                <p class="mt-4 text-slate-400 max-w-3xl">
+                    One Laravel sử dụng cơ chế thông minh để xử lý cả <strong>Initial Load (SSR)</strong> và <strong>SPA
+                        Navigation (CSR)</strong> trên cùng một Controller.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left: Explanation -->
+                <div class="space-y-8">
+                    <div class="flex gap-4">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-brand-900/30 flex items-center justify-center flex-shrink-0 border border-brand-500/20">
+                            <i class="fas fa-sync-alt text-brand-500 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Thông minh theo Ngữ cảnh (Context-Aware)</h3>
+                            <p class="text-slate-400 leading-relaxed">
+                                <strong>Truy cập lần đầu / Refresh:</strong> Server trả về HTML trọn vẹn (SSR) để hiển
+                                thị ngay và tốt cho SEO.<br><br>
+                                <strong>SPA Navigation:</strong> Khi người dùng chuyển trang, OneJS Router gửi request
+                                ngầm. Controller phát hiện và chỉ trả về <strong>JSON Data</strong>. View được render
+                                lại tại Client (CSR) mà không cần tải lại trang.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-purple-900/30 flex items-center justify-center flex-shrink-0 border border-purple-500/20">
+                            <i class="fas fa-shield-alt text-purple-500 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Tách biệt Public API</h3>
+                            <p class="text-slate-400 leading-relaxed">
+                                Cơ chế Dual-Response tối ưu cho ứng dụng Web. Các Public API dành cho bên thứ 3 hoặc
+                                Mobile Native thuần túy sẽ được tách biệt trong Context/Route riêng.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-blue-900/30 flex items-center justify-center flex-shrink-0 border border-blue-500/20">
+                            <i class="fas fa-code-branch text-blue-500 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Đơn giản hóa Codebase</h3>
+                            <p class="text-slate-400 leading-relaxed">
+                                Không cần viết API riêng cho Frontend. Một Action `show()` duy nhất phục vụ cả việc hiển
+                                thị lần đầu và cập nhật dữ liệu khi điều hướng.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Visual & Code Snippet -->
+                <div class="space-y-6">
+
+
+                    <div class="code-window border-slate-700/50 bg-dark-900/50">
+                        <div
+                            class="px-4 py-2 border-b border-slate-700/50 bg-dark-950/50 flex justify-between items-center">
+                            <span class="text-xs text-slate-500 font-mono">ProductController.php</span>
+                            <span class="text-xs text-green-400 font-mono flex items-center gap-1"><i
+                                    class="fas fa-check-circle"></i> Optimized</span>
+                        </div>
+                        <div class="p-6 overflow-x-auto">
+                            <pre class="text-sm font-mono leading-relaxed">
+<span class="text-purple-400">class</span> <span class="text-yellow-300">ProductController</span> <span class="text-purple-400">extends</span> Controller
+{
+    <span class="text-slate-500">// URL: /products/{slug}</span>
+    <span class="text-purple-400">public function</span> <span class="text-blue-400">show</span>(<span class="text-yellow-300">Request</span> <span class="text-sky-400">$request</span>, <span class="text-sky-400">$slug</span>)
+    {
+        <span class="text-sky-400">$product</span> = <span class="text-yellow-300">Product</span>::<span class="text-blue-400">where</span>(<span class="text-green-400">'slug'</span>, <span class="text-sky-400">$slug</span>)-><span class="text-blue-400">firstOrFail</span>();
+
+        <span class="text-slate-500">// 🪄 Magic Dual-Response:</span>
+        <span class="text-slate-500">// 1. Initial Load: Trả về View HTML (Server-Side Render)</span>
+        <span class="text-slate-500">// 2. SPA Navigation: Trả về JSON Data (Client-Side Render)</span>
+        <span class="text-purple-400">return</span> <span class="text-sky-400">$this</span>-><span class="text-blue-400">response</span>(<span class="text-sky-400">$request</span>, [<span class="text-green-400">'product'</span> => <span class="text-sky-400">$product</span>], <span class="text-green-400">'@module.show'</span>);
+    }
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="bg-brand-900/10 py-16 border-y border-brand-900/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-800/50">
+                <div>
+                    <div class="text-4xl font-bold text-white mb-2">70%</div>
+                    <div class="text-brand-200 text-sm font-medium">GIẢM CHI PHÍ DEV</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-white mb-2">~60fps</div>
+                    <div class="text-brand-200 text-sm font-medium">HIỆU NĂNG NATIVE</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-white mb-2">100%</div>
+                    <div class="text-brand-200 text-sm font-medium">SEO FRIENDLY</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-white mb-2">3 in 1</div>
+                    <div class="text-brand-200 text-sm font-medium">WEB • MOBILE • DESKTOP</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tech/Features Section -->
+    <section id="features" class="py-20 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-base text-brand-500 font-semibold tracking-wide uppercase">Công nghệ Lõi</h2>
+                <h2 class="text-3xl font-extrabold text-white mt-2">Sức mạnh đằng sau One Laravel</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-dark-800 p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-code text-blue-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Unified Codebase</h3>
+                    <p class="text-slate-400 text-sm">Viết logic UI bằng 100% cú pháp Blade. Không cần học React, Vue
+                        hay Swift. Hệ thống tự động chuyển đổi.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card bg-dark-800 p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-microchip text-green-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">OneJS Runtime</h3>
+                    <p class="text-slate-400 text-sm">Lightweight JS Framework (chỉ 20KB) quản lý State và Lifecycle, sử
+                        dụng <strong>Batched Updates (RAF)</strong> để tối ưu DOM.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card bg-dark-800 p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-rocket text-purple-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Two-Stage Build</h3>
+                    <p class="text-slate-400 text-sm">Quy trình: Blade Compiler (Python) → Webpack Bundling (Tree
+                        Shaking). Code production được tối ưu hoá cực đại.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card bg-dark-800 p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-yellow-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Incremental Compilation</h3>
+                    <p class="text-slate-400 text-sm">Chỉ biên dịch lại những phần template thay đổi. Giúp tốc độ phát
+                        triển (HMR) nhanh như chớp.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card bg-dark-800 p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-pink-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-mobile-alt text-pink-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Mobile & Desktop</h3>
+                    <p class="text-slate-400 text-sm">Tích hợp sẵn Capacitor và Electron. Build ra file .apk, .ipa, .exe
+                        trực tiếp từ output của One Laravel.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card bg-dark-800 p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-database text-teal-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Global App Object</h3>
+                    <p class="text-slate-400 text-sm">Truy cập mọi services (`App.api`, `App.store`, `App.router`) từ
+                        bất kỳ đâu trong Blade template.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADDED: Comparison Section -->
+    <section id="comparison" class="py-24 bg-dark-950 border-t border-gray-800 relative overflow-hidden">
+        <!-- Background Glow -->
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-blue-600/5 rounded-full blur-[100px] pointer-events-none">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-base text-brand-500 font-semibold tracking-wide uppercase">Tại sao chọn One Laravel?
+                </h2>
+                <h2 class="text-3xl font-extrabold text-white mt-2">So sánh với các giải pháp truyền thống</h2>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="p-4 border-b border-gray-800 text-slate-500 font-medium w-1/4">Tiêu chí</th>
+                            <th
+                                class="p-4 border-b border-gray-800 bg-brand-900/10 text-brand-500 font-bold text-lg w-1/4 rounded-t-xl border-t border-brand-500/20">
+                                One Laravel
+                            </th>
+                            <th class="p-4 border-b border-gray-800 text-white font-bold w-1/4">
+                                Laravel + React (API)
+                            </th>
+                            <th class="p-4 border-b border-gray-800 text-white font-bold w-1/4">
+                                Laravel + Livewire
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-300">
+                        <tr class="hover:bg-white/5 transition">
+                            <td class="p-4 border-b border-gray-800 font-semibold">Ngôn ngữ Frontend</td>
+                            <td
+                                class="p-4 border-b border-gray-800 bg-brand-900/5 text-white font-medium border-x border-brand-500/10">
+                                Blade (PHP) -> Native JS
+                            </td>
+                            <td class="p-4 border-b border-gray-800">JSX / TypeScript</td>
+                            <td class="p-4 border-b border-gray-800">Blade (PHP)</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition">
+                            <td class="p-4 border-b border-gray-800 font-semibold">Cơ chế Render</td>
+                            <td
+                                class="p-4 border-b border-gray-800 bg-brand-900/5 text-brand-400 font-medium border-x border-brand-500/10">
+                                Hybrid (SSR + CSR)
+                            </td>
+                            <td class="p-4 border-b border-gray-800">CSR (Chủ yếu)</td>
+                            <td class="p-4 border-b border-gray-800">SSR + HTML Over Wire</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition">
+                            <td class="p-4 border-b border-gray-800 font-semibold">Mobile App</td>
+                            <td
+                                class="p-4 border-b border-gray-800 bg-brand-900/5 text-green-400 font-medium border-x border-brand-500/10">
+                                <i class="fas fa-check-circle mr-2"></i>Native (Compile)
+                            </td>
+                            <td class="p-4 border-b border-gray-800">Cần viết lại (React Native)</td>
+                            <td class="p-4 border-b border-gray-800 text-slate-500">Không hỗ trợ tốt (WebView)</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition">
+                            <td class="p-4 border-b border-gray-800 font-semibold">Quản lý State</td>
+                            <td
+                                class="p-4 border-b border-gray-800 bg-brand-900/5 text-white border-x border-brand-500/10">
+                                Tự động (Reactive)
+                            </td>
+                            <td class="p-4 border-b border-gray-800">Thủ công (Redux/Zustand)</td>
+                            <td class="p-4 border-b border-gray-800">Server Round-trip</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition">
+                            <td class="p-4 border-b border-gray-800 font-semibold">SEO</td>
+                            <td
+                                class="p-4 border-b border-gray-800 bg-brand-900/5 text-green-400 font-medium border-x border-brand-500/10 rounded-b-xl border-b-brand-500/20">
+                                <i class="fas fa-star mr-2"></i>Tuyệt đối (100/100)
+                            </td>
+                            <td class="p-4 border-b border-gray-800">Khó khăn (Cần Next.js)</td>
+                            <td class="p-4 border-b border-gray-800">Tốt</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-8 text-center">
+                <p class="text-slate-500 text-sm">
+                    * One Laravel loại bỏ hoàn toàn việc phải duy trì 2 codebase riêng biệt (Frontend & Backend), giúp
+                    tiết kiệm 50-70% nguồn lực.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="py-20 bg-dark-800 border-y border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-base text-brand-500 font-semibold tracking-wide uppercase">Workflow</h2>
+                <h2 class="text-3xl font-extrabold text-white mt-2">Từ Code đến Production</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative">
+                <div
+                    class="hidden md:block absolute top-12 left-[16%] right-[16%] h-1 bg-gradient-to-r from-transparent via-brand-500 to-transparent border-t border-dashed border-gray-500 z-0">
+                </div>
+
+                <div class="relative z-10 bg-dark-800 md:bg-transparent">
+                    <div
+                        class="w-24 h-24 bg-dark-900 border-2 border-brand-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-[0_0_20px_rgba(244,63,94,0.4)]">
+                        📝
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">1. Viết Code</h3>
+                    <p class="text-slate-400 px-4">Sử dụng <strong>Blade Templates</strong> và <strong>Backend
+                            Controller</strong>.</p>
+                </div>
+                <div class="relative z-10 bg-dark-800 md:bg-transparent">
+                    <div
+                        class="w-24 h-24 bg-dark-900 border-2 border-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                        ⚙️
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">2. Compile & Optimize</h3>
+                    <p class="text-slate-400 px-4">Python Compiler xử lý directives, Webpack thực hiện <strong>Tree
+                            Shaking</strong>.</p>
+                </div>
+                <div class="relative z-10 bg-dark-800 md:bg-transparent">
+                    <div
+                        class="w-24 h-24 bg-dark-900 border-2 border-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-[0_0_20px_rgba(59,130,246,0.4)]">
+                        🚀
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">3. Triển khai Đa điểm</h3>
+                    <p class="text-slate-400 px-4">Server cho Web, App Store cho iOS, Google Play cho Android.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-base text-brand-500 font-semibold tracking-wide uppercase">Khách hàng nói gì</h2>
+                <h2 class="text-3xl font-extrabold text-white mt-2">Được tin dùng bởi các CTO hàng đầu</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div
+                    class="bg-dark-800 p-8 rounded-2xl border border-gray-700 relative hover:border-brand-500/50 transition">
+                    <i class="fas fa-quote-left text-4xl text-gray-700 mb-4 opacity-50"></i>
+                    <p class="text-slate-300 mb-6 italic">"Chúng tôi đã giảm đội ngũ Mobile từ 6 người xuống còn 0. Đội
+                        Web hiện tại có thể ship cả ứng dụng iOS và Android. Một sự thay đổi cuộc chơi thực sự."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Minh Nguyễn"
+                            class="w-12 h-12 rounded-full mr-4 border-2 border-brand-500 object-cover">
+                        <div>
+                            <div class="font-bold text-white">Minh Nguyễn</div>
+                            <div class="text-sm text-slate-500">CTO @ FinTechAsia</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="bg-dark-800 p-8 rounded-2xl border border-gray-700 relative hover:border-brand-500/50 transition">
+                    <i class="fas fa-quote-left text-4xl text-gray-700 mb-4 opacity-50"></i>
+                    <p class="text-slate-300 mb-6 italic">"Tôi chưa bao giờ thấy một framework nào biên dịch Blade
+                        template thành Reactive JS mượt mà như vậy. Tốc độ render là không thể tin nổi."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Jenkins"
+                            class="w-12 h-12 rounded-full mr-4 border-2 border-brand-500 object-cover">
+                        <div>
+                            <div class="font-bold text-white">Sarah Jenkins</div>
+                            <div class="text-sm text-slate-500">Senior Laravel Developer</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div
+                    class="bg-dark-800 p-8 rounded-2xl border border-gray-700 relative hover:border-brand-500/50 transition">
+                    <i class="fas fa-quote-left text-4xl text-gray-700 mb-4 opacity-50"></i>
+                    <p class="text-slate-300 mb-6 italic">"Chi phí đầu tư cho dự án giảm 60% nhờ One Laravel. Chúng tôi
+                        ra mắt sản phẩm trên 3 nền tảng chỉ trong 2 tháng thay vì 6 tháng."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/86.jpg" alt="David Trần"
+                            class="w-12 h-12 rounded-full mr-4 border-2 border-brand-500 object-cover">
+                        <div>
+                            <div class="font-bold text-white">David Trần</div>
+                            <div class="text-sm text-slate-500">Founder @ StartupInc</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-dark-900 border-t border-gray-800">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-white">Câu hỏi Thường gặp</h2>
+                <p class="mt-4 text-slate-400">Dành cho Nhà đầu tư & CTO</p>
+            </div>
+
+            <div class="space-y-4">
+                <details
+                    class="bg-dark-800 border border-gray-700 rounded-lg p-6 group open:border-brand-500 transition-all cursor-pointer">
+                    <summary class="flex justify-between items-center font-semibold text-lg text-white">
+                        One Laravel bảo mật như thế nào?
+                        <span class="transform group-open:rotate-180 transition-transform"><i
+                                class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <p class="mt-4 text-slate-400 leading-relaxed">Tuyệt đối an toàn. Chúng tôi áp dụng cơ chế
+                        <strong>Logic Stripping</strong>: Trình biên dịch sẽ loại bỏ hoàn toàn mã PHP phía server trước
+                        khi gửi xuống client. Đồng thời tích hợp sẵn CSRF protection và XSS filtering tiêu chuẩn của
+                        Laravel.</p>
+                </details>
+
+                <details
+                    class="bg-dark-800 border border-gray-700 rounded-lg p-6 group open:border-brand-500 transition-all cursor-pointer">
+                    <summary class="flex justify-between items-center font-semibold text-lg text-white">
+                        Hệ thống có thể Scale lên mức Enterprise không?
+                        <span class="transform group-open:rotate-180 transition-transform"><i
+                                class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <p class="mt-4 text-slate-400 leading-relaxed">Hoàn toàn được. Với kiến trúc <strong>System >
+                            Context > Module</strong> lấy cảm hứng từ DDD, code được tổ chức tách biệt, dễ dàng bảo trì.
+                        Backend hỗ trợ Stateless API tương thích tốt với Kubernetes và Serverless.</p>
+                </details>
+
+                <details
+                    class="bg-dark-800 border border-gray-700 rounded-lg p-6 group open:border-brand-500 transition-all cursor-pointer">
+                    <summary class="flex justify-between items-center font-semibold text-lg text-white">
+                        Tôi có thể sử dụng các thư viện JS bên ngoài (ChartJS, Maps) không?
+                        <span class="transform group-open:rotate-180 transition-transform"><i
+                                class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <p class="mt-4 text-slate-400 leading-relaxed">Dễ dàng. One Laravel chạy trên nền tảng Webpack tiêu
+                        chuẩn. Bạn có thể `import` bất kỳ thư viện NPM nào vào trong block `&lt;script setup&gt;` của
+                        Blade Component.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action / Investor Form -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-brand-900 to-dark-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-extrabold text-white mb-6">Sẵn sàng đồng hành cùng kỳ lân công nghệ tiếp theo?</h2>
+            <p class="text-xl text-slate-300 mb-10">
+                Chúng tôi đang tìm kiếm đối tác chiến lược vòng Seed để thay đổi cách thế giới phát triển phần mềm.
+            </p>
+
+            <div class="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 shadow-2xl">
+                <form class="space-y-4 text-left">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-1">Họ tên</label>
+                            <input type="text"
+                                class="w-full bg-dark-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition"
+                                placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-1">Email</label>
+                            <input type="email"
+                                class="w-full bg-dark-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition"
+                                placeholder="investor@fund.com">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Tin nhắn</label>
+                        <textarea
+                            class="w-full bg-dark-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 h-32 transition"
+                            placeholder="Tôi quan tâm đến tiềm năng tăng trưởng của One Laravel..."></textarea>
+                    </div>
+                    <button type="button"
+                        class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg transition shadow-lg transform hover:-translate-y-1">
+                        Liên hệ với Founder
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-950 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                <div
+                    class="w-8 h-8 bg-gradient-to-br from-brand-600 to-rose-800 rounded flex items-center justify-center font-bold text-white">
+                    1L</div>
+                <span class="font-bold text-lg text-slate-200">One Laravel</span>
+            </div>
+            <div class="text-slate-500 text-sm text-center md:text-right">
+                &copy; 2026 One Laravel Framework. All rights reserved. <br>
+                <span class="text-xs">Built with ❤️ for the PHP Community.</span>
+            </div>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="https://github.com/onelaravel/onelaravel" class="text-slate-400 hover:text-white transition"><i
+                        class="fab fa-github text-2xl"></i></a>
+                <a href="#" class="text-slate-400 hover:text-blue-400 transition"><i
+                        class="fab fa-discord text-2xl"></i></a>
+                <a href="#" class="text-slate-400 hover:text-blue-300 transition"><i
+                        class="fab fa-twitter text-2xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

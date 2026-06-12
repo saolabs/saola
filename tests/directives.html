@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Blade Directives - Laravel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #FF2D20 0%, #FF6B6B 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 30px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+        
+        tbody tr {
+            transition: all 0.3s ease;
+        }
+        
+        tbody tr:hover {
+            background: #f8f9ff;
+            transform: scale(1.01);
+        }
+        
+        .stt {
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            width: 50px;
+        }
+        
+        .loai {
+            width: 120px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .badge-single {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .badge-pair {
+            background: #4299e1;
+            color: white;
+        }
+        
+        code {
+            background: #2d3748;
+            color: #68d391;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            margin: 5px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .code-block .keyword {
+            color: #f687b3;
+        }
+        
+        .code-block .string {
+            color: #68d391;
+        }
+        
+        .code-block .variable {
+            color: #fbd38d;
+        }
+        
+        .function-col {
+            min-width: 250px;
+        }
+        
+        .code-col {
+            min-width: 300px;
+        }
+        
+        .result-col {
+            min-width: 250px;
+            background: #f0f9ff;
+        }
+        
+        .result-output {
+            background: #fff;
+            border: 2px solid #e0f2fe;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            color: #0c4a6e;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        footer {
+            background: #f7fafc;
+            padding: 20px;
+            text-align: center;
+            color: #718096;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+            padding: 12px;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .category-title {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 15px !important;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Blade Directives Reference</h1>
+            <p>Danh sách đầy đủ các Blade Directives trong Laravel Framework</p>
+        </header>
+        
+        <div class="content">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Tìm kiếm directive...">
+            
+            <table id="directivesTable">
+                <thead>
+                    <tr>
+                        <th class="stt">STT</th>
+                        <th class="loai">Loại</th>
+                        <th>Open</th>
+                        <th>Close</th>
+                        <th class="function-col">Chức Năng</th>
+                        <th class="code-col">Code Mẫu</th>
+                        <th class="result-col">Kết Quả Hiển Thị</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- CONTROL STRUCTURES -->
+                    <tr>
+                        <td colspan="7" class="category-title">🎯 CẤU TRÚC ĐIỀU KHIỂN</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">1</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@if($condition)</code></td>
+                        <td><code>@endif</code></td>
+                        <td class="function-col">Kiểm tra điều kiện, thực thi code nếu điều kiện đúng</td>
+                        <td class="code-col">
+                            <div class="code-block">@if($user->isAdmin())<br>    Xin chào Admin!<br>@endif</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Xin chào Admin!</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">2</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@elseif($condition)</code></td>
+                        <td>-</td>
+                        <td class="function-col">Kiểm tra điều kiện thay thế khi @if không thỏa</td>
+                        <td class="code-col">
+                            <div class="code-block">@if($score >= 90)<br>    Xuất sắc<br>@elseif($score >= 80)<br>    Giỏi<br>@endif</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Giỏi <em>(nếu $score=85)</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">3</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@else</code></td>
+                        <td>-</td>
+                        <td class="function-col">Thực thi code khi tất cả điều kiện trên không thỏa</td>
+                        <td class="code-col">
+                            <div class="code-block">@if($user->isPremium())<br>    Premium<br>@else<br>    Free<br>@endif</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Free</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">4</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@unless($condition)</code></td>
+                        <td><code>@endunless</code></td>
+                        <td class="function-col">Ngược lại với @if, thực thi khi điều kiện SAI</td>
+                        <td class="code-col">
+                            <div class="code-block">@unless($user->isBanned())<br>    Bạn có thể đăng bài<br>@endunless</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Bạn có thể đăng bài</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">5</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@isset($variable)</code></td>
+                        <td><code>@endisset</code></td>
+                        <td class="function-col">Kiểm tra biến có tồn tại và không null</td>
+                        <td class="code-col">
+                            <div class="code-block">@isset($user->name)<br>    Tên: {{ $user->name }}<br>@endisset</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Tên: John Doe</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">6</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@empty($variable)</code></td>
+                        <td><code>@endempty</code></td>
+                        <td class="function-col">Kiểm tra biến rỗng (empty)</td>
+                        <td class="code-col">
+                            <div class="code-block">@empty($posts)<br>    Không có bài viết<br>@endempty</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Không có bài viết</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">7</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@switch($value)</code></td>
+                        <td><code>@endswitch</code></td>
+                        <td class="function-col">Cấu trúc switch-case để kiểm tra nhiều giá trị</td>
+                        <td class="code-col">
+                            <div class="code-block">@switch($status)<br>    @case('pending')<br>        Đang chờ<br>        @break<br>    @default<br>        Khác<br>@endswitch</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Đang chờ</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- AUTHENTICATION -->
+                    <tr>
+                        <td colspan="7" class="category-title">🔐 XÁC THỰC</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">8</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@auth</code><br><code>@auth('guard')</code></td>
+                        <td><code>@endauth</code></td>
+                        <td class="function-col">Kiểm tra người dùng đã đăng nhập</td>
+                        <td class="code-col">
+                            <div class="code-block">@auth<br>    Xin chào, {{ auth()->user()->name }}<br>@endauth</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Xin chào, Nguyen Van A</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">9</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@guest</code><br><code>@guest('guard')</code></td>
+                        <td><code>@endguest</code></td>
+                        <td class="function-col">Kiểm tra người dùng CHƯA đăng nhập</td>
+                        <td class="code-col">
+                            <div class="code-block">@guest<br>    &lt;a href="/login"&gt;Đăng nhập&lt;/a&gt;<br>@endguest</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;a href="/login"&gt;Đăng nhập&lt;/a&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">10</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@can('ability')</code></td>
+                        <td><code>@endcan</code></td>
+                        <td class="function-col">Kiểm tra quyền của người dùng (authorization)</td>
+                        <td class="code-col">
+                            <div class="code-block">@can('edit', $post)<br>    &lt;button&gt;Sửa&lt;/button&gt;<br>@endcan</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;button&gt;Sửa&lt;/button&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">11</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@cannot('ability')</code></td>
+                        <td><code>@endcannot</code></td>
+                        <td class="function-col">Kiểm tra người dùng KHÔNG có quyền</td>
+                        <td class="code-col">
+                            <div class="code-block">@cannot('delete', $post)<br>    Bạn không có quyền xóa<br>@endcannot</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Bạn không có quyền xóa</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">12</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@elsecan('ability')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Kiểm tra quyền thay thế trong chuỗi @can</td>
+                        <td class="code-col">
+                            <div class="code-block">@can('edit', $post)<br>    Sửa<br>@elsecan('view', $post)<br>    Xem<br>@endcan</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Xem</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">13</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@canany(['edit', 'delete'])</code></td>
+                        <td><code>@endcanany</code></td>
+                        <td class="function-col">Kiểm tra có BẤT KỲ quyền nào trong danh sách</td>
+                        <td class="code-col">
+                            <div class="code-block">@canany(['edit', 'delete'], $post)<br>    &lt;div&gt;Actions&lt;/div&gt;<br>@endcanany</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;div&gt;Actions&lt;/div&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- LOOPS -->
+                    <tr>
+                        <td colspan="7" class="category-title">🔁 VÒNG LẶP</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">14</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@for($i=0; $i&lt;10; $i++)</code></td>
+                        <td><code>@endfor</code></td>
+                        <td class="function-col">Vòng lặp for truyền thống</td>
+                        <td class="code-col">
+                            <div class="code-block">@for($i = 1; $i &lt;= 5; $i++)<br>    Số {{ $i }}<br>@endfor</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Số 1<br>Số 2<br>Số 3<br>Số 4<br>Số 5</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">15</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@foreach($items as $item)</code></td>
+                        <td><code>@endforeach</code></td>
+                        <td class="function-col">Lặp qua từng phần tử trong mảng/collection</td>
+                        <td class="code-col">
+                            <div class="code-block">@foreach($users as $user)<br>    &lt;li&gt;{{ $user->name }}&lt;/li&gt;<br>@endforeach</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;li&gt;John&lt;/li&gt;<br>&lt;li&gt;Jane&lt;/li&gt;<br>&lt;li&gt;Bob&lt;/li&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">16</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@forelse($items as $item)</code></td>
+                        <td><code>@endforelse</code></td>
+                        <td class="function-col">Foreach với xử lý khi mảng rỗng</td>
+                        <td class="code-col">
+                            <div class="code-block">@forelse($posts as $post)<br>    {{ $post->title }}<br>@empty<br>    Không có bài viết<br>@endforelse</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Không có bài viết <em>(nếu $posts rỗng)</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">17</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@while($condition)</code></td>
+                        <td><code>@endwhile</code></td>
+                        <td class="function-col">Lặp khi điều kiện còn đúng</td>
+                        <td class="code-col">
+                            <div class="code-block">@php $i = 0; @endphp<br>@while($i &lt; 5)<br>    {{ $i++ }}<br>@endwhile</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">0 1 2 3 4</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">18</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@continue</code><br><code>@continue($condition)</code></td>
+                        <td>-</td>
+                        <td class="function-col">Bỏ qua lần lặp hiện tại, chuyển sang lần kế tiếp</td>
+                        <td class="code-col">
+                            <div class="code-block">@foreach($users as $user)<br>    @continue($user->blocked)<br>    {{ $user->name }}<br>@endforeach</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">John<br>Jane <em>(bỏ qua users bị block)</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">19</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@break</code><br><code>@break($condition)</code></td>
+                        <td>-</td>
+                        <td class="function-col">Thoát khỏi vòng lặp hoàn toàn</td>
+                        <td class="code-col">
+                            <div class="code-block">@foreach($items as $item)<br>    @break($item->id == 5)<br>    {{ $item->name }}<br>@endforeach</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Item 1<br>Item 2<br>Item 3<br>Item 4</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- TEMPLATE INHERITANCE -->
+                    <tr>
+                        <td colspan="7" class="category-title">📄 KẾ THỪA TEMPLATE</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">20</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@extends('layout.app')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Kế thừa từ template cha</td>
+                        <td class="code-col">
+                            <div class="code-block">@extends('layouts.master')<br><br>@section('content')<br>    Nội dung<br>@endsection</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Kế thừa toàn bộ HTML từ layouts.master</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">21</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@section('name')</code></td>
+                        <td><code>@endsection</code><br><code>@show</code></td>
+                        <td class="function-col">Định nghĩa một section có thể override</td>
+                        <td class="code-col">
+                            <div class="code-block">@section('sidebar')<br>    &lt;ul&gt;Menu&lt;/ul&gt;<br>@endsection</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;ul&gt;Menu&lt;/ul&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">22</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@yield('name')</code><br><code>@yield('name', 'default')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Hiển thị nội dung của section từ view con</td>
+                        <td class="code-col">
+                            <div class="code-block">&lt;div class="content"&gt;<br>    @yield('content')<br>&lt;/div&gt;</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;div class="content"&gt;<br>    <em>Nội dung từ view con</em><br>&lt;/div&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">23</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@parent</code></td>
+                        <td>-</td>
+                        <td class="function-col">Hiển thị nội dung section từ template cha</td>
+                        <td class="code-col">
+                            <div class="code-block">@section('sidebar')<br>    @parent<br>    Thêm nội dung mới<br>@endsection</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Nội dung từ cha</em><br>Thêm nội dung mới</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">24</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@show</code></td>
+                        <td>-</td>
+                        <td class="function-col">Kết thúc section và hiển thị ngay nội dung</td>
+                        <td class="code-col">
+                            <div class="code-block">@section('title', 'Trang chủ')<br>@show</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">Trang chủ</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- INCLUDE -->
+                    <tr>
+                        <td colspan="7" class="category-title">📦 INCLUDE VIEWS</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">25</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@include('view.name')</code><br><code>@include('view', ['data' => $value])</code></td>
+                        <td>-</td>
+                        <td class="function-col">Nhúng một view khác vào view hiện tại</td>
+                        <td class="code-col">
+                            <div class="code-block">@include('partials.header')<br>@include('user.profile', ['user' => $user])</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Nội dung từ partials.header</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">26</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@includeIf('view.name')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Include view nếu view tồn tại</td>
+                        <td class="code-col">
+                            <div class="code-block">@includeIf('partials.optional-nav')</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Hiển thị nếu view tồn tại, nếu không thì bỏ qua</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">27</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@includeWhen($condition, 'view')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Include view khi điều kiện đúng</td>
+                        <td class="code-col">
+                            <div class="code-block">@includeWhen($user->isAdmin(), 'admin.panel')</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Nội dung admin.panel nếu là admin</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">28</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@includeUnless($condition, 'view')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Include view khi điều kiện SAI</td>
+                        <td class="code-col">
+                            <div class="code-block">@includeUnless($user->isBanned(), 'comments.form')</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Hiển thị form comment nếu không bị ban</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">29</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@includeFirst(['view1', 'view2'])</code></td>
+                        <td>-</td>
+                        <td class="function-col">Include view đầu tiên tồn tại trong mảng</td>
+                        <td class="code-col">
+                            <div class="code-block">@includeFirst(['custom.header', 'default.header'])</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Nội dung từ custom.header hoặc default.header</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">30</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@each('view', $data, 'item')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Render view cho mỗi item trong collection</td>
+                        <td class="code-col">
+                            <div class="code-block">@each('partials.task', $tasks, 'task', 'partials.no-tasks')</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Render partials.task cho mỗi task</em></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- STACKS -->
+                    <tr>
+                        <td colspan="7" class="category-title">📚 STACKS (Scripts & Styles)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">31</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@push('name')</code></td>
+                        <td><code>@endpush</code></td>
+                        <td class="function-col">Thêm nội dung vào cuối stack</td>
+                        <td class="code-col">
+                            <div class="code-block">@push('scripts')<br>    &lt;script src="custom.js"&gt;&lt;/script&gt;<br>@endpush</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Script được thêm vào cuối stack 'scripts'</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">32</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@prepend('name')</code></td>
+                        <td><code>@endprepend</code></td>
+                        <td class="function-col">Thêm nội dung vào đầu stack</td>
+                        <td class="code-col">
+                            <div class="code-block">@prepend('styles')<br>    &lt;link href="first.css"&gt;<br>@endprepend</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>CSS được thêm vào đầu stack 'styles'</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">33</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@stack('name')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Hiển thị tất cả nội dung trong stack</td>
+                        <td class="code-col">
+                            <div class="code-block">&lt;head&gt;<br>    @stack('styles')<br>&lt;/head&gt;</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;head&gt;<br>    &lt;link href="first.css"&gt;<br>    &lt;link href="second.css"&gt;<br>&lt;/head&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">34</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@once</code></td>
+                        <td><code>@endonce</code></td>
+                        <td class="function-col">Chỉ render nội dung một lần duy nhất</td>
+                        <td class="code-col">
+                            <div class="code-block">@once<br>    @push('scripts')<br>        &lt;script&gt;...&lt;/script&gt;<br>    @endpush<br>@endonce</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Script chỉ được push 1 lần dù include nhiều lần</em></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- COMPONENTS -->
+                    <tr>
+                        <td colspan="7" class="category-title">🧩 COMPONENTS</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">35</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@component('component')</code></td>
+                        <td><code>@endcomponent</code></td>
+                        <td class="function-col">Render component (cũ, nên dùng class components)</td>
+                        <td class="code-col">
+                            <div class="code-block">@component('alert')<br>    &lt;strong&gt;Lỗi!&lt;/strong&gt;<br>@endcomponent</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>HTML từ component alert với nội dung "Lỗi!"</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">36</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@slot('name')</code></td>
+                        <td><code>@endslot</code></td>
+                        <td class="function-col">Định nghĩa slot trong component</td>
+                        <td class="code-col">
+                            <div class="code-block">@component('card')<br>    @slot('title')<br>        Tiêu đề<br>    @endslot<br>@endcomponent</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Component card với slot title = "Tiêu đề"</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">37</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@props(['name' => 'default'])</code></td>
+                        <td>-</td>
+                        <td class="function-col">Định nghĩa props cho anonymous component</td>
+                        <td class="code-col">
+                            <div class="code-block">@props(['type' => 'info'])<br>&lt;div class="alert-{{ $type }}"&gt;</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;div class="alert-info"&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">38</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@aware(['parentData'])</code></td>
+                        <td>-</td>
+                        <td class="function-col">Truy cập data từ component cha</td>
+                        <td class="code-col">
+                            <div class="code-block">@aware(['color' => 'gray'])<br>&lt;div class="bg-{{ $color }}"&gt;</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;div class="bg-blue"&gt; <em>(nếu cha truyền color='blue')</em></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- PHP & RAW -->
+                    <tr>
+                        <td colspan="7" class="category-title">💻 PHP & RAW</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">39</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@php</code></td>
+                        <td><code>@endphp</code></td>
+                        <td class="function-col">Viết code PHP thuần trong template</td>
+                        <td class="code-col">
+                            <div class="code-block">@php<br>    $counter = 0;<br>    $total = count($items);<br>@endphp</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Không có output, chỉ thực thi PHP</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">40</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@verbatim</code></td>
+                        <td><code>@endverbatim</code></td>
+                        <td class="function-col">Không parse Blade syntax (dùng cho Vue/Alpine)</td>
+                        <td class="code-col">
+                            <div class="code-block">@verbatim<br>    &lt;div&gt;{{ vueVariable }}&lt;/div&gt;<br>@endverbatim</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;div&gt;{{ vueVariable }}&lt;/div&gt; <em>(giữ nguyên)</em></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- FORMS -->
+                    <tr>
+                        <td colspan="7" class="category-title">📝 FORMS & CSRF</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">41</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@csrf</code></td>
+                        <td>-</td>
+                        <td class="function-col">Tạo hidden input chứa CSRF token</td>
+                        <td class="code-col">
+                            <div class="code-block">&lt;form method="POST"&gt;<br>    @csrf<br>    ...<br>&lt;/form&gt;</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;input type="hidden" name="_token" value="abc123..."&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">42</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@method('PUT')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Tạo hidden input để spoof HTTP method</td>
+                        <td class="code-col">
+                            <div class="code-block">&lt;form method="POST"&gt;<br>    @csrf<br>    @method('DELETE')<br>&lt;/form&gt;</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;input type="hidden" name="_method" value="DELETE"&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">43</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@error('field')</code></td>
+                        <td><code>@enderror</code></td>
+                        <td class="function-col">Hiển thị lỗi validation cho field cụ thể</td>
+                        <td class="code-col">
+                            <div class="code-block">@error('email')<br>    &lt;span&gt;{{ $message }}&lt;/span&gt;<br>@enderror</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;span&gt;Email không hợp lệ&lt;/span&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- ENVIRONMENT -->
+                    <tr>
+                        <td colspan="7" class="category-title">🌍 ENVIRONMENT</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">44</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@env('local')</code><br><code>@env(['local', 'staging'])</code></td>
+                        <td><code>@endenv</code></td>
+                        <td class="function-col">Kiểm tra môi trường ứng dụng</td>
+                        <td class="code-col">
+                            <div class="code-block">@env('local')<br>    &lt;!-- Debug tools --&gt;<br>@endenv</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;!-- Debug tools --&gt; <em>(nếu env=local)</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">45</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@production</code></td>
+                        <td><code>@endproduction</code></td>
+                        <td class="function-col">Kiểm tra môi trường production</td>
+                        <td class="code-col">
+                            <div class="code-block">@production<br>    &lt;!-- Analytics code --&gt;<br>@endproduction</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;!-- Analytics code --&gt; <em>(chỉ trên production)</em></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- UTILITIES -->
+                    <tr>
+                        <td colspan="7" class="category-title">🛠️ UTILITIES</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">46</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@json($data)</code></td>
+                        <td>-</td>
+                        <td class="function-col">Chuyển đổi dữ liệu PHP sang JSON</td>
+                        <td class="code-col">
+                            <div class="code-block">&lt;script&gt;<br>    var data = @json($array);<br>&lt;/script&gt;</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">var data = {"name":"John","age":30};</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">47</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@dd($data)</code></td>
+                        <td>-</td>
+                        <td class="function-col">Dump và die (debug)</td>
+                        <td class="code-col">
+                            <div class="code-block">@dd($user)<br>@dd($user, $posts)</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Hiển thị dump data và dừng thực thi</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">48</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@dump($data)</code></td>
+                        <td>-</td>
+                        <td class="function-col">Dump data để debug (không dừng execution)</td>
+                        <td class="code-col">
+                            <div class="code-block">@dump($variable)<br>@dump($user, $settings)</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output"><em>Hiển thị dump data, tiếp tục thực thi</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">49</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@hasSection('name')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Kiểm tra section có tồn tại không</td>
+                        <td class="code-col">
+                            <div class="code-block">@hasSection('sidebar')<br>    &lt;div&gt;...&lt;/div&gt;<br>@endif</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;div&gt;...&lt;/div&gt; <em>(nếu có section 'sidebar')</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">50</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@sectionMissing('name')</code></td>
+                        <td>-</td>
+                        <td class="function-col">Kiểm tra section KHÔNG tồn tại</td>
+                        <td class="code-col">
+                            <div class="code-block">@sectionMissing('sidebar')<br>    &lt;div&gt;Default&lt;/div&gt;<br>@endif</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;div&gt;Default&lt;/div&gt; <em>(nếu không có section)</em></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">51</td>
+                        <td class="loai"><span class="badge badge-pair">Đóng mở</span></td>
+                        <td><code>@session('key')</code></td>
+                        <td><code>@endsession</code></td>
+                        <td class="function-col">Kiểm tra và lấy giá trị session</td>
+                        <td class="code-col">
+                            <div class="code-block">@session('status')<br>    &lt;div&gt;{{ $value }}&lt;/div&gt;<br>@endsession</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">&lt;div&gt;success&lt;/div&gt;</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">52</td>
+                        <td class="loai"><span class="badge badge-single">Đơn</span></td>
+                        <td><code>@js($data)</code></td>
+                        <td>-</td>
+                        <td class="function-col">Chuyển đổi PHP sang JavaScript (Laravel 9.31+)</td>
+                        <td class="code-col">
+                            <div class="code-block">&lt;script&gt;<br>    const config = @js($config);<br>&lt;/script&gt;</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">const config = {api_key: "abc", debug: true};</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- CUSTOM -->
+                    <tr>
+                        <td colspan="7" class="category-title">✨ CUSTOM DIRECTIVES</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="stt">53</td>
+                        <td class="loai"><span class="badge badge-single">Custom</span></td>
+                        <td><code>@directive</code></td>
+                        <td>-</td>
+                        <td class="function-col">Bạn có thể tạo custom directives riêng trong AppServiceProvider</td>
+                        <td class="code-col">
+                            <div class="code-block">// AppServiceProvider.php<br>Blade::directive('datetime', function ($expression) {<br>    return "&lt;?php echo ($expression)->format('m/d/Y'); ?&gt;";<br>});</div>
+                        </td>
+                        <td class="result-col">
+                            <div class="result-output">10/09/2025</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <footer>
+            <p><strong>📚 Laravel Blade Directives Reference</strong></p>
+            <p>Được tạo cho dự án Saola - Framework Laravel với SPA Architecture</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Tổng số: <strong>53 directives</strong></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        const table = document.getElementById('directivesTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                
+                // Skip category title rows
+                if (row.querySelector('.category-title')) {
+                    continue;
+                }
+                
+                const text = row.textContent.toLowerCase();
+                
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+        
+        // Add row numbers dynamically
+        let counter = 1;
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            if (!row.querySelector('.category-title')) {
+                const sttCell = row.querySelector('.stt');
+                if (sttCell) {
+                    sttCell.textContent = counter++;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
