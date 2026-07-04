@@ -1,11 +1,19 @@
 /**
  * Auto-generated Views Registry
  * Combines all context registries into a single export
- * Generated at: 2026-03-08T16:56:46.888Z
+ * Generated at: 2026-06-23T23:48:19.049Z
  * 
  * This file is auto-updated when compiling any context.
  * Do not edit manually.
  */
-export const views = {};
+
+import webRegistry from './web/registry.js';
+
+/**
+ * Combined view registry from all contexts
+ */
+export const views = {
+    ...webRegistry
+};
 
 export default views;

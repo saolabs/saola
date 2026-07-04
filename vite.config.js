@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 const context = process.env.VITE_CONTEXT || 'web';
@@ -7,9 +8,13 @@ const context = process.env.VITE_CONTEXT || 'web';
 export default defineConfig({
     plugins: [
         laravel({
-            input: `resources/js/saola/app.js`,  // Main Saola app entry
+            input: [
+                `resources/js/saola/app.js`,  // Main Saola app entry
+                `resources/css/app.css`,      // Tailwind v4 entry → static/saola/{ctx}/css/app.css
+            ],
             refresh: true,
         }),
+        tailwindcss(), // Tailwind v4: compile @import 'tailwindcss' trong app.css
     ],
     resolve: {
         alias: {
@@ -35,7 +40,16 @@ export default defineConfig({
             output: {
                 entryFileNames: 'js/[name].js',
                 chunkFileNames: 'js/[name].js',
-                assetFileNames: 'assets/[name].[ext]'
+                // CSS (Tailwind app.css) → css/app.css (non-hashed, ổn định để
+                // head.sao tham chiếu asset('static/saola/{ctx}/css/app.css')).
+                // Asset khác (ảnh/font) giữ assets/.
+                assetFileNames: (info) => {
+                    const names = info.names ?? (info.name ? [info.name] : []);
+                    if (names.some((n) => n.endsWith('.css'))) {
+                        return 'css/[name][extname]';
+                    }
+                    return 'assets/[name].[ext]';
+                }
             }
         }
     },

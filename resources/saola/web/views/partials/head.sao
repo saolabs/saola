@@ -1,0 +1,3 @@
+    {{-- <head> meta riêng cho context web. CSS/JS load qua _system/partials/assets
+         (dev-aware) trong begin.blade — KHÔNG thêm <link css>/<script> cứng ở đây. --}}
+    <meta name="saola-context" content="web">

@@ -11,10 +11,13 @@ import views from './views.js';
 // Get Application instance
 const App = app('App');
 
-// Register all views from the combined registry
-App.View.setViewRegistry(views);
-
-App.init();
+// App.start() (KHÔNG phải App.init()) — start Router để render route đầu, và
+// SSR-aware: tự đọc <script data-ref="saola-ssr"> → hydrate route đầu thay vì
+// mount mới (xem docs/HYDRATION.md §6). container khớp #app-root của SSR shell.
+// registry PHẢI truyền qua config: App.View chỉ tồn tại sau khi providers boot
+// trong init() (gọi từ start). Gọi App.View.setViewRegistry() TRƯỚC start ném
+// "Cannot read properties of undefined (reading 'setViewRegistry')".
+App.start({ view: { container: '#app-root', registry: views } });
 
 // Export for use in other modules
 export { App, views };

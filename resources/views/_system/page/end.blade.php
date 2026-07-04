@@ -40,6 +40,11 @@
         };
     </script>
 
+    {{-- SSR hydrate boot — client (App.start → readSSRBoot) đọc để hydrate route đầu.
+         viewId của layout chain client tự discover từ DOM. renderSSRBoot tự bỏ qua
+         nếu thiếu view/viewId (→ CSR boot). Xem docs/HYDRATION.md §6. --}}
+    {!! $__helper->renderSSRBoot($__VIEW_PATH__ ?? '', $__VIEW_ID__ ?? '') !!}
+
     <!-- Core JavaScript for SPA - Load after APP_CONFIGS is defined -->
     @include($__system__.'partials.scripts')
 

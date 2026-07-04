@@ -11,7 +11,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ $__env->yieldContent('favicon', asset('favicon.ico')) }}">
     @include($__partial__.'head')
-    
+
+    {{-- Saola assets (CSS + JS), dev-aware: Vite HMR khi `npm run dev`, static khi build --}}
+    @include($__system__.'partials.assets')
+
     @yield('styles')
 </head>
 <body>

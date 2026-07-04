@@ -1,4 +1,3 @@
-{{-- <script src="/static/{{ $__context__ }}/js/main.bundle.js" defer></script> --}}
-{{-- @if(app()->environment('local'))
-    <script src="/reload-dev.js"></script>
-@endif --}}
+{{-- Saola CSS+JS bundle giờ load qua _system/partials/assets (dev-aware) trong
+     <head> của begin.blade. Partial này để dành cho script bổ sung cuối <body>
+     (analytics, polyfill…) nếu cần. --}}

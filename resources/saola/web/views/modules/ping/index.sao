@@ -1,0 +1,54 @@
+@states({
+    count: 0,
+    name: 'Saola',
+    pings: []
+})
+<template>
+    @extends(__layout__ + "base")
+    @block('content')
+        <section @class(["ping", "active": count > 0])>
+            <h1>Ping Module — Hydration Test</h1>
+            <p>Hello, {{ name }}! 👋</p>
+
+            <div>
+                <button @click(setCount(count + 1))>Ping (+1)</button>
+                <button @click(reset())>Reset</button>
+                <span>Count: {{ count }}</span>
+            </div>
+
+            <div>
+                <label>Your name:</label>
+                <input type="text" name="name" placeholder="Type a name..." @bind(name) />
+            </div>
+
+            <button @click(addPing())>Add ping to list</button>
+            <ul>
+                @for(i = 0; i < count; i++)
+                    <li>Ping #{{ i + 1 }}</li>
+                @endfor
+            </ul>
+        </section>
+    @endblock
+</template>
+
+<script setup lang="ts">
+    export default {
+        name: 'PingPage',
+        reset(){
+            setCount(0);
+        },
+        addPing(){
+            setCount(count + 1);
+        }
+    };
+</script>
+
+<style scoped>
+    .ping {
+        padding: 24px;
+        font-family: system-ui, sans-serif;
+    }
+    .active h1 {
+        color: #2563eb;
+    }
+</style>
