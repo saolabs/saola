@@ -71,9 +71,9 @@ class BaseView extends View {
             data: __data__,
             viewId: __VIEW_ID__,
             path: __VIEW_PATH__,
-            scripts: [],
-            styles: [],
-            resources: [],
+            scripts: [{"type":"code","content":"window.__SAOLA_DEMO_BOOT_COUNT__ = (window.__SAOLA_DEMO_BOOT_COUNT__ || 0) + 1;"}],
+            styles: [{"type":"href","href":"/static/saola/demo-site.css"}],
+            resources: [{"tag":"link","uuid":"link-0","attrs":{"rel":"stylesheet","href":"/static/saola/demo-site.css"}}],
             commitConstructorData: function() {
                 // Then update states from data
 
@@ -90,7 +90,7 @@ class BaseView extends View {
                         }
                     }
                 }
-                // Then update states from data
+                // Re-derive CHỈ state phụ thuộc data — state literal của instance KHÔNG reset
 
                 // Finally lock state updates
 
@@ -108,19 +108,11 @@ class BaseView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement) => [
-            this.html(`32a9c14a`, "header", parentElement, {}, (parentElement) => [
-                this.html(`34e8407e`, "h1", parentElement, {}, (parentElement) => [
-                    this.text('Base Layout')
+            this.html(`d69e6b1d`, "div", parentElement,
+                { classes: [{ type: 'static', value: "saola-demo-root" }] },
+                (parentElement) => [
+                this.blockOutlet(`d9c86768`, "shell", parentElement)
                 ])
-            ]),
-            this.html(`c226aaa1`, "main", parentElement, {}, (parentElement) => [
-                this.blockOutlet(`ec9040ed`, "content", parentElement)
-            ]),
-            this.html(`524f4445`, "footer", parentElement, {}, (parentElement) => [
-                this.html(`25def5fd`, "p", parentElement, {}, (parentElement) => [
-                    this.text('&copy; 2026 SaoLabs. All rights reserved.')
-                ])
-            ])
             ]);
             }
         });

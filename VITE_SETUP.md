@@ -18,10 +18,22 @@ npm run dev:admin
 npm run dev:mobile
 ```
 
-This runs:
-1. Compiles `.sao` templates → `.blade.php` + `.ts/.js` files
-2. Starts Vite dev server (http://localhost:5173)
-3. Watches for changes and hot-reloads
+This runs 3 concurrent processes (`server`, `vite`, `client`):
+1. Starts Laravel at `http://127.0.0.1:8080`
+2. Starts Vite/HMR at `http://127.0.0.1:5173`
+3. Compiles `.sao` through the Saola Vite plugin
+4. Watches and auto-reloads on changes to:
+   - `resources/saola/*/views/**` (.sao views) → recompile + full reload
+   - `resources/saola/*/app/**` (helpers/services) → recompile + full reload
+   - `app/**`, `routes/**`, `resources/views/**`, `lang/**` (PHP) → browser full reload
+   - `../client/dist/**` — the local `@saolabs/client` is watched via `tsc --watch`
+     (the `client` process), so editing the client lib hot-reloads too
+
+> Note: `php artisan serve` re-interprets PHP each request, so Controller/Model
+> edits take effect on the next request without a server restart. Editing `.env`
+> still needs a manual restart (`--no-reload` disables the env watcher).
+
+Open the Laravel URL (`http://127.0.0.1:8080`), not the Vite asset URL.
 
 ### Production Build
 
@@ -46,27 +58,22 @@ npm run build:all          # All contexts at once
 ┌──────────────────────────────────────────────────────────┐
 │ 1. npm run dev:web                                       │
 ├──────────────────────────────────────────────────────────┤
-│ • npm run build:views:web                                │
-│   - Compiles resources/one/web/**/*.sao                 │
-│   - Outputs: resources/js/one/web/views/*.ts            │
-│   - Outputs: resources/views/web/*.blade.php            │
+│ • Laravel                                                │
+│   - Serves the application at 127.0.0.1:8080            │
 │                                                          │
-│ • vite (VITE_CONTEXT=web)                              │
-│   - Serves resources/js/one/app.js                       │
-│   - HMR enabled on http://localhost:5173                │
-│   - Watches for any TS/JS/CSS changes                   │
-│   - Instant reload via WebSocket                        │
-│                                                          │
-│ • Laravel dev server continues running                  │
-│   - Renders .blade.php templates                        │
-│   - Loads Vite bundle with HMR                          │
+│ • Vite + Saola compiler plugin                           │
+│   - Compiles resources/saola/web/views/**/*.sao         │
+│   - Outputs client views to resources/js/saola/web      │
+│   - Outputs Blade views to resources/views/web          │
+│   - Serves HMR at 127.0.0.1:5173                        │
+│   - Recompiles and reloads after .sao changes           │
 └──────────────────────────────────────────────────────────┘
 ```
 
 ### File Structure
 
 ```
-resources/one/web/              ← SOURCE (.sao templates, app code)
+resources/saola/web/            ← SOURCE (.sao templates, app code)
   ├── views/
   │   ├── home.sao
   │   ├── counter.sao
@@ -75,7 +82,7 @@ resources/one/web/              ← SOURCE (.sao templates, app code)
       ├── helpers/
       └── services/
 
-resources/js/one/web/           ← COMPILED (Vite bundles this)
+resources/js/saola/web/         ← COMPILED (Vite bundles this)
   ├── app.js                    ← Entry point
   ├── views/
   │   ├── home.ts
@@ -89,7 +96,7 @@ resources/views/web/            ← BLADE OUTPUT (Laravel renders)
   ├── counter.blade.php
   └── ...
 
-public/static/one/web/js/       ← VITE OUTPUT (production)
+public/static/saola/web/js/     ← VITE OUTPUT (production)
   └── app.js                    ← Final bundle
 ```
 
@@ -121,15 +128,17 @@ Vite HMR settings (vite.config.js):
 
 ```javascript
 server: {
+    host: '127.0.0.1',
+    port: 5173,
     hmr: {
-        host: 'localhost',
+        host: '127.0.0.1',
         port: 5173,
     },
 }
 ```
 
 **What it does**:
-- Browser connects to WebSocket at `ws://localhost:5173`
+- Browser connects to WebSocket at `ws://127.0.0.1:5173`
 - Updates module when code changes
 - Preserves component state during reload
 
@@ -164,7 +173,7 @@ npm install
 ### Issue: HMR not working
 
 **Check**:
-1. Vite dev server running at localhost:5173
+1. Laravel is running at 127.0.0.1:8080 and Vite at 127.0.0.1:5173
 2. Browser WebSocket connection (DevTools → Network)
 3. Check vite.config.js HMR settings
 
@@ -186,8 +195,9 @@ npm run build:views:web    # Compile .sao → .blade.php
 
 | Command | Purpose |
 |---------|---------|
-| `npm run dev` | Dev mode web context + HMR |
+| `npm run dev` | Dev mode web context + HMR (server + vite + client watch) |
 | `npm run dev:web` | Dev mode web context |
+| `npm run dev:client` | Watch/rebuild local `@saolabs/client` (`tsc --watch`) |
 | `npm run dev:admin` | Dev mode admin context |
 | `npm run dev:mobile` | Dev mode mobile context |
 | `npm run build` | Production build web context |

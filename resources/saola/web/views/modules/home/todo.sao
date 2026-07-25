@@ -1,0 +1,88 @@
+@states({
+    todos: [
+        { id: 1, text: 'Review hydration lifecycle', completed: true },
+        { id: 2, text: 'Test shared layout transition', completed: false },
+        { id: 3, text: 'Inspect runtime asset cleanup', completed: false }
+    ],
+    newTodo: '',
+    filter: 'all',
+    nextId: 4,
+    activeCount: 2,
+    completedCount: 1
+})
+
+<template>
+    @extends(__layout__ + "workspace")
+    @block('workspace')
+        <header class="workspace-topbar"><div><p class="eyebrow"><span>01</span> Personal queue</p><h1>Good morning.</h1></div><div class="completion-ring"><strong>{{ completedCount }}/{{ todos.length }}</strong><span>complete</span></div></header>
+
+        <section class="todo-board">
+            <form class="todo-entry" @submit(addTodo(event))><label for="new-task">Add one clear next step</label><div><input id="new-task" type="text" placeholder="What needs your attention?" @bind(newTodo)><button type="submit">Add task <span>+</span></button></div></form>
+            <div class="todo-toolbar">
+                <div><button @class(['active': filter === 'all']) @click(setFilter('all'))>All <span>{{ todos.length }}</span></button><button @class(['active': filter === 'active']) @click(setFilter('active'))>Active <span>{{ activeCount }}</span></button><button @class(['active': filter === 'done']) @click(setFilter('done'))>Done <span>{{ completedCount }}</span></button></div>
+                <button class="clear-button" @disabled(completedCount === 0) @click(clearCompleted())>Clear completed</button>
+            </div>
+            <div class="todo-list">
+                @if(todos.length === 0)
+                    <div class="empty-state"><span>○</span><h2>Your queue is clear.</h2><p>Add one meaningful task above.</p></div>
+                @else
+                    @foreach(todos as todo)
+                        @key(todo['id'])
+                        @if(filter === 'all' || (filter === 'active' && !todo['completed']) || (filter === 'done' && todo['completed']))
+                            <article @class(['todo-row', 'completed': todo['completed']])>
+                                <button class="todo-check" @click(toggleTodo(todo['id'])) aria-label="Toggle task">
+                                    @if(todo['completed'])
+                                        ✓
+                                    @endif
+                                </button>
+                                <div><strong>{{ todo['text'] }}</strong><small>SAOLA DEMO · TASK {{ todo['id'] }}</small></div>
+                                <button class="todo-delete" @click(deleteTodo(todo['id'])) aria-label="Delete task">×</button>
+                            </article>
+                        @endif
+                    @endforeach
+                @endif
+            </div>
+            <footer class="todo-summary"><p><span>{{ activeCount }}</span> items still need attention.</p><a href="/about">Why Saola handles this differently →</a></footer>
+        </section>
+    @endblock
+</template>
+
+<script setup lang="ts">
+    export default {
+        name: 'TodoPage',
+        addTodo(event) {
+            event.preventDefault();
+            const text = newTodo.trim();
+            if (!text) return;
+            const nextTodos = [...todos, { id: nextId, text, completed: false }];
+            setTodos(nextTodos);
+            this.updateCounts(nextTodos);
+            setNextId(nextId + 1);
+            setNewTodo('');
+        },
+        toggleTodo(id) {
+            const nextTodos = todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo);
+            setTodos(nextTodos);
+            this.updateCounts(nextTodos);
+        },
+        deleteTodo(id) {
+            const nextTodos = todos.filter(todo => todo.id !== id);
+            setTodos(nextTodos);
+            this.updateCounts(nextTodos);
+        },
+        clearCompleted() {
+            const nextTodos = todos.filter(todo => !todo.completed);
+            setTodos(nextTodos);
+            this.updateCounts(nextTodos);
+        },
+        updateCounts(list) {
+            setActiveCount(list.filter(todo => !todo.completed).length);
+            setCompletedCount(list.filter(todo => todo.completed).length);
+        }
+    };
+</script>
+
+<style scoped>
+    .todo-row.completed strong { text-decoration: line-through; color: #79808b; }
+    .todo-row.completed .todo-check { background: var(--cobalt); color: white; }
+</style>

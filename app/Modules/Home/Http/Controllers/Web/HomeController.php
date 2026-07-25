@@ -3,10 +3,6 @@
 namespace App\Modules\Home\Http\Controllers\Web;
 
 use App\Http\Controllers\WebController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Saola\Core\Support\SPA;
-
 class HomeController extends WebController
 {
     protected $module = 'home';
@@ -16,10 +12,29 @@ class HomeController extends WebController
         return $this->response([]);
     }
 
-    public function demo()
+    public function about()
     {
         return $this->response([]);
     }
 
+    public function privacy()
+    {
+        return $this->response([]);
+    }
+
+    public function terms()
+    {
+        return $this->response([]);
+    }
+
+    public function contact()
+    {
+        return $this->response([]);
+    }
+
+    public function todo()
+    {
+        return $this->response([]);
+    }
 
 }

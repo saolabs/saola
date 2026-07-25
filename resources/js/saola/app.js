@@ -5,11 +5,15 @@
  * Import and use views from the auto-generated views.js registry.
  */
 
-import { Application, app } from '@saolabs/client';
+import { app } from '@saolabs/client';
 import views from './views.js';
 
 // Get Application instance
-const App = app('App');
+const App = app();
+
+// Bridge cho Blade shell và công cụ chẩn đoán runtime. API module vẫn là
+// nguồn chính; global chỉ giữ cùng một Application instance, không khởi tạo lại.
+window.App = App;
 
 // App.start() (KHÔNG phải App.init()) — start Router để render route đầu, và
 // SSR-aware: tự đọc <script data-ref="saola-ssr"> → hydrate route đầu thay vì

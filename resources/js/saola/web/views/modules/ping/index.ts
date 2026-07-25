@@ -147,10 +147,8 @@ class IndexView extends View {
                         }
                     }
                 }
-                // Then update states from data
-                update$count(0);
-                update$name('Saola');
-                update$pings([]);
+                // Re-derive CHỈ state phụ thuộc data — state literal của instance KHÔNG reset
+
                 // Finally lock state updates
                 lockUpdateRealState();
             },

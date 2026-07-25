@@ -1,0 +1,28 @@
+@states({ activeSection: 'collection' })
+
+<template>
+    @extends(__layout__ + "public")
+    @block('content')
+        <section class="legal-hero">
+            <p class="eyebrow"><span>01</span> Legal / Privacy</p>
+            <h1>Privacy in<br>plain language.</h1>
+            <p>Last updated July 21, 2026 · Demo policy</p>
+        </section>
+        <section class="legal-layout">
+            <aside>
+                <button @class(['active': activeSection === 'collection']) @click(setActiveSection('collection'))>01 Information</button>
+                <button @class(['active': activeSection === 'use']) @click(setActiveSection('use'))>02 How we use it</button>
+                <button @class(['active': activeSection === 'control']) @click(setActiveSection('control'))>03 Your control</button>
+            </aside>
+            <div class="legal-copy">
+                @if(activeSection === 'collection')
+                    <article><span>01</span><h2>Information we collect</h2><p>This demonstration stores Todo items only in the active client view. The contact and newsletter forms do not send data to a server.</p><p>In a production application, data collection should be stated next to the interaction that causes it—not hidden in a long policy.</p></article>
+                @elseif(activeSection === 'use')
+                    <article><span>02</span><h2>How information is used</h2><p>Saola itself does not prescribe analytics or tracking. Applications decide which services to use and must disclose those decisions.</p><p>Hydration reuses the server-rendered DOM; it does not require duplicating personal data in a second hidden document.</p></article>
+                @else
+                    <article><span>03</span><h2>Your control</h2><p>People should be able to inspect, correct and remove stored information through clear product controls.</p><p>For this demo, leaving the Todo route destroys its page instance unless page caching is explicitly enabled by the application.</p></article>
+                @endif
+            </div>
+        </section>
+    @endblock
+</template>

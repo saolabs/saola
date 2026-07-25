@@ -1,0 +1,37 @@
+<template>
+    @extends(__layout__ + "base")
+    @block('shell')
+        <div class="site-frame">
+            <header class="site-header">
+                <a class="brand" href="/" aria-label="Saola Focus home">
+                    <span class="brand-mark">S</span>
+                    <span><strong>SAOLA</strong><small>FOCUS SYSTEM</small></span>
+                </a>
+                <nav class="site-nav" aria-label="Main navigation">
+                    <a href="/">Home</a>
+                    <a href="/about">About</a>
+                    <a href="/contact">Contact</a>
+                    <a class="nav-cta" href="/todo-list">Open workspace <span>↗</span></a>
+                </nav>
+            </header>
+
+            <main class="site-main">
+                @useBlock('content')
+            </main>
+
+            <footer class="site-footer">
+                <div>
+                    <span class="brand-mark brand-mark-small">S</span>
+                    <p>A hydration-first demonstration built with Laravel, Blade and Saola views.</p>
+                </div>
+                <nav aria-label="Legal navigation">
+                    <a href="/privacy">Privacy</a>
+                    <a href="/terms">Terms</a>
+                    <span>© 2026 SaoLabs</span>
+                </nav>
+            </footer>
+        </div>
+    @endblock
+</template>
+
+<link rel="stylesheet" href="/static/saola/demo-site.css">

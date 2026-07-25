@@ -58,8 +58,10 @@ class ListView extends View {
 
         const __UPDATE_DATA_TRAIT__ = {};
         let {posts = [], title = null} = __data__;
-        __UPDATE_DATA_TRAIT__.posts = value => posts = value;
-        __UPDATE_DATA_TRAIT__.title = value => title = value;
+        __STATE__.__.register('posts', posts);
+        __STATE__.__.register('title', title);
+        __UPDATE_DATA_TRAIT__.posts = value => { posts = value; updateStateByKey('posts', value); };
+        __UPDATE_DATA_TRAIT__.title = value => { title = value; updateStateByKey('title', value); };
         const __VARIABLE_LIST__ = ["posts", "title"];
 
 
@@ -93,7 +95,7 @@ class ListView extends View {
                         }
                     }
                 }
-                // Then update states from data
+                // Re-derive CHỈ state phụ thuộc data — state literal của instance KHÔNG reset
 
                 // Finally lock state updates
 
@@ -112,14 +114,16 @@ class ListView extends View {
             let parentReactive = null;
             return this.wrapper((parentElement) => [
             this.html(`bca678f9`, "h1", parentElement, {}, (parentElement) => [
-                this.output(`d11262e8`, parentElement, true, [], (parentElement) => title)
+                this.output(`d11262e8`, parentElement, true, ["title"], (parentElement) => title)
             ]),
             this.html(`6de958cf`, "ul", parentElement, {}, (parentElement) => [
-                this.__foreach(posts, (post, __loopKey, __loopIndex, __loop) => [
+                this.reactive(`cc92f7f7`, "foreach", parentReactive, parentElement, ["posts"], (parentReactive, parentElement) => {
+                    return this.__foreach(posts, (post, __loopKey, __loopIndex, __loop) => [
                         this.html(`27454eba-${__loopIndex + 1}`, "li", parentElement, {}, (parentElement) => [
-                            this.output(`abe48791-${__loopIndex + 1}`, parentElement, true, [], (parentElement) => post.title)
+                            this.output(`abe48791-${__loopIndex + 1}`, parentElement, true, ["title"], (parentElement) => post.title)
                         ])
-                ])
+                    ])
+                })
             ]),
             this.text('#test')
             ]);

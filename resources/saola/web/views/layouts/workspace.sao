@@ -1,0 +1,28 @@
+<template>
+    @extends(__layout__ + "base")
+    @block('shell')
+        <div class="workspace-frame">
+            <aside class="workspace-sidebar">
+                <a class="brand brand-inverse" href="/">
+                    <span class="brand-mark">S</span>
+                    <span><strong>SAOLA</strong><small>WORKSPACE</small></span>
+                </a>
+                <div class="workspace-date">
+                    <span>Today</span>
+                    <strong>Make room<br>for what matters.</strong>
+                </div>
+                <nav class="workspace-nav">
+                    <a class="active" href="/todo-list"><span>01</span> Tasks</a>
+                    <a href="/"><span>02</span> Back to site</a>
+                    <a href="/about"><span>03</span> Philosophy</a>
+                </nav>
+                <p class="workspace-note">State stays local to the page. The layout remains stable while the route changes.</p>
+            </aside>
+            <main class="workspace-main">
+                @useBlock('workspace')
+            </main>
+        </div>
+    @endblock
+</template>
+
+<link rel="stylesheet" href="/static/saola/demo-site.css">

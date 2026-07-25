@@ -23,7 +23,11 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
             ->controller(HomeController::class)
             ->group(function ($module) {
                 $module->get('/', 'index')->name('index');
-                $module->get('/demo', 'demo')->name('demo');
+                $module->get('/about', 'about')->name('about');
+                $module->get('/privacy', 'privacy')->name('privacy');
+                $module->get('/terms', 'terms')->name('terms');
+                $module->get('/contact', 'contact')->name('contact');
+                $module->get('/todo-list', 'todo')->name('todo');
             });
 
     }
