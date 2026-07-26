@@ -6,6 +6,10 @@ import path from 'path';
 
 const context = process.env.VITE_CONTEXT || 'web';
 const useLocalSaolaClient = process.env.SAOLA_LOCAL_CLIENT === 'true';
+const devHost = process.env.VITE_DEV_HOST || '127.0.0.1';
+const hmrHost = process.env.VITE_HMR_HOST || '127.0.0.1';
+const devPort = Number(process.env.VITE_DEV_PORT || 5173);
+const hmrClientPort = Number(process.env.VITE_HMR_CLIENT_PORT || devPort);
 
 export default defineConfig({
     plugins: [
@@ -81,12 +85,13 @@ export default defineConfig({
         }
     },
     server: {
-        host: '127.0.0.1',
-        port: 5173,
+        host: devHost,
+        port: devPort,
         strictPort: true,
         hmr: {
-            host: '127.0.0.1',
-            port: 5173,
+            host: hmrHost,
+            port: devPort,
+            clientPort: hmrClientPort,
         },
         // The local client lives outside this project root (../client/dist).
         // Allow Vite to read+watch it so tsc --watch rebuilds hot-reload.

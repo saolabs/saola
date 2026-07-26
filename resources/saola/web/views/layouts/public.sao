@@ -3,16 +3,38 @@
     @block('shell')
         <div class="site-frame">
             <header class="site-header">
-                <a class="brand" href="/" aria-label="Saola Focus home">
-                    <span class="brand-mark">S</span>
-                    <span><strong>SAOLA</strong><small>FOCUS SYSTEM</small></span>
-                </a>
-                <nav class="site-nav" aria-label="Main navigation">
-                    <a href="/">Home</a>
-                    <a href="/about">About</a>
-                    <a href="/contact">Contact</a>
-                    <a class="nav-cta" href="/todo-list">Open workspace <span>↗</span></a>
-                </nav>
+                <div class="site-shell">
+                    <div class="site-header-row">
+                        <a class="site-logo" href="/" aria-label="Trang chủ Saola">
+                            <span class="site-logo-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+                            <span><span class="logo-saola">Saola</span><span class="logo-labs">Labs</span></span>
+                        </a>
+
+                        <div class="site-header-collapse">
+                            <nav class="site-nav" aria-label="Điều hướng chính">
+                                <a href="/about">Giải pháp</a>
+                                <a href="/#workflow">Quy trình</a>
+                                <a href="/todo-list">Demo</a>
+                                <a href="/contact">Liên hệ</a>
+                            </nav>
+                            <div class="site-header-actions">
+                                <a class="site-login-link" href="/about">Tài liệu</a>
+                                <a class="site-header-cta" href="/todo-list">Dùng thử miễn phí <span>→</span></a>
+                            </div>
+                        </div>
+
+                        <details class="site-mobile-menu">
+                            <summary aria-label="Mở menu">☰</summary>
+                            <nav aria-label="Điều hướng di động">
+                                <a href="/about">Giải pháp</a>
+                                <a href="/#workflow">Quy trình</a>
+                                <a href="/todo-list">Demo</a>
+                                <a href="/contact">Liên hệ</a>
+                                <a class="site-header-cta" href="/todo-list">Dùng thử miễn phí →</a>
+                            </nav>
+                        </details>
+                    </div>
+                </div>
             </header>
 
             <main class="site-main">
@@ -22,7 +44,7 @@
             <footer class="site-footer">
                 <div>
                     <span class="brand-mark brand-mark-small">S</span>
-                    <p>A hydration-first demonstration built with Laravel, Blade and Saola views.</p>
+                    <p>Demo hydration-first được xây dựng bằng Laravel, Blade và Saola views.</p>
                 </div>
                 <nav aria-label="Legal navigation">
                     <a href="/privacy">Privacy</a>

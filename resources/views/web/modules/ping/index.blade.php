@@ -24,7 +24,7 @@
             <ul @class([$__VIEW_ID__ . '-304a3482'])>
                 @startMarker('reactive', '63183269', ['stateKey' => ['count'], 'type' => 'for'])
                 @for($i = 0; $i < $count; $i++)
-                    <li @class([$__VIEW_ID__ . "-ae68a1c5-{$i}"])>Ping #{{ $i + 1 }}</li>
+                    <li @class([$__VIEW_ID__ . "-ae68a1c5-{$i}"])>Ping #@startMarker('output', "7c7ba19b-{$i}"){{ $i + 1 }}@endMarker('output', "7c7ba19b-{$i}")</li>
                 @endfor
                 @endMarker('reactive', '63183269')
             </ul>

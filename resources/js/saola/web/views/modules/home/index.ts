@@ -125,7 +125,7 @@ class IndexView extends View {
             viewId: __VIEW_ID__,
             path: __VIEW_PATH__,
             scripts: [],
-            styles: [{"type":"code","scoped":true,"content":".hero-copy h1 em { color: var(--cobalt); font-style: normal; }\n    .route-node.active { transform: translateX(8px); }"}],
+            styles: [{"type":"code","scoped":true,"content":".hero-copy h1 em { color: var(--cobalt); font-style: normal; }\n    .route-node.active { isolation: isolate; }"}],
             resources: [],
             commitConstructorData: function(this: any) {
                 // Then update states from data
@@ -164,30 +164,27 @@ class IndexView extends View {
             let parentReactive = null;
             this.block('block-content', 'content', (parentElement: any) => [
             this.html(`b4052a35`, "section", parentElement,
-                { classes: [{ type: 'static', value: "hero-grid" }] },
+                { classes: [{ type: 'static', value: "hero-grid" }, { type: 'static', value: "hero-studio" }], attrs: { "id": { type: 'static', value: "hero-section" } } },
                 (parentElement: any) => [
                 this.html(`90a6e493`, "div", parentElement,
                     { classes: [{ type: 'static', value: "hero-copy" }] },
                     (parentElement: any) => [
                     this.html(`f515bf66`, "p", parentElement,
-                        { classes: [{ type: 'static', value: "eyebrow" }] },
+                        { classes: [{ type: 'static', value: "hero-eyebrow" }] },
                         (parentElement: any) => [
-                        this.html(`e2f86203`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('01')
-                        ]),
-                        this.text(' A calmer way to ship')
+                        this.text('Nền tảng SPA thế hệ mới cho Laravel')
                         ]),
                     this.html(`9b0938cb`, "h1", parentElement, {}, (parentElement: any) => [
-                        this.text('One view.'),
+                        this.text('Viết một lần.'),
                         this.html(`f7127348`, "br", parentElement, {}),
                         this.html(`d4f4199d`, "em", parentElement, {}, (parentElement: any) => [
-                            this.text('Every surface.')
+                            this.text('Vận hành mọi nơi.')
                         ])
                     ]),
                     this.html(`7718bb8d`, "p", parentElement,
                         { classes: [{ type: 'static', value: "hero-lead" }] },
                         (parentElement: any) => [
-                        this.text('Saola keeps Laravel and Blade in charge of the first response, then hydrates the exact same view into a fast, stateful SPA.')
+                        this.text('Saola giữ Laravel và Blade cho phản hồi đầu tiên, sau đó hydrate chính xác view đó thành một SPA nhanh, reactive và an toàn.')
                         ]),
                     this.html(`ed82504f`, "div", parentElement,
                         { classes: [{ type: 'static', value: "hero-actions" }] },
@@ -195,19 +192,29 @@ class IndexView extends View {
                         this.html(`63bde3ef`, "a", parentElement,
                             { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }], attrs: { "href": { type: 'static', value: "/todo-list" } } },
                             (parentElement: any) => [
-                            this.text('Try the workspace '),
+                            this.text('Trải nghiệm demo '),
                             this.html(`fee9a4ad`, "span", parentElement, {}, (parentElement: any) => [
                                 this.text('→')
                             ])
                             ]),
                         this.html(`b589ca24`, "a", parentElement,
-                            { classes: [{ type: 'static', value: "text-link" }], attrs: { "href": { type: 'static', value: "/about" } } },
+                            { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-secondary" }], attrs: { "href": { type: 'static', value: "/about" } } },
                             (parentElement: any) => [
-                            this.text('Read our approach '),
-                            this.html(`c0aad52e`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('↗')
+                            this.text('Khám phá kiến trúc')
                             ])
-                            ])
+                        ]),
+                    this.html(`1959f375`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "hero-proof-row" }], attrs: { "aria-label": { type: 'static', value: "Saola capabilities" } } },
+                        (parentElement: any) => [
+                        this.html(`840df5fc`, "span", parentElement, {}, (parentElement: any) => [
+                            this.text('✓ SSR bằng Blade')
+                        ]),
+                        this.html(`72aed0dd`, "span", parentElement, {}, (parentElement: any) => [
+                            this.text('✓ Hydration không duplicate')
+                        ]),
+                        this.html(`4a9f4e30`, "span", parentElement, {}, (parentElement: any) => [
+                            this.text('✓ Reactive theo state')
+                        ])
                         ])
                     ]),
                 this.html(`5f82dcd4`, "div", parentElement,
@@ -216,88 +223,136 @@ class IndexView extends View {
                     this.html(`01b28266`, "div", parentElement,
                         { classes: [{ type: 'static', value: "route-card-head" }] },
                         (parentElement: any) => [
-                        this.html(`37bb2111`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('LIVE ROUTE')
+                        this.html(`17fdbbc3`, "div", parentElement, {}, (parentElement: any) => [
+                            this.html(`8f494a03`, "span", parentElement, { classes: [{ type: 'static', value: "runtime-dot" }] }),
+                            this.html(`49d1a08b`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.text('Runtime overview')
+                            ])
                         ]),
-                        this.html(`1a133c3a`, "strong", parentElement, {}, (parentElement: any) => [
-                            this.text('/home')
-                        ])
+                        this.html(`483a565a`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "live-badge" }] },
+                            (parentElement: any) => [
+                            this.text('Live · /home')
+                            ])
                         ]),
                     this.html(`81148f49`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "route-line" }] },
+                        { classes: [{ type: 'static', value: "runtime-metrics" }] },
                         (parentElement: any) => [
-                        this.html(`0a6e7712`, "button", parentElement,
-                            { classes: [{ type: 'static', value: "route-node" }, { type: 'binding', value: "active", factory: () => selectedSignal === 'blade', stateKeys: ["selectedSignal"] }], events: { click: [(event: any) => setSelectedSignal('blade')] } },
-                            (parentElement: any) => [
-                            this.html(`ce927f4f`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('1')
+                        this.html(`f8a7486f`, "div", parentElement, {}, (parentElement: any) => [
+                            this.html(`3f6f4d1a`, "small", parentElement, {}, (parentElement: any) => [
+                                this.text('Render source')
                             ]),
-                            this.html(`f7052e3e`, "strong", parentElement, {}, (parentElement: any) => [
+                            this.html(`26663c5d`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.text('1 view')
+                            ]),
+                            this.html(`f298ae77`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('.sao')
+                            ])
+                        ]),
+                        this.html(`3ecbdb6f`, "div", parentElement, {}, (parentElement: any) => [
+                            this.html(`790075db`, "small", parentElement, {}, (parentElement: any) => [
+                                this.text('Current phase')
+                            ]),
+                            this.html(`60b7e503`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.text('Hydrate')
+                            ]),
+                            this.html(`25f9faa5`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('DOM reuse')
+                            ])
+                        ]),
+                        this.html(`e3b84133`, "div", parentElement, {}, (parentElement: any) => [
+                            this.html(`d3ffa7cd`, "small", parentElement, {}, (parentElement: any) => [
+                                this.text('Listeners')
+                            ]),
+                            this.html(`49c0a9c0`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.text('1×')
+                            ]),
+                            this.html(`02b0031a`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('deduplicated')
+                            ])
+                        ])
+                        ]),
+                    this.html(`328c95ab`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "route-line" }], attrs: { "role": { type: 'static', value: "group" }, "aria-label": { type: 'static', value: "Chọn giai đoạn render" } } },
+                        (parentElement: any) => [
+                        this.html(`5c74ea59`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "route-node" }, { type: 'binding', value: "active", factory: () => selectedSignal === 'blade', stateKeys: ["selectedSignal"] }], attrs: { "aria-label": { type: 'static', value: "Xem giai đoạn Blade" } }, events: { click: [(event: any) => setSelectedSignal('blade')] } },
+                            (parentElement: any) => [
+                            this.html(`1ecedf4d`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('01')
+                            ]),
+                            this.html(`20c5c596`, "strong", parentElement, {}, (parentElement: any) => [
                                 this.text('Blade')
                             ]),
-                            this.html(`526cf3cc`, "small", parentElement, {}, (parentElement: any) => [
+                            this.html(`f3d3caed`, "small", parentElement, {}, (parentElement: any) => [
                                 this.text('server response')
                             ])
                             ]),
-                        this.html(`3a989139`, "button", parentElement,
-                            { classes: [{ type: 'static', value: "route-node" }, { type: 'binding', value: "active", factory: () => selectedSignal === 'hydration', stateKeys: ["selectedSignal"] }], events: { click: [(event: any) => setSelectedSignal('hydration')] } },
+                        this.html(`819175ee`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "route-node" }, { type: 'binding', value: "active", factory: () => selectedSignal === 'hydration', stateKeys: ["selectedSignal"] }], attrs: { "aria-label": { type: 'static', value: "Xem giai đoạn hydration" } }, events: { click: [(event: any) => setSelectedSignal('hydration')] } },
                             (parentElement: any) => [
-                            this.html(`05212354`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('2')
+                            this.html(`28771293`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('02')
                             ]),
-                            this.html(`d46221bd`, "strong", parentElement, {}, (parentElement: any) => [
+                            this.html(`1755efaf`, "strong", parentElement, {}, (parentElement: any) => [
                                 this.text('Hydrate')
                             ]),
-                            this.html(`d429dcc9`, "small", parentElement, {}, (parentElement: any) => [
+                            this.html(`2335456c`, "small", parentElement, {}, (parentElement: any) => [
                                 this.text('bind existing DOM')
                             ])
                             ]),
-                        this.html(`b3e06691`, "button", parentElement,
-                            { classes: [{ type: 'static', value: "route-node" }, { type: 'binding', value: "active", factory: () => selectedSignal === 'spa', stateKeys: ["selectedSignal"] }], events: { click: [(event: any) => setSelectedSignal('spa')] } },
+                        this.html(`f0ce158d`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "route-node" }, { type: 'binding', value: "active", factory: () => selectedSignal === 'spa', stateKeys: ["selectedSignal"] }], attrs: { "aria-label": { type: 'static', value: "Xem giai đoạn SPA" } }, events: { click: [(event: any) => setSelectedSignal('spa')] } },
                             (parentElement: any) => [
-                            this.html(`8584e61f`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('3')
+                            this.html(`afd5a05b`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('03')
                             ]),
-                            this.html(`8f16b88f`, "strong", parentElement, {}, (parentElement: any) => [
+                            this.html(`1e6f4d27`, "strong", parentElement, {}, (parentElement: any) => [
                                 this.text('SPA')
                             ]),
-                            this.html(`14861b24`, "small", parentElement, {}, (parentElement: any) => [
+                            this.html(`d7a1c7ef`, "small", parentElement, {}, (parentElement: any) => [
                                 this.text('client navigation')
                             ])
                             ])
                         ]),
-                    this.html(`328c95ab`, "div", parentElement,
+                    this.html(`ac51d251`, "div", parentElement,
                         { classes: [{ type: 'static', value: "signal-readout" }] },
                         (parentElement: any) => [
-                        this.reactive(`489f9502`, "if", parentReactive, parentElement, ["selectedSignal"], (parentReactive: any, parentElement: any) => {
+                        this.reactive(`c4fa93f3`, "if", parentReactive, parentElement, ["selectedSignal"], (parentReactive: any, parentElement: any) => {
                             const reactiveContents = [];
                             if (selectedSignal === 'blade') {
                                 reactiveContents.push(
-                                this.html(`91534320`, "p", parentElement, {}, (parentElement: any) => [
-                                    this.html(`728fc54b`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.html(`a6a5695c`, "p", parentElement, {}, (parentElement: any) => [
+                                    this.html(`f0caada4`, "strong", parentElement, {}, (parentElement: any) => [
                                         this.text('Server-first')
                                     ]),
-                                    this.text(' — HTML remains useful before JavaScript starts.')
+                                    this.html(`be381f48`, "span", parentElement, {}, (parentElement: any) => [
+                                        this.text('HTML có nội dung ngay cả trước khi JavaScript khởi chạy.')
+                                    ])
                                 ])
                                 );
                             }
                             else if (selectedSignal === 'spa') {
                                 reactiveContents.push(
-                                this.html(`029a7aa7`, "p", parentElement, {}, (parentElement: any) => [
-                                    this.html(`61237f49`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.html(`b7a84ebe`, "p", parentElement, {}, (parentElement: any) => [
+                                    this.html(`5cde38e9`, "strong", parentElement, {}, (parentElement: any) => [
                                         this.text('Navigation-ready')
                                     ]),
-                                    this.text(' — only the changing view tree is replaced.')
+                                    this.html(`8f12d23b`, "span", parentElement, {}, (parentElement: any) => [
+                                        this.text('Chỉ nhánh view thay đổi được cập nhật, layout dùng lại.')
+                                    ])
                                 ])
                                 );
                             }
                             else {
                                 reactiveContents.push(
-                                this.html(`4c9b0e4d`, "p", parentElement, {}, (parentElement: any) => [
-                                    this.html(`ae8ef897`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.html(`67b613a4`, "p", parentElement, {}, (parentElement: any) => [
+                                    this.html(`3ffa7209`, "strong", parentElement, {}, (parentElement: any) => [
                                         this.text('Hydration-safe')
                                     ]),
-                                    this.text(' — events and state attach to the DOM Blade already rendered.')
+                                    this.html(`dd25ae50`, "span", parentElement, {}, (parentElement: any) => [
+                                        this.text('State và event gắn vào DOM có sẵn, không nhân đôi listener.')
+                                    ])
                                 ])
                                 );
                             }
@@ -310,7 +365,7 @@ class IndexView extends View {
                 { classes: [{ type: 'static', value: "proof-strip" }] },
                 (parentElement: any) => [
                 this.html(`35bf6e9d`, "p", parentElement, {}, (parentElement: any) => [
-                    this.text('BUILT FOR REAL APPLICATIONS')
+                    this.text('NỀN TẢNG CHO ỨNG DỤNG THỰC TẾ')
                 ]),
                 this.html(`7f8af112`, "div", parentElement, {}, (parentElement: any) => [
                     this.html(`14b47dbd`, "strong", parentElement, {}, (parentElement: any) => [
@@ -346,7 +401,7 @@ class IndexView extends View {
                 ])
                 ]),
             this.html(`6c26f9b7`, "section", parentElement,
-                { classes: [{ type: 'static', value: "feature-section" }] },
+                { classes: [{ type: 'static', value: "feature-section" }], attrs: { "id": { type: 'static', value: "workflow" } } },
                 (parentElement: any) => [
                 this.html(`ce6a96bf`, "div", parentElement,
                     { classes: [{ type: 'static', value: "section-heading" }] },
@@ -355,14 +410,14 @@ class IndexView extends View {
                         { classes: [{ type: 'static', value: "eyebrow" }] },
                         (parentElement: any) => [
                         this.html(`f1acc65a`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('02')
+                            this.text('Workflow')
                         ]),
-                        this.text(' The useful parts')
+                        this.text(' Từ route đến tương tác')
                         ]),
                     this.html(`98293aba`, "h2", parentElement, {}, (parentElement: any) => [
-                        this.text('Less framework'),
+                        this.text('Một quy trình.'),
                         this.html(`c006637c`, "br", parentElement, {}),
-                        this.text('between intent and result.')
+                        this.text('Không có bước thừa.')
                     ])
                     ]),
                 this.html(`d44023e9`, "div", parentElement,
@@ -373,10 +428,10 @@ class IndexView extends View {
                             this.text('01')
                         ]),
                         this.html(`6efb1915`, "h3", parentElement, {}, (parentElement: any) => [
-                            this.text('Render once')
+                            this.text('Render một nguồn')
                         ]),
                         this.html(`4a13b743`, "p", parentElement, {}, (parentElement: any) => [
-                            this.text('The same \\`.sao\\` source produces server Blade and the client view contract.')
+                            this.text('Cùng một file \\`.sao\\` sinh Blade phía server và view contract phía client.')
                         ])
                     ]),
                     this.html(`04b24ab0`, "article", parentElement, {}, (parentElement: any) => [
@@ -384,10 +439,10 @@ class IndexView extends View {
                             this.text('02')
                         ]),
                         this.html(`8d51d8aa`, "h3", parentElement, {}, (parentElement: any) => [
-                            this.text('Keep context')
+                            this.text('Hydrate DOM có sẵn')
                         ]),
                         this.html(`53b76b5c`, "p", parentElement, {}, (parentElement: any) => [
-                            this.text('Shared layouts survive route changes while page state follows a clear lifecycle.')
+                            this.text('Element được đối chiếu theo ID ổn định; attributes và events được reconcile thay vì gắn chồng.')
                         ])
                     ]),
                     this.html(`ddf2d3a9`, "article", parentElement, {}, (parentElement: any) => [
@@ -395,10 +450,10 @@ class IndexView extends View {
                             this.text('03')
                         ]),
                         this.html(`ad421324`, "h3", parentElement, {}, (parentElement: any) => [
-                            this.text('Load precisely')
+                            this.text('Reactive đúng phạm vi')
                         ]),
                         this.html(`71463dd8`, "p", parentElement, {}, (parentElement: any) => [
-                            this.text('Global assets deduplicate; scoped styles stay attached to their owning view.')
+                            this.text('State chỉ cập nhật nhánh phụ thuộc, đồng thời cleanup resource khi view bị hủy.')
                         ])
                     ])
                     ])
@@ -411,14 +466,14 @@ class IndexView extends View {
                         { classes: [{ type: 'static', value: "eyebrow" }] },
                         (parentElement: any) => [
                         this.html(`5f6b80a9`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('03')
+                            this.text('Release notes')
                         ]),
-                        this.text(' Product notes')
+                        this.text(' Theo dõi Saola')
                         ]),
                     this.html(`6560bb1b`, "h2", parentElement, {}, (parentElement: any) => [
-                        this.text('Follow the build,'),
+                        this.text('Nhận cập nhật.'),
                         this.html(`c03b5dbb`, "br", parentElement, {}),
-                        this.text('without the noise.')
+                        this.text('Không nhận spam.')
                     ])
                 ]),
                 this.html(`b8bd3cde`, "form", parentElement,
@@ -436,10 +491,10 @@ class IndexView extends View {
                                 ]),
                                 this.html(`28dbecef`, "p", parentElement, {}, (parentElement: any) => [
                                     this.html(`61788545`, "strong", parentElement, {}, (parentElement: any) => [
-                                        this.text('You\'re on the list.')
+                                        this.text('Đã ghi nhận email.')
                                     ]),
                                     this.html(`bd39f455`, "br", parentElement, {}),
-                                    this.text('We will write only when something useful ships.')
+                                    this.text('Saola chỉ gửi khi có bản phát hành đáng chú ý.')
                                 ])
                                 ])
                             );
@@ -449,7 +504,7 @@ class IndexView extends View {
                             this.html(`fb2898e9`, "label", parentElement,
                                 { attrs: { "for": { type: 'static', value: "home-email" } } },
                                 (parentElement: any) => [
-                                this.text('Work email')
+                                this.text('Email công việc')
                                 ]),
                             this.html(`d05b19b3`, "div", parentElement, {}, (parentElement: any) => [
                                 this.html(`8c996698`, "input", parentElement, { attrs: { "id": { type: 'static', value: "home-email" }, "type": { type: 'static', value: "email" }, "placeholder": { type: 'static', value: "you@company.com" }, "bind": { type: 'static', value: true }, "email": { type: 'static', value: true }, "required": { type: 'static', value: true } } }),
@@ -463,7 +518,7 @@ class IndexView extends View {
                                     ])
                             ]),
                             this.html(`d3584ffa`, "small", parentElement, {}, (parentElement: any) => [
-                                this.text('No campaigns. Just meaningful release notes.')
+                                this.text('Chỉ có release notes và cập nhật kỹ thuật quan trọng.')
                             ])
                             );
                         }

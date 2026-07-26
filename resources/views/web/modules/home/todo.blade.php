@@ -37,7 +37,7 @@
                                     @endif
                                     @endMarker('reactive', "aba5abe7-{$todo['id']}")
                                 </button>
-                                <div @class([$__VIEW_ID__ . "-82692654-{$todo['id']}"])><strong @class([$__VIEW_ID__ . "-0185855c-{$todo['id']}"])>{{ $todo['text'] }}</strong><small @class([$__VIEW_ID__ . "-3e7229d0-{$todo['id']}"])>SAOLA DEMO · TASK {{ $todo['id'] }}</small></div>
+                                <div @class([$__VIEW_ID__ . "-82692654-{$todo['id']}"])><strong @class([$__VIEW_ID__ . "-0185855c-{$todo['id']}"])>@startMarker('output', "70d19571-{$todo['id']}"){{ $todo['text'] }}@endMarker('output', "70d19571-{$todo['id']}")</strong><small @class([$__VIEW_ID__ . "-3e7229d0-{$todo['id']}"])>SAOLA DEMO · TASK @startMarker('output', "4e67dbd4-{$todo['id']}"){{ $todo['id'] }}@endMarker('output', "4e67dbd4-{$todo['id']}")</small></div>
                                 <button @class([$__VIEW_ID__ . "-09d56e46-{$todo['id']}", 'todo-delete']) @attr(['aria-label' => 'Delete task'])>×</button>
                             </article>
                         @endif
