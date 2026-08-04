@@ -1,86 +1,77 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
-@useState($selectedSignal, 'hydration')
-@useState($email, '')
-@useState($joined, false)
+@useState($selectedSignal, 'source')
 @extends($__layout__ . "public")
     @block('content')
-        <section @class([$__VIEW_ID__ . '-b4052a35', 'hero-grid', 'hero-studio']) @attr(['id' => 'hero-section'])>
-            <div @class([$__VIEW_ID__ . '-90a6e493', 'hero-copy'])>
-                <p @class([$__VIEW_ID__ . '-f515bf66', 'hero-eyebrow'])>Nền tảng SPA thế hệ mới cho Laravel</p>
-                <h1 @class([$__VIEW_ID__ . '-9b0938cb'])>Viết một lần.<br @class([$__VIEW_ID__ . '-f7127348'])><em @class([$__VIEW_ID__ . '-d4f4199d'])>Vận hành mọi nơi.</em></h1>
-                <p @class([$__VIEW_ID__ . '-7718bb8d', 'hero-lead'])>Saola giữ Laravel và Blade cho phản hồi đầu tiên, sau đó hydrate chính xác view đó thành một SPA nhanh, reactive và an toàn.</p>
+        <section @class([$__VIEW_ID__ . '-b4052a35', 'home-hero'])>
+            <div @class([$__VIEW_ID__ . '-90a6e493', 'home-hero-copy'])>
+                <p @class([$__VIEW_ID__ . '-f515bf66', 'kicker'])><span @class([$__VIEW_ID__ . '-e2f86203'])>SAOLA / ECOSYSTEM 01</span> Laravel-native application platform</p>
+                <h1 @class([$__VIEW_ID__ . '-9b0938cb'])>Một giao diện.<br @class([$__VIEW_ID__ . '-f7127348'])><em @class([$__VIEW_ID__ . '-d4f4199d'])>Hai runtime.</em><br @class([$__VIEW_ID__ . '-e95ae667'])>Không hai codebase.</h1>
+                <p @class([$__VIEW_ID__ . '-7718bb8d', 'hero-lead'])>Saola biến một view <code @class([$__VIEW_ID__ . '-cbfb64a4'])>.sao</code> thành Blade cho phản hồi đầu tiên và JavaScript cho mọi tương tác tiếp theo — cùng route, cùng state contract, cùng cấu trúc.</p>
                 <div @class([$__VIEW_ID__ . '-ed82504f', 'hero-actions'])>
-                    <a @class([$__VIEW_ID__ . '-63bde3ef', 'button', 'button-primary']) @attr(['href' => '/todo-list'])>Trải nghiệm demo <span @class([$__VIEW_ID__ . '-fee9a4ad'])>→</span></a>
-                    <a @class([$__VIEW_ID__ . '-b589ca24', 'button', 'button-secondary']) @attr(['href' => '/about'])>Khám phá kiến trúc</a>
+                    <a @class([$__VIEW_ID__ . '-63bde3ef', 'button', 'button-primary']) @attr(['href' => '/architecture'])>Khám phá hệ thống <span @class([$__VIEW_ID__ . '-fee9a4ad'])>↗</span></a>
+                    <a @class([$__VIEW_ID__ . '-b589ca24', 'text-link']) @attr(['href' => '/getting-started'])>Xem cách bắt đầu <span @class([$__VIEW_ID__ . '-c0aad52e'])>→</span></a>
                 </div>
-                <div @class([$__VIEW_ID__ . '-1959f375', 'hero-proof-row']) @attr(['aria-label' => 'Saola capabilities'])>
-                    <span @class([$__VIEW_ID__ . '-840df5fc'])>✓ SSR bằng Blade</span>
-                    <span @class([$__VIEW_ID__ . '-72aed0dd'])>✓ Hydration không duplicate</span>
-                    <span @class([$__VIEW_ID__ . '-4a9f4e30'])>✓ Reactive theo state</span>
-                </div>
+                <dl @class([$__VIEW_ID__ . '-5e135ba5', 'hero-facts'])>
+                    <div @class([$__VIEW_ID__ . '-fe5c8eae'])><dt @class([$__VIEW_ID__ . '-d73d3967'])>BACKEND</dt><dd @class([$__VIEW_ID__ . '-3947d795'])>Laravel 13</dd></div>
+                    <div @class([$__VIEW_ID__ . '-50a0f69c'])><dt @class([$__VIEW_ID__ . '-22a4978d'])>FIRST PAINT</dt><dd @class([$__VIEW_ID__ . '-8196725f'])>Blade SSR</dd></div>
+                    <div @class([$__VIEW_ID__ . '-ecb37508'])><dt @class([$__VIEW_ID__ . '-4f2b888b'])>AFTER LOAD</dt><dd @class([$__VIEW_ID__ . '-0e24af22'])>Reactive SPA</dd></div>
+                </dl>
             </div>
-            <div @class([$__VIEW_ID__ . '-5f82dcd4', 'route-card']) @attr(['aria-label' => 'Saola render route'])>
-                <div @class([$__VIEW_ID__ . '-01b28266', 'route-card-head'])>
-                    <div @class([$__VIEW_ID__ . '-17fdbbc3'])><span @class([$__VIEW_ID__ . '-8f494a03', 'runtime-dot'])></span><strong @class([$__VIEW_ID__ . '-49d1a08b'])>Runtime overview</strong></div>
-                    <span @class([$__VIEW_ID__ . '-483a565a', 'live-badge'])>Live · /home</span>
+
+            <div @class([$__VIEW_ID__ . '-5f82dcd4', 'system-instrument']) @attr(['aria-label' => 'Luồng biên dịch và render của Saola'])>
+                <div @class([$__VIEW_ID__ . '-01b28266', 'instrument-top'])><span @class([$__VIEW_ID__ . '-37bb2111'])><i @class([$__VIEW_ID__ . '-f21de37f'])></i> ROUTE / HOME</span><span @class([$__VIEW_ID__ . '-483a565a'])>CONTEXT: WEB</span></div>
+                <div @class([$__VIEW_ID__ . '-81148f49', 'source-cell'])>
+                    <div @class([$__VIEW_ID__ . '-f8a7486f', 'cell-label'])>01 / SOURCE OF TRUTH</div>
+                    <strong @class([$__VIEW_ID__ . '-aeba9a26'])>home.sao</strong>
+                    <code @class([$__VIEW_ID__ . '-19524746'])>&lt;template&gt; + state + style</code>
                 </div>
-                <div @class([$__VIEW_ID__ . '-81148f49', 'runtime-metrics'])>
-                    <div @class([$__VIEW_ID__ . '-f8a7486f'])><small @class([$__VIEW_ID__ . '-3f6f4d1a'])>Render source</small><strong @class([$__VIEW_ID__ . '-26663c5d'])>1 view</strong><span @class([$__VIEW_ID__ . '-f298ae77'])>.sao</span></div>
-                    <div @class([$__VIEW_ID__ . '-3ecbdb6f'])><small @class([$__VIEW_ID__ . '-790075db'])>Current phase</small><strong @class([$__VIEW_ID__ . '-60b7e503'])>Hydrate</strong><span @class([$__VIEW_ID__ . '-25f9faa5'])>DOM reuse</span></div>
-                    <div @class([$__VIEW_ID__ . '-e3b84133'])><small @class([$__VIEW_ID__ . '-d3ffa7cd'])>Listeners</small><strong @class([$__VIEW_ID__ . '-49c0a9c0'])>1×</strong><span @class([$__VIEW_ID__ . '-02b0031a'])>deduplicated</span></div>
+                <div @class([$__VIEW_ID__ . '-328c95ab', 'branch-line'])><span @class([$__VIEW_ID__ . '-49a217a8'])>COMPILE</span></div>
+                <div @class([$__VIEW_ID__ . '-ac51d251', 'runtime-pair'])>
+                    <article @class([$__VIEW_ID__ . '-1db15f13'])><span @class([$__VIEW_ID__ . '-c3a538e4'])>02A / SERVER</span><strong @class([$__VIEW_ID__ . '-cd192bfa'])>Blade</strong><small @class([$__VIEW_ID__ . '-e2e22d5c'])>HTML hoàn chỉnh</small></article>
+                    <article @class([$__VIEW_ID__ . '-498ed0c5'])><span @class([$__VIEW_ID__ . '-e8e4ac97'])>02B / CLIENT</span><strong @class([$__VIEW_ID__ . '-6ee7879c'])>JavaScript</strong><small @class([$__VIEW_ID__ . '-8d001972'])>View contract</small></article>
                 </div>
-                <div @class([$__VIEW_ID__ . '-328c95ab', 'route-line']) @attr(['role' => 'group', 'aria-label' => 'Chọn giai đoạn render'])>
-                    <button @class([$__VIEW_ID__ . '-5c74ea59', 'route-node', 'active'=> $selectedSignal === 'blade']) @attr(['aria-label' => 'Xem giai đoạn Blade'])><span @class([$__VIEW_ID__ . '-1ecedf4d'])>01</span><strong @class([$__VIEW_ID__ . '-20c5c596'])>Blade</strong><small @class([$__VIEW_ID__ . '-f3d3caed'])>server response</small></button>
-                    <button @class([$__VIEW_ID__ . '-819175ee', 'route-node', 'active'=> $selectedSignal === 'hydration']) @attr(['aria-label' => 'Xem giai đoạn hydration'])><span @class([$__VIEW_ID__ . '-28771293'])>02</span><strong @class([$__VIEW_ID__ . '-1755efaf'])>Hydrate</strong><small @class([$__VIEW_ID__ . '-2335456c'])>bind existing DOM</small></button>
-                    <button @class([$__VIEW_ID__ . '-f0ce158d', 'route-node', 'active'=> $selectedSignal === 'spa']) @attr(['aria-label' => 'Xem giai đoạn SPA'])><span @class([$__VIEW_ID__ . '-afd5a05b'])>03</span><strong @class([$__VIEW_ID__ . '-1e6f4d27'])>SPA</strong><small @class([$__VIEW_ID__ . '-d7a1c7ef'])>client navigation</small></button>
-                </div>
-                <div @class([$__VIEW_ID__ . '-ac51d251', 'signal-readout'])>
-                    @startMarker('reactive', 'c4fa93f3', ['stateKey' => ['selectedSignal'], 'type' => 'if'])
-                    @if($selectedSignal === 'blade')
-                        <p @class([$__VIEW_ID__ . '-a6a5695c'])><strong @class([$__VIEW_ID__ . '-f0caada4'])>Server-first</strong><span @class([$__VIEW_ID__ . '-be381f48'])>HTML có nội dung ngay cả trước khi JavaScript khởi chạy.</span></p>
-                    @elseif($selectedSignal === 'spa')
-                        <p @class([$__VIEW_ID__ . '-b7a84ebe'])><strong @class([$__VIEW_ID__ . '-5cde38e9'])>Navigation-ready</strong><span @class([$__VIEW_ID__ . '-8f12d23b'])>Chỉ nhánh view thay đổi được cập nhật, layout dùng lại.</span></p>
+                <div @class([$__VIEW_ID__ . '-76eb295c', 'instrument-readout'])>
+                    <button @class([$__VIEW_ID__ . '-a7c0e4a6', 'active'=> $selectedSignal === 'source'])>SOURCE</button>
+                    <button @class([$__VIEW_ID__ . '-d9002f86', 'active'=> $selectedSignal === 'hydrate'])>HYDRATE</button>
+                    <button @class([$__VIEW_ID__ . '-c2ac9d7a', 'active'=> $selectedSignal === 'navigate'])>NAVIGATE</button>
+                    @startMarker('reactive', '3bcea458', ['stateKey' => ['selectedSignal'], 'type' => 'if'])
+                    @if($selectedSignal === 'hydrate')
+                        <p @class([$__VIEW_ID__ . '-9851b44b'])><b @class([$__VIEW_ID__ . '-591588a3'])>DOM được nhận lại.</b> Runtime claim marker có sẵn, nối state và event mà không dựng lại toàn bộ trang.</p>
+                    @elseif($selectedSignal === 'navigate')
+                        <p @class([$__VIEW_ID__ . '-c9d2d458'])><b @class([$__VIEW_ID__ . '-2102ae8f'])>Layout được giữ lại.</b> Router chỉ thay nhánh view cần đổi; context route chọn đúng registry cho request hiện tại.</p>
                     @else
-                        <p @class([$__VIEW_ID__ . '-67b613a4'])><strong @class([$__VIEW_ID__ . '-3ffa7209'])>Hydration-safe</strong><span @class([$__VIEW_ID__ . '-dd25ae50'])>State và event gắn vào DOM có sẵn, không nhân đôi listener.</span></p>
+                        <p @class([$__VIEW_ID__ . '-0be2d6a8'])><b @class([$__VIEW_ID__ . '-704cd593'])>Một nguồn được biên dịch hai hướng.</b> Blade và JavaScript tuân theo cùng AST thay vì hai implementation song song.</p>
                     @endif
-                    @endMarker('reactive', 'c4fa93f3')
+                    @endMarker('reactive', '3bcea458')
                 </div>
             </div>
         </section>
 
-        <section @class([$__VIEW_ID__ . '-8aa0772c', 'proof-strip'])>
-            <p @class([$__VIEW_ID__ . '-35bf6e9d'])>NỀN TẢNG CHO ỨNG DỤNG THỰC TẾ</p>
-            <div @class([$__VIEW_ID__ . '-7f8af112'])><strong @class([$__VIEW_ID__ . '-14b47dbd'])>01</strong><span @class([$__VIEW_ID__ . '-c67cd95a'])>Laravel routes</span></div>
-            <div @class([$__VIEW_ID__ . '-9b976db3'])><strong @class([$__VIEW_ID__ . '-9aa2ffa8'])>02</strong><span @class([$__VIEW_ID__ . '-b5411efa'])>Blade fallback</span></div>
-            <div @class([$__VIEW_ID__ . '-cfc01898'])><strong @class([$__VIEW_ID__ . '-ccc1deb9'])>03</strong><span @class([$__VIEW_ID__ . '-1edf95b4'])>Scoped assets</span></div>
-            <div @class([$__VIEW_ID__ . '-f5acbbe8'])><strong @class([$__VIEW_ID__ . '-e0f722e3'])>04</strong><span @class([$__VIEW_ID__ . '-261e25b4'])>Reactive state</span></div>
+        <section @class([$__VIEW_ID__ . '-8aa0772c', 'orientation-strip']) @attr(['aria-label' => 'Định vị Saola'])>
+            <p @class([$__VIEW_ID__ . '-35bf6e9d'])><span @class([$__VIEW_ID__ . '-b76d6580'])>Saola không thay Laravel.</span> Saola nối phần Laravel đã làm tốt với trải nghiệm SPA mà đội sản phẩm cần.</p>
+            <div @class([$__VIEW_ID__ . '-7f8af112'])><strong @class([$__VIEW_ID__ . '-14b47dbd'])>SSR</strong><small @class([$__VIEW_ID__ . '-872e3af2'])>đúng ngay từ request đầu</small></div>
+            <div @class([$__VIEW_ID__ . '-9b976db3'])><strong @class([$__VIEW_ID__ . '-9aa2ffa8'])>CSR</strong><small @class([$__VIEW_ID__ . '-521ea42c'])>nhanh sau hydration</small></div>
+            <div @class([$__VIEW_ID__ . '-cfc01898'])><strong @class([$__VIEW_ID__ . '-ccc1deb9'])>CONTEXT</strong><small @class([$__VIEW_ID__ . '-6d1fc048'])>web · admin · mobile</small></div>
         </section>
 
-        <section @class([$__VIEW_ID__ . '-6c26f9b7', 'feature-section']) @attr(['id' => 'workflow'])>
-            <div @class([$__VIEW_ID__ . '-ce6a96bf', 'section-heading'])>
-                <p @class([$__VIEW_ID__ . '-5a71cd5f', 'eyebrow'])><span @class([$__VIEW_ID__ . '-f1acc65a'])>Workflow</span> Từ route đến tương tác</p>
-                <h2 @class([$__VIEW_ID__ . '-98293aba'])>Một quy trình.<br @class([$__VIEW_ID__ . '-c006637c'])>Không có bước thừa.</h2>
+        <section @class([$__VIEW_ID__ . '-6c26f9b7', 'home-map']) @attr(['id' => 'explore'])>
+            <div @class([$__VIEW_ID__ . '-ce6a96bf', 'section-head'])>
+                <p @class([$__VIEW_ID__ . '-5a71cd5f', 'kicker'])><span @class([$__VIEW_ID__ . '-f1acc65a'])>PROJECT MAP</span> Không dồn mọi thứ vào trang chủ</p>
+                <h2 @class([$__VIEW_ID__ . '-98293aba'])>Đi vào đúng lớp<br @class([$__VIEW_ID__ . '-c006637c'])>mà bạn cần hiểu.</h2>
+                <p @class([$__VIEW_ID__ . '-7e849715'])>Mỗi phần của Saola có một trách nhiệm rõ ràng. Các trang dưới đây giải thích sâu bằng flow, contract và ví dụ thực tế.</p>
             </div>
-            <div @class([$__VIEW_ID__ . '-d44023e9', 'feature-list'])>
-                <article @class([$__VIEW_ID__ . '-e3e123df'])><span @class([$__VIEW_ID__ . '-5cadfa06'])>01</span><h3 @class([$__VIEW_ID__ . '-6efb1915'])>Render một nguồn</h3><p @class([$__VIEW_ID__ . '-4a13b743'])>Cùng một file `.sao` sinh Blade phía server và view contract phía client.</p></article>
-                <article @class([$__VIEW_ID__ . '-04b24ab0'])><span @class([$__VIEW_ID__ . '-2dd4b699'])>02</span><h3 @class([$__VIEW_ID__ . '-8d51d8aa'])>Hydrate DOM có sẵn</h3><p @class([$__VIEW_ID__ . '-53b76b5c'])>Element được đối chiếu theo ID ổn định; attributes và events được reconcile thay vì gắn chồng.</p></article>
-                <article @class([$__VIEW_ID__ . '-ddf2d3a9'])><span @class([$__VIEW_ID__ . '-8d5d9746'])>03</span><h3 @class([$__VIEW_ID__ . '-ad421324'])>Reactive đúng phạm vi</h3><p @class([$__VIEW_ID__ . '-71463dd8'])>State chỉ cập nhật nhánh phụ thuộc, đồng thời cleanup resource khi view bị hủy.</p></article>
+            <div @class([$__VIEW_ID__ . '-d44023e9', 'map-grid'])>
+                <a @class([$__VIEW_ID__ . '-68691adb', 'map-card', 'map-card-wide']) @attr(['href' => '/architecture'])><span @class([$__VIEW_ID__ . '-f58a9058'])>01 / SYSTEM</span><h3 @class([$__VIEW_ID__ . '-95e8578e'])>Kiến trúc hệ sinh thái</h3><p @class([$__VIEW_ID__ . '-537c68b1'])>Core, compiler, client runtime và application gặp nhau ở đâu trong một request.</p><i @class([$__VIEW_ID__ . '-6c57319f'])>Khám phá kiến trúc ↗</i></a>
+                <a @class([$__VIEW_ID__ . '-bbea58cd', 'map-card']) @attr(['href' => '/compiler'])><span @class([$__VIEW_ID__ . '-e7bcc131'])>02 / BUILD</span><h3 @class([$__VIEW_ID__ . '-2a7bc8cf'])>Compiler & AST</h3><p @class([$__VIEW_ID__ . '-703512be'])>Một cú pháp, hai output và cơ chế children/include đồng bộ.</p><i @class([$__VIEW_ID__ . '-c0e73b95'])>Mở compiler ↗</i></a>
+                <a @class([$__VIEW_ID__ . '-40a53288', 'map-card', 'map-card-dark']) @attr(['href' => '/runtime'])><span @class([$__VIEW_ID__ . '-50cdd8c6'])>03 / LIVE</span><h3 @class([$__VIEW_ID__ . '-a12bc027'])>Runtime & Hydration</h3><p @class([$__VIEW_ID__ . '-c4c4f4d6'])>Claim DOM, reactive update, lifecycle, rerender và page cache.</p><i @class([$__VIEW_ID__ . '-b98affc7'])>Xem runtime ↗</i></a>
+                <a @class([$__VIEW_ID__ . '-5d85b82c', 'map-card']) @attr(['href' => '/getting-started'])><span @class([$__VIEW_ID__ . '-09a33627'])>04 / START</span><h3 @class([$__VIEW_ID__ . '-13e66592'])>Bắt đầu từ một route</h3><p @class([$__VIEW_ID__ . '-2125817d'])>Cấu trúc module, view đầu tiên và quy trình compile/run.</p><i @class([$__VIEW_ID__ . '-735ec8ee'])>Bắt đầu xây ↗</i></a>
+                <a @class([$__VIEW_ID__ . '-65327ce9', 'map-card']) @attr(['href' => '/todo-list'])><span @class([$__VIEW_ID__ . '-6d15c32a'])>05 / PROOF</span><h3 @class([$__VIEW_ID__ . '-2112fb7c'])>Demo tương tác</h3><p @class([$__VIEW_ID__ . '-e983f9c8'])>Một fixture nhỏ để quan sát state, event và điều hướng đang chạy.</p><i @class([$__VIEW_ID__ . '-d1abd539'])>Mở live demo ↗</i></a>
             </div>
         </section>
 
-        <section @class([$__VIEW_ID__ . '-4e212027', 'newsletter-panel'])>
-            <div @class([$__VIEW_ID__ . '-1628defa'])><p @class([$__VIEW_ID__ . '-d621a64b', 'eyebrow'])><span @class([$__VIEW_ID__ . '-5f6b80a9'])>Release notes</span> Theo dõi Saola</p><h2 @class([$__VIEW_ID__ . '-6560bb1b'])>Nhận cập nhật.<br @class([$__VIEW_ID__ . '-c03b5dbb'])>Không nhận spam.</h2></div>
-            <form @class([$__VIEW_ID__ . '-b8bd3cde', 'newsletter-form'])>
-                @startMarker('reactive', '44cceece', ['stateKey' => ['joined'], 'type' => 'if'])
-                @if($joined)
-                    <div @class([$__VIEW_ID__ . '-50aeb2d9', 'success-note'])><span @class([$__VIEW_ID__ . '-a7eda2b2'])>✓</span><p @class([$__VIEW_ID__ . '-28dbecef'])><strong @class([$__VIEW_ID__ . '-61788545'])>Đã ghi nhận email.</strong><br @class([$__VIEW_ID__ . '-bd39f455'])>Saola chỉ gửi khi có bản phát hành đáng chú ý.</p></div>
-                @else
-                    <label @class([$__VIEW_ID__ . '-fb2898e9']) @attr(['for' => 'home-email'])>Email công việc</label>
-                    <div @class([$__VIEW_ID__ . '-d05b19b3'])><input @class([$__VIEW_ID__ . '-8c996698']) @attr(['id' => 'home-email', 'type' => 'email', 'placeholder' => 'you@company.com', 'required' => true]) @bind($email)><button @class([$__VIEW_ID__ . '-8451212a']) @attr(['type' => 'submit'])>Join <span @class([$__VIEW_ID__ . '-6a9bfaef'])>→</span></button></div>
-                    <small @class([$__VIEW_ID__ . '-d3584ffa'])>Chỉ có release notes và cập nhật kỹ thuật quan trọng.</small>
-                @endif
-                @endMarker('reactive', '44cceece')
-            </form>
+        <section @class([$__VIEW_ID__ . '-4e212027', 'principle-band'])>
+            <div @class([$__VIEW_ID__ . '-1628defa'])><p @class([$__VIEW_ID__ . '-d621a64b', 'kicker'])><span @class([$__VIEW_ID__ . '-5f6b80a9'])>DESIGN PRINCIPLE</span> Điều Saola bảo vệ</p><h2 @class([$__VIEW_ID__ . '-6560bb1b'])>Server là sự thật.<br @class([$__VIEW_ID__ . '-c03b5dbb'])>Client là sự tiếp nối.</h2></div>
+            <div @class([$__VIEW_ID__ . '-281112e1', 'principle-copy'])><p @class([$__VIEW_ID__ . '-1ace0544'])>Phản hồi đầu tiên phải hoàn chỉnh và có thể hiểu được. JavaScript không “cứu” một trang rỗng; nó tiếp nhận chính view server vừa render và làm view đó sống lên.</p><a @class([$__VIEW_ID__ . '-e6526bf8', 'button', 'button-light']) @attr(['href' => '/about'])>Vì sao Saola tồn tại <span @class([$__VIEW_ID__ . '-451e22c6'])>→</span></a></div>
         </section>
     @endblock

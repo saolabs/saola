@@ -1,100 +1,80 @@
-@states({
-    selectedSignal: 'hydration',
-    email: '',
-    joined: false
-})
+@states({ selectedSignal: 'source' })
 
 <template>
     @extends(__layout__ + "public")
     @block('content')
-        <section class="hero-grid hero-studio" id="hero-section">
-            <div class="hero-copy">
-                <p class="hero-eyebrow">Nền tảng SPA thế hệ mới cho Laravel</p>
-                <h1>Viết một lần.<br><em>Vận hành mọi nơi.</em></h1>
-                <p class="hero-lead">Saola giữ Laravel và Blade cho phản hồi đầu tiên, sau đó hydrate chính xác view đó thành một SPA nhanh, reactive và an toàn.</p>
+        <section class="home-hero">
+            <div class="home-hero-copy">
+                <p class="kicker"><span>SAOLA / ECOSYSTEM 01</span> Laravel-native application platform</p>
+                <h1>Một giao diện.<br><em>Hai runtime.</em><br>Không hai codebase.</h1>
+                <p class="hero-lead">Saola biến một view <code>.sao</code> thành Blade cho phản hồi đầu tiên và JavaScript cho mọi tương tác tiếp theo — cùng route, cùng state contract, cùng cấu trúc.</p>
                 <div class="hero-actions">
-                    <a class="button button-primary" href="/todo-list">Trải nghiệm demo <span>→</span></a>
-                    <a class="button button-secondary" href="/about">Khám phá kiến trúc</a>
+                    <a class="button button-primary" href="/architecture">Khám phá hệ thống <span>↗</span></a>
+                    <a class="text-link" href="/getting-started">Xem cách bắt đầu <span>→</span></a>
                 </div>
-                <div class="hero-proof-row" aria-label="Saola capabilities">
-                    <span>✓ SSR bằng Blade</span>
-                    <span>✓ Hydration không duplicate</span>
-                    <span>✓ Reactive theo state</span>
-                </div>
+                <dl class="hero-facts">
+                    <div><dt>BACKEND</dt><dd>Laravel 13</dd></div>
+                    <div><dt>FIRST PAINT</dt><dd>Blade SSR</dd></div>
+                    <div><dt>AFTER LOAD</dt><dd>Reactive SPA</dd></div>
+                </dl>
             </div>
-            <div class="route-card" aria-label="Saola render route">
-                <div class="route-card-head">
-                    <div><span class="runtime-dot"></span><strong>Runtime overview</strong></div>
-                    <span class="live-badge">Live · /home</span>
+
+            <div class="system-instrument" aria-label="Luồng biên dịch và render của Saola">
+                <div class="instrument-top"><span><i></i> ROUTE / HOME</span><span>CONTEXT: WEB</span></div>
+                <div class="source-cell">
+                    <div class="cell-label">01 / SOURCE OF TRUTH</div>
+                    <strong>home.sao</strong>
+                    <code>&lt;template&gt; + state + style</code>
                 </div>
-                <div class="runtime-metrics">
-                    <div><small>Render source</small><strong>1 view</strong><span>.sao</span></div>
-                    <div><small>Current phase</small><strong>Hydrate</strong><span>DOM reuse</span></div>
-                    <div><small>Listeners</small><strong>1×</strong><span>deduplicated</span></div>
+                <div class="branch-line"><span>COMPILE</span></div>
+                <div class="runtime-pair">
+                    <article><span>02A / SERVER</span><strong>Blade</strong><small>HTML hoàn chỉnh</small></article>
+                    <article><span>02B / CLIENT</span><strong>JavaScript</strong><small>View contract</small></article>
                 </div>
-                <div class="route-line" role="group" aria-label="Chọn giai đoạn render">
-                    <button @class(['route-node', 'active': selectedSignal === 'blade']) @click(setSelectedSignal('blade')) aria-label="Xem giai đoạn Blade"><span>01</span><strong>Blade</strong><small>server response</small></button>
-                    <button @class(['route-node', 'active': selectedSignal === 'hydration']) @click(setSelectedSignal('hydration')) aria-label="Xem giai đoạn hydration"><span>02</span><strong>Hydrate</strong><small>bind existing DOM</small></button>
-                    <button @class(['route-node', 'active': selectedSignal === 'spa']) @click(setSelectedSignal('spa')) aria-label="Xem giai đoạn SPA"><span>03</span><strong>SPA</strong><small>client navigation</small></button>
-                </div>
-                <div class="signal-readout">
-                    @if(selectedSignal === 'blade')
-                        <p><strong>Server-first</strong><span>HTML có nội dung ngay cả trước khi JavaScript khởi chạy.</span></p>
-                    @elseif(selectedSignal === 'spa')
-                        <p><strong>Navigation-ready</strong><span>Chỉ nhánh view thay đổi được cập nhật, layout dùng lại.</span></p>
+                <div class="instrument-readout">
+                    <button @class(['active': selectedSignal === 'source']) @click(setSelectedSignal('source'))>SOURCE</button>
+                    <button @class(['active': selectedSignal === 'hydrate']) @click(setSelectedSignal('hydrate'))>HYDRATE</button>
+                    <button @class(['active': selectedSignal === 'navigate']) @click(setSelectedSignal('navigate'))>NAVIGATE</button>
+                    @if(selectedSignal === 'hydrate')
+                        <p><b>DOM được nhận lại.</b> Runtime claim marker có sẵn, nối state và event mà không dựng lại toàn bộ trang.</p>
+                    @elseif(selectedSignal === 'navigate')
+                        <p><b>Layout được giữ lại.</b> Router chỉ thay nhánh view cần đổi; context route chọn đúng registry cho request hiện tại.</p>
                     @else
-                        <p><strong>Hydration-safe</strong><span>State và event gắn vào DOM có sẵn, không nhân đôi listener.</span></p>
+                        <p><b>Một nguồn được biên dịch hai hướng.</b> Blade và JavaScript tuân theo cùng AST thay vì hai implementation song song.</p>
                     @endif
                 </div>
             </div>
         </section>
 
-        <section class="proof-strip">
-            <p>NỀN TẢNG CHO ỨNG DỤNG THỰC TẾ</p>
-            <div><strong>01</strong><span>Laravel routes</span></div>
-            <div><strong>02</strong><span>Blade fallback</span></div>
-            <div><strong>03</strong><span>Scoped assets</span></div>
-            <div><strong>04</strong><span>Reactive state</span></div>
+        <section class="orientation-strip" aria-label="Định vị Saola">
+            <p><span>Saola không thay Laravel.</span> Saola nối phần Laravel đã làm tốt với trải nghiệm SPA mà đội sản phẩm cần.</p>
+            <div><strong>SSR</strong><small>đúng ngay từ request đầu</small></div>
+            <div><strong>CSR</strong><small>nhanh sau hydration</small></div>
+            <div><strong>CONTEXT</strong><small>web · admin · mobile</small></div>
         </section>
 
-        <section class="feature-section" id="workflow">
-            <div class="section-heading">
-                <p class="eyebrow"><span>Workflow</span> Từ route đến tương tác</p>
-                <h2>Một quy trình.<br>Không có bước thừa.</h2>
+        <section class="home-map" id="explore">
+            <div class="section-head">
+                <p class="kicker"><span>PROJECT MAP</span> Không dồn mọi thứ vào trang chủ</p>
+                <h2>Đi vào đúng lớp<br>mà bạn cần hiểu.</h2>
+                <p>Mỗi phần của Saola có một trách nhiệm rõ ràng. Các trang dưới đây giải thích sâu bằng flow, contract và ví dụ thực tế.</p>
             </div>
-            <div class="feature-list">
-                <article><span>01</span><h3>Render một nguồn</h3><p>Cùng một file `.sao` sinh Blade phía server và view contract phía client.</p></article>
-                <article><span>02</span><h3>Hydrate DOM có sẵn</h3><p>Element được đối chiếu theo ID ổn định; attributes và events được reconcile thay vì gắn chồng.</p></article>
-                <article><span>03</span><h3>Reactive đúng phạm vi</h3><p>State chỉ cập nhật nhánh phụ thuộc, đồng thời cleanup resource khi view bị hủy.</p></article>
+            <div class="map-grid">
+                <a class="map-card map-card-wide" href="/architecture"><span>01 / SYSTEM</span><h3>Kiến trúc hệ sinh thái</h3><p>Core, compiler, client runtime và application gặp nhau ở đâu trong một request.</p><i>Khám phá kiến trúc ↗</i></a>
+                <a class="map-card" href="/compiler"><span>02 / BUILD</span><h3>Compiler & AST</h3><p>Một cú pháp, hai output và cơ chế children/include đồng bộ.</p><i>Mở compiler ↗</i></a>
+                <a class="map-card map-card-dark" href="/runtime"><span>03 / LIVE</span><h3>Runtime & Hydration</h3><p>Claim DOM, reactive update, lifecycle, rerender và page cache.</p><i>Xem runtime ↗</i></a>
+                <a class="map-card" href="/getting-started"><span>04 / START</span><h3>Bắt đầu từ một route</h3><p>Cấu trúc module, view đầu tiên và quy trình compile/run.</p><i>Bắt đầu xây ↗</i></a>
+                <a class="map-card" href="/todo-list"><span>05 / PROOF</span><h3>Demo tương tác</h3><p>Một fixture nhỏ để quan sát state, event và điều hướng đang chạy.</p><i>Mở live demo ↗</i></a>
             </div>
         </section>
 
-        <section class="newsletter-panel">
-            <div><p class="eyebrow"><span>Release notes</span> Theo dõi Saola</p><h2>Nhận cập nhật.<br>Không nhận spam.</h2></div>
-            <form class="newsletter-form" @submit(joinWaitlist(event))>
-                @if(joined)
-                    <div class="success-note"><span>✓</span><p><strong>Đã ghi nhận email.</strong><br>Saola chỉ gửi khi có bản phát hành đáng chú ý.</p></div>
-                @else
-                    <label for="home-email">Email công việc</label>
-                    <div><input id="home-email" type="email" placeholder="you@company.com" @bind(email) required><button type="submit">Join <span>→</span></button></div>
-                    <small>Chỉ có release notes và cập nhật kỹ thuật quan trọng.</small>
-                @endif
-            </form>
+        <section class="principle-band">
+            <div><p class="kicker"><span>DESIGN PRINCIPLE</span> Điều Saola bảo vệ</p><h2>Server là sự thật.<br>Client là sự tiếp nối.</h2></div>
+            <div class="principle-copy"><p>Phản hồi đầu tiên phải hoàn chỉnh và có thể hiểu được. JavaScript không “cứu” một trang rỗng; nó tiếp nhận chính view server vừa render và làm view đó sống lên.</p><a class="button button-light" href="/about">Vì sao Saola tồn tại <span>→</span></a></div>
         </section>
     @endblock
 </template>
 
 <script setup lang="ts">
-    export default {
-        name: 'HomePage',
-        joinWaitlist(event) {
-            event.preventDefault();
-            if (email.trim()) setJoined(true);
-        }
-    };
+    export default { name: 'HomePage' };
 </script>
-
-<style scoped>
-    .hero-copy h1 em { color: var(--cobalt); font-style: normal; }
-    .route-node.active { isolation: isolate; }
-</style>

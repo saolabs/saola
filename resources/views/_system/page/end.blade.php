@@ -23,16 +23,9 @@
                 routes: {!! json_encode($__helper->exportComponentRoutes($__context__), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
             },
             view: {
-                systemData: {
-                    
-                    __system__: '{{ $__system__ }}',
-                    __base__: '{{ $__base__ }}',
-                    __layout__: '{{ $__layout__ }}',
-                    __page__: '{{ $__page__ }}',
-                    __component__: '{{ $__component__ }}',
-                    __template__: '{{ $__template__ }}',
-                    __context__: '{{ $__context__ }}'
-                },
+                contextViews: '{{ viewContextManager()->getContextViews($__context__) }}',
+                revision: '{{ viewContextManager()->getContextViewRevision($__context__) }}',
+                systemData: {!! json_encode(viewContextManager()->exportContextState($__context__)['systemData'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!},
                 superView: '{{ $__VIEW_PATH__ ?? null }}',
                 
                 ssrData: {!! json_encode($__helper->exportApplicationViewData(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}

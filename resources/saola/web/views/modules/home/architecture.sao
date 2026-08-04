@@ -1,0 +1,40 @@
+<template>
+    @extends(__layout__ + "public")
+    @block('content')
+        <section class="page-hero page-hero-architecture">
+            <div>
+                <p class="kicker"><span>01 / ARCHITECTURE</span> Toàn cảnh hệ sinh thái</p>
+                <h1>Laravel ở lõi.<br><em>SPA ở trải nghiệm.</em></h1>
+            </div>
+            <div class="page-hero-aside"><p>Saola là một chuỗi contract từ request tới DOM, không phải một frontend framework đặt cạnh Laravel.</p><dl><div><dt>INPUT</dt><dd>Route + context + data</dd></div><div><dt>OUTPUT</dt><dd>SSR → hydrate → SPA</dd></div></dl></div>
+        </section>
+
+        <section class="stack-section">
+            <div class="section-index"><span>01</span><p>Bốn lớp<br>một luồng</p></div>
+            <div class="stack-diagram">
+                <article><span>APPLICATION</span><strong>Modules & contexts</strong><p>Web, admin và mobile tổ chức route, controller, view theo cùng một mô hình module.</p><i>04</i></article>
+                <article><span>CORE</span><strong>Laravel integration</strong><p>Route map, view response, SSR boot payload và request-scoped context.</p><i>03</i></article>
+                <article><span>COMPILER</span><strong>.sao → Blade + JS</strong><p>Một AST tạo hai output có cùng structure, directive và marker contract.</p><i>02</i></article>
+                <article><span>CLIENT</span><strong>Router & view runtime</strong><p>Hydration, lifecycle, reactivity, layout reuse và page cache phía trình duyệt.</p><i>01</i></article>
+            </div>
+        </section>
+
+        <section class="request-section">
+            <div class="section-head compact"><p class="kicker"><span>REQUEST FLOW</span> Từ URL tới tương tác</p><h2>Một đường đi,<br>hai giai đoạn.</h2></div>
+            <ol class="flow-timeline">
+                <li><span>01</span><div><strong>Route chọn module và context</strong><p>Request web, admin hoặc mobile được resolve trong phạm vi hiện tại thay vì đọc một static map dùng chung cho mọi request.</p></div><code>GET /projects/42</code></li>
+                <li><span>02</span><div><strong>Controller trả view response</strong><p>Core xác định component route tương ứng, render Blade và tạo boot payload cho đúng context.</p></div><code>context: web</code></li>
+                <li><span>03</span><div><strong>Blade tạo HTML hoàn chỉnh</strong><p>Layout, block, include và children đã có nội dung trước khi runtime phía client khởi động.</p></div><code>SSR / READY</code></li>
+                <li><span>04</span><div><strong>Runtime claim DOM có sẵn</strong><p>Marker ổn định nối ViewController, state và event vào vùng DOM tương ứng.</p></div><code>HYDRATE / CLAIM</code></li>
+                <li><span>05</span><div><strong>Router tiếp quản điều hướng</strong><p>Navigation tiếp theo resolve view chain, reuse layout chung và chỉ mount phần thay đổi.</p></div><code>SPA / ACTIVE</code></li>
+            </ol>
+        </section>
+
+        <section class="context-panel">
+            <div><p class="kicker"><span>OCTANE SAFE</span> Context thuộc request</p><h2>Không để request sau<br>kế thừa request trước.</h2></div>
+            <div><p>Worker sống lâu không đồng nghĩa state ứng dụng được phép sống lâu. Saola resolve route component theo context đang hoạt động và cô lập dữ liệu request-scoped, kể cả khi response là HTML hay JSON.</p><div class="context-cells"><span>WEB<small>public registry</small></span><span>ADMIN<small>admin registry</small></span><span>MOBILE<small>mobile registry</small></span></div></div>
+        </section>
+
+        <section class="next-page"><span>Tiếp theo / 02</span><div><h2>Compiler biến một nguồn thành hai runtime thế nào?</h2><a class="button button-primary" href="/compiler">Compiler & AST <span>↗</span></a></div></section>
+    @endblock
+</template>

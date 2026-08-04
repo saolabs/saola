@@ -11,7 +11,7 @@ const __VIEW_CONFIG__ = {
         "content":{
             "type":"long",
             "preloader":false,
-            "useVars":false,
+            "useVars":true,
             "script":{}
         }
     },
@@ -93,7 +93,7 @@ class AboutView extends View {
             viewId: __VIEW_ID__,
             path: __VIEW_PATH__,
             scripts: [],
-            styles: [{"type":"code","scoped":true,"content":".page-intro h1 em { color: var(--coral); font-style: normal; }"}],
+            styles: [],
             resources: [],
             commitConstructorData: function() {
                 // Then update states from data
@@ -137,20 +137,20 @@ class AboutView extends View {
                         { classes: [{ type: 'static', value: "eyebrow" }] },
                         (parentElement) => [
                         this.html(`e2f86203`, "span", parentElement, {}, (parentElement) => [
-                            this.text('01')
+                            this.text('PROJECT / SAOLA')
                         ]),
-                        this.text(' About Saola')
+                        this.text(' Vì sao dự án tồn tại')
                         ]),
                     this.html(`9b0938cb`, "h1", parentElement, {}, (parentElement) => [
-                        this.text('Software should feel'),
+                        this.text('Web hiện đại không nên'),
                         this.html(`f7127348`, "br", parentElement, {}),
                         this.html(`d4f4199d`, "em", parentElement, {}, (parentElement) => [
-                            this.text('quietly capable.')
+                            this.text('đòi hai hệ thống.')
                         ])
                     ])
                 ]),
                 this.html(`9f45c023`, "p", parentElement, {}, (parentElement) => [
-                    this.text('We build for teams who want Laravel\'s reliability without giving up the immediacy people expect from modern applications.')
+                    this.text('Saola bắt đầu từ một câu hỏi thực dụng: làm sao giữ độ tin cậy và năng suất của Laravel, nhưng vẫn tạo được trải nghiệm ứng dụng nhanh, liên tục và có lifecycle rõ ràng?')
                 ])
                 ]),
             this.html(`8aa0772c`, "section", parentElement,
@@ -159,7 +159,7 @@ class AboutView extends View {
                 this.html(`301a68fc`, "div", parentElement,
                     { classes: [{ type: 'static', value: "manifesto-number" }] },
                     (parentElement) => [
-                    this.text('01—03')
+                    this.text('01—04 / PRINCIPLES')
                     ]),
                 this.html(`7f8af112`, "div", parentElement,
                     { classes: [{ type: 'static', value: "value-accordion" }] },
@@ -174,7 +174,7 @@ class AboutView extends View {
                                 this.text('01')
                             ]),
                             this.html(`772aefab`, "strong", parentElement, {}, (parentElement) => [
-                                this.text('Server truth')
+                                this.text('Một nguồn là điều kiện, không phải khẩu hiệu')
                             ]),
                             this.html(`83d2d00c`, "i", parentElement, {}, (parentElement) => [
                                 this.text('+')
@@ -185,7 +185,7 @@ class AboutView extends View {
                             if (activeValue === 0) {
                                 reactiveContents.push(
                                 this.html(`5bd50f04`, "p", parentElement, {}, (parentElement) => [
-                                    this.text('The first response must be complete, accessible and compatible with Blade. Hydration is an enhancement, not a rescue operation.')
+                                    this.text('Nếu Blade và JavaScript được viết riêng, chúng sẽ lệch nhau. Saola đặt compiler và AST ở giữa để structure, directive, children và marker được sinh từ cùng một view.')
                                 ])
                                 );
                             }
@@ -202,7 +202,7 @@ class AboutView extends View {
                                 this.text('02')
                             ]),
                             this.html(`54e0b6eb`, "strong", parentElement, {}, (parentElement) => [
-                                this.text('Small contracts')
+                                this.text('Server phải hoàn thành trách nhiệm trước')
                             ]),
                             this.html(`b0246e5b`, "i", parentElement, {}, (parentElement) => [
                                 this.text('+')
@@ -213,7 +213,7 @@ class AboutView extends View {
                             if (activeValue === 1) {
                                 reactiveContents.push(
                                 this.html(`4606aa95`, "p", parentElement, {}, (parentElement) => [
-                                    this.text('Views describe UI, layouts provide durable structure, and components own focused behavior. Each layer has one job.')
+                                    this.text('Phản hồi đầu tiên phải có nội dung, có cấu trúc và hoạt động như một tài liệu web. Hydration nâng cấp nó thành ứng dụng; hydration không che giấu một server response rỗng.')
                                 ])
                                 );
                             }
@@ -230,7 +230,7 @@ class AboutView extends View {
                                 this.text('03')
                             ]),
                             this.html(`cbd31918`, "strong", parentElement, {}, (parentElement) => [
-                                this.text('Visible lifecycle')
+                                this.text('Lifecycle phải nhìn thấy được')
                             ]),
                             this.html(`ee477f05`, "i", parentElement, {}, (parentElement) => [
                                 this.text('+')
@@ -241,7 +241,35 @@ class AboutView extends View {
                             if (activeValue === 2) {
                                 reactiveContents.push(
                                 this.html(`bcf58435`, "p", parentElement, {}, (parentElement) => [
-                                    this.text('Mount, pause, resume and destroy are explicit so navigation, caching and resource cleanup remain understandable.')
+                                    this.text('Mount, active, pause, resume và destroy là những trạng thái có contract. Event, subscription, async resource và cache phải đi theo owner của chúng.')
+                                ])
+                                );
+                            }
+                            return reactiveContents;
+                        })
+                        ]),
+                    this.html(`641beadb`, "article", parentElement,
+                        { classes: [{ type: 'static', value: "value-item" }, { type: 'binding', value: "open", factory: () => activeValue === 3, stateKeys: ["activeValue"] }] },
+                        (parentElement) => [
+                        this.html(`f655ded1`, "button", parentElement,
+                            { events: { click: [(event) => setActiveValue(3)] } },
+                            (parentElement) => [
+                            this.html(`3d9a38c6`, "span", parentElement, {}, (parentElement) => [
+                                this.text('04')
+                            ]),
+                            this.html(`aa413e39`, "strong", parentElement, {}, (parentElement) => [
+                                this.text('Đa nền tảng bắt đầu từ context đúng')
+                            ]),
+                            this.html(`51937053`, "i", parentElement, {}, (parentElement) => [
+                                this.text('+')
+                            ])
+                            ]),
+                        this.reactive(`ef215791`, "if", parentReactive, parentElement, ["activeValue"], (parentReactive, parentElement) => {
+                            const reactiveContents = [];
+                            if (activeValue === 3) {
+                                reactiveContents.push(
+                                this.html(`edf80019`, "p", parentElement, {}, (parentElement) => [
+                                    this.text('Web, admin và mobile có thể dùng route map và registry riêng. Context được resolve theo request để worker dài hạn như Octane không làm rò trạng thái giữa người dùng.')
                                 ])
                                 );
                             }
@@ -254,7 +282,7 @@ class AboutView extends View {
                 { classes: [{ type: 'static', value: "quote-panel" }] },
                 (parentElement) => [
                 this.html(`d2bc3963`, "p", parentElement, {}, (parentElement) => [
-                    this.text('“A framework earns trust when its runtime behavior matches the structure developers see in the source.”')
+                    this.text('“Framework đáng tin khi hành vi runtime khớp với cấu trúc mà lập trình viên nhìn thấy trong source.”')
                 ]),
                 this.html(`b19e2c09`, "span", parentElement, {}, (parentElement) => [
                     this.text('SAOLA DESIGN PRINCIPLE / 2026')
@@ -264,14 +292,14 @@ class AboutView extends View {
                 { classes: [{ type: 'static', value: "closing-cta" }] },
                 (parentElement) => [
                 this.html(`8ef866a8`, "h2", parentElement, {}, (parentElement) => [
-                    this.text('See the model in motion.')
+                    this.text('Xem các nguyên tắc này chạy trên một route thật.')
                 ]),
                 this.html(`8f1c0163`, "a", parentElement,
                     { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }], attrs: { "href": { type: 'static', value: "/todo-list" } } },
                     (parentElement) => [
-                    this.text('Open interactive demo '),
+                    this.text('Mở interactive demo '),
                     this.html(`4f37196e`, "span", parentElement, {}, (parentElement) => [
-                        this.text('→')
+                        this.text('↗')
                     ])
                     ])
                 ])

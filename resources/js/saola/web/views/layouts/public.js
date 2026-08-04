@@ -157,40 +157,40 @@ class PublicView extends View {
                                     { classes: [{ type: 'static', value: "site-nav" }], attrs: { "aria-label": { type: 'static', value: "Điều hướng chính" } } },
                                     (parentElement) => [
                                     this.html(`335b5477`, "a", parentElement,
-                                        { attrs: { "href": { type: 'static', value: "/about" } } },
+                                        { attrs: { "href": { type: 'static', value: "/architecture" } } },
                                         (parentElement) => [
-                                        this.text('Giải pháp')
+                                        this.text('Kiến trúc')
                                         ]),
                                     this.html(`e113090f`, "a", parentElement,
-                                        { attrs: { "href": { type: 'static', value: "/#workflow" } } },
+                                        { attrs: { "href": { type: 'static', value: "/compiler" } } },
                                         (parentElement) => [
-                                        this.text('Quy trình')
+                                        this.text('Compiler')
                                         ]),
                                     this.html(`a39b7ac3`, "a", parentElement,
-                                        { attrs: { "href": { type: 'static', value: "/todo-list" } } },
+                                        { attrs: { "href": { type: 'static', value: "/runtime" } } },
                                         (parentElement) => [
-                                        this.text('Demo')
+                                        this.text('Runtime')
                                         ]),
                                     this.html(`cbd37804`, "a", parentElement,
-                                        { attrs: { "href": { type: 'static', value: "/contact" } } },
+                                        { attrs: { "href": { type: 'static', value: "/about" } } },
                                         (parentElement) => [
-                                        this.text('Liên hệ')
+                                        this.text('Dự án')
                                         ])
                                     ]),
                                 this.html(`28d409a0`, "div", parentElement,
                                     { classes: [{ type: 'static', value: "site-header-actions" }] },
                                     (parentElement) => [
                                     this.html(`d0e4541c`, "a", parentElement,
-                                        { classes: [{ type: 'static', value: "site-login-link" }], attrs: { "href": { type: 'static', value: "/about" } } },
+                                        { classes: [{ type: 'static', value: "site-login-link" }], attrs: { "href": { type: 'static', value: "/todo-list" } } },
                                         (parentElement) => [
-                                        this.text('Tài liệu')
+                                        this.text('Live demo')
                                         ]),
                                     this.html(`3a993caf`, "a", parentElement,
-                                        { classes: [{ type: 'static', value: "site-header-cta" }], attrs: { "href": { type: 'static', value: "/todo-list" } } },
+                                        { classes: [{ type: 'static', value: "site-header-cta" }], attrs: { "href": { type: 'static', value: "/getting-started" } } },
                                         (parentElement) => [
-                                        this.text('Dùng thử miễn phí '),
+                                        this.text('Bắt đầu '),
                                         this.html(`5e766cf2`, "span", parentElement, {}, (parentElement) => [
-                                            this.text('→')
+                                            this.text('↗')
                                         ])
                                         ])
                                     ])
@@ -207,29 +207,34 @@ class PublicView extends View {
                                     { attrs: { "aria-label": { type: 'static', value: "Điều hướng di động" } } },
                                     (parentElement) => [
                                     this.html(`40de4ca1`, "a", parentElement,
-                                        { attrs: { "href": { type: 'static', value: "/about" } } },
+                                        { attrs: { "href": { type: 'static', value: "/architecture" } } },
                                         (parentElement) => [
-                                        this.text('Giải pháp')
+                                        this.text('Kiến trúc')
                                         ]),
                                     this.html(`40e7e83c`, "a", parentElement,
-                                        { attrs: { "href": { type: 'static', value: "/#workflow" } } },
+                                        { attrs: { "href": { type: 'static', value: "/compiler" } } },
                                         (parentElement) => [
-                                        this.text('Quy trình')
+                                        this.text('Compiler & AST')
                                         ]),
                                     this.html(`0bb0fa4a`, "a", parentElement,
-                                        { attrs: { "href": { type: 'static', value: "/todo-list" } } },
+                                        { attrs: { "href": { type: 'static', value: "/runtime" } } },
                                         (parentElement) => [
-                                        this.text('Demo')
+                                        this.text('Runtime & Hydration')
                                         ]),
                                     this.html(`1c3fd1b3`, "a", parentElement,
-                                        { attrs: { "href": { type: 'static', value: "/contact" } } },
+                                        { attrs: { "href": { type: 'static', value: "/about" } } },
                                         (parentElement) => [
-                                        this.text('Liên hệ')
+                                        this.text('Về dự án')
                                         ]),
                                     this.html(`164d727e`, "a", parentElement,
-                                        { classes: [{ type: 'static', value: "site-header-cta" }], attrs: { "href": { type: 'static', value: "/todo-list" } } },
+                                        { attrs: { "href": { type: 'static', value: "/todo-list" } } },
                                         (parentElement) => [
-                                        this.text('Dùng thử miễn phí →')
+                                        this.text('Live demo')
+                                        ]),
+                                    this.html(`3f1f21f7`, "a", parentElement,
+                                        { classes: [{ type: 'static', value: "site-header-cta" }], attrs: { "href": { type: 'static', value: "/getting-started" } } },
+                                        (parentElement) => [
+                                        this.text('Bắt đầu →')
                                         ])
                                     ])
                                 ])
@@ -244,31 +249,96 @@ class PublicView extends View {
                 this.html(`78151b5a`, "footer", parentElement,
                     { classes: [{ type: 'static', value: "site-footer" }] },
                     (parentElement) => [
-                    this.html(`78967ff6`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`f2453137`, "span", parentElement,
-                            { classes: [{ type: 'static', value: "brand-mark" }, { type: 'static', value: "brand-mark-small" }] },
+                    this.html(`78967ff6`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "footer-intro" }] },
+                        (parentElement) => [
+                        this.html(`101959dd`, "a", parentElement,
+                            { classes: [{ type: 'static', value: "site-logo" }, { type: 'static', value: "site-logo-footer" }], attrs: { "href": { type: 'static', value: "/" }, "aria-label": { type: 'static', value: "Trang chủ Saola" } } },
                             (parentElement) => [
-                            this.text('S')
+                            this.html(`97b46bf5`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "site-logo-mark" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } },
+                                (parentElement) => [
+                                this.html(`79f28304`, "i", parentElement, {}),
+                                this.html(`2de522bc`, "i", parentElement, {}),
+                                this.html(`5199c8d1`, "i", parentElement, {})
+                                ]),
+                            this.html(`788489b8`, "span", parentElement, {}, (parentElement) => [
+                                this.html(`688e5753`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "logo-saola" }] },
+                                    (parentElement) => [
+                                    this.text('Saola')
+                                    ]),
+                                this.html(`1f828edb`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "logo-labs" }] },
+                                    (parentElement) => [
+                                    this.text('Labs')
+                                    ])
+                            ])
                             ]),
                         this.html(`891dca6b`, "p", parentElement, {}, (parentElement) => [
-                            this.text('Demo hydration-first được xây dựng bằng Laravel, Blade và Saola views.')
+                            this.text('Một nguồn giao diện cho Blade SSR và JavaScript SPA. Được thiết kế quanh Laravel, không đứng bên cạnh Laravel.')
                         ])
-                    ]),
-                    this.html(`0a88c436`, "nav", parentElement,
-                        { attrs: { "aria-label": { type: 'static', value: "Legal navigation" } } },
+                        ]),
+                    this.html(`bdc463c6`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "footer-map" }] },
                         (parentElement) => [
-                        this.html(`4534b347`, "a", parentElement,
-                            { attrs: { "href": { type: 'static', value: "/privacy" } } },
-                            (parentElement) => [
-                            this.text('Privacy')
+                        this.html(`540d6e73`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`b2fa4316`, "span", parentElement, {}, (parentElement) => [
+                                this.text('KHÁM PHÁ')
                             ]),
-                        this.html(`930b2d8d`, "a", parentElement,
-                            { attrs: { "href": { type: 'static', value: "/terms" } } },
-                            (parentElement) => [
-                            this.text('Terms')
+                            this.html(`7a232c26`, "a", parentElement,
+                                { attrs: { "href": { type: 'static', value: "/architecture" } } },
+                                (parentElement) => [
+                                this.text('Kiến trúc')
+                                ]),
+                            this.html(`2a50561e`, "a", parentElement,
+                                { attrs: { "href": { type: 'static', value: "/compiler" } } },
+                                (parentElement) => [
+                                this.text('Compiler')
+                                ]),
+                            this.html(`efc775a9`, "a", parentElement,
+                                { attrs: { "href": { type: 'static', value: "/runtime" } } },
+                                (parentElement) => [
+                                this.text('Runtime')
+                                ])
+                        ]),
+                        this.html(`dd466dd6`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`6b4d80a6`, "span", parentElement, {}, (parentElement) => [
+                                this.text('DỰ ÁN')
                             ]),
-                        this.html(`1ccde8e3`, "span", parentElement, {}, (parentElement) => [
-                            this.text('© 2026 SaoLabs')
+                            this.html(`1fe1d8a7`, "a", parentElement,
+                                { attrs: { "href": { type: 'static', value: "/about" } } },
+                                (parentElement) => [
+                                this.text('Về Saola')
+                                ]),
+                            this.html(`fb901a10`, "a", parentElement,
+                                { attrs: { "href": { type: 'static', value: "/todo-list" } } },
+                                (parentElement) => [
+                                this.text('Live demo')
+                                ]),
+                            this.html(`c81f26ec`, "a", parentElement,
+                                { attrs: { "href": { type: 'static', value: "/contact" } } },
+                                (parentElement) => [
+                                this.text('Liên hệ')
+                                ])
+                        ]),
+                        this.html(`2aabb1e7`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`21b933ba`, "span", parentElement, {}, (parentElement) => [
+                                this.text('PHÁP LÝ')
+                            ]),
+                            this.html(`d863e33f`, "a", parentElement,
+                                { attrs: { "href": { type: 'static', value: "/privacy" } } },
+                                (parentElement) => [
+                                this.text('Privacy')
+                                ]),
+                            this.html(`91ec6987`, "a", parentElement,
+                                { attrs: { "href": { type: 'static', value: "/terms" } } },
+                                (parentElement) => [
+                                this.text('Terms')
+                                ]),
+                            this.html(`d9ca2503`, "small", parentElement, {}, (parentElement) => [
+                                this.text('© 2026 SaoLabs')
+                            ])
                         ])
                         ])
                     ])
