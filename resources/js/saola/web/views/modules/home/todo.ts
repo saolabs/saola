@@ -274,7 +274,7 @@ class TodoView extends View {
                         this.text('Add one clear next step')
                         ]),
                     this.html(`f5a4866b`, "div", parentElement, {}, (parentElement: any) => [
-                        this.html(`14eae2aa`, "input", parentElement, { attrs: { "id": { type: 'static', value: "new-task" }, "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "What needs your attention?" }, "bind": { type: 'static', value: true }, "newTodo": { type: 'static', value: true } } }),
+                        this.html(`14eae2aa`, "input", parentElement, { attrs: { "id": { type: 'static', value: "new-task" }, "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "What needs your attention?" } }, bind: { key: 'newTodo' } }),
                         this.html(`42ff8191`, "button", parentElement,
                             { attrs: { "type": { type: 'static', value: "submit" } } },
                             (parentElement: any) => [

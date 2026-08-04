@@ -304,13 +304,13 @@ class ContactView extends View {
                                     this.html(`dc81da6d`, "span", parentElement, {}, (parentElement: any) => [
                                         this.text('Your name')
                                     ]),
-                                    this.html(`5a58ad17`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Nguyen An" }, "bind": { type: 'static', value: true }, "name": { type: 'static', value: true } } })
+                                    this.html(`5a58ad17`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Nguyen An" } }, bind: { key: 'name' } })
                                 ]),
                                 this.html(`8cc8559a`, "label", parentElement, {}, (parentElement: any) => [
                                     this.html(`6b835f52`, "span", parentElement, {}, (parentElement: any) => [
                                         this.text('Email')
                                     ]),
-                                    this.html(`459b3dbe`, "input", parentElement, { attrs: { "type": { type: 'static', value: "email" }, "placeholder": { type: 'static', value: "an@company.com" }, "bind": { type: 'static', value: true }, "email": { type: 'static', value: true } } })
+                                    this.html(`459b3dbe`, "input", parentElement, { attrs: { "type": { type: 'static', value: "email" }, "placeholder": { type: 'static', value: "an@company.com" } }, bind: { key: 'email' } })
                                 ])
                                 ]),
                             this.reactive(`3c5efb8e`, "if", parentReactive, parentElement, ["attempted", "email", "name"], (parentReactive: any, parentElement: any) => {
@@ -331,7 +331,7 @@ class ContactView extends View {
                                     this.text('What should we discuss?')
                                 ]),
                                 this.html(`5cc3aebc`, "select", parentElement,
-                                    { attrs: { "bind": { type: 'static', value: true }, "topic": { type: 'static', value: true } } },
+                                    { bind: { key: 'topic' } },
                                     (parentElement: any) => [
                                     this.html(`57da3ced`, "option", parentElement, {}, (parentElement: any) => [
                                         this.text('Architecture review')
@@ -351,7 +351,7 @@ class ContactView extends View {
                                 this.html(`dfc41403`, "span", parentElement, {}, (parentElement: any) => [
                                     this.text('Context')
                                 ]),
-                                this.html(`24320d66`, "textarea", parentElement, { attrs: { "maxlength": { type: 'static', value: "500" }, "placeholder": { type: 'static', value: "What is the application doing today, and where does it become difficult?" }, "bind": { type: 'static', value: true }, "message": { type: 'static', value: true } }, events: { input: [(event: any) => setMessageLength({"handler":"count","params":[event.target.value]})] } }),
+                                this.html(`24320d66`, "textarea", parentElement, { attrs: { "maxlength": { type: 'static', value: "500" }, "placeholder": { type: 'static', value: "What is the application doing today, and where does it become difficult?" } }, events: { input: [(event: any) => setMessageLength({"handler":"count","params":[event.target.value]})] }, bind: { key: 'message' } }),
                                 this.html(`ccb5d383`, "small", parentElement, {}, (parentElement: any) => [
                                     this.output(`1a6e11ed`, parentElement, true, ["messageLength"], (parentElement: any) => messageLength),
                                     this.text(' / 500')

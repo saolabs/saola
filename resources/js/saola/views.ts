@@ -1,7 +1,7 @@
 /**
  * Auto-generated Views Registry
  * Combines all context registries into a single export
- * Generated at: 2026-08-02T11:34:52.258Z
+ * Generated at: 2026-08-04T03:46:28.776Z
  * 
  * This file is auto-updated when compiling any context.
  * Do not edit manually.

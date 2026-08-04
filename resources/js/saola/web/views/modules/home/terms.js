@@ -256,7 +256,7 @@ class TermsView extends View {
                 { classes: [{ type: 'static', value: "accept-panel" }] },
                 (parentElement) => [
                 this.html(`831b41c7`, "label", parentElement, {}, (parentElement) => [
-                    this.html(`5071e598`, "input", parentElement, { attrs: { "type": { type: 'static', value: "checkbox" }, "bind": { type: 'static', value: true }, "accepted": { type: 'static', value: true } } }),
+                    this.html(`5071e598`, "input", parentElement, { attrs: { "type": { type: 'static', value: "checkbox" } }, bind: { key: 'accepted' } }),
                     this.html(`2348d881`, "span", parentElement, {}),
                     this.html(`d052a684`, "p", parentElement, {}, (parentElement) => [
                         this.html(`0de7eff6`, "strong", parentElement, {}, (parentElement) => [

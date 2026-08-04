@@ -443,7 +443,7 @@ class IndexView extends View {
                                     (parentElement: any) => [
                                     this.text('Tên mẫu')
                                     ]),
-                                this.html(`0c819b78`, "input", parentElement, { attrs: { "id": { type: 'static', value: "demo-name" }, "data-demo-name": { type: 'static', value: true }, "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Nhập một tên" }, "bind": { type: 'static', value: true }, "name": { type: 'static', value: true } }, props: { "required": { type: 'binding', factory: () => true, stateKeys: ["true"] } } }),
+                                this.html(`0c819b78`, "input", parentElement, { attrs: { "id": { type: 'static', value: "demo-name" }, "data-demo-name": { type: 'static', value: true }, "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Nhập một tên" } }, props: { "required": { type: 'binding', factory: () => true, stateKeys: ["true"] } }, bind: { key: 'name' } }),
                                 this.html(`a1d02bec`, "p", parentElement,
                                     { classes: [{ type: 'static', value: "live-output" }] },
                                     (parentElement: any) => [
@@ -466,16 +466,16 @@ class IndexView extends View {
                                 this.html(`8ea1bfd6`, "label", parentElement,
                                     { classes: [{ type: 'static', value: "check-row" }] },
                                     (parentElement: any) => [
-                                    this.html(`fc0ed7b7`, "input", parentElement, { attrs: { "data-demo-accept": { type: 'static', value: true }, "type": { type: 'static', value: "checkbox" }, "bind": { type: 'static', value: true }, "accepted": { type: 'static', value: true } }, props: { "checked": { type: 'binding', factory: () => accepted, stateKeys: ["accepted"] } } }),
+                                    this.html(`fc0ed7b7`, "input", parentElement, { attrs: { "data-demo-accept": { type: 'static', value: true }, "type": { type: 'static', value: "checkbox" } }, props: { "checked": { type: 'binding', factory: () => accepted, stateKeys: ["accepted"] } }, bind: { key: 'accepted' } }),
                                     this.text(' Đã đọc tài liệu cú pháp')
                                     ]),
                                 this.html(`8202d879`, "label", parentElement,
                                     { classes: [{ type: 'static', value: "check-row" }] },
                                     (parentElement: any) => [
-                                    this.html(`79a83397`, "input", parentElement, { attrs: { "type": { type: 'static', value: "checkbox" }, "bind": { type: 'static', value: true }, "isLocked": { type: 'static', value: true } }, props: { "checked": { type: 'binding', factory: () => isLocked, stateKeys: ["isLocked"] } } }),
+                                    this.html(`79a83397`, "input", parentElement, { attrs: { "type": { type: 'static', value: "checkbox" } }, props: { "checked": { type: 'binding', factory: () => isLocked, stateKeys: ["isLocked"] } }, bind: { key: 'isLocked' } }),
                                     this.text(' Khóa trường ghi chú')
                                     ]),
-                                this.html(`a6a1575d`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Ghi chú mẫu" }, "bind": { type: 'static', value: true }, "note": { type: 'static', value: true } }, props: { "readOnly": { type: 'binding', factory: () => isLocked, stateKeys: ["isLocked"] } } }),
+                                this.html(`a6a1575d`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Ghi chú mẫu" } }, props: { "readOnly": { type: 'binding', factory: () => isLocked, stateKeys: ["isLocked"] } }, bind: { key: 'note' } }),
                                 this.html(`3d23181b`, "button", parentElement,
                                     { attrs: { "data-demo-continue": { type: 'static', value: true } }, props: { "disabled": { type: 'binding', factory: () => !accepted, stateKeys: ["accepted"] } } },
                                     (parentElement: any) => [
@@ -619,7 +619,7 @@ class IndexView extends View {
                                 "tone": "cyan",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
                                 this.html(`7f2a3c58`, "select", parentElement,
-                                    { attrs: { "data-demo-runtime": { type: 'static', value: true }, "bind": { type: 'static', value: true }, "selectedRuntime": { type: 'static', value: true } } },
+                                    { attrs: { "data-demo-runtime": { type: 'static', value: true } }, bind: { key: 'selectedRuntime' } },
                                     (parentElement: any) => [
                                     this.html(`9a32bb52`, "option", parentElement,
                                         { attrs: { "value": { type: 'static', value: "blade" } } },

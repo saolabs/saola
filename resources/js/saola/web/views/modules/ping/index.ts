@@ -196,7 +196,7 @@ class IndexView extends View {
                     this.html(`afbce0c4`, "label", parentElement, {}, (parentElement: any) => [
                         this.text('Your name:')
                     ]),
-                    this.html(`d492e6e2`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "name": { type: 'static', value: true }, "placeholder": { type: 'static', value: "Type a name..." }, "bind": { type: 'static', value: true } } })
+                    this.html(`d492e6e2`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "name": { type: 'static', value: "name" }, "placeholder": { type: 'static', value: "Type a name..." } }, bind: { key: 'name' } })
                 ]),
                 this.html(`6a16652b`, "button", parentElement,
                     { events: { click: [{"handler":"addPing","params":[]}] } },
