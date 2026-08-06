@@ -1,0 +1,165 @@
+@states({
+    users: [
+        { id: 1, name: 'Mai Lan',  email: 'lan@saola.dev',  rev: 1, active: true,  roles: [{ name: 'admin' }, { name: 'dev' }] },
+        { id: 2, name: 'Trần Bảo', email: 'bao@saola.dev',  rev: 1, active: false, roles: [{ name: 'viewer' }] },
+        { id: 3, name: 'Hồ Vy',    email: 'vy@saola.dev',   rev: 1, active: true,  roles: [] }
+    ],
+    tags: ['hydration', 'reactive', 'loop', 'cleanup'],
+    query: '',
+    selectedId: 0,
+    refreshCount: 0,
+    modalOpen: false,
+    banner: ''
+})
+
+@computed(activeCount = users.filter(u => u.active).length)
+@computed(totalRoles = users.reduce((n, u) => n + u.roles.length, 0))
+
+<template>
+    @extends(__layout__ + "workspace")
+    @block('workspace')
+        <header class="workspace-topbar">
+            <div>
+                <p class="eyebrow"><span>04</span> Stress harness</p>
+                <h1>Reactive · Hydration · Loop · Cleanup</h1>
+            </div>
+            <div class="completion-ring">
+                <strong>{{ activeCount }}/{{ users.length }}</strong><span>active</span>
+            </div>
+        </header>
+
+        <section class="stress">
+            {{-- Event modifiers: .prevent thay cho event.preventDefault() thủ công --}}
+            <form class="stress__bar" @submit.prevent(applyQuery())>
+                <input type="text" placeholder="Lọc theo tên…" @bind(query)>
+                <button type="submit">Lọc</button>
+                <button type="button" @click(refreshFromServer())>
+                    Refresh từ server <span>({{ refreshCount }})</span>
+                </button>
+                <button type="button" @click.once(showBannerOnce())>Chỉ chạy 1 lần</button>
+            </form>
+
+            @if(banner !== '')
+                <p class="stress__banner">{{ banner }}</p>
+            @endif
+
+            {{-- GAP-10: mỗi item include một view con; refresh sinh ref MỚI nhưng
+                 @key giữ nguyên → đường bị lỗi trước đây là view con biến mất --}}
+            <div class="stress__list">
+                @foreach(users as user)
+                    @key(user['id'])
+                    <article class="stress__row" @transition('row') @click(selectUser(user['id']))>
+                        {{-- @include truyền BIỂU THỨC; attribute của custom tag chỉ nhận chuỗi tĩnh --}}
+                        @include('web.modules.stress.usercard', ['user' => user, 'highlight' => selectedId === user['id']])
+
+                        {{-- @if trong loop → Reactive theo từng item (record marker riêng) --}}
+                        @if(user['roles'].length > 0)
+                            <div class="stress__roles">
+                                {{-- @foreach lồng, bọc trong thẻ → chạy ngoài cửa sổ cache loop ngoài --}}
+                                @foreach(user['roles'] as role)
+                                    <span class="chip">{{ role['name'] }}</span>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="stress__roles stress__roles--empty">chưa có vai trò</div>
+                        @endif
+
+                        {{-- .stop: bấm xoá không được kích hoạt selectUser của hàng --}}
+                        <button class="stress__del" @click.stop(removeUser(user['id']))>×</button>
+                    </article>
+                @endforeach
+            </div>
+
+            {{-- GAP-18: loop KHÔNG có @key — hậu tố id marker là chỉ số vòng lặp,
+                 phải khớp $loop->index phía SSR thì hydrate mới không lệch --}}
+            <div class="stress__tags">
+                @foreach(tags as tag)
+                    <span class="chip chip--tag">{{ tag }}</span>
+                @endforeach
+            </div>
+
+            <footer class="stress__foot">
+                <span>{{ totalRoles }} vai trò</span>
+                <button type="button" @click(openModal())>Mở modal</button>
+            </footer>
+        </section>
+
+        {{-- .self: chỉ đóng khi bấm ĐÚNG nền, không đóng khi bấm vào hộp bên trong --}}
+        @if(modalOpen)
+            <div class="stress__backdrop" @click.self(closeModal()) @transition('fade')>
+                <div class="stress__modal">
+                    <h2>Modal</h2>
+                    <p>Bấm ra nền để đóng. Bấm trong hộp thì không.</p>
+                    <button type="button" @click(closeModal())>Đóng</button>
+                </div>
+            </div>
+        @endif
+    @endblock
+</template>
+
+<script setup lang="ts">
+    export default {
+        name: 'StressPage',
+
+        /**
+         * Mô phỏng ĐÚNG một lần refetch: dữ liệu giống hệt về cấu trúc nhưng
+         * MỌI object là reference mới (như JSON.parse của response thật).
+         * Đây là đường từng làm view con của @include biến mất khỏi DOM.
+         */
+        refreshFromServer() {
+            const next = JSON.parse(JSON.stringify(users)).map(u => ({ ...u, rev: u.rev + 1 }));
+            setUsers(next);
+            setRefreshCount(refreshCount + 1);
+        },
+
+        applyQuery() {
+            const q = query.trim().toLowerCase();
+            if (!q) return;
+            setUsers(users.filter(u => u.name.toLowerCase().includes(q)));
+        },
+
+        selectUser(id) {
+            setSelectedId(selectedId === id ? 0 : id);
+        },
+
+        removeUser(id) {
+            setUsers(users.filter(u => u.id !== id));
+        },
+
+        showBannerOnce() {
+            setBanner('Nút này đã dùng hết lượt (.once).');
+        },
+
+        openModal() { setModalOpen(true); },
+        closeModal() { setModalOpen(false); }
+    };
+</script>
+
+<style scoped>
+    .stress { display: grid; gap: 16px; }
+    .stress__bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .stress__bar input { flex: 1 1 220px; }
+    .stress__banner { padding: 8px 12px; background: rgba(43, 80, 255, .08); }
+    .stress__list { display: grid; gap: 8px; }
+    .stress__row { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center;
+        border: 1px solid rgba(0, 0, 0, .12); padding: 6px; cursor: pointer; }
+    .stress__roles { display: flex; gap: 6px; flex-wrap: wrap; }
+    .stress__roles--empty { opacity: .45; font-size: 13px; }
+    .chip { padding: 2px 8px; border: 1px solid currentColor; font-size: 12px; }
+    .chip--tag { opacity: .7; }
+    .stress__del { border: 0; background: none; font-size: 20px; line-height: 1; cursor: pointer; }
+    .stress__tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .stress__foot { display: flex; justify-content: space-between; align-items: center; }
+
+    .stress__backdrop { position: fixed; inset: 0; display: grid; place-items: center;
+        background: rgba(0, 0, 0, .45); }
+    .stress__modal { background: #fff; padding: 24px; min-width: 280px; }
+
+    /* @transition('row') — enter/leave cho hàng danh sách */
+    .row-enter-active, .row-leave-active { transition: opacity .18s ease, transform .18s ease; }
+    .row-enter-from, .row-leave-to { opacity: 0; transform: translateY(-6px); }
+
+    /* @transition('fade') — modal */
+    .fade-enter-active, .fade-leave-active { transition: opacity .15s ease; }
+    .fade-enter-from, .fade-leave-to { opacity: 0; }
+</style>

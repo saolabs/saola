@@ -1,0 +1,28 @@
+@props({
+    user: {},
+    highlight: false
+})
+
+<template>
+    <div @class(['ucard', 'ucard--hl': highlight])>
+        <div class="ucard__id">#{{ user['id'] }}</div>
+        <div class="ucard__main">
+            <strong>{{ user['name'] }}</strong>
+            <small>{{ user['email'] }}</small>
+        </div>
+        <div class="ucard__rev">rev {{ user['rev'] }}</div>
+    </div>
+</template>
+
+<script setup lang="ts">
+    export default { name: 'StressUserCard' };
+</script>
+
+<style scoped>
+    .ucard { display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; }
+    .ucard__id { font: 700 13px/1 Courier, monospace; opacity: .55; }
+    .ucard__main { display: grid; }
+    .ucard__main small { opacity: .6; }
+    .ucard__rev { font: 12px/1 Courier, monospace; opacity: .5; }
+    .ucard--hl { outline: 2px solid var(--cobalt, #2b50ff); }
+</style>
