@@ -22,6 +22,21 @@ const __VIEW_CONFIG__ = {
 
 
 
+/**
+ * Props của view — sinh tự động từ @props/@vars, không sửa tay.
+ * Optional hết vì khai báo nào cũng có default.
+ */
+export interface FeaturecardProps {
+    number?: string;
+    title?: string;
+    source?: string;
+    tone?: string;
+    __ONE_CHILDREN_CONTENT__?: string;
+    /** viewId server gán khi hydrate */
+    __SSR_VIEW_ID__?: string;
+    [key: string]: any;
+}
+
 class FeaturecardViewController extends ViewController {
     constructor(view: View) {
         super(view, __VIEW_PATH__, __VIEW_TYPE__);
@@ -34,7 +49,7 @@ class FeaturecardViewController extends ViewController {
 }
 
 class FeaturecardView extends View {
-    constructor(__data__: any = {}, systemData: any = {}) {
+    constructor(__data__: FeaturecardProps = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, FeaturecardViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -63,11 +78,11 @@ class FeaturecardView extends View {
         __STATE__.__.register('source', source);
         __STATE__.__.register('tone', tone);
         __STATE__.__.register('__ONE_CHILDREN_CONTENT__', __ONE_CHILDREN_CONTENT__);
-        __UPDATE_DATA_TRAIT__.number = (value: any) => { number = value; updateStateByKey('number', value); };
-        __UPDATE_DATA_TRAIT__.title = (value: any) => { title = value; updateStateByKey('title', value); };
-        __UPDATE_DATA_TRAIT__.source = (value: any) => { source = value; updateStateByKey('source', value); };
-        __UPDATE_DATA_TRAIT__.tone = (value: any) => { tone = value; updateStateByKey('tone', value); };
-        __UPDATE_DATA_TRAIT__.__ONE_CHILDREN_CONTENT__ = (value: any) => { __ONE_CHILDREN_CONTENT__ = value; updateStateByKey('__ONE_CHILDREN_CONTENT__', value); };
+        __UPDATE_DATA_TRAIT__.number = (__next: any) => { number = __next; updateStateByKey('number', __next); };
+        __UPDATE_DATA_TRAIT__.title = (__next: any) => { title = __next; updateStateByKey('title', __next); };
+        __UPDATE_DATA_TRAIT__.source = (__next: any) => { source = __next; updateStateByKey('source', __next); };
+        __UPDATE_DATA_TRAIT__.tone = (__next: any) => { tone = __next; updateStateByKey('tone', __next); };
+        __UPDATE_DATA_TRAIT__.__ONE_CHILDREN_CONTENT__ = (__next: any) => { __ONE_CHILDREN_CONTENT__ = __next; updateStateByKey('__ONE_CHILDREN_CONTENT__', __next); };
         const __VARIABLE_LIST__: any = ["number", "title", "source", "tone", "__ONE_CHILDREN_CONTENT__"];
 
 
@@ -147,7 +162,7 @@ class FeaturecardView extends View {
 }
 
 // Export factory function
-export function WebModulesDemoFeaturecard(__data__ = {}, systemData = {}): FeaturecardView {
+export function WebModulesDemoFeaturecard(__data__: FeaturecardProps = {}, systemData: any = {}): FeaturecardView {
     return new FeaturecardView(__data__, systemData);
 }
 export default WebModulesDemoFeaturecard;

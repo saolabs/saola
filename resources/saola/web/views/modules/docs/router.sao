@@ -1,0 +1,73 @@
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>07</span> RUNTIME</p>
+                <h1>Router và dịch vụ client.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Ba cửa vào đều đổ về một hàm xử lý route, và việc đầu tiên router làm là hỏi PageCache. Application là một container service có thứ tự nạp được resolve tự động.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>ROUTER</span> Điều hướng và cache</p>
+            <h2>Back không gọi lại API.</h2>
+            <p>Ba cửa vào đều đổ về một hàm xử lý route: khởi động lần đầu, chặn click trên thẻ liên kết, và sự kiện lịch sử trình duyệt. Việc đầu tiên router làm không phải render mà là hỏi PageCache.</p>
+            <div class="ov-grid">
+                <div class="ov-card">
+                    <span>Cache</span>
+                    <h3>PageCache theo LRU</h3>
+                    <p>Khoá là request URI gồm path và query, không gồm fragment. Điều hướng <code>pop</code> mà có entry thì đi đường restore: gắn lại DOM, resume, xong — không render, không fetch.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Layout</span>
+                    <h3>Diff chuỗi layout</h3>
+                    <p>Chuỗi layout mới được so với chuỗi đang mount. Phần trùng được giữ nguyên và không render lại, chỉ phần khác biệt bị thay.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Guard</span>
+                    <h3>beforeEach · afterEach</h3>
+                    <p>Guard chạy sau khi match route và trước khi mount, đủ để chặn hoặc chuyển hướng.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Escape hatch</span>
+                    <h3>Bỏ qua chặn liên kết</h3>
+                    <p><code>target</code> khác <code>_self</code>, thuộc tính <code>download</code>, giao thức đặc biệt, hoặc <code>data-nav="disabled"</code> — router để trình duyệt tự xử lý. Mục lục bên trái trang này dùng đúng cách đó.</p>
+                </div>
+            </div>
+
+            <p class="kicker"><span>SERVICES</span> Container phía client</p>
+            <h2>Application là một container có thứ tự.</h2>
+            <p>Service đăng ký qua service provider có khai báo phụ thuộc, thứ tự nạp được resolve chứ không phải viết tay. Truy cập qua <code>App.&lt;Tên&gt;</code>.</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>App.Http</code></div><span>Fetch client: base URL, interceptor, timeout, tự huỷ request trùng, tự gắn header revision của view</span><b>network</b></div>
+                <div><div class="dt-key"><code>App.Event</code></div><span>Bus sự kiện: một hoặc nhiều event, <code>once</code>, trả về hàm huỷ đăng ký</span><b>bus</b></div>
+                <div><div class="dt-key"><code>App.Store</code> / <code>App.Storage</code></div><span>Kho theo khoá có TTL, subscribe theo khoá và callback lúc hết hạn</span><b>state</b></div>
+                <div><div class="dt-key"><code>App.Head</code></div><span>Quản lý thẻ head: title, meta, link theo từng view</span><b>document</b></div>
+                <div><div class="dt-key"><code>App.Router</code> / <code>App.View</code></div><span>Router và ViewManager — mount, hydrate, pause, resume view chain</span><b>core</b></div>
+                <div><div class="dt-key"><code>App.Helper</code></div><span>Hàm tiện ích mà output biên dịch gọi tới, ví dụ <code>count()</code></span><b>utility</b></div>
+                <div><div class="dt-key"><code>App.API</code></div><span>ApiClient dựng trên HttpService cho lớp gọi API có cấu trúc</span><b>network</b></div>
+                <div><div class="dt-key"><code>App.Logger</code></div><span>Log theo cấp, tắt được ở production</span><b>diagnostics</b></div>
+                <div><div class="dt-key"><code>App.Marker</code> / <code>App.Registry</code></div><span>Truy vấn và đăng ký marker, nền của hydration</span><b>internal</b></div>
+                <div><div class="dt-key"><code>App.Devtools</code></div><span>Phát sự kiện vòng đời view cho inspector</span><b>diagnostics</b></div>
+            </div>
+            <p class="ov-sub">Dịch vụ nội bộ không nằm trên container</p>
+            <div class="ov-tags">
+                <span class="ov-tag">AssetManager — ref-count style &amp; script</span>
+                <span class="ov-tag">BlockManager — nối block với outlet</span>
+                <span class="ov-tag">SectionManager</span>
+                <span class="ov-tag">PageCache</span>
+                <span class="ov-tag">DomService</span>
+                <span class="ov-tag">ForeachSlotCache</span>
+                <span class="ov-tag">ElementManager</span>
+            </div>
+        </div>
+
+        <a class="doc-next" href="/docs/build">
+            <div><span>Tiếp theo</span><strong>Build, CLI & cấu hình</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

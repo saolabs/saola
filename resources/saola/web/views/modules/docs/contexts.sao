@@ -1,0 +1,77 @@
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>02</span> NỀN TẢNG</p>
+                <h1>Context, module và controller.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Context là biên giới thật giữa web, admin, api và mobile. Module là đơn vị tổ chức code tự khai báo route của mình. Controller biết mình đang phục vụ context nào.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>CONTEXT</span> Nhiều mặt tiền, một lõi</p>
+            <h2>Context là biên giới thật, không phải thư mục.</h2>
+            <p>Mỗi context có prefix, middleware, permission, thư mục view, registry và bundle JavaScript riêng. Cùng một module có thể phục vụ cả ba mà không trộn route hay asset của nhau.</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>web</code></div><span>Website công khai — SSR rồi hydrate thành SPA</span><b>prefix /</b></div>
+                <div><div class="dt-key"><code>admin</code></div><span>Khu quản trị, middleware <code>auth</code> + <code>permission:admin</code></span><b>prefix /admin</b></div>
+                <div><div class="dt-key"><code>api</code></div><span>RESTful JSON, không render view</span><b>prefix /api</b></div>
+                <div><div class="dt-key"><code>mobile</code></div><span>Context thứ tư cho webview/PWA, cùng cơ chế</span><b>tuỳ cấu hình</b></div>
+            </div>
+            <p class="ov-sub">Đăng ký context</p>
+            <div class="code-window">
+                <div class="window-bar"><span>PHP</span><b>app/Providers/ModuleServiceProvider.php</b></div>
+                <pre><code><span class="code-line">System::context('admin', [</span><span class="code-line code-indent-1">'prefix' =&gt; 'admin',</span><span class="code-line code-indent-1">'middleware' =&gt; ['web', 'auth', 'permission:admin'],</span><span class="code-line code-indent-1">'permission' =&gt; ['admin'],</span><span class="code-line">]);</span></code></pre>
+            </div>
+            <div class="ov-note">
+                Context không chỉ là namespace: <code>ViewContextService</code> giữ registry theo request. Worker sống lâu (Octane) không làm rò state của request trước sang request sau.
+            </div>
+
+            <p class="kicker"><span>MODULES</span> Đơn vị tổ chức code</p>
+            <h2>Module tự khai báo, hệ thống tự tìm.</h2>
+            <p>Mỗi thư mục dưới <code>app/Modules/</code> có <code>ModuleServiceProvider.php</code> sẽ được nạp tự động — đệ quy, nên module lồng module vẫn chạy. Không có file danh sách nào phải sửa khi thêm module mới.</p>
+            <div class="ov-grid">
+                <div class="ov-card">
+                    <span>Cấu trúc</span>
+                    <h3>Bên trong một module</h3>
+                    <p><code>Http/Controllers/{Web,Admin,Api}</code> · <code>Http/Requests</code> · <code>Models</code> · <code>Repositories</code> · <code>Services</code> · <code>Masks</code>.</p>
+                    <p>Chỉ tạo thư mục nào thực sự cần — module chỉ có view như <code>Ping</code> thì chỉ có một controller.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Route</span>
+                    <h3>Fluent API theo context</h3>
+                    <p><code>module()</code> nhận slug, prefix và priority; <code>controller()</code>, <code>as()</code>, <code>title()</code> rồi <code>group()</code> khai báo từng verb.</p>
+                    <p>Route đăng ký trong <code>routes()</code> của module, không dồn vào <code>routes/web.php</code>.</p>
+                </div>
+            </div>
+            <div class="code-window">
+                <div class="window-bar"><span>PHP</span><b>app/Modules/Roster/ModuleServiceProvider.php</b></div>
+                <pre><code><span class="code-line">System::context('api')-&gt;module('roster', ['prefix' =&gt; '/roster', 'priority' =&gt; 5])</span><span class="code-line code-indent-1">-&gt;controller(RosterController::class)</span><span class="code-line code-indent-1">-&gt;group(function ($module) {</span><span class="code-line code-indent-2">$module-&gt;get('/', 'index')-&gt;name('index');</span><span class="code-line code-indent-2">$module-&gt;post('/', 'store')-&gt;name('store');</span><span class="code-line code-indent-2">$module-&gt;put('/{uuid}', 'update')-&gt;name('update');</span><span class="code-line code-indent-2">$module-&gt;delete('/{uuid}', 'destroy')-&gt;name('destroy');</span><span class="code-line code-indent-1">});</span></code></pre>
+            </div>
+
+            <p class="kicker"><span>CONTROLLER</span> Ba base, một hình dạng response</p>
+            <h2>Controller biết mình đang ở context nào.</h2>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>WebController</code></div><span><code>response()</code> tự resolve blade path từ route name; request nào expect JSON thì trả JSON</span><b>web</b></div>
+                <div><div class="dt-key"><code>AdminController</code></div><span>Sẵn index · list · detail · create · edit · trash kèm validation</span><b>admin</b></div>
+                <div><div class="dt-key"><code>ApiController</code></div><span>Bộ <code>jsonSuccess/jsonError/jsonCreated/jsonNotFound/jsonConflict/jsonValidationError</code></span><b>api</b></div>
+            </div>
+            <p class="ov-sub">Hình dạng response API</p>
+            <div class="code-window">
+                <div class="window-bar"><span>JSON</span><b>ApiResponse</b></div>
+                <pre><code><span class="code-line">{</span><span class="code-line code-indent-1">"success": true,</span><span class="code-line code-indent-1">"statusCode": 200,</span><span class="code-line code-indent-1">"statusText": "ok",</span><span class="code-line code-indent-1">"message": "Success",</span><span class="code-line code-indent-1">"errors": [],</span><span class="code-line code-indent-1">"data": {}</span><span class="code-line">}</span></code></pre>
+            </div>
+            <div class="ov-note">
+                Cùng một controller phục vụ được cả SSR lẫn SPA: <code>response()</code> nhìn header <code>X-Sao-Response</code> và <code>X-Saola-View-Revision</code> do <code>HttpService</code> tự gắn để quyết định trả HTML hay JSON payload cho view runtime.
+            </div>
+        </div>
+
+        <a class="doc-next" href="/docs/compiler">
+            <div><span>Tiếp theo</span><strong>Compiler & AST</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

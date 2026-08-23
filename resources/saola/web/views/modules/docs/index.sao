@@ -1,0 +1,187 @@
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>01</span> TÀI LIỆU</p>
+                <h1>Bắt đầu từ đây.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Saola biến một file <code>.sao</code> thành Blade cho lần render đầu và JavaScript cho mọi tương tác sau đó — cùng một AST, cùng marker, cùng state contract. Tài liệu này đi từ bức tranh tổng tới từng contract cụ thể.</p>
+                <dl>
+                    <div><dt>Backend</dt><dd>Laravel 13</dd></div>
+                    <div><dt>Runtime</dt><dd>&#64;saolabs/client</dd></div>
+                </dl>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>PACKAGES</span> Ba gói, một hợp đồng</p>
+            <h2>Ba mảnh ghép, một contract chung.</h2>
+            <p>Hệ sinh thái chia làm ba gói phát hành độc lập. Điểm nối giữa chúng không phải là quy ước ngầm mà là một spec viết ra giấy: <code>RUNTIME_CONTRACT</code> mô tả chính xác compiler được phép emit gì và client phải hiểu gì.</p>
+            <div class="ov-grid ov-grid--3">
+                <div class="ov-card">
+                    <span>Composer</span>
+                    <h3>saola/core</h3>
+                    <p>Lõi PHP: <code>System::context()</code> routing, base controller cho web/admin/api, module service provider, Blade directive và ViewStorageManager — nơi duy nhất sinh marker phía server.</p>
+                </div>
+                <div class="ov-card">
+                    <span>npm</span>
+                    <h3>&#64;saolabs/compiler</h3>
+                    <p>CLI <code>sao-compile</code>. Parse <code>.sao</code> thành AST rồi emit hai đầu ra từ cùng một cây: Blade cho SSR và TypeScript cho view runtime, kèm registry.</p>
+                </div>
+                <div class="ov-card">
+                    <span>npm</span>
+                    <h3>&#64;saolabs/client</h3>
+                    <p>Runtime SPA: Application container, Router, ViewManager, ViewController, hệ element reactive, PageCache và bộ service (Http, Event, Store, Head…).</p>
+                </div>
+            </div>
+            <div class="ov-note">
+                <strong>Vì sao tách ba gói:</strong> compiler và client có thể phát hành lệch nhau, nên contract mang version. Compiler ghi <code>__CONTRACT_VERSION__</code> vào output, client kiểm lúc load view — lệch major thì cảnh báo rõ ràng thay vì lỗi khó lần.
+            </div>
+
+            <p class="kicker"><span>REQUEST</span> Từ URL tới tương tác</p>
+            <h2>Một đường đi, hai giai đoạn.</h2>
+            <p>Lần tải đầu là SSR thật: Laravel trả HTML hoàn chỉnh có sẵn nội dung. Runtime phía client không dựng lại DOM đó — nó <em>nhận</em> (claim) DOM có sẵn qua marker rồi gắn state và event lên. Từ lần điều hướng thứ hai trở đi, mọi thứ là CSR.</p>
+            <ol class="flow-timeline">
+                <li>
+                    <span>01</span>
+                    <div>
+                        <strong>Route chọn context và module</strong>
+                        <p>Middleware theo context chạy trước, <code>System::context()</code> match route trong phạm vi module đã đăng ký.</p>
+                    </div>
+                    <code>GET /roster</code>
+                </li>
+                <li>
+                    <span>02</span>
+                    <div>
+                        <strong>Controller trả view response</strong>
+                        <p>Core resolve component ứng với route, render Blade và nhúng boot payload (viewId, registry, systemData) cho đúng context.</p>
+                    </div>
+                    <code>context: web</code>
+                </li>
+                <li>
+                    <span>03</span>
+                    <div>
+                        <strong>Blade tạo HTML hoàn chỉnh</strong>
+                        <p>Layout, block, include và children đã có nội dung trước khi một dòng JavaScript nào chạy. Mỗi vùng động được bọc bằng comment marker ổn định.</p>
+                    </div>
+                    <code>SSR / READY</code>
+                </li>
+                <li>
+                    <span>04</span>
+                    <div>
+                        <strong>Runtime claim DOM có sẵn</strong>
+                        <p>State được commit về đúng giá trị server <em>trước</em> khi render, để factory của <code class="directive-token">if</code> và <code class="directive-token">foreach</code> sinh đúng element claim đúng node.</p>
+                    </div>
+                    <code>HYDRATE / CLAIM</code>
+                </li>
+                <li>
+                    <span>05</span>
+                    <div>
+                        <strong>Router tiếp quản điều hướng</strong>
+                        <p>Điều hướng sau đó resolve view chain, diff layout và chỉ mount lại phần thay đổi. Back/forward đọc PageCache thay vì gọi lại API.</p>
+                    </div>
+                    <code>SPA / ACTIVE</code>
+                </li>
+            </ol>
+
+            <p class="kicker"><span>MỤC LỤC</span> Đi thẳng tới phần bạn cần</p>
+            <h2>Tài liệu chia theo lớp.</h2>
+            <p>Bốn nhóm, mỗi nhóm trả lời một loại câu hỏi khác nhau. Nếu bạn mới bắt đầu, đi theo thứ tự; nếu đang tìm một directive cụ thể, nhảy thẳng vào tham chiếu.</p>
+            <div class="ov-grid">
+                <a class="ov-card" href="/docs/getting-started">
+                    <span>Bắt đầu</span>
+                    <h3>Cài đặt &amp; route đầu tiên →</h3>
+                    <p>Bốn bước từ khai báo module tới kiểm tra cả SSR lẫn SPA.</p>
+                </a>
+                <a class="ov-card" href="/docs/architecture">
+                    <span>Nền tảng</span>
+                    <h3>Kiến trúc hệ thống →</h3>
+                    <p>Bốn lớp và một luồng: application, core, compiler, client.</p>
+                </a>
+                <a class="ov-card" href="/docs/contexts">
+                    <span>Nền tảng</span>
+                    <h3>Context, module &amp; controller →</h3>
+                    <p>Biên giới giữa web, admin, api; auto-discovery và fluent routing.</p>
+                </a>
+                <a class="ov-card" href="/docs/compiler">
+                    <span>Nền tảng</span>
+                    <h3>Compiler &amp; AST →</h3>
+                    <p>Một cú pháp, hai output, cơ chế include và children đồng bộ.</p>
+                </a>
+                <a class="ov-card" href="/docs/sao-file">
+                    <span>Viết view</span>
+                    <h3>Cấu trúc file .sao →</h3>
+                    <p>Bốn phần của một single-file component và hai chế độ cú pháp.</p>
+                </a>
+                <a class="ov-card" href="/docs/directives">
+                    <span>Viết view</span>
+                    <h3>Tham chiếu directive →</h3>
+                    <p>Bảy nhóm directive, từ khai báo tới quyền và biến ma thuật.</p>
+                </a>
+                <a class="ov-card" href="/docs/reactivity">
+                    <span>Viết view</span>
+                    <h3>State &amp; reactivity →</h3>
+                    <p>Setter, batching theo khung hình, computed và element API.</p>
+                </a>
+                <a class="ov-card" href="/docs/runtime">
+                    <span>Runtime</span>
+                    <h3>Runtime &amp; hydration →</h3>
+                    <p>Claim DOM, reactive update, page cache và dọn tài nguyên.</p>
+                </a>
+                <a class="ov-card" href="/docs/lifecycle">
+                    <span>Runtime</span>
+                    <h3>Vòng đời &amp; marker →</h3>
+                    <p>Bảy chuyển trạng thái và hợp đồng marker giữa server với client.</p>
+                </a>
+                <a class="ov-card" href="/docs/router">
+                    <span>Runtime</span>
+                    <h3>Router &amp; dịch vụ client →</h3>
+                    <p>PageCache, layout diff và bộ service trên Application container.</p>
+                </a>
+                <a class="ov-card" href="/docs/build">
+                    <span>Vận hành</span>
+                    <h3>Build, CLI &amp; cấu hình →</h3>
+                    <p>Hai chặng build, bốn file cấu hình và bộ kiểm thử.</p>
+                </a>
+                <a class="ov-card" href="/docs/status">
+                    <span>Vận hành</span>
+                    <h3>Giới hạn đã biết →</h3>
+                    <p>Cái gì đang chạy đầy đủ, cái gì còn dở và cách đi vòng.</p>
+                </a>
+            </div>
+
+            <p class="kicker"><span>LIVE</span> Không chỉ đọc sơ đồ</p>
+            <h2>Bốn trang đang chạy thật.</h2>
+            <p>Mỗi trang dưới đây là một fixture có chủ đích, không phải ảnh chụp. Mở DevTools xem HTML lần đầu để thấy nội dung đã có sẵn trước khi JavaScript chạy.</p>
+            <div class="ov-grid">
+                <a class="ov-card" href="/demo">
+                    <span>Fixture cú pháp</span>
+                    <h3>Interactive demo →</h3>
+                    <p>Chín nhóm cú pháp trong một trang: state, event, binding, điều kiện, vòng lặp, switch, props, import và children.</p>
+                </a>
+                <a class="ov-card" href="/todo-list">
+                    <span>Layout dùng chung</span>
+                    <h3>Todo workspace →</h3>
+                    <p>State cục bộ của trang trong khi layout giữ nguyên qua mỗi lần đổi route.</p>
+                </a>
+                <a class="ov-card" href="/roster">
+                    <span>Sửa đồng thời</span>
+                    <h3>Roster sync →</h3>
+                    <p>Poll ba mươi giây, diff giữ reference, và xử lý khi người khác sửa hoặc xoá đúng bản ghi bạn đang mở form.</p>
+                </a>
+                <a class="ov-card" href="/ping">
+                    <span>Hydration trần</span>
+                    <h3>Ping →</h3>
+                    <p>Fixture nhỏ nhất: state, event, binding và một vòng lặp — đủ để soi marker bằng mắt.</p>
+                </a>
+            </div>
+        </div>
+
+        <a class="doc-next" href="/docs/getting-started">
+            <div><span>Tiếp theo</span><strong>Cài đặt &amp; route đầu tiên</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

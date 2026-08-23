@@ -65,7 +65,7 @@ class PrivacyView extends View {
 
         const __UPDATE_DATA_TRAIT__ = {};
         const set$activeSection = __STATE__.__.register('activeSection');
-        let activeSection = null;
+        let activeSection = 'collection';
         const setActiveSection = (state) => {
             activeSection = state;
             set$activeSection(state);

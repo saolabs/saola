@@ -1,0 +1,72 @@
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>08</span> VẬN HÀNH</p>
+                <h1>Build, CLI và cấu hình.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Hai chặng tách rời: compile view rồi bundle. Cộng thêm bốn file cấu hình, bộ kiểm thử ba tầng và hạ tầng phát triển dựng bằng một lệnh.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>BUILD</span> Hai chặng, một lệnh</p>
+            <h2>Compile view, rồi bundle.</h2>
+            <p>Chặng một biến <code>.sao</code> thành Blade và TypeScript. Chặng hai để Vite gói TypeScript đó thành bundle của từng context. Hai chặng tách rời nên sửa template không phải build lại toàn bộ.</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>sao-compile web</code></div><span>Compile view của một context; <code>all</code> cho mọi context</span><b>stage 1</b></div>
+                <div><div class="dt-key"><code>sao-compile all --watch</code></div><span>Watch mode lúc phát triển</span><b>stage 1</b></div>
+                <div><div class="dt-key"><code>npm run build:web</code></div><span>Compile view rồi vite build ra <code>public/static/saola/web/js</code></span><b>stage 2</b></div>
+                <div><div class="dt-key"><code>npm run dev:web</code></div><span>Chạy song song artisan serve, vite và watcher của client</span><b>dev</b></div>
+                <div><div class="dt-key"><code>npm run build:web:local</code></div><span>Build luôn cả <code>@saolabs/client</code> từ mã nguồn cạnh bên thay vì bản đã phát hành</span><b>monorepo</b></div>
+            </div>
+            <p class="ov-sub">Đường đi của một file</p>
+            <div class="code-window">
+                <div class="window-bar"><span>PIPELINE</span><b>một view, hai đầu ra</b></div>
+                <pre><code><span class="code-line">resources/saola/web/views/modules/home/index.sao</span><span class="code-line code-indent-1">├─ resources/views/web/modules/home/index.blade.php      (SSR)</span><span class="code-line code-indent-1">└─ resources/js/saola/web/views/modules/home/index.ts    (runtime)</span><span class="code-line code-gap"></span><span class="code-line">resources/js/saola/web/registry.ts   ← bản đồ view path → factory</span><span class="code-line">public/static/saola/web/js/app.js    ← bundle của context web</span></code></pre>
+            </div>
+            <p class="ov-sub">File cấu hình</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>sao.config.json</code></div><span>Đường dẫn và khai báo context cho CLI compiler</span><b>compiler</b></div>
+                <div><div class="dt-key"><code>config/sao.php</code></div><span>Cấu hình phía PHP: context, option, feature flag</span><b>php</b></div>
+                <div><div class="dt-key"><code>config/spa.php</code></div><span>Cấu hình runtime SPA: mode, debug, router</span><b>runtime</b></div>
+                <div><div class="dt-key"><code>vite.config.js</code></div><span>Entry, alias <code>@saola</code> <code>@compiled</code> <code>@views</code>, thư mục output</span><b>bundler</b></div>
+            </div>
+
+            <p class="kicker"><span>QUALITY</span> Kiểm thử và hạ tầng</p>
+            <h2>Contract được kiểm bằng chính contract.</h2>
+            <div class="ov-grid">
+                <div class="ov-card">
+                    <span>Client</span>
+                    <h3>Vitest trên jsdom</h3>
+                    <p>Test của runtime chạy trên DOM giả lập: reconciliation của foreach, claim marker khi hydrate, dọn tài nguyên khi destroy.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Contract</span>
+                    <h3>Compile thật rồi assert DOM</h3>
+                    <p>Fixture <code>.sao</code> được compile bằng compiler thật, chạy trong jsdom rồi kiểm DOM đầu ra. Đây mới là nguồn chân lý thi hành của spec, không phải tài liệu.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Server</span>
+                    <h3>PHPUnit theo tầng</h3>
+                    <p>Bộ Unit và Feature tách riêng. Feature test gọi thẳng endpoint để kiểm hình dạng response và mã trạng thái.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Hạ tầng</span>
+                    <h3>Docker Compose</h3>
+                    <p>PostgreSQL 15 và Redis 7 kèm hai giao diện quản trị, dựng bằng một lệnh cho môi trường phát triển.</p>
+                </div>
+            </div>
+            <div class="ov-note">
+                Fixture của test giữ nguyên <em>output thật của compiler</em>. Viết tay kỳ vọng sẽ làm test mù với chính khâu sinh code mà nó phải bảo vệ.
+            </div>
+        </div>
+
+        <a class="doc-next" href="/docs/status">
+            <div><span>Tiếp theo</span><strong>Giới hạn đã biết</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

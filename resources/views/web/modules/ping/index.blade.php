@@ -3,9 +3,9 @@
 @useState($count, 0)
 @useState($name, 'Saola')
 @useState($pings, [])
-@extends($__layout__ . "base")
+@extends($__layout__ . "public")
     @block('content')
-        <section @class([$__VIEW_ID__ . '-b4052a35']) @attr(['ping' => true, 'active' => true, 'count' => true])> 0])>
+        <section @class([$__VIEW_ID__ . '-b4052a35', "ping", "active"=> $count !== 0])>
             <h1 @class([$__VIEW_ID__ . '-ba3bf830'])>Ping Module — Hydration Test</h1>
             <p @class([$__VIEW_ID__ . '-9f45c023'])>Hello, @startMarker('output', '6e45b3ed'){{ $name }}@endMarker('output', '6e45b3ed')! 👋</p>
 

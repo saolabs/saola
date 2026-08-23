@@ -1,0 +1,52 @@
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>09</span> TRẠNG THÁI</p>
+                <h1>Giới hạn đã biết.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Dự án đang ở giai đoạn dựng nền. Trang này ghi thẳng cái gì chạy được và cái gì còn dở, để người đọc không mất thời gian tự phát hiện lại.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>STATUS</span> Trung thực về hiện trạng</p>
+            <h2>Cái gì đang chạy, cái gì còn dở.</h2>
+            <p>Dự án đang ở giai đoạn dựng nền. Những mục dưới đây là giới hạn đã biết, ghi ra để người đọc không mất thời gian tự phát hiện lại.</p>
+
+            <p class="ov-sub">Đang chạy đầy đủ</p>
+            <ul class="check-list">
+                <li>SSR bằng Blade rồi hydrate, kèm layout chain và block outlet.</li>
+                <li>Reactive theo vùng marker: điều kiện, vòng lặp, output, binding hai chiều.</li>
+                <li>Reconciliation của <code class="directive-token">foreach</code> theo slot, có dọn element khi item rời danh sách.</li>
+                <li>Điều hướng SPA, layout diff và PageCache cho back/forward.</li>
+                <li>Vòng đời view đầy đủ với dọn tài nguyên theo ref-count.</li>
+                <li>Bốn context với route, registry và bundle tách bạch.</li>
+            </ul>
+
+            <p class="ov-sub">Giới hạn đã biết</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code class="directive-token">foreach</code> đổi reference</div><span>Slot chỉ tái dùng khi reference item không đổi, nên refetch dựng lại hàng đó. Cách đi vòng: lặp trên id ổn định và truyền dữ liệu qua props.</span><b>runtime</b></div>
+                <div><div class="dt-key"><code class="directive-token">bind</code> lồng cấp</div><span><code>bind(a.b)</code> đọc được giá trị nhưng không ghi ngược và không nhận thay đổi — setter và subscription chỉ có ở tầng khoá phẳng.</span><b>runtime</b></div>
+                <div><div class="dt-key"><code>&lt;style scoped&gt;</code> trong layout</div><span>Trang render qua block của layout không có wrapper riêng nên style scoped không tìm được subtree để gắn. Dùng stylesheet chung cho những trang đó.</span><b>runtime</b></div>
+                <div><div class="dt-key">Dấu <code>&gt;</code> trong <code class="directive-token">class</code></div><span>Biểu thức chứa dấu lớn hơn làm bộ phân tích đóng thẻ sớm ở đầu ra Blade. Viết lại bằng phép so sánh khác là qua.</span><b>compiler</b></div>
+                <div><div class="dt-key"><code class="directive-token">style</code> dạng object</div><span>Viết <code>&#64;style({'font-size': x})</code> theo cú pháp modern chỉ ra đúng ở đầu ra Blade; phía JavaScript nó rã thành các thuộc tính tĩnh rời rạc nên binding không chạy sau hydrate.</span><b>compiler</b></div>
+            <div><div class="dt-key"><code class="directive-token">show</code> đụng Blade</div><span>Laravel đã có <code class="directive-token">show</code> nghĩa là kết thúc section rồi yield ngay, nên nó nuốt directive cùng tên của Saola và làm hỏng section stack của cả trang. Dùng <code class="directive-token">class</code> với class ẩn thay thế.</span><b>compiler</b></div>
+            <div><div class="dt-key"><code class="directive-token">computed</code> khi SSR</div><span>Directive này chỉ được emit ở đầu ra JavaScript; phía Blade không có khai báo nào nên biến undefined khi render server. Dùng biểu thức dẫn xuất thẳng trong template là qua.</span><b>compiler</b></div>
+            <div><div class="dt-key">Modifier ở đầu ra Blade</div><span>Modifier của event chỉ được emit đúng ở phía JavaScript; phía Blade còn sinh thuộc tính thừa.</span><b>compiler</b></div>
+                <div><div class="dt-key">Fragment và Component chưa có id</div><span>Hai loại marker này còn thiếu id ổn định nên chưa hydrate được như các loại khác.</span><b>contract</b></div>
+                <div><div class="dt-key">Prefix đôi của context API</div><span>Prefix mặc định của Laravel cộng với prefix context làm URL thành <code>/api/api/...</code>.</span><b>routing</b></div>
+            </div>
+            <div class="ov-note ov-note--warn">
+                Danh sách này lấy từ chính tài liệu contract và những gì kiểm chứng được khi chạy thật, không phải phỏng đoán. Mục nào sửa xong sẽ rời khỏi bảng.
+            </div>
+        </div>
+
+        <a class="doc-next" href="/components">
+            <div><span>Tiếp theo</span><strong>Thư viện component</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

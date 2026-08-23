@@ -65,7 +65,7 @@ class TermsView extends View {
 
         const __UPDATE_DATA_TRAIT__ = {};
         const set$accepted = __STATE__.__.register('accepted');
-        let accepted = null;
+        let accepted = false;
         const setAccepted = (state) => {
             accepted = state;
             set$accepted(state);
@@ -79,7 +79,7 @@ class TermsView extends View {
             }
         };
         const set$expanded = __STATE__.__.register('expanded');
-        let expanded = null;
+        let expanded = 1;
         const setExpanded = (state) => {
             expanded = state;
             set$expanded(state);

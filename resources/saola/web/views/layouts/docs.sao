@@ -1,0 +1,74 @@
+<template>
+    @extends(__layout__ + "public")
+    @block('content')
+        <div class="docs-shell">
+            <aside class="docs-nav" aria-label="Điều hướng tài liệu">
+                <div class="docs-nav-inner">
+                    <p class="docs-nav-group">Bắt đầu</p>
+                    <a href="/docs">Giới thiệu</a>
+                    <a href="/docs/getting-started">Cài đặt &amp; route đầu tiên</a>
+
+                    <p class="docs-nav-group">Nền tảng</p>
+                    <a href="/docs/architecture">Kiến trúc hệ thống</a>
+                    <a href="/docs/contexts">Context, module &amp; controller</a>
+                    <a href="/docs/compiler">Compiler &amp; AST</a>
+
+                    <p class="docs-nav-group">Viết view</p>
+                    <a href="/docs/sao-file">Cấu trúc file .sao</a>
+                    <a href="/docs/directives">Tham chiếu directive</a>
+                    <a href="/docs/reactivity">State &amp; reactivity</a>
+
+                    <p class="docs-nav-group">Runtime</p>
+                    <a href="/docs/runtime">Runtime &amp; hydration</a>
+                    <a href="/docs/lifecycle">Vòng đời &amp; marker</a>
+                    <a href="/docs/router">Router &amp; dịch vụ client</a>
+
+                    <p class="docs-nav-group">Vận hành</p>
+                    <a href="/docs/build">Build, CLI &amp; cấu hình</a>
+                    <a href="/docs/status">Giới hạn đã biết</a>
+
+                    <p class="docs-nav-group">Thực hành</p>
+                    <a href="/components">Thư viện component</a>
+                </div>
+            </aside>
+
+            <main class="docs-main">
+                @useBlock('doc')
+            </main>
+        </div>
+    @endblock
+</template>
+
+<script setup lang="ts">
+    export default {
+        name: 'DocsLayout',
+
+        // Layout được tái dùng khi điều hướng giữa các trang docs (layout diff),
+        // nên started() chỉ chạy một lần — phải tự đánh dấu lại sau mỗi lần chuyển route.
+        started() {
+            this.markCurrent();
+            this._resync = () => setTimeout(() => this.markCurrent(), 40);
+            document.addEventListener('click', this._resync, true);
+            window.addEventListener('popstate', this._resync);
+        },
+
+        resumed() { this.markCurrent(); },
+
+        stopped() { this.teardown(); },
+        destroyed() { this.teardown(); },
+
+        teardown() {
+            if (!this._resync) return;
+            document.removeEventListener('click', this._resync, true);
+            window.removeEventListener('popstate', this._resync);
+            this._resync = null;
+        },
+
+        markCurrent() {
+            const here = window.location.pathname.replace(/\/+$/, '') || '/';
+            document.querySelectorAll('.docs-nav a').forEach(a => {
+                a.classList.toggle('is-current', a.getAttribute('href') === here);
+            });
+        }
+    };
+</script>

@@ -5,10 +5,10 @@
 @wrapper
 <article @class([$__VIEW_ID__ . '-98f36c4a', 'feature-card', 'feature-card--pink'=> $tone === 'pink', 'feature-card--cyan'=> $tone === 'cyan', 'feature-card--yellow'=> $tone === 'yellow'])>
         <header @class([$__VIEW_ID__ . '-303803c4'])>
-            <span @class([$__VIEW_ID__ . '-ccb57492'])>{{ $number }}</span>
-            <h3 @class([$__VIEW_ID__ . '-bf78161e'])>{{ $title }}</h3>
+            <span @class([$__VIEW_ID__ . '-ccb57492'])>@startMarker('output', 'b6cbe0ba'){{ $number }}@endMarker('output', 'b6cbe0ba')</span>
+            <h3 @class([$__VIEW_ID__ . '-bf78161e'])>@startMarker('output', 'b7a0c11f'){{ $title }}@endMarker('output', 'b7a0c11f')</h3>
         </header>
-        <code @class([$__VIEW_ID__ . '-caa3a4d0'])>{!! $source !!}</code>
+        <code @class([$__VIEW_ID__ . '-caa3a4d0'])>@startMarker('output', '52849a7f'){!! $source !!}@endMarker('output', '52849a7f')</code>
         <div @class([$__VIEW_ID__ . '-abc599f4', 'feature-card__body'])>
             {!! $__ONE_CHILDREN_CONTENT__ !!}
         </div>

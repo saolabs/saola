@@ -29,6 +29,16 @@ const __VIEW_CONFIG__ = {
 
 
 
+/**
+ * Props của view — sinh tự động từ @props/@vars, không sửa tay.
+ * Optional hết vì khai báo nào cũng có default.
+ */
+export interface ContactProps {
+    /** viewId server gán khi hydrate */
+    __SSR_VIEW_ID__?: string;
+    [key: string]: any;
+}
+
 class ContactViewController extends ViewController {
     constructor(view: View) {
         super(view, __VIEW_PATH__, __VIEW_TYPE__);
@@ -41,7 +51,7 @@ class ContactViewController extends ViewController {
 }
 
 class ContactView extends View {
-    constructor(__data__: any = {}, systemData: any = {}) {
+    constructor(__data__: ContactProps = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, ContactViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -65,7 +75,7 @@ class ContactView extends View {
 
         const __UPDATE_DATA_TRAIT__: any = {};
         const set$name = __STATE__.__.register('name');
-        let name: any = null;
+        let name: any = '';
         const setName = (state: any) => {
             name = state;
             set$name(state);
@@ -79,7 +89,7 @@ class ContactView extends View {
             }
         };
         const set$email = __STATE__.__.register('email');
-        let email: any = null;
+        let email: any = '';
         const setEmail = (state: any) => {
             email = state;
             set$email(state);
@@ -93,7 +103,7 @@ class ContactView extends View {
             }
         };
         const set$topic = __STATE__.__.register('topic');
-        let topic: any = null;
+        let topic: any = 'Architecture review';
         const setTopic = (state: any) => {
             topic = state;
             set$topic(state);
@@ -107,7 +117,7 @@ class ContactView extends View {
             }
         };
         const set$message = __STATE__.__.register('message');
-        let message: any = null;
+        let message: any = '';
         const setMessage = (state: any) => {
             message = state;
             set$message(state);
@@ -121,7 +131,7 @@ class ContactView extends View {
             }
         };
         const set$messageLength = __STATE__.__.register('messageLength');
-        let messageLength: any = null;
+        let messageLength: any = 0;
         const setMessageLength = (state: any) => {
             messageLength = state;
             set$messageLength(state);
@@ -135,7 +145,7 @@ class ContactView extends View {
             }
         };
         const set$attempted = __STATE__.__.register('attempted');
-        let attempted: any = null;
+        let attempted: any = false;
         const setAttempted = (state: any) => {
             attempted = state;
             set$attempted(state);
@@ -149,7 +159,7 @@ class ContactView extends View {
             }
         };
         const set$sent = __STATE__.__.register('sent');
-        let sent: any = null;
+        let sent: any = false;
         const setSent = (state: any) => {
             sent = state;
             set$sent(state);
@@ -394,7 +404,7 @@ class ContactView extends View {
 }
 
 // Export factory function
-export function WebModulesHomeContact(__data__ = {}, systemData = {}): ContactView {
+export function WebModulesHomeContact(__data__: ContactProps = {}, systemData: any = {}): ContactView {
     return new ContactView(__data__, systemData);
 }
 export default WebModulesHomeContact;

@@ -1,0 +1,252 @@
+@props({
+    uid: '',
+    record: null
+})
+
+@states({
+    editing: false,
+    base: null,
+    busy: false,
+    note: '',
+    fName: '',
+    fEmail: '',
+    fGender: 'other',
+    fBirthdate: ''
+})
+
+<template>
+    <article @class(['rs-row', 'rs-row--edit': editing, 'rs-row--gone': record === null])>
+        @if(editing)
+            {{-- Bị người khác XOÁ khi đang sửa: parent giữ hàng lại, record = null --}}
+            @if(record === null)
+                <div class="rs-alert rs-alert--danger">
+                    <strong>Người khác vừa xoá người dùng này</strong>
+                    <p>Bản nháp trong form vẫn còn nguyên. Tạo lại thành người dùng mới, hay bỏ bản nháp?</p>
+                    <div class="rs-alert-actions">
+                        <button type="button" class="rs-btn rs-btn-sm rs-btn-primary" @click(recreate())>Tạo lại từ bản nháp</button>
+                        <button type="button" class="rs-btn rs-btn-sm rs-btn-plain" @click(cancelEdit())>Bỏ bản nháp</button>
+                    </div>
+                </div>
+            {{-- Bị người khác SỬA khi đang sửa: version lệch so với lúc mở form --}}
+            @elseif(base !== null && record['updated_at'] !== base['updated_at'])
+                <div class="rs-alert">
+                    <strong>Người khác vừa sửa người dùng này</strong>
+                    <p>Bản nháp của bạn chưa bị đụng tới. Chọn bản muốn giữ:</p>
+                    <ul class="rs-diff">
+                        @if(record['name'] !== base['name'])
+                            <li>
+                                <span class="rs-diff-key">name</span>
+                                <span class="rs-diff-theirs"><em>Của họ</em><b>{{ record['name'] }}</b></span>
+                                <span class="rs-diff-mine"><em>Của bạn</em><b>{{ fName }}</b></span>
+                            </li>
+                        @endif
+                        @if(record['email'] !== base['email'])
+                            <li>
+                                <span class="rs-diff-key">email</span>
+                                <span class="rs-diff-theirs"><em>Của họ</em><b>{{ record['email'] }}</b></span>
+                                <span class="rs-diff-mine"><em>Của bạn</em><b>{{ fEmail }}</b></span>
+                            </li>
+                        @endif
+                        @if(record['gender'] !== base['gender'])
+                            <li>
+                                <span class="rs-diff-key">gender</span>
+                                <span class="rs-diff-theirs"><em>Của họ</em><b>{{ record['gender'] }}</b></span>
+                                <span class="rs-diff-mine"><em>Của bạn</em><b>{{ fGender }}</b></span>
+                            </li>
+                        @endif
+                        @if(record['birthdate'] !== base['birthdate'])
+                            <li>
+                                <span class="rs-diff-key">birthdate</span>
+                                <span class="rs-diff-theirs"><em>Của họ</em><b>{{ record['birthdate'] }}</b></span>
+                                <span class="rs-diff-mine"><em>Của bạn</em><b>{{ fBirthdate }}</b></span>
+                            </li>
+                        @endif
+                    </ul>
+                    <div class="rs-alert-actions">
+                        <button type="button" class="rs-btn rs-btn-sm rs-btn-ghost" @click(takeTheirs())>Lấy bản của họ</button>
+                        <button type="button" class="rs-btn rs-btn-sm rs-btn-primary" @click(keepMine())>Giữ bản của tôi</button>
+                    </div>
+                </div>
+            @endif
+
+            <form class="rs-edit-form" @submit(save(event))>
+                <div class="rs-edit-grid">
+                    <label class="rs-field">
+                        <span>Họ tên</span>
+                        <input type="text" placeholder="Họ tên" @bind(fName)>
+                    </label>
+                    <label class="rs-field">
+                        <span>Email</span>
+                        <input type="email" placeholder="Email" @bind(fEmail)>
+                    </label>
+                    <label class="rs-field">
+                        <span>Giới tính</span>
+                        <select @bind(fGender)>
+                            <option value="male">male</option>
+                            <option value="female">female</option>
+                            <option value="other">other</option>
+                        </select>
+                    </label>
+                    <label class="rs-field">
+                        <span>Ngày sinh</span>
+                        <input type="date" @bind(fBirthdate)>
+                    </label>
+                </div>
+                <div class="rs-edit-foot">
+                    @if(base !== null)
+                        <span class="rs-ver">base v{{ base['updated_at'] }}</span>
+                    @endif
+                    <span class="rs-spacer"></span>
+                    {{-- Bản ghi đã biến mất thì Lưu chỉ ăn 404 — chỉ còn đường tạo lại
+                         hoặc bỏ nháp, hai nút đó nằm trong khối cảnh báo phía trên. --}}
+                    @if(record !== null)
+                        <button type="button" class="rs-btn rs-btn-sm rs-btn-plain" @click(cancelEdit())>Huỷ</button>
+                        <button type="submit" class="rs-btn rs-btn-sm rs-btn-primary" @disabled(busy)>Lưu thay đổi</button>
+                    @endif
+                </div>
+            </form>
+        @else
+            @if(record === null)
+                <div class="rs-row-view">
+                    <span class="rs-avatar rs-avatar--gone"></span>
+                    <div class="rs-row-id">
+                        <strong>Bản ghi đã bị xoá</strong>
+                        <span>Hàng này sẽ biến mất ở lần đồng bộ tới.</span>
+                    </div>
+                </div>
+            @else
+                <div class="rs-row-view">
+                    <span @class(['rs-avatar', 'rs-avatar--f': record['gender'] === 'female', 'rs-avatar--m': record['gender'] === 'male'])></span>
+                    <div class="rs-row-id">
+                        <strong>{{ record['name'] }}</strong>
+                        <span>{{ record['email'] }}</span>
+                    </div>
+                    <div class="rs-row-meta">
+                        <span class="rs-tag rs-tag--brand">{{ record['gender'] }}</span>
+                        <span class="rs-tag">{{ record['birthdate'] }}</span>
+                        <span class="rs-ver">v{{ record['updated_at'] }}</span>
+                    </div>
+                    <div class="rs-row-actions">
+                        <button type="button" class="rs-btn rs-btn-sm rs-btn-ghost" @click(beginEdit())>Sửa</button>
+                        <button type="button" class="rs-btn rs-btn-sm rs-btn-danger" @click(remove())>Xoá</button>
+                    </div>
+                </div>
+            @endif
+        @endif
+
+        @if(note !== '')
+            <p class="rs-note">{{ note }}</p>
+        @endif
+    </article>
+</template>
+
+<script setup lang="ts">
+    const API = '/api/api/roster';
+
+    export default {
+        name: 'RosterItem',
+
+        /** Mở form: chụp lại bản server đang cầm làm mốc so sánh (base). */
+        beginEdit() {
+            if (!record) return;
+            setBase(record);
+            setFName(record.name);
+            setFEmail(record.email);
+            setFGender(record.gender);
+            setFBirthdate(record.birthdate);
+            setNote('');
+            setEditing(true);
+            App.Event.emit('roster:editing', uid, true);
+        },
+
+        cancelEdit() {
+            setEditing(false);
+            setBase(null);
+            setNote('');
+            App.Event.emit('roster:editing', uid, false);
+            App.Event.emit('roster:refresh');
+        },
+
+        /** Bỏ bản nháp, nạp lại nguyên bản của người kia. */
+        takeTheirs() {
+            this.beginEdit();
+        },
+
+        /** Giữ nguyên form, chỉ dời mốc version để lần lưu tới không bị 409. */
+        keepMine() {
+            setBase(record);
+            setNote('Sẽ ghi đè bản của người kia khi bạn bấm Lưu.');
+        },
+
+        async save(event) {
+            event.preventDefault();
+            if (busy) return;
+            setBusy(true);
+            try {
+                const res = await App.Http.put(API + '/' + uid, {
+                    name: fName,
+                    email: fEmail,
+                    gender: fGender,
+                    birthdate: fBirthdate,
+                    version: base ? base.updated_at : null
+                });
+                // Đẩy thẳng bản vừa lưu lên cha thay vì chờ vòng fetch kế tiếp —
+                // nếu không, hàng quay về chế độ xem với `record` cũ và loé lên
+                // dữ liệu lỗi thời (tệ nhất là bản của người kia sau khi hoà giải).
+                const saved = res.data.data;
+                setBase(saved);
+                setEditing(false);
+                setNote('');
+                App.Event.emit('roster:editing', uid, false);
+                App.Event.emit('roster:record', saved);
+            } catch (e) {
+                // 409/404: server đã đi trước ta. Kéo bản mới về, khối so sánh
+                // phía trên tự bật lên vì record.updated_at lệch base.
+                const code = e.response ? e.response.statusCode : 0;
+                if (code === 409) {
+                    setNote('Có người khác vừa sửa trước bạn — đối chiếu rồi lưu lại.');
+                    App.Event.emit('roster:refresh');
+                } else if (code === 404) {
+                    setNote('User đã bị xoá khỏi server.');
+                    App.Event.emit('roster:refresh');
+                } else {
+                    setNote('Lưu thất bại: ' + (e.message || e));
+                }
+            } finally {
+                setBusy(false);
+            }
+        },
+
+        async remove() {
+            try {
+                await App.Http.delete(API + '/' + uid);
+            } catch (e) {
+                setNote('Xoá thất bại: ' + (e.message || e));
+            }
+            App.Event.emit('roster:refresh');
+        },
+
+        /** Bản ghi đã mất trên server — POST lại bản nháp thành user mới. */
+        async recreate() {
+            setBusy(true);
+            try {
+                const res = await App.Http.post(API, {
+                    name: fName,
+                    email: fEmail,
+                    gender: fGender,
+                    birthdate: fBirthdate
+                });
+                setEditing(false);
+                setBase(null);
+                setNote('');
+                App.Event.emit('roster:editing', uid, false);
+                App.Event.emit('roster:record', res.data.data);
+                App.Event.emit('roster:refresh');
+            } catch (e) {
+                setNote('Tạo lại thất bại: ' + (e.message || e));
+            } finally {
+                setBusy(false);
+            }
+        }
+    };
+</script>

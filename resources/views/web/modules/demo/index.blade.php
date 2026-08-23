@@ -30,7 +30,7 @@
                 <div @class([$__VIEW_ID__ . '-c13c35fb'])>
                     <a @class([$__VIEW_ID__ . '-69452823']) @attr(['href' => '#playground'])>Playground</a>
                     <a @class([$__VIEW_ID__ . '-cd4d96c2']) @attr(['href' => '#coverage'])>Phạm vi hỗ trợ</a>
-                    <a @class([$__VIEW_ID__ . '-22cee8fd']) @attr(['href' => '/getting-started'])>Tài liệu</a>
+                    <a @class([$__VIEW_ID__ . '-22cee8fd']) @attr(['href' => '/docs/getting-started'])>Tài liệu</a>
                 </div>
             </nav>
 

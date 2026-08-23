@@ -29,6 +29,16 @@ const __VIEW_CONFIG__ = {
 
 
 
+/**
+ * Props của view — sinh tự động từ @props/@vars, không sửa tay.
+ * Optional hết vì khai báo nào cũng có default.
+ */
+export interface TodoProps {
+    /** viewId server gán khi hydrate */
+    __SSR_VIEW_ID__?: string;
+    [key: string]: any;
+}
+
 class TodoViewController extends ViewController {
     constructor(view: View) {
         super(view, __VIEW_PATH__, __VIEW_TYPE__);
@@ -41,7 +51,7 @@ class TodoViewController extends ViewController {
 }
 
 class TodoView extends View {
-    constructor(__data__: any = {}, systemData: any = {}) {
+    constructor(__data__: TodoProps = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, TodoViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -65,7 +75,7 @@ class TodoView extends View {
 
         const __UPDATE_DATA_TRAIT__: any = {};
         const set$todos = __STATE__.__.register('todos');
-        let todos: any = null;
+        let todos: any = [{"id": 1, "text": "Review hydration lifecycle", "completed": true}, {"id": 2, "text": "Test shared layout transition", "completed": false}, {"id": 3, "text": "Inspect runtime asset cleanup", "completed": false}];
         const setTodos = (state: any) => {
             todos = state;
             set$todos(state);
@@ -79,7 +89,7 @@ class TodoView extends View {
             }
         };
         const set$newTodo = __STATE__.__.register('newTodo');
-        let newTodo: any = null;
+        let newTodo: any = '';
         const setNewTodo = (state: any) => {
             newTodo = state;
             set$newTodo(state);
@@ -93,7 +103,7 @@ class TodoView extends View {
             }
         };
         const set$filter = __STATE__.__.register('filter');
-        let filter: any = null;
+        let filter: any = 'all';
         const setFilter = (state: any) => {
             filter = state;
             set$filter(state);
@@ -107,7 +117,7 @@ class TodoView extends View {
             }
         };
         const set$nextId = __STATE__.__.register('nextId');
-        let nextId: any = null;
+        let nextId: any = 4;
         const setNextId = (state: any) => {
             nextId = state;
             set$nextId(state);
@@ -121,7 +131,7 @@ class TodoView extends View {
             }
         };
         const set$activeCount = __STATE__.__.register('activeCount');
-        let activeCount: any = null;
+        let activeCount: any = 2;
         const setActiveCount = (state: any) => {
             activeCount = state;
             set$activeCount(state);
@@ -135,7 +145,7 @@ class TodoView extends View {
             }
         };
         const set$completedCount = __STATE__.__.register('completedCount');
-        let completedCount: any = null;
+        let completedCount: any = 1;
         const setCompletedCount = (state: any) => {
             completedCount = state;
             set$completedCount(state);
@@ -418,7 +428,7 @@ class TodoView extends View {
 }
 
 // Export factory function
-export function WebModulesHomeTodo(__data__ = {}, systemData = {}): TodoView {
+export function WebModulesHomeTodo(__data__: TodoProps = {}, systemData: any = {}): TodoView {
     return new TodoView(__data__, systemData);
 }
 export default WebModulesHomeTodo;

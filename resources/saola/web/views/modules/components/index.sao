@@ -1,0 +1,424 @@
+@states({
+    count: 0,
+    name: 'Saola',
+    agree: true,
+    tone: 'sky',
+    textSize: 'md',
+    status: 'ready',
+    runtime: 'blade',
+    items: [
+        { id: 1, label: 'Blade SSR' },
+        { id: 2, label: 'Hydrate' },
+        { id: 3, label: 'SPA takeover' }
+    ],
+    nextId: 4,
+    draft: '',
+    visible: true,
+    locked: false,
+    clicks: 0,
+    onceLeft: 1,
+    selfHits: 0,
+    price: 120,
+    qty: 2
+})
+
+
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>10</span> THỰC HÀNH</p>
+                <h1>Thư viện component.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Mỗi ví dụ dưới đây đang chạy thật trên chính trang này, kèm đúng đoạn <code>.sao</code> sinh ra nó. Bấm thử bên trái, đọc nguồn bên phải.</p>
+            </div>
+        </header>
+
+        <div class="cmp-page">
+            <div class="cmp-groups">
+
+                <section class="cmp-group">
+                    <div class="cmp-group-head">
+                        <h2>State &amp; sự kiện</h2>
+                        <p>Khai báo state ở đầu file, mỗi key tự có setter; event gắn thẳng lên thẻ.</p>
+                    </div>
+                    <div class="cmp-list">
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Counter</h3>
+                                    <p>Setter sinh tự động từ tên state.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">&#64;states</span><span class="ov-tag">&#64;click</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-num">{{ count }}</div>
+                                    <div class="cmp-row">
+                                        <button @click(setCount(count - 1))>−</button>
+                                        <button class="is-primary" @click(setCount(count + 1))>+</button>
+                                        <button @click(setCount(0))>Reset</button>
+                                    </div>
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&#64;states({ count: 0 })</span><span class="code-line"></span><span class="code-line">&lt;div&gt;<span class="mustache-token">count</span>&lt;/div&gt;</span><span class="code-line">&lt;button &#64;click(setCount(count + 1))&gt;+&lt;/button&gt;</span><span class="code-line">&lt;button &#64;click(setCount(0))&gt;Reset&lt;/button&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Modifier của event</h3>
+                                    <p><code>.once</code> chỉ chạy một lần; <code>.self</code> bỏ qua click từ phần tử con.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">.once</span><span class="ov-tag ov-tag--brand">.self</span><span class="ov-tag">.stop</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-row">
+                                        <button @click.once(setOnceLeft(0))>Chỉ chạy 1 lần</button>
+                                        <span class="cmp-chip cmp-chip--slate">còn lại: {{ onceLeft }}</span>
+                                    </div>
+                                    <div class="cmp-box" @click.self(setSelfHits(selfHits + 1))>
+                                        Bấm vào nền này thì đếm tăng — bấm
+                                        <button @click.stop(setClicks(clicks + 1))>nút bên trong</button>
+                                        thì không.
+                                    </div>
+                                    <p class="cmp-note">nền: {{ selfHits }} · nút con: {{ clicks }}</p>
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&lt;button &#64;click.once(setOnceLeft(0))&gt;…&lt;/button&gt;</span><span class="code-line"></span><span class="code-line">&lt;div &#64;click.self(setSelfHits(selfHits + 1))&gt;</span><span class="code-line">  &lt;button &#64;click.stop(setClicks(clicks + 1))&gt;…&lt;/button&gt;</span><span class="code-line">&lt;/div&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Biểu thức dẫn xuất</h3>
+                                    <p>Compiler suy ra vùng này phụ thuộc <code>price</code> và <code>qty</code>, chỉ tính lại khi hai state đó đổi.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">output</span><span class="ov-tag">stateKeys</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-row">
+                                        <label>Đơn giá <input type="number" @bind(price)></label>
+                                        <label>Số lượng <input type="number" @bind(qty)></label>
+                                    </div>
+                                    <div class="cmp-out">Thành tiền: {{ price * qty }}</div>
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&#64;states({ price: 120, qty: 2 })</span><span class="code-line"></span><span class="code-line">&lt;input type="number" &#64;bind(price)&gt;</span><span class="code-line">&lt;input type="number" &#64;bind(qty)&gt;</span><span class="code-line">&lt;div&gt;Thành tiền: <span class="mustache-token">price * qty</span>&lt;/div&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </section>
+
+                <section class="cmp-group">
+                    <div class="cmp-group-head">
+                        <h2>Binding hai chiều</h2>
+                        <p>Một directive cho mọi loại input: text, number, select, checkbox, radio.</p>
+                    </div>
+                    <div class="cmp-list">
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Text input</h3>
+                                    <p>Gõ vào ô thì state đổi, đổi state thì ô đổi theo.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">&#64;bind</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-row">
+                                        <input type="text" placeholder="Nhập tên…" @bind(name)>
+                                        <button @click(setName('Saola'))>Đặt lại</button>
+                                    </div>
+                                    <div class="cmp-out">Xin chào, {{ name }}.</div>
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&#64;states({ name: 'Saola' })</span><span class="code-line"></span><span class="code-line">&lt;input type="text" &#64;bind(name)&gt;</span><span class="code-line">&lt;div&gt;Xin chào, <span class="mustache-token">name</span>.&lt;/div&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Select &amp; checkbox</h3>
+                                    <p>Cùng <code class="directive-token">bind</code>, runtime tự chọn <code>value</code> hay <code>checked</code>.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">&#64;bind</span><span class="ov-tag">&#64;disabled</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-row">
+                                        <select @bind(tone)>
+                                            <option value="sky">sky</option>
+                                            <option value="indigo">indigo</option>
+                                            <option value="slate">slate</option>
+                                        </select>
+                                        <label><input type="checkbox" @bind(agree)> Đồng ý điều khoản</label>
+                                        <button class="is-primary" @disabled(!agree)>Gửi</button>
+                                    </div>
+                                    <div class="cmp-row">
+                                        <span @class(['cmp-chip', 'cmp-chip--sky': tone === 'sky', 'cmp-chip--indigo': tone === 'indigo', 'cmp-chip--slate': tone === 'slate'])>tone = {{ tone }}</span>
+                                    </div>
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&lt;select &#64;bind(tone)&gt;…&lt;/select&gt;</span><span class="code-line">&lt;input type="checkbox" &#64;bind(agree)&gt;</span><span class="code-line">&lt;button &#64;disabled(!agree)&gt;Gửi&lt;/button&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </section>
+
+                <section class="cmp-group">
+                    <div class="cmp-group-head">
+                        <h2>Ràng buộc thuộc tính</h2>
+                        <p>Class, style và boolean attribute đều đọc thẳng từ state.</p>
+                    </div>
+                    <div class="cmp-list">
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Class động</h3>
+                                    <p>Class tĩnh trộn với class có điều kiện; chỉ thuộc tính class được đụng tới, phần còn lại của thẻ giữ nguyên.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">&#64;class</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-row">
+                                        <button @click(setTextSize('sm'))>Nhỏ</button>
+                                        <button @click(setTextSize('md'))>Vừa</button>
+                                        <button @click(setTextSize('lg'))>Lớn</button>
+                                    </div>
+                                    <div @class(['cmp-box', 'txt-sm': textSize === 'sm', 'txt-lg': textSize === 'lg'])>Cỡ chữ hiện tại: {{ textSize }}.</div>
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&#64;states({ textSize: 'md' })</span><span class="code-line"></span><span class="code-line">&lt;div &#64;class(['box', 'txt-lg': textSize === 'lg'])&gt;…&lt;/div&gt;</span><span class="code-line">&lt;button &#64;click(setTextSize('lg'))&gt;Lớn&lt;/button&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Ẩn hiện &amp; readonly</h3>
+                                    <p>Bật tắt hiển thị bằng class có điều kiện — DOM vẫn nằm nguyên chỗ cũ.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">&#64;class</span><span class="ov-tag ov-tag--brand">&#64;readonly</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-row">
+                                        <button @click(setVisible(!visible))>Bật tắt khối</button>
+                                        <label><input type="checkbox" @bind(locked)> Khoá ô nhập</label>
+                                    </div>
+                                    <div @class(['cmp-box', 'is-hidden': !visible])>Khối này vẫn nằm trong DOM khi bị ẩn.</div>
+                                    <input type="text" @bind(draft) @readonly(locked) placeholder="Ghi chú…">
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&lt;div &#64;class(['box', 'is-hidden': !visible])&gt;…&lt;/div&gt;</span><span class="code-line">&lt;input &#64;bind(draft) &#64;readonly(locked)&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </section>
+
+                <section class="cmp-group">
+                    <div class="cmp-group-head">
+                        <h2>Điều khiển luồng</h2>
+                        <p>Mỗi khối là một vùng marker độc lập, chỉ render lại khi state phụ thuộc đổi.</p>
+                    </div>
+                    <div class="cmp-list">
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>If / elseif / else</h3>
+                                    <p>Compiler tự suy ra state nào khiến vùng này render lại.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">&#64;if</span><span class="ov-tag">&#64;elseif</span><span class="ov-tag">&#64;else</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-row">
+                                        <button @click(setStatus('ready'))>ready</button>
+                                        <button @click(setStatus('building'))>building</button>
+                                        <button @click(setStatus('error'))>error</button>
+                                    </div>
+                                    @if(status === 'ready')
+                                        <div class="cmp-out">Sẵn sàng — bundle khớp với view registry.</div>
+                                    @elseif(status === 'building')
+                                        <div class="cmp-box">Đang biên dịch view cho context web…</div>
+                                    @else
+                                        <div class="cmp-box">Có lỗi khi compile. Xem log của <code>sao-compile</code>.</div>
+                                    @endif
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&#64;if(status === 'ready')</span><span class="code-line">    &lt;div&gt;Sẵn sàng…&lt;/div&gt;</span><span class="code-line">&#64;elseif(status === 'building')</span><span class="code-line">    &lt;div&gt;Đang biên dịch…&lt;/div&gt;</span><span class="code-line">&#64;else</span><span class="code-line">    &lt;div&gt;Có lỗi…&lt;/div&gt;</span><span class="code-line">&#64;endif</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Switch</h3>
+                                    <p>Nhiều nhánh trong một vùng marker duy nhất.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">&#64;switch</span><span class="ov-tag">&#64;case</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-row">
+                                        <button @click(setRuntime('blade'))>Blade</button>
+                                        <button @click(setRuntime('client'))>Client</button>
+                                        <button @click(setRuntime('api'))>API</button>
+                                    </div>
+                                    @switch(runtime)
+                                        @case('blade')
+                                            <div class="cmp-out">Server render HTML hoàn chỉnh cho request đầu.</div>
+                                            @break
+                                        @case('client')
+                                            <div class="cmp-out">Runtime claim DOM rồi tiếp quản điều hướng.</div>
+                                            @break
+                                        @default
+                                            <div class="cmp-out">Context api trả JSON, không render view.</div>
+                                    @endswitch
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&#64;switch(runtime)</span><span class="code-line">    &#64;case('blade')</span><span class="code-line">        &lt;div&gt;Server render…&lt;/div&gt;</span><span class="code-line">        &#64;break</span><span class="code-line">    &#64;default</span><span class="code-line">        &lt;div&gt;Context api…&lt;/div&gt;</span><span class="code-line">&#64;endswitch</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Foreach có &#64;key</h3>
+                                    <p>Khoá quyết định slot nào được tái dùng khi danh sách đổi.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">&#64;foreach</span><span class="ov-tag ov-tag--brand">&#64;key</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    <div class="cmp-row">
+                                        <input type="text" placeholder="Thêm mục…" @bind(draft)>
+                                        <button class="is-primary" @click(addItem())>Thêm</button>
+                                    </div>
+                                    <ul class="cmp-ul">
+                                        @foreach(items as item)
+                                            @key(item['id'])
+                                            <li>
+                                                <span>{{ item['label'] }}</span>
+                                                <button @click(removeItem(item['id']))>Xoá</button>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                    @if(items.length === 0)
+                                        <p class="cmp-note">Danh sách trống.</p>
+                                    @endif
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&#64;foreach(items as item)</span><span class="code-line">    &#64;key(item['id'])</span><span class="code-line">    &lt;li&gt;</span><span class="code-line">        &lt;span&gt;<span class="mustache-token">item['label']</span>&lt;/span&gt;</span><span class="code-line">        &lt;button &#64;click(removeItem(item['id']))&gt;Xoá&lt;/button&gt;</span><span class="code-line">    &lt;/li&gt;</span><span class="code-line">&#64;endforeach</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </section>
+
+                <section class="cmp-group">
+                    <div class="cmp-group-head">
+                        <h2>Component con</h2>
+                        <p>Include tạo một view thật với ViewController và vòng đời riêng, không phải partial dán vào.</p>
+                    </div>
+                    <div class="cmp-list">
+
+                        <article class="cmp-item">
+                            <div class="cmp-head">
+                                <div>
+                                    <h3>Props &amp; children</h3>
+                                    <p>Prop đổi theo state của trang; nội dung giữa thẻ đi qua slot.</p>
+                                </div>
+                                <div class="ov-tags"><span class="ov-tag ov-tag--brand">&#64;include</span><span class="ov-tag ov-tag--brand">&#64;props</span><span class="ov-tag">&#64;children</span></div>
+                            </div>
+                            <div class="cmp-body">
+                                <div class="cmp-preview">
+                                    @include('web.modules.components.statcard', ['label' => 'Số lần bấm', 'value' => count, 'tone' => tone])
+                                    <p class="cmp-note">Đổi counter hoặc select tone ở trên rồi nhìn thẻ này cập nhật.</p>
+                                </div>
+                                <div class="cmp-source">
+                                    <pre><code><span class="code-line">&#64;props({ label: 'Label', value: '0', tone: 'sky' })</span><span class="code-line"></span><span class="code-line">&lt;div &#64;class(['card', 'card--indigo': tone === 'indigo'])&gt;</span><span class="code-line">  &lt;span&gt;<span class="mustache-token">label</span>&lt;/span&gt;</span><span class="code-line">  &lt;strong&gt;<span class="mustache-token">value</span>&lt;/strong&gt;</span><span class="code-line">  &#64;children</span><span class="code-line">&lt;/div&gt;</span></code></pre>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </section>
+
+                <section class="cmp-group">
+                    <div class="cmp-group-head">
+                        <h2>Trang mẫu đầy đủ</h2>
+                        <p>Ba fixture lớn hơn, mỗi cái tập trung vào một vấn đề thật.</p>
+                    </div>
+                    <div class="ov-grid ov-grid--3">
+                        <a class="ov-card" href="/demo">
+                            <span>Cú pháp</span>
+                            <h3>Interactive demo →</h3>
+                            <p>Chín nhóm cú pháp trong một trang, gồm cả phần chỉ chạy phía server.</p>
+                        </a>
+                        <a class="ov-card" href="/todo-list">
+                            <span>Layout</span>
+                            <h3>Todo workspace →</h3>
+                            <p>State cục bộ của trang trong khi layout giữ nguyên qua mỗi lần đổi route.</p>
+                        </a>
+                        <a class="ov-card" href="/roster">
+                            <span>Đồng thời</span>
+                            <h3>Roster sync →</h3>
+                            <p>Poll ba mươi giây và xử lý khi người khác sửa hoặc xoá bản ghi bạn đang mở.</p>
+                        </a>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <a class="doc-next" href="/docs">
+            <div><span>Quay lại</span><strong>Mục lục tài liệu</strong></div>
+            <span class="button button-primary">Mở tài liệu →</span>
+        </a>
+    @endblock
+</template>
+
+<script setup lang="ts">
+    export default {
+        name: 'ComponentsPage',
+
+        addItem() {
+            const label = draft.trim();
+            if (!label) return;
+            setItems([...items, { id: nextId, label }]);
+            setNextId(nextId + 1);
+            setDraft('');
+        },
+
+        removeItem(id) {
+            setItems(items.filter(i => i.id !== id));
+        }
+    };
+</script>

@@ -1,0 +1,57 @@
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>03</span> VIẾT VIEW</p>
+                <h1>Cấu trúc file .sao.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Bốn phần theo đúng thứ tự: khai báo, template, script setup và style. Wrapper của template quyết định bạn viết cú pháp kiểu JavaScript hay kiểu PHP.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>SFC</span> Single-file component</p>
+            <h2>Bốn phần, theo đúng thứ tự.</h2>
+            <p>Một file <code>.sao</code> gồm khai báo ở đầu file, template, <code>&lt;script setup&gt;</code> và <code>&lt;style&gt;</code>. Wrapper của template quyết định syntax mode.</p>
+            <div class="stack-diagram">
+                <article>
+                    <span>01 / DECLARATIONS</span>
+                    <strong>Đầu file</strong>
+                    <p><code class="directive-token">states</code> <code class="directive-token">props</code> <code class="directive-token">const</code> <code class="directive-token">let</code> <code class="directive-token">vars</code> <code class="directive-token">import</code> <code class="directive-token">await</code> — giữ nguyên thứ tự khai báo.</p>
+                </article>
+                <article>
+                    <span>02 / TEMPLATE</span>
+                    <strong>HTML + directive</strong>
+                    <p><code>&lt;template&gt;</code> hoặc <code>&lt;sao:blade&gt;</code> bật <em>modern syntax</em> kiểu JS; <code>&lt;blade&gt;</code> là legacy pass-through cú pháp PHP.</p>
+                </article>
+                <article>
+                    <span>03 / SCRIPT SETUP</span>
+                    <strong>Logic phía client</strong>
+                    <p>Export default một object method. Method đọc thẳng state và setter trong closure, không cần <code>this.</code>. <code>lang="ts"</code> thì output ra <code>.ts</code>.</p>
+                </article>
+                <article>
+                    <span>04 / STYLE</span>
+                    <strong>CSS của view</strong>
+                    <p><code>&lt;style scoped&gt;</code> gắn theo subtree của view, <code>&lt;style&gt;</code> là global. <code>&lt;link rel="stylesheet"&gt;</code> ở cấp file thành asset có ref-count.</p>
+                </article>
+            </div>
+            <p class="ov-sub">Modern syntax so với legacy</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>Biến</code></div><span>modern <code>user.name</code> — legacy <code>$user-&gt;name</code></span><b>expression</b></div>
+                <div><div class="dt-key"><code>Vòng lặp</code></div><span>modern <code>items as item</code> — legacy <code>$items as $item</code></span><b>control</b></div>
+                <div><div class="dt-key"><code>Object</code></div><span>modern <code>&#123;key: value&#125;</code> — legacy <code>['key' =&gt; $value]</code></span><b>literal</b></div>
+                <div><div class="dt-key"><code>Nối chuỗi</code></div><span>modern template literal — legacy toán tử <code>.</code></span><b>string</b></div>
+            </div>
+            <div class="ov-note">
+                Preprocessor chạy hai lượt: lượt một thu thập bảng ký hiệu, lượt hai biến đổi biểu thức. Nhờ vậy nó biết <code>user</code> là state hay biến vòng lặp trước khi quyết định dịch thành <code>$user</code> hay giữ nguyên.
+            </div>
+        </div>
+
+        <a class="doc-next" href="/docs/directives">
+            <div><span>Tiếp theo</span><strong>Tham chiếu directive</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

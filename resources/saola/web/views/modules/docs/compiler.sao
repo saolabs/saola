@@ -1,0 +1,54 @@
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <section class="page-hero page-hero-compiler">
+            <div><p class="kicker"><span>02 / COMPILER</span> Source synchronization</p><h1>Một AST.<br><em>Hai output đồng bộ.</em></h1></div>
+            <div class="page-hero-aside"><p>Compiler không chỉ đổi syntax. Nó bảo toàn ý nghĩa của view giữa Blade SSR và JavaScript runtime.</p><dl><div><dt>SOURCE</dt><dd>component.sao</dd></div><div><dt>TARGETS</dt><dd>.blade.php + .js</dd></div></dl></div>
+        </section>
+
+        <section class="compiler-board">
+            <div class="code-window source-window"><div class="window-bar"><span>SOURCE</span><b>card.sao</b><i>● ● ●</i></div><pre><code><span class="html-token">article class="card"</span>
+  <span class="html-token">h2</span><span class="mustache-token">title</span><span class="html-token html-token-close">h2</span>
+  <span class="directive-token">children</span>
+<span class="html-token html-token-close">article</span></code></pre></div>
+            <div class="compile-spine"><span>PARSE</span><i>↓</i><strong>AST</strong><i>↙ ↘</i><span>GENERATE</span></div>
+            <div class="target-stack">
+                <div class="code-window"><div class="window-bar"><span>SERVER</span><b>card.blade.php</b></div><pre><code><span class="html-token">article class="card"</span>
+  <span class="html-token">h2</span><span class="mustache-token">$title</span><span class="html-token html-token-close">h2</span>
+  <span class="blade-raw-token">$__ONE_CHILDREN_CONTENT__</span>
+<span class="html-token html-token-close">article</span></code></pre></div>
+                <div class="code-window code-window-dark"><div class="window-bar"><span>CLIENT</span><b>Card.js</b></div><pre><code>return this.wrapper([
+  this.html('article', [
+    this.output(title),
+    this.children()
+  ])
+]);</code></pre></div>
+            </div>
+        </section>
+
+        <section class="content-grid-section">
+            <div class="section-head compact"><p class="kicker"><span>SEMANTICS</span> Những khái niệm dễ nhầm</p><h2>Include tạo view.<br>Children tạo vị trí.</h2></div>
+            <div class="compare-grid">
+                <article><span>INCLUDE</span><h3>Chọn một view khác</h3><p><code class="directive-token">include</code> resolve component từ registry, tạo child ViewController và quản lý lifecycle riêng.</p><ul><li>Có identity của view</li><li>Có data/props riêng</li><li>Có thể lồng include</li></ul></article>
+                <article><span>CHILDREN</span><h3>Chọn lúc nội dung được render</h3><p><code class="directive-token">children</code> là outlet lazy. Nội dung không bị append trực tiếp; nó chỉ render khi traversal gặp đúng directive.</p><ul><li>Giữ context của caller</li><li>Đúng thứ tự DOM</li><li>Hydrate và rerender cùng contract</li></ul></article>
+                <article><span>ROOT AST</span><h3>View ngoài cùng vẫn là view</h3><p>AST gốc không tự trở thành children. Khi được route hoặc include resolve, nó là một view với wrapper và lifecycle rõ ràng.</p><ul><li>Route có thể mount trực tiếp</li><li>Include có thể mount làm con</li><li>Ownership không nhập nhằng</li></ul></article>
+            </div>
+        </section>
+
+        <section class="directive-section">
+            <div><p class="kicker"><span>DIRECTIVE MAP</span> Cùng nghĩa ở cả hai phía</p><h2>Template là contract,<br>không phải chuỗi HTML.</h2></div>
+            <div class="directive-table">
+                <div><code><span class="directive-token">extends</span></code><span>Resolve layout chain</span><b>STRUCTURE</b></div>
+                <div><code><span class="directive-token">block</span> / <span class="directive-token">useBlock</span></code><span>Đăng ký và mount nội dung vào outlet</span><b>COMPOSITION</b></div>
+                <div><code><span class="directive-token">include</span></code><span>Tạo child view theo registry hiện tại</span><b>VIEW</b></div>
+                <div><code><span class="directive-token">children</span></code><span>Render lazy child content tại vị trí khai báo</span><b>CONTENT</b></div>
+                <div><code><span class="directive-token">if</span> / <span class="directive-token">foreach</span></code><span>Tạo vùng reactive có marker ổn định</span><b>CONTROL</b></div>
+                <div><code><span class="directive-token">click</span> / <span class="directive-token">bind</span></code><span>Nối event và state dependency</span><b>BEHAVIOR</b></div>
+            </div>
+        </section>
+        <a class="doc-next" href="/docs/sao-file">
+            <div><span>Tiếp theo</span><strong>Cấu trúc file .sao</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

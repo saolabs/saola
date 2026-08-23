@@ -29,6 +29,16 @@ const __VIEW_CONFIG__ = {
 
 
 
+/**
+ * Props của view — sinh tự động từ @props/@vars, không sửa tay.
+ * Optional hết vì khai báo nào cũng có default.
+ */
+export interface IndexProps {
+    /** viewId server gán khi hydrate */
+    __SSR_VIEW_ID__?: string;
+    [key: string]: any;
+}
+
 class IndexViewController extends ViewController {
     constructor(view: View) {
         super(view, __VIEW_PATH__, __VIEW_TYPE__);
@@ -41,7 +51,7 @@ class IndexViewController extends ViewController {
 }
 
 class IndexView extends View {
-    constructor(__data__: any = {}, systemData: any = {}) {
+    constructor(__data__: IndexProps = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, IndexViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -65,7 +75,7 @@ class IndexView extends View {
 
         const __UPDATE_DATA_TRAIT__: any = {};
         const set$count = __STATE__.__.register('count');
-        let count: any = null;
+        let count: any = 3;
         const setCount = (state: any) => {
             count = state;
             set$count(state);
@@ -79,7 +89,7 @@ class IndexView extends View {
             }
         };
         const set$name = __STATE__.__.register('name');
-        let name: any = null;
+        let name: any = 'Saola';
         const setName = (state: any) => {
             name = state;
             set$name(state);
@@ -93,7 +103,7 @@ class IndexView extends View {
             }
         };
         const set$selectedPanel = __STATE__.__.register('selectedPanel');
-        let selectedPanel: any = null;
+        let selectedPanel: any = 'state';
         const setSelectedPanel = (state: any) => {
             selectedPanel = state;
             set$selectedPanel(state);
@@ -107,7 +117,7 @@ class IndexView extends View {
             }
         };
         const set$status = __STATE__.__.register('status');
-        let status: any = null;
+        let status: any = 'ready';
         const setStatus = (state: any) => {
             status = state;
             set$status(state);
@@ -121,7 +131,7 @@ class IndexView extends View {
             }
         };
         const set$isVisible = __STATE__.__.register('isVisible');
-        let isVisible: any = null;
+        let isVisible: any = true;
         const setIsVisible = (state: any) => {
             isVisible = state;
             set$isVisible(state);
@@ -135,7 +145,7 @@ class IndexView extends View {
             }
         };
         const set$isLocked = __STATE__.__.register('isLocked');
-        let isLocked: any = null;
+        let isLocked: any = false;
         const setIsLocked = (state: any) => {
             isLocked = state;
             set$isLocked(state);
@@ -149,7 +159,7 @@ class IndexView extends View {
             }
         };
         const set$accepted = __STATE__.__.register('accepted');
-        let accepted: any = null;
+        let accepted: any = false;
         const setAccepted = (state: any) => {
             accepted = state;
             set$accepted(state);
@@ -163,7 +173,7 @@ class IndexView extends View {
             }
         };
         const set$selectedRuntime = __STATE__.__.register('selectedRuntime');
-        let selectedRuntime: any = null;
+        let selectedRuntime: any = 'blade';
         const setSelectedRuntime = (state: any) => {
             selectedRuntime = state;
             set$selectedRuntime(state);
@@ -177,7 +187,7 @@ class IndexView extends View {
             }
         };
         const set$note = __STATE__.__.register('note');
-        let note: any = null;
+        let note: any = '';
         const setNote = (state: any) => {
             note = state;
             set$note(state);
@@ -191,7 +201,7 @@ class IndexView extends View {
             }
         };
         const set$sampleItems = __STATE__.__.register('sampleItems');
-        let sampleItems: any = null;
+        let sampleItems: any = [{"id": 1, "label": "Blade output", "enabled": true}, {"id": 2, "label": "JavaScript view", "enabled": true}, {"id": 3, "label": "Scoped CSS", "enabled": false}];
         const setSampleItems = (state: any) => {
             sampleItems = state;
             set$sampleItems(state);
@@ -307,7 +317,7 @@ class IndexView extends View {
                             this.text('Phạm vi hỗ trợ')
                             ]),
                         this.html(`22cee8fd`, "a", parentElement,
-                            { attrs: { "href": { type: 'static', value: "/getting-started" } } },
+                            { attrs: { "href": { type: 'static', value: "/docs/getting-started" } } },
                             (parentElement: any) => [
                             this.text('Tài liệu')
                             ])
@@ -357,7 +367,7 @@ class IndexView extends View {
                         { classes: [{ type: 'static', value: "hero-note" }] },
                         (parentElement: any) => [
                         this.html(`d1051098`, "strong", parentElement, {}, (parentElement: any) => [
-                            this.output(`8dfe6749`, parentElement, true, [], (parentElement: any) => featureTotal)
+                            this.text(String(featureTotal ?? ''))
                         ]),
                         this.html(`6ef066f6`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('nhóm cú pháp được tài liệu hóa')
@@ -708,7 +718,7 @@ class IndexView extends View {
                                     ]),
                                 this.html(`5fe12573`, "small", parentElement, {}, (parentElement: any) => [
                                     this.text('Giới hạn mẫu: 0–'),
-                                    this.output(`2d0ce7db`, parentElement, true, [], (parentElement: any) => MAX_COUNT)
+                                    this.text(String(MAX_COUNT ?? ''))
                                 ])
                             ]
                             })),
@@ -746,7 +756,7 @@ class IndexView extends View {
                                     ]),
                                     this.text(' được import. Tiêu đề và số là props; nội dung đoạn này đi qua slot '),
                                     this.html(`0ea168d2`, "code", parentElement, {}, (parentElement: any) => [
-                                        this.text('&#64;children')
+                                        this.text('@children')
                                     ]),
                                     this.text('.')
                                 ])
@@ -778,35 +788,35 @@ class IndexView extends View {
                             ]),
                             this.html(`e507f63c`, "p", parentElement, {}, (parentElement: any) => [
                                 this.html(`0f9f3c92`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;states')
+                                    this.text('@states')
                                 ]),
                                 this.text(', '),
                                 this.html(`11228f95`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;state')
+                                    this.text('@state')
                                 ]),
                                 this.text(', '),
                                 this.html(`1bd83dfd`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;props')
+                                    this.text('@props')
                                 ]),
                                 this.text(', '),
                                 this.html(`8476cef6`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;const')
+                                    this.text('@const')
                                 ]),
                                 this.text(', '),
                                 this.html(`25d54a81`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;let')
+                                    this.text('@let')
                                 ]),
                                 this.text(', '),
                                 this.html(`2e57333e`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;vars')
+                                    this.text('@vars')
                                 ]),
                                 this.text(', '),
                                 this.html(`eb6834cf`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;import')
+                                    this.text('@import')
                                 ]),
                                 this.text(', '),
                                 this.html(`88a4d770`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;await')
+                                    this.text('@await')
                                 ])
                             ]),
                             this.html(`4b211548`, "span", parentElement, {}, (parentElement: any) => [
@@ -819,31 +829,31 @@ class IndexView extends View {
                             ]),
                             this.html(`5faf36b1`, "p", parentElement, {}, (parentElement: any) => [
                                 this.html(`2d990fba`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;extends')
+                                    this.text('@extends')
                                 ]),
                                 this.text(', '),
                                 this.html(`4a81cfbe`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;block')
+                                    this.text('@block')
                                 ]),
                                 this.text(', '),
                                 this.html(`d7e74641`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;section')
+                                    this.text('@section')
                                 ]),
                                 this.text(', '),
                                 this.html(`414c62c2`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;yield')
+                                    this.text('@yield')
                                 ]),
                                 this.text(', '),
                                 this.html(`c55390f6`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;include')
+                                    this.text('@include')
                                 ]),
                                 this.text(', '),
                                 this.html(`24748e05`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;children')
+                                    this.text('@children')
                                 ]),
                                 this.text(', '),
                                 this.html(`daffd75d`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;exec')
+                                    this.text('@exec')
                                 ])
                             ]),
                             this.html(`01bc413c`, "span", parentElement, {}, (parentElement: any) => [
@@ -856,35 +866,35 @@ class IndexView extends View {
                             ]),
                             this.html(`fdae1d56`, "p", parentElement, {}, (parentElement: any) => [
                                 this.html(`64d42a83`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;if')
+                                    this.text('@if')
                                 ]),
                                 this.text(', '),
                                 this.html(`5a202243`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;foreach')
+                                    this.text('@foreach')
                                 ]),
                                 this.text(', '),
                                 this.html(`e3537807`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;for')
+                                    this.text('@for')
                                 ]),
                                 this.text(', '),
                                 this.html(`69767f16`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;while')
+                                    this.text('@while')
                                 ]),
                                 this.text(', '),
                                 this.html(`1a038ceb`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;switch')
+                                    this.text('@switch')
                                 ]),
                                 this.text(', '),
                                 this.html(`6137dcae`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;break')
+                                    this.text('@break')
                                 ]),
                                 this.text(', '),
                                 this.html(`ce112366`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;continue')
+                                    this.text('@continue')
                                 ]),
                                 this.text(', '),
                                 this.html(`14d8ce2f`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;ssr')
+                                    this.text('@ssr')
                                 ])
                             ]),
                             this.html(`d956ab68`, "span", parentElement, {}, (parentElement: any) => [
@@ -897,31 +907,31 @@ class IndexView extends View {
                             ]),
                             this.html(`6f5bcdbd`, "p", parentElement, {}, (parentElement: any) => [
                                 this.html(`8e1de079`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;attr')
+                                    this.text('@attr')
                                 ]),
                                 this.text(', '),
                                 this.html(`5f991a41`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;class')
+                                    this.text('@class')
                                 ]),
                                 this.text(', '),
                                 this.html(`e436284f`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;style')
+                                    this.text('@style')
                                 ]),
                                 this.text(', '),
                                 this.html(`5a992cc4`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;bind')
+                                    this.text('@bind')
                                 ]),
                                 this.text(', '),
                                 this.html(`daa8e59d`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;val')
+                                    this.text('@val')
                                 ]),
                                 this.text(', '),
                                 this.html(`058b8fb0`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;show')
+                                    this.text('@show')
                                 ]),
                                 this.text(', '),
                                 this.html(`ac28fd2f`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;hide')
+                                    this.text('@hide')
                                 ]),
                                 this.text(', boolean attributes')
                             ]),
@@ -935,31 +945,31 @@ class IndexView extends View {
                             ]),
                             this.html(`1ffcdb8e`, "p", parentElement, {}, (parentElement: any) => [
                                 this.html(`352f19a3`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;csrf')
+                                    this.text('@csrf')
                                 ]),
                                 this.text(', '),
                                 this.html(`1b8157dc`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;method')
+                                    this.text('@method')
                                 ]),
                                 this.text(', '),
                                 this.html(`916317ad`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;auth')
+                                    this.text('@auth')
                                 ]),
                                 this.text(', '),
                                 this.html(`ab8b086a`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;guest')
+                                    this.text('@guest')
                                 ]),
                                 this.text(', '),
                                 this.html(`33fff89c`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;can')
+                                    this.text('@can')
                                 ]),
                                 this.text(', '),
                                 this.html(`57bfe208`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;cannot')
+                                    this.text('@cannot')
                                 ]),
                                 this.text(', '),
                                 this.html(`76cda61c`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&#64;error')
+                                    this.text('@error')
                                 ])
                             ]),
                             this.html(`1360a086`, "span", parentElement, {}, (parentElement: any) => [
@@ -972,11 +982,11 @@ class IndexView extends View {
                             ]),
                             this.html(`85b8a6c1`, "p", parentElement, {}, (parentElement: any) => [
                                 this.html(`b0861b21`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&lt;script setup lang="ts"&gt;')
+                                    this.text('<script setup lang="ts">')
                                 ]),
                                 this.text(', '),
                                 this.html(`efea05bf`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('&lt;style scoped&gt;')
+                                    this.text('<style scoped>')
                                 ]),
                                 this.text(', magic variables và wrapper modern / legacy')
                             ]),
@@ -1013,7 +1023,7 @@ class IndexView extends View {
 }
 
 // Export factory function
-export function WebModulesDemoIndex(__data__ = {}, systemData = {}): IndexView {
+export function WebModulesDemoIndex(__data__: IndexProps = {}, systemData: any = {}): IndexView {
     return new IndexView(__data__, systemData);
 }
 export default WebModulesDemoIndex;

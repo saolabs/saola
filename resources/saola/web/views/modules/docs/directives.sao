@@ -1,0 +1,458 @@
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>04</span> THAM CHIẾU</p>
+                <h1>Toàn bộ directive.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Mỗi directive dưới đây có cú pháp, giải thích nó thật sự làm gì, một ví dụ chạy được và ghi chú khi có cạm bẫy. Trừ khi ghi khác, directive có mặt ở cả hai đầu ra: Blade cho SSR và JavaScript cho runtime.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <nav class="dir-toc" aria-label="Nhóm directive">
+                <a href="#khai-bao" data-nav="disabled">Khai báo</a>
+                <a href="#xuat-gia-tri" data-nav="disabled">Xuất giá trị</a>
+                <a href="#dieu-khien" data-nav="disabled">Điều khiển luồng</a>
+                <a href="#thuoc-tinh" data-nav="disabled">Thuộc tính &amp; binding</a>
+                <a href="#su-kien" data-nav="disabled">Sự kiện</a>
+                <a href="#layout" data-nav="disabled">Layout &amp; component</a>
+                <a href="#tien-ich" data-nav="disabled">Quyền, form &amp; tiện ích</a>
+                <a href="#magic" data-nav="disabled">Biến ma thuật</a>
+            </nav>
+
+            <section class="dir-group" id="khai-bao">
+                <h2>Khai báo</h2>
+                <p>Nằm ở đầu file, ngoài <code>&lt;template&gt;</code>, và giữ nguyên thứ tự bạn viết. Đây là nơi quyết định biến nào reactive, biến nào không.</p>
+
+                <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;states</span><span class="dir-kind">Reactive</span></div>
+                        <div class="dir-sig">&#64;states({ key: giá_trị, ... })</div>
+                        <p>Khai báo một khối state reactive. Mỗi khoá sinh ra ba thứ: biến đọc được trong template và trong <code>&lt;script setup&gt;</code>, một setter <code>setTênKhoá()</code>, và một slot trong StateManager để các vùng marker đăng ký phụ thuộc.</p>
+                        <p>Giá trị bạn viết ở đây là giá trị khởi tạo cho <em>cả</em> lần render server lẫn lần hydrate — nhờ vậy HTML server trả về và cây element client dựng ra khớp nhau.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;states({ count: 0, name: 'Saola', items: [] })</span><span class="code-line"></span><span class="code-line">&lt;button &#64;click(setCount(count + 1))&gt;<span class="mustache-token">count</span>&lt;/button&gt;</span></code></pre></div>
+                        <p class="dir-note">Tên setter là <code>set</code> + tên khoá viết hoa chữ đầu: <code>count</code> → <code>setCount</code>, <code>isOpen</code> → <code>setIsOpen</code>. Gọi setter với cùng reference vẫn được nhận nếu nội dung tầng một đã đổi, nên <code>list.splice(i,1); setList(list)</code> hoạt động.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;state</span><span class="dir-kind">Reactive</span></div>
+                        <div class="dir-sig">&#64;state(tên = giá_trị)
+&#64;state(a = 1, b = 2)</div>
+                        <p>Giống <code>&#64;states</code> nhưng viết theo kiểu gán từng biến. Dùng khi chỉ có một hai state và khối object trông rườm rà.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;state(editMode = false)</span><span class="code-line">&#64;state(page = 1, perPage = 20)</span></code></pre></div>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;props</span><span class="dir-kind">Đầu vào component</span></div>
+                        <div class="dir-sig">&#64;props({ tên: mặc_định, ... })
+&#64;props(tên, khác = 'mặc định')</div>
+                        <p>Khai báo dữ liệu view này nhận từ bên gọi. Prop cũng là slot reactive: khi view cha đổi state mà biểu thức prop phụ thuộc vào, runtime đẩy giá trị mới vào <em>đúng instance con đang sống</em> chứ không dựng lại view con.</p>
+                        <p>Giá trị trong ngoặc là mặc định, dùng khi bên gọi không truyền khoá đó.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line c">&lt;!-- statcard.sao --&gt;</span><span class="code-line">&#64;props({ label: 'Label', value: '0', tone: 'sky' })</span><span class="code-line"></span><span class="code-line c">&lt;!-- bên gọi --&gt;</span><span class="code-line">&#64;include('web.modules.demo.statcard', ['label' =&gt; 'Lượt bấm', 'value' =&gt; count])</span></code></pre></div>
+                        <p class="dir-note">Mảng props ở <code>&#64;include</code> viết theo cú pháp mảng PHP (<code>'khoá' =&gt; giá_trị</code>) ngay cả trong template modern syntax.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;const</span><span class="dir-kind">Bất biến</span></div>
+                        <div class="dir-sig">&#64;const(TÊN = giá_trị)
+&#64;const([x, setX] = useState(0))</div>
+                        <p>Hằng số cho view. Dạng thứ hai là destructuring kiểu React: tạo một cặp state và setter mà không cần khai báo trong <code>&#64;states</code>.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;const(API = '/api/api/roster')</span><span class="code-line">&#64;const([message, setMessage] = useState('Xin chào'))</span></code></pre></div>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;let</span><span class="dir-kind">Không reactive</span></div>
+                        <div class="dir-sig">&#64;let(tên = biểu_thức)</div>
+                        <p>Biến cục bộ có thể gán lại nhưng <strong>không</strong> reactive: đổi nó không làm vùng nào render lại. Dùng cho giá trị dẫn xuất tính một lần lúc dựng view.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;let(total = price * qty)</span><span class="code-line">&#64;let(greeting = `Xin chào ${name}`)</span></code></pre></div>
+                        <p class="dir-note dir-note--warn">Nếu bạn muốn giá trị tự cập nhật theo state thì đừng dùng <code>&#64;let</code> — viết thẳng biểu thức trong template, compiler sẽ tự suy ra vùng đó phụ thuộc state nào.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;vars</span><span class="dir-kind">Dữ liệu server</span></div>
+                        <div class="dir-sig">&#64;vars(users, posts)
+&#64;vars(users = [])</div>
+                        <p>Khai báo biến do controller truyền xuống. Không reactive — nó là dữ liệu của lần render này, không phải state người dùng thay đổi được.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line c">// controller: return $this-&gt;response(['results' =&gt; $rows]);</span><span class="code-line">&#64;vars(results = [])</span><span class="code-line"></span><span class="code-line">&#64;foreach(results as row) … &#64;endforeach</span></code></pre></div>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;import</span><span class="dir-kind">Component</span></div>
+                        <div class="dir-sig">&#64;import(__template__ + 'counter')
+&#64;import(__template__ + 'card' as card)
+&#64;import({ a: 'path.a', b: __template__ + 'b' })</div>
+                        <p>Nạp view khác vào phạm vi hiện tại và đăng ký nó vào registry component của file. Sau khi import, có thể dùng như thẻ tuỳ chỉnh trong template thay vì gọi <code>&#64;include</code> mỗi lần.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;import(__template__ + 'demo.featurecard')</span><span class="code-line"></span><span class="code-line">&lt;featurecard number="01" title="Reactive state"&gt;…&lt;/featurecard&gt;</span></code></pre></div>
+                        <p class="dir-note">Thuộc tính của thẻ tuỳ chỉnh chỉ nhận chuỗi tĩnh. Cần truyền biểu thức thì dùng <code>&#64;include</code> với mảng props.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;await</span><span class="dir-kind">Async</span></div>
+                        <div class="dir-sig">&#64;await</div>
+                        <p>Đánh dấu view là bất đồng bộ. Compiler bật cờ <code>hasAwaitData</code> trong config, runtime nhờ đó biết view cần chờ dữ liệu trước khi commit state, và có thể render khối preload trong lúc chờ.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;computed</span><span class="dir-kind">Dẫn xuất</span></div>
+                        <div class="dir-sig">&#64;computed(tên = biểu_thức)</div>
+                        <p>State dẫn xuất có memo hoá. Chỉ tính lại khi một trong các state phụ thuộc đổi, và tính <em>lười</em> — đánh dấu bẩn lúc dep đổi, tính thật lúc có người đọc. Dep đổi năm lần trong một batch thì chỉ tính một lần.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;states({ users: [] })</span><span class="code-line">&#64;computed(activeCount = users.filter(u =&gt; u.active).length)</span></code></pre></div>
+                        <p class="dir-note dir-note--warn"><strong>Hiện chỉ chạy phía client.</strong> Directive này không được emit ở đầu ra Blade nên biến bị undefined khi render server. Trang cần SSR thì viết thẳng biểu thức trong template.</p>
+                    </article>
+
+                </div>
+            </section>
+
+            <section class="dir-group" id="xuat-gia-tri">
+                <h2>Xuất giá trị</h2>
+                <p>Mỗi chỗ nội suy được bọc trong một cặp marker riêng, nên đổi state chỉ thay đúng đoạn text đó chứ không render lại cả thẻ cha.</p>
+                <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#123;&#123; … &#125;&#125;</span><span class="dir-kind">Escape</span></div>
+                        <div class="dir-sig">&#123;&#123; biểu_thức &#125;&#125;</div>
+                        <p>In giá trị dưới dạng text an toàn. Nội dung được đặt bằng text node nên không có đường nào để chuỗi biến thành HTML.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&lt;h1&gt;<span class="mustache-token">user['name']</span>&lt;/h1&gt;</span><span class="code-line">&lt;span&gt;<span class="mustache-token">price * qty</span>&lt;/span&gt;</span></code></pre></div>
+                        <p class="dir-note">Biểu thức được phép, không chỉ tên biến. Compiler đọc biểu thức để suy ra danh sách state mà vùng này phụ thuộc.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#123;!! … !!&#125;</span><span class="dir-kind">Raw HTML</span></div>
+                        <div class="dir-sig">&#123;!! biểu_thức !!&#125;</div>
+                        <p>In nguyên HTML, không escape. Chỉ dùng cho nội dung bạn tự sinh ra hoặc đã làm sạch — đây là đường duy nhất để chuỗi từ dữ liệu trở thành thẻ thật.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#123;&#123;-- … --&#125;&#125;</span><span class="dir-kind">Ghi chú</span></div>
+                        <div class="dir-sig">&#123;&#123;-- ghi chú --&#125;&#125;</div>
+                        <p>Ghi chú của template. Bị loại hoàn toàn khỏi cả hai đầu ra, khác với <code>&lt;!-- --&gt;</code> vốn đi thẳng vào HTML.</p>
+                    </article>
+
+                </div>
+            </section>
+
+            <section class="dir-group" id="dieu-khien">
+                <h2>Điều khiển luồng</h2>
+                <p>Mỗi khối trở thành một <em>vùng reactive</em>: một cặp marker trong DOM cộng danh sách state mà điều kiện phụ thuộc. State đổi thì chỉ nội dung giữa hai marker đó được dựng lại.</p>
+                <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;if <em>· &#64;elseif · &#64;else · &#64;endif</em></span><span class="dir-kind">Vùng reactive</span></div>
+                        <div class="dir-sig">&#64;if(điều_kiện)
+    …
+&#64;elseif(điều_kiện_khác)
+    …
+&#64;else
+    …
+&#64;endif</div>
+                        <p>Compiler đọc biểu thức điều kiện, rút ra danh sách state trong đó và gắn vào vùng. Không có dependency tracking lúc chạy — phụ thuộc được tính sẵn lúc biên dịch.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;if(status === 'ready')</span><span class="code-line">    &lt;p&gt;Sẵn sàng&lt;/p&gt;</span><span class="code-line">&#64;elseif(status === 'building')</span><span class="code-line">    &lt;p&gt;Đang biên dịch…&lt;/p&gt;</span><span class="code-line">&#64;else</span><span class="code-line">    &lt;p&gt;Có lỗi&lt;/p&gt;</span><span class="code-line">&#64;endif</span></code></pre></div>
+                        <p class="dir-note">Đặt <code>&#64;if</code> bên trong <code>&#64;foreach</code> thì mỗi item có vùng marker riêng, nên đổi một item không đụng các item khác.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;foreach <em>· &#64;endforeach</em></span><span class="dir-kind">Vùng reactive</span></div>
+                        <div class="dir-sig">&#64;foreach(danh_sách as item)
+&#64;foreach(danh_sách as khoá =&gt; item)</div>
+                        <p>Lặp có <em>reconciliation</em>: runtime giữ một cache slot cho mỗi item. Khi danh sách đổi, item nào còn nguyên thì giữ nguyên DOM và mọi subscription của nó; item rời danh sách thì element bị destroy hẳn chứ không bỏ rơi.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;foreach(items as item)</span><span class="code-line">    &#64;key(item['id'])</span><span class="code-line">    &lt;li&gt;<span class="mustache-token">item['label']</span>&lt;/li&gt;</span><span class="code-line">&#64;endforeach</span></code></pre></div>
+                        <p class="dir-note dir-note--warn">Slot chỉ được tái dùng khi khoá khớp <strong>và</strong> reference của item không đổi — vì output biên dịch đóng gói thẳng object item vào closure. Refetch từ server trả object mới sẽ dựng lại hàng đó. Muốn giữ state của view con qua mỗi lần đồng bộ thì lặp trên danh sách id ổn định rồi truyền dữ liệu qua props.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;key</span><span class="dir-kind">Bổ trợ vòng lặp</span></div>
+                        <div class="dir-sig">&#64;key(biểu_thức)</div>
+                        <p>Đặt ngay dòng đầu thân vòng lặp. Nó cho cache biết lấy gì làm định danh của item. Không có <code>&#64;key</code> thì runtime dùng chính reference object làm khoá, và hậu tố id của marker rơi về chỉ số vòng lặp — phải khớp với phía SSR thì hydrate mới không lệch.</p>
+                        <p>Khoá còn giúp phân biệt các item trùng nhau trong danh sách nguyên thuỷ, ví dụ <code>['a', 'b', 'a']</code>.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;forelse <em>· &#64;empty · &#64;endforelse</em></span><span class="dir-kind">Vùng reactive</span></div>
+                        <div class="dir-sig">&#64;forelse(danh_sách as item)
+    …
+&#64;empty
+    …
+&#64;endforelse</div>
+                        <p>Như <code>&#64;foreach</code> nhưng có sẵn nhánh cho danh sách rỗng, khỏi phải viết thêm một <code>&#64;if</code> đếm phần tử.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;for <em>· &#64;while</em></span><span class="dir-kind">Vùng reactive</span></div>
+                        <div class="dir-sig">&#64;for(i = 0; i &lt; n; i++) … &#64;endfor
+&#64;while(điều_kiện) … &#64;endwhile</div>
+                        <p>Vòng lặp đếm và vòng lặp điều kiện. <code>&#64;while</code> có trần lặp ở runtime để một điều kiện sai không treo trình duyệt.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;for(i = 0; i &lt; count; i++)</span><span class="code-line">    &lt;li&gt;Ping #<span class="mustache-token">i + 1</span>&lt;/li&gt;</span><span class="code-line">&#64;endfor</span></code></pre></div>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;switch <em>· &#64;case · &#64;default · &#64;break</em></span><span class="dir-kind">Vùng reactive</span></div>
+                        <div class="dir-sig">&#64;switch(biểu_thức)
+    &#64;case('a')
+        …
+        &#64;break
+    &#64;default
+        …
+&#64;endswitch</div>
+                        <p>Nhiều nhánh gói trong một vùng marker duy nhất. Nhớ <code>&#64;break</code> ở cuối mỗi <code>&#64;case</code>, đúng ngữ nghĩa switch chứ không phải if-else.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;continue <em>· &#64;break</em></span><span class="dir-kind">Điều khiển</span></div>
+                        <div class="dir-sig">&#64;continue
+&#64;break
+&#64;continue(điều_kiện)</div>
+                        <p>Bỏ qua vòng hiện tại hoặc thoát vòng lặp. Nhận điều kiện tuỳ chọn để khỏi bọc thêm một <code>&#64;if</code>.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;ssr <em>· &#64;endssr</em></span><span class="dir-kind">Chỉ server</span></div>
+                        <div class="dir-sig">&#64;ssr … &#64;endssr</div>
+                        <p>Khối chỉ tồn tại ở đầu ra Blade. Compiler loại nó khỏi view JavaScript, nên nội dung bên trong xuất hiện trong HTML lần đầu rồi không bao giờ được runtime dựng lại. Hợp cho dữ liệu chỉ có ở server hoặc khối nặng không cần tương tác.</p>
+                        <p class="dir-note">Bí danh: <code>&#64;serverSide</code> / <code>&#64;endServerSide</code>, <code>&#64;useSSR</code> / <code>&#64;enduseSSR</code>.</p>
+                    </article>
+
+                </div>
+            </section>
+
+            <section class="dir-group" id="thuoc-tinh">
+                <h2>Thuộc tính &amp; binding</h2>
+                <p>Nhóm này viết <em>bên trong thẻ mở</em>. Runtime chia chúng thành bốn rổ khác nhau — <code>attrs</code>, <code>props</code>, <code>classes</code>, <code>styles</code> — vì đặt thuộc tính HTML và gán property của element không giống nhau.</p>
+                <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;attr</span><span class="dir-kind">attrs</span></div>
+                        <div class="dir-sig">&#64;attr({ tên: giá_trị, ... })</div>
+                        <p>Thuộc tính động. Giá trị <code>null</code>, <code>undefined</code> hoặc <code>false</code> làm runtime <em>gỡ hẳn</em> thuộc tính khỏi thẻ chứ không đặt chuỗi rỗng.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&lt;a &#64;attr({ href: link, title: docTitle })&gt;…&lt;/a&gt;</span></code></pre></div>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;class</span><span class="dir-kind">classes</span></div>
+                        <div class="dir-sig">&#64;class(['tĩnh', 'có-điều-kiện': biểu_thức])</div>
+                        <p>Trộn class tĩnh với class có điều kiện. Runtime chỉ bật tắt đúng những class có điều kiện, không ghi đè cả thuộc tính <code>class</code> — nên class do code khác thêm vào vẫn còn.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&lt;div &#64;class(['card', 'card--active': isActive, 'card--gone': record === null])&gt;</span></code></pre></div>
+                        <p class="dir-note dir-note--warn">Tránh dấu <code>&gt;</code> hoặc <code>&lt;</code> trong biểu thức: bộ phân tích thẻ ở đầu ra Blade đóng thẻ sớm tại đó. Viết <code>count !== 0</code> thay cho <code>count &gt; 0</code>.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;style</span><span class="dir-kind">styles</span></div>
+                        <div class="dir-sig">&#64;style({ 'thuộc-tính': giá_trị })</div>
+                        <p>Inline style theo state, đặt qua <code>style.setProperty</code> nên chỉ những thuộc tính bạn liệt kê bị đụng tới.</p>
+                        <p class="dir-note dir-note--warn"><strong>Dạng object của modern syntax hiện chưa ra đúng ở đầu ra JavaScript</strong> — nó rã thành các thuộc tính tĩnh rời rạc nên binding không chạy sau hydrate. Tạm thời dùng <code>&#64;class</code> với vài class dựng sẵn.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;bind <em>· &#64;val</em></span><span class="dir-kind">Hai chiều</span></div>
+                        <div class="dir-sig">&#64;bind(tên_state)</div>
+                        <p>Binding hai chiều. Runtime tự chọn cách đọc ghi theo loại input: <code>checked</code> cho checkbox, so khớp <code>value</code> cho radio, <code>valueAsNumber</code> cho number và range, còn lại là <code>value</code>. Với <code>&lt;select&gt;</code>, việc gán giá trị được hoãn một microtask vì <code>&lt;option&gt;</code> chưa kịp có mặt lúc thẻ vừa tạo.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&lt;input type="text" &#64;bind(name)&gt;</span><span class="code-line">&lt;input type="checkbox" &#64;bind(agree)&gt;</span><span class="code-line">&lt;select &#64;bind(tone)&gt;…&lt;/select&gt;</span></code></pre></div>
+                        <p class="dir-note dir-note--warn">Chỉ nhận khoá phẳng. <code>&#64;bind(user.name)</code> đọc được giá trị ban đầu nhưng không ghi ngược và không nhận thay đổi, vì setter và subscription chỉ tồn tại ở tầng khoá gốc. Tách thành state phẳng như <code>userName</code>.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">Boolean attribute</span><span class="dir-kind">props</span></div>
+                        <div class="dir-sig">&#64;disabled(biểu_thức)  &#64;checked(…)  &#64;selected(…)
+&#64;required(…)  &#64;readonly(…)</div>
+                        <p>Gán thẳng vào <em>property</em> của element chứ không phải thuộc tính HTML — đúng cách trình duyệt đọc trạng thái các thẻ form.</p>
+                        <table class="dir-mini">
+                            <tr><td>&#64;disabled</td><td>khoá nút hoặc ô nhập</td></tr>
+                            <tr><td>&#64;checked</td><td>trạng thái checkbox và radio</td></tr>
+                            <tr><td>&#64;selected</td><td>option đang được chọn</td></tr>
+                            <tr><td>&#64;required</td><td>bắt buộc nhập</td></tr>
+                            <tr><td>&#64;readonly</td><td>chỉ đọc, vẫn gửi kèm form</td></tr>
+                        </table>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;show <em>· &#64;hide</em></span><span class="dir-kind">props</span></div>
+                        <div class="dir-sig">&#64;show(biểu_thức)
+&#64;hide(biểu_thức)</div>
+                        <p>Bật tắt hiển thị mà giữ nguyên DOM và state bên trong — khác <code>&#64;if</code> vốn dựng lại nội dung mỗi lần bật.</p>
+                        <p class="dir-note dir-note--warn"><strong>Đang đụng directive cùng tên của Blade.</strong> Laravel hiểu <code>&#64;show</code> là "kết thúc section rồi yield ngay", nên nó nuốt directive của Saola và làm hỏng section stack của cả trang. Tạm thời dùng <code>&#64;class</code> với một class ẩn.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;transition</span><span class="dir-kind">Hoạt ảnh</span></div>
+                        <div class="dir-sig">&#64;transition('tên')</div>
+                        <p>Gắn tiền tố class enter/leave cho phần tử khi nó vào hoặc rời một vùng reactive. Bạn định nghĩa <code>.tên-enter-active</code>, <code>.tên-enter-from</code>, <code>.tên-leave-active</code>, <code>.tên-leave-to</code> trong CSS.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&lt;article &#64;transition('row')&gt;…&lt;/article&gt;</span><span class="code-line"></span><span class="code-line">.row-enter-active, .row-leave-active { transition: opacity .18s ease; }</span><span class="code-line">.row-enter-from,   .row-leave-to     { opacity: 0; }</span></code></pre></div>
+                    </article>
+
+                </div>
+            </section>
+
+            <section class="dir-group" id="su-kien">
+                <h2>Sự kiện</h2>
+                <p>Viết <code>&#64;tênSựKiện(...)</code> ngay trên thẻ. Mọi listener đăng ký kèm <code>AbortSignal</code> của view, nên khi view bị destroy chỉ cần một lệnh <code>abort()</code> là gỡ sạch — không có đường nào rò listener.</p>
+                <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;click <em>và họ hàng</em></span><span class="dir-kind">Gắn listener</span></div>
+                        <div class="dir-sig">&#64;click(tênMethod())            <span class="c">// gọi method trong &lt;script setup&gt;</span>
+&#64;click(setCount(count + 1))    <span class="c">// biểu thức trực tiếp</span>
+&#64;change(update(event))         <span class="c">// truyền object event</span></code></div>
+                        <p>Có hai dạng. Dạng thứ nhất là tên method: compiler ghi lại tên rồi runtime tra trên view instance và bind <code>this</code> về view. Dạng thứ hai là biểu thức, được gói thành closure ngay tại chỗ.</p>
+                        <p>Biến <code>event</code> có sẵn trong biểu thức, truyền vào method thì nhận nguyên object sự kiện.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&lt;form &#64;submit(save(event))&gt;</span><span class="code-line">    &lt;input &#64;bind(name) &#64;keydown(onKey(event))&gt;</span><span class="code-line">    &lt;button type="submit"&gt;Lưu&lt;/button&gt;</span><span class="code-line">&lt;/form&gt;</span></code></pre></div>
+                        <table class="dir-mini">
+                            <tr><td>chuột</td><td>&#64;click · &#64;dblclick · &#64;contextmenu · &#64;mouseenter</td></tr>
+                            <tr><td>form</td><td>&#64;submit · &#64;change · &#64;input · &#64;focus · &#64;blur</td></tr>
+                            <tr><td>bàn phím</td><td>&#64;keydown và các sự kiện bàn phím chuẩn</td></tr>
+                            <tr><td>khác</td><td>&#64;wheel · &#64;scroll · &#64;resize · &#64;load</td></tr>
+                        </table>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">Modifier</span><span class="dir-kind">.prevent .stop .self .once</span></div>
+                        <div class="dir-sig">&#64;click.prevent(save())
+&#64;click.stop.once(remove(id))</div>
+                        <p>Nối sau tên sự kiện, ghép được nhiều cái. Runtime xử lý chúng trước khi gọi handler của bạn.</p>
+                        <table class="dir-mini">
+                            <tr><td>.prevent</td><td>gọi <code>event.preventDefault()</code></td></tr>
+                            <tr><td>.stop</td><td>gọi <code>event.stopPropagation()</code></td></tr>
+                            <tr><td>.self</td><td>chỉ chạy khi <code>event.target === event.currentTarget</code> — kiểm <em>trước</em> <code>.prevent</code> và <code>.stop</code></td></tr>
+                            <tr><td>.once</td><td>chạy đúng một lần rồi tự gỡ</td></tr>
+                        </table>
+                        <p class="dir-note dir-note--warn">Modifier hiện chỉ được emit đúng ở phía JavaScript; đầu ra Blade còn sinh thuộc tính thừa. Trang cần SSR sạch thì dùng <code>&#64;submit(save(event))</code> rồi tự gọi <code>event.preventDefault()</code> trong method.</p>
+                    </article>
+
+                </div>
+            </section>
+
+            <section class="dir-group" id="layout">
+                <h2>Layout &amp; component</h2>
+                <p>Layout không phải chuỗi HTML ghép lại: mỗi tầng là một view thật có ViewController riêng. Điều hướng giữa hai trang cùng layout chỉ thay nhánh khác biệt, phần layout trùng nhau được giữ nguyên cả DOM lẫn state.</p>
+                <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;extends</span><span class="dir-kind">Layout</span></div>
+                        <div class="dir-sig">&#64;extends(__layout__ + "public")</div>
+                        <p>Khai báo layout cha. Hàm <code>render()</code> của trang sẽ trả về <em>view cha</em> thay vì cây element của chính nó — ViewManager nhìn kiểu trả về để rẽ nhánh. Layout lồng layout được, chuỗi phân giải đệ quy.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;block <em>· &#64;useBlock · &#64;endblock</em></span><span class="dir-kind">Layout</span></div>
+                        <div class="dir-sig"><span class="c">// trang:</span>
+&#64;block('content') … &#64;endblock
+
+<span class="c">// layout:</span>
+&#64;useBlock('content')</div>
+                        <p>Trang <em>đăng ký</em> nội dung, layout <em>tạo chỗ trống</em>. BlockManager nối hai bên theo tên. Nhờ tách rời như vậy, nội dung block được dựng lười đúng vị trí outlet chứ không phải append mù vào cuối thẻ chứa.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line c">&lt;!-- layouts/docs.sao --&gt;</span><span class="code-line">&#64;extends(__layout__ + "public")</span><span class="code-line">&#64;block('content')</span><span class="code-line">    &lt;aside class="docs-nav"&gt;…&lt;/aside&gt;</span><span class="code-line">    &lt;main&gt;&#64;useBlock('doc')&lt;/main&gt;</span><span class="code-line">&#64;endblock</span></code></pre></div>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;section <em>· &#64;yield</em></span><span class="dir-kind">Layout</span></div>
+                        <div class="dir-sig">&#64;section('tên') … &#64;endsection
+&#64;yield('tên', 'mặc định')</div>
+                        <p>Cơ chế section quen thuộc của Blade. Section có thể khai báo kiểu render dài hoặc có preloader riêng qua config sinh ra trong <code>__VIEW_CONFIG__</code>.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;include</span><span class="dir-kind">Component</span></div>
+                        <div class="dir-sig">&#64;include('đường.dẫn.view')
+&#64;include('đường.dẫn.view', ['prop' =&gt; biểu_thức])</div>
+                        <p>Tạo một view con thật: có ViewController riêng, state riêng, vòng đời riêng. Đây là khác biệt lớn với partial — view con sống độc lập, được start, pause, resume và destroy theo chính nó.</p>
+                        <p>Compiler đọc mảng props để suy ra view con phụ thuộc state nào của cha. Khi state đó đổi, runtime <em>đẩy props mới vào đúng instance đang sống</em> chứ không dựng lại view con — nên state nội bộ của nó, ví dụ một form đang mở dở, không bị thổi bay.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line">&#64;foreach(ids as id)</span><span class="code-line">    &#64;key(id)</span><span class="code-line">    &#64;include('web.modules.roster.item', ['uid' =&gt; id, 'record' =&gt; records[id] ?? null])</span><span class="code-line">&#64;endforeach</span></code></pre></div>
+                        <p class="dir-note">Props phải sống được qua SSR nên chỉ nhận giá trị tuần tự hoá được — không truyền được callback. Kênh từ con lên cha là bus sự kiện <code>App.Event</code>.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;children</span><span class="dir-kind">Slot</span></div>
+                        <div class="dir-sig">&#64;children</div>
+                        <p>Chỗ đặt nội dung mà bên gọi truyền vào giữa hai thẻ. Nội dung được render lười đúng tại vị trí khai báo và giữ nguyên context của bên gọi — biến trong đó vẫn là biến của view cha, không phải của component.</p>
+                        <div class="dir-ex"><pre><code><span class="code-line c">&lt;!-- card.sao --&gt;</span><span class="code-line">&lt;article class="card"&gt;&lt;h3&gt;<span class="mustache-token">title</span>&lt;/h3&gt;&#64;children&lt;/article&gt;</span><span class="code-line"></span><span class="code-line c">&lt;!-- bên gọi --&gt;</span><span class="code-line">&lt;card title="Ví dụ"&gt;&lt;p&gt;Nội dung này đi qua slot&lt;/p&gt;&lt;/card&gt;</span></code></pre></div>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;exec</span><span class="dir-kind">Tiện ích</span></div>
+                        <div class="dir-sig">&#64;exec(biểu_thức)</div>
+                        <p>Chạy một biểu thức mà không in ra gì. Dùng để gán biến trung gian hoặc gọi hàm phụ ngay trong template.</p>
+                    </article>
+
+                </div>
+            </section>
+
+            <section class="dir-group" id="tien-ich">
+                <h2>Quyền, form &amp; tiện ích</h2>
+                <p>Nhóm này giữ nguyên ngữ nghĩa Blade quen thuộc, nên nếu bạn đã viết Laravel thì không phải học lại.</p>
+                <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;csrf <em>· &#64;method</em></span><span class="dir-kind">Form</span></div>
+                        <div class="dir-sig">&#64;csrf
+&#64;method('PUT')</div>
+                        <p>Chèn ô ẩn chứa token CSRF, và giả lập HTTP method cho form vốn chỉ gửi được GET với POST.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;auth <em>· &#64;guest</em></span><span class="dir-kind">Quyền</span></div>
+                        <div class="dir-sig">&#64;auth … &#64;endauth
+&#64;guest … &#64;endguest</div>
+                        <p>Khối hiển thị theo trạng thái đăng nhập, xét ở phía server lúc render.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;can <em>· &#64;cannot</em></span><span class="dir-kind">Quyền</span></div>
+                        <div class="dir-sig">&#64;can('quyền', $model) … &#64;endcan</div>
+                        <p>Khối theo policy của Laravel. Cùng cách viết, cùng cách phân giải quyền.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;error</span><span class="dir-kind">Form</span></div>
+                        <div class="dir-sig">&#64;error('trường') … &#64;enderror</div>
+                        <p>Hiện lỗi validation của một trường, với biến <code>$message</code> sẵn trong khối.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;hasSection</span><span class="dir-kind">Layout</span></div>
+                        <div class="dir-sig">&#64;hasSection('tên') … &#64;endhassection</div>
+                        <p>Kiểm tra một section đã được trang con định nghĩa chưa, để layout quyết định có dựng khung bao quanh hay không.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;verbatim</span><span class="dir-kind">Tiện ích</span></div>
+                        <div class="dir-sig">&#64;verbatim … &#64;endverbatim</div>
+                        <p>Xuất nguyên văn, không biên dịch gì bên trong. Cần khi bạn muốn in ra cú pháp của chính Saola hoặc của một template engine khác.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;register</span><span class="dir-kind">Tiện ích</span></div>
+                        <div class="dir-sig">&#64;register … &#64;endregister</div>
+                        <p>Khối JavaScript thô được đưa thẳng vào view đã biên dịch, không qua preprocessor. Dùng cho đoạn cần chạy nguyên trạng.</p>
+                    </article>
+
+                </div>
+            </section>
+
+            <section class="dir-group" id="magic">
+                <h2>Biến ma thuật</h2>
+                <p>Có sẵn trong mọi view, do render context cấp. Dùng chúng thay vì viết cứng đường dẫn để view còn chuyển được giữa các context.</p>
+                <div class="dir-list">
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">Danh sách</span><span class="dir-kind">Toàn cục trong view</span></div>
+                        <table class="dir-mini">
+                            <tr><td>__layout__</td><td>đường dẫn gốc tới thư mục layout của context hiện tại</td></tr>
+                            <tr><td>__template__</td><td>đường dẫn gốc tới component dùng chung</td></tr>
+                            <tr><td>__VIEW_PATH__</td><td>đường dẫn dạng chấm của chính view này, ví dụ <code>web.modules.docs.index</code></td></tr>
+                            <tr><td>__VIEW_ID__</td><td>định danh instance, là tiền tố của mọi class và marker dùng để hydrate</td></tr>
+                            <tr><td>__context__</td><td>context đang phục vụ request: web, admin, api hay mobile</td></tr>
+                            <tr><td>__base__ · __page__<br>__component__ · __partial__</td><td>đường dẫn gốc theo từng loại view</td></tr>
+                            <tr><td>__system__</td><td>khối system data do render context truyền xuống</td></tr>
+                        </table>
+                    </article>
+                </div>
+            </section>
+        </div>
+
+        <a class="doc-next" href="/docs/reactivity">
+            <div><span>Tiếp theo</span><strong>State &amp; reactivity</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

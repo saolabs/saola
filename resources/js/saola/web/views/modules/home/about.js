@@ -65,7 +65,7 @@ class AboutView extends View {
 
         const __UPDATE_DATA_TRAIT__ = {};
         const set$activeValue = __STATE__.__.register('activeValue');
-        let activeValue = null;
+        let activeValue = 0;
         const setActiveValue = (state) => {
             activeValue = state;
             set$activeValue(state);

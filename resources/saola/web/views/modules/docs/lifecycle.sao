@@ -1,0 +1,65 @@
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>06</span> RUNTIME</p>
+                <h1>Vòng đời và marker.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>ViewController là một state machine bảy chuyển trạng thái. Marker comment là hợp đồng để client nhận lại DOM server đã render thay vì dựng lại từ đầu.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>LIFECYCLE</span> Trạng thái quan sát được</p>
+            <h2>Bảy chuyển trạng thái, mỗi cái một cặp hook.</h2>
+            <p>ViewController là một state machine: <code>created → active ⇄ paused → destroyed</code>. Mỗi chuyển trạng thái bắn ra một cặp hook trước và sau, khai báo thẳng trong <code>&lt;script setup&gt;</code>.</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>mounting · mounted</code></div><span>DOM gắn vào tài liệu thật, style và script của view được acquire</span><b>mount</b></div>
+                <div><div class="dt-key"><code>starting · started</code></div><span>Subscribe reactive và gắn event; chạy sau render và commit data</span><b>start</b></div>
+                <div><div class="dt-key"><code>pausing · paused</code></div><span>Rời DOM để vào PageCache; state chuyển sang chế độ ghi dirty</span><b>pause</b></div>
+                <div><div class="dt-key"><code>resuming · resumed</code></div><span>Quay lại từ PageCache; flush dirty rồi gắn lại DOM</span><b>resume</b></div>
+                <div><div class="dt-key"><code>stopping · stopped</code></div><span>Huỷ subscribe, DOM vẫn còn nguyên</span><b>stop</b></div>
+                <div><div class="dt-key"><code>unmounting · unmounted</code></div><span>Gỡ DOM khỏi tài liệu, release asset theo ref-count</span><b>unmount</b></div>
+                <div><div class="dt-key"><code>destroying · destroyed</code></div><span>Dọn toàn bộ: abort event, huỷ subscription, destroy con theo thứ tự ngược</span><b>destroy</b></div>
+            </div>
+            <div class="ov-note">
+                Alias tương thích bản cũ vẫn chạy: <code>onMounted</code> ≈ <code>started</code>, <code>onPause</code> ≈ <code>paused</code>, <code>onResume</code> ≈ <code>resumed</code>, <code>onDeactivated</code> ≈ <code>stopped</code>, <code>onDestroy</code> ≈ <code>destroyed</code>. Hook async không chặn điều hướng nhưng promise bị reject vẫn được log.
+            </div>
+
+            <p class="kicker"><span>HYDRATION</span> Nhận DOM thay vì dựng lại</p>
+            <h2>Marker là hợp đồng giữa hai bên.</h2>
+            <p>Server bọc mỗi vùng động bằng comment marker; client tìm đúng cặp marker đó để claim. Format được định nghĩa ở đúng hai nơi và bắt buộc phải khớp: <code>MarkerRegistry</code> phía client và <code>ViewStorageManager</code> phía server.</p>
+            <div class="code-window code-window-dark">
+                <div class="window-bar"><span>MARKER</span><b>format</b></div>
+                <pre><code><span class="code-line">&lt;!--s:{type}:{id}-s--&gt;   ...nội dung...   &lt;!--s:{type}:{id}-e--&gt;</span></code></pre>
+            </div>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>v</code></div><span>Wrapper — biên của một view, id là <code>viewId</code></span><b>view</b></div>
+                <div><div class="dt-key"><code>r</code></div><span>Reactive — vùng if, foreach, switch</span><b>reactive</b></div>
+                <div><div class="dt-key"><code>o</code></div><span>Output — giá trị nội suy</span><b>output</b></div>
+                <div><div class="dt-key"><code>b</code> / <code>bo</code></div><span>Block và BlockOutlet</span><b>layout</b></div>
+                <div><div class="dt-key"><code>c</code> / <code>frg</code> / <code>y</code></div><span>Component, Fragment, Yield</span><b>structure</b></div>
+                <div><div class="dt-key"><code>fe</code> / <code>fls</code> / <code>ea</code></div><span>Marker của foreach, forelse, each</span><b>loop</b></div>
+            </div>
+            <p class="ov-sub">Thứ tự khi hydrate</p>
+            <p>Khác CSR ở chỗ state được commit <em>trước</em> khi render, vì factory của vùng điều kiện phụ thuộc state — sai state thì sinh sai element và claim trượt DOM.</p>
+            <ul class="check-list">
+                <li><code>commitData()</code> khôi phục state đúng bằng giá trị server.</li>
+                <li><code>flushNow()</code> khi chưa subscribe — bỏ pending để không render lại phá DOM vừa claim.</li>
+                <li><code>render()</code> tạo cây object và claim DOM, tuyệt đối không <code>appendChild</code>.</li>
+                <li>Đổi <code>initMode</code> sang <code>create</code> — từ đây mọi re-render là CSR bình thường.</li>
+                <li><code>start()</code> gắn subscription và event, rồi kích hoạt vùng.</li>
+            </ul>
+            <div class="ov-note">
+                Html claim bằng class <code>{viewId}-{hash}</code>, các element dạng marker claim bằng cặp comment. Không tìm thấy thì element tự tạo mới — hydration một phần vẫn chạy chứ không vỡ trang.
+            </div>
+        </div>
+
+        <a class="doc-next" href="/docs/router">
+            <div><span>Tiếp theo</span><strong>Router & dịch vụ client</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

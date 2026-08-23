@@ -12,26 +12,26 @@
 
                         <div class="site-header-collapse">
                             <nav class="site-nav" aria-label="Điều hướng chính">
-                                <a href="/architecture">Kiến trúc</a>
-                                <a href="/compiler">Compiler</a>
-                                <a href="/runtime">Runtime</a>
+                                <a href="/docs">Tài liệu</a>
+                                <a href="/components">Component</a>
+                                <a href="/demo">Demo</a>
                                 <a href="/about">Dự án</a>
                             </nav>
                             <div class="site-header-actions">
-                                <a class="site-login-link" href="/todo-list">Live demo</a>
-                                <a class="site-header-cta" href="/getting-started">Bắt đầu <span>↗</span></a>
+                                <a class="site-header-cta" href="/docs/getting-started">Bắt đầu <span>↗</span></a>
                             </div>
                         </div>
 
                         <details class="site-mobile-menu">
                             <summary aria-label="Mở menu">☰</summary>
                             <nav aria-label="Điều hướng di động">
-                                <a href="/architecture">Kiến trúc</a>
-                                <a href="/compiler">Compiler & AST</a>
-                                <a href="/runtime">Runtime & Hydration</a>
+                                <a href="/docs">Tài liệu</a>
+                                <a href="/components">Thư viện component</a>
+                                <a href="/demo">Interactive demo</a>
+                                <a href="/todo-list">Todo workspace</a>
+                                <a href="/roster">Roster sync</a>
                                 <a href="/about">Về dự án</a>
-                                <a href="/todo-list">Live demo</a>
-                                <a class="site-header-cta" href="/getting-started">Bắt đầu →</a>
+                                <a class="site-header-cta" href="/docs/getting-started">Bắt đầu →</a>
                             </nav>
                         </details>
                     </div>
@@ -51,8 +51,8 @@
                     <p>Một nguồn giao diện cho Blade SSR và JavaScript SPA. Được thiết kế quanh Laravel, không đứng bên cạnh Laravel.</p>
                 </div>
                 <div class="footer-map">
-                    <div><span>KHÁM PHÁ</span><a href="/architecture">Kiến trúc</a><a href="/compiler">Compiler</a><a href="/runtime">Runtime</a></div>
-                    <div><span>DỰ ÁN</span><a href="/about">Về Saola</a><a href="/todo-list">Live demo</a><a href="/contact">Liên hệ</a></div>
+                    <div><span>TÀI LIỆU</span><a href="/docs">Mục lục</a><a href="/docs/getting-started">Bắt đầu</a><a href="/docs/directives">Directive</a><a href="/docs/status">Giới hạn đã biết</a></div>
+                    <div><span>THỰC HÀNH</span><a href="/components">Thư viện component</a><a href="/demo">Interactive demo</a><a href="/roster">Roster sync</a><a href="/about">Về Saola</a></div>
                     <div><span>PHÁP LÝ</span><a href="/privacy">Privacy</a><a href="/terms">Terms</a><small>© 2026 SaoLabs</small></div>
                 </div>
             </footer>

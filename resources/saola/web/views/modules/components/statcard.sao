@@ -1,0 +1,19 @@
+@props({
+    label: 'Label',
+    value: '0',
+    tone: 'sky'
+})
+
+<template>
+    <div @class(['cmp-slot', 'cmp-slot--indigo': tone === 'indigo'])>
+        <span>{{ label }}</span>
+        <strong>{{ value }}</strong>
+        <div class="cmp-slot-body">
+            @children
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+    export default { name: 'ComponentsStatCard' };
+</script>

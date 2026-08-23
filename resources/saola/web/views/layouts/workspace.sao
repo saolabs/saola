@@ -12,9 +12,10 @@
                     <strong>Make room<br>for what matters.</strong>
                 </div>
                 <nav class="workspace-nav">
-                    <a class="active" href="/todo-list"><span>01</span> Tasks</a>
-                    <a href="/"><span>02</span> Back to site</a>
-                    <a href="/about"><span>03</span> Philosophy</a>
+                    <a href="/todo-list"><span>01</span> Tasks</a>
+                    <a href="/roster"><span>02</span> Roster</a>
+                    <a href="/"><span>03</span> Back to site</a>
+                    <a href="/about"><span>04</span> Philosophy</a>
                 </nav>
                 <p class="workspace-note">State stays local to the page. The layout remains stable while the route changes.</p>
             </aside>

@@ -154,7 +154,7 @@ class WorkspaceView extends View {
                         { classes: [{ type: 'static', value: "workspace-nav" }] },
                         (parentElement) => [
                         this.html(`dfaa61d0`, "a", parentElement,
-                            { classes: [{ type: 'static', value: "active" }], attrs: { "href": { type: 'static', value: "/todo-list" } } },
+                            { attrs: { "href": { type: 'static', value: "/todo-list" } } },
                             (parentElement) => [
                             this.html(`cb4d927c`, "span", parentElement, {}, (parentElement) => [
                                 this.text('01')
@@ -162,18 +162,26 @@ class WorkspaceView extends View {
                             this.text(' Tasks')
                             ]),
                         this.html(`2c228af7`, "a", parentElement,
-                            { attrs: { "href": { type: 'static', value: "/" } } },
+                            { attrs: { "href": { type: 'static', value: "/roster" } } },
                             (parentElement) => [
                             this.html(`ca7daca6`, "span", parentElement, {}, (parentElement) => [
                                 this.text('02')
                             ]),
-                            this.text(' Back to site')
+                            this.text(' Roster')
                             ]),
                         this.html(`937a1507`, "a", parentElement,
-                            { attrs: { "href": { type: 'static', value: "/about" } } },
+                            { attrs: { "href": { type: 'static', value: "/" } } },
                             (parentElement) => [
                             this.html(`65c71c6e`, "span", parentElement, {}, (parentElement) => [
                                 this.text('03')
+                            ]),
+                            this.text(' Back to site')
+                            ]),
+                        this.html(`98f2250a`, "a", parentElement,
+                            { attrs: { "href": { type: 'static', value: "/about" } } },
+                            (parentElement) => [
+                            this.html(`c4e5d60d`, "span", parentElement, {}, (parentElement) => [
+                                this.text('04')
                             ]),
                             this.text(' Philosophy')
                             ])

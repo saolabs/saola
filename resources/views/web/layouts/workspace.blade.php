@@ -16,9 +16,10 @@
                     <strong @class([$__VIEW_ID__ . '-57a0cbe4'])>Make room<br @class([$__VIEW_ID__ . '-36a9e72f'])>for what matters.</strong>
                 </div>
                 <nav @class([$__VIEW_ID__ . '-76ddaf72', 'workspace-nav'])>
-                    <a @class([$__VIEW_ID__ . '-dfaa61d0', 'active']) @attr(['href' => '/todo-list'])><span @class([$__VIEW_ID__ . '-cb4d927c'])>01</span> Tasks</a>
-                    <a @class([$__VIEW_ID__ . '-2c228af7']) @attr(['href' => '/'])><span @class([$__VIEW_ID__ . '-ca7daca6'])>02</span> Back to site</a>
-                    <a @class([$__VIEW_ID__ . '-937a1507']) @attr(['href' => '/about'])><span @class([$__VIEW_ID__ . '-65c71c6e'])>03</span> Philosophy</a>
+                    <a @class([$__VIEW_ID__ . '-dfaa61d0']) @attr(['href' => '/todo-list'])><span @class([$__VIEW_ID__ . '-cb4d927c'])>01</span> Tasks</a>
+                    <a @class([$__VIEW_ID__ . '-2c228af7']) @attr(['href' => '/roster'])><span @class([$__VIEW_ID__ . '-ca7daca6'])>02</span> Roster</a>
+                    <a @class([$__VIEW_ID__ . '-937a1507']) @attr(['href' => '/'])><span @class([$__VIEW_ID__ . '-65c71c6e'])>03</span> Back to site</a>
+                    <a @class([$__VIEW_ID__ . '-98f2250a']) @attr(['href' => '/about'])><span @class([$__VIEW_ID__ . '-c4e5d60d'])>04</span> Philosophy</a>
                 </nav>
                 <p @class([$__VIEW_ID__ . '-0236cb34', 'workspace-note'])>State stays local to the page. The layout remains stable while the route changes.</p>
             </aside>

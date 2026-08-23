@@ -29,6 +29,16 @@ const __VIEW_CONFIG__ = {
 
 
 
+/**
+ * Props của view — sinh tự động từ @props/@vars, không sửa tay.
+ * Optional hết vì khai báo nào cũng có default.
+ */
+export interface IndexProps {
+    /** viewId server gán khi hydrate */
+    __SSR_VIEW_ID__?: string;
+    [key: string]: any;
+}
+
 class IndexViewController extends ViewController {
     constructor(view: View) {
         super(view, __VIEW_PATH__, __VIEW_TYPE__);
@@ -41,7 +51,7 @@ class IndexViewController extends ViewController {
 }
 
 class IndexView extends View {
-    constructor(__data__: any = {}, systemData: any = {}) {
+    constructor(__data__: IndexProps = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, IndexViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -65,7 +75,7 @@ class IndexView extends View {
 
         const __UPDATE_DATA_TRAIT__: any = {};
         const set$count = __STATE__.__.register('count');
-        let count: any = null;
+        let count: any = 0;
         const setCount = (state: any) => {
             count = state;
             set$count(state);
@@ -79,7 +89,7 @@ class IndexView extends View {
             }
         };
         const set$name = __STATE__.__.register('name');
-        let name: any = null;
+        let name: any = 'Saola';
         const setName = (state: any) => {
             name = state;
             set$name(state);
@@ -93,7 +103,7 @@ class IndexView extends View {
             }
         };
         const set$pings = __STATE__.__.register('pings');
-        let pings: any = null;
+        let pings: any = [];
         const setPings = (state: any) => {
             pings = state;
             set$pings(state);
@@ -120,14 +130,14 @@ class IndexView extends View {
         });
 
         this.__ctrl__.setup({
-            superView: `${__layout__+"base"}`,
+            superView: `${__layout__+"public"}`,
             subscribe: true,
             fetch: null,
             data: __data__,
             viewId: __VIEW_ID__,
             path: __VIEW_PATH__,
             scripts: [],
-            styles: [{"type":"code","scoped":true,"content":".ping {\n        padding: 24px;\n        font-family: system-ui, sans-serif;\n    }\n    .active h1 {\n        color: #2563eb;\n    }"}],
+            styles: [],
             resources: [],
             commitConstructorData: function(this: any) {
                 // Then update states from data
@@ -166,7 +176,7 @@ class IndexView extends View {
             let parentReactive = null;
             this.block('block-content', 'content', (parentElement: any) => [
             this.html(`b4052a35`, "section", parentElement,
-                { classes: [{ type: 'static', value: "ping" }, { type: 'binding', value: "active", factory: () => count > 0, stateKeys: ["count"] }] },
+                { classes: [{ type: 'static', value: "ping" }, { type: 'binding', value: "active", factory: () => count !== 0, stateKeys: ["count"] }] },
                 (parentElement: any) => [
                 this.html(`ba3bf830`, "h1", parentElement, {}, (parentElement: any) => [
                     this.text('Ping Module — Hydration Test')
@@ -222,7 +232,7 @@ class IndexView extends View {
                 ])
                 ])
             ]);
-            this.superViewPath = `${__layout__+"base"}`;
+            this.superViewPath = `${__layout__+"public"}`;
             return this.extendView(this.superViewPath, {});
             }
         });
@@ -231,7 +241,7 @@ class IndexView extends View {
 }
 
 // Export factory function
-export function WebModulesPingIndex(__data__ = {}, systemData = {}): IndexView {
+export function WebModulesPingIndex(__data__: IndexProps = {}, systemData: any = {}): IndexView {
     return new IndexView(__data__, systemData);
 }
 export default WebModulesPingIndex;

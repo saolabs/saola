@@ -60,8 +60,8 @@ class ListView extends View {
         let {posts = [], title = null} = __data__;
         __STATE__.__.register('posts', posts);
         __STATE__.__.register('title', title);
-        __UPDATE_DATA_TRAIT__.posts = value => { posts = value; updateStateByKey('posts', value); };
-        __UPDATE_DATA_TRAIT__.title = value => { title = value; updateStateByKey('title', value); };
+        __UPDATE_DATA_TRAIT__.posts = __next => { posts = __next; updateStateByKey('posts', __next); };
+        __UPDATE_DATA_TRAIT__.title = __next => { title = __next; updateStateByKey('title', __next); };
         const __VARIABLE_LIST__ = ["posts", "title"];
 
 
@@ -119,8 +119,8 @@ class ListView extends View {
             this.html(`6de958cf`, "ul", parentElement, {}, (parentElement) => [
                 this.reactive(`cc92f7f7`, "foreach", parentReactive, parentElement, ["posts"], (parentReactive, parentElement) => {
                     return this.__foreach(posts, (post, __loopKey, __loopIndex, __loop) => [
-                        this.html(`27454eba-${__loopIndex + 1}`, "li", parentElement, {}, (parentElement) => [
-                            this.output(`abe48791-${__loopIndex + 1}`, parentElement, true, ["title"], (parentElement) => post.title)
+                        this.html(`27454eba-${__loopIndex}`, "li", parentElement, {}, (parentElement) => [
+                            this.output(`abe48791-${__loopIndex}`, parentElement, true, ["title"], (parentElement) => post.title)
                         ])
                     ])
                 })

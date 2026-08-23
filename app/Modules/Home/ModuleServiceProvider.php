@@ -24,10 +24,6 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
             ->group(function ($module) {
                 $module->get('/', 'index')->name('index');
                 $module->get('/about', 'about')->name('about');
-                $module->get('/architecture', 'architecture')->name('architecture');
-                $module->get('/compiler', 'compiler')->name('compiler');
-                $module->get('/runtime', 'runtime')->name('runtime');
-                $module->get('/getting-started', 'gettingStarted')->name('getting-started');
                 $module->get('/privacy', 'privacy')->name('privacy');
                 $module->get('/terms', 'terms')->name('terms');
                 $module->get('/contact', 'contact')->name('contact');

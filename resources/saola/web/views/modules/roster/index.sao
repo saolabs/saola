@@ -1,0 +1,235 @@
+@states({
+    ids: [],
+    records: {},
+    editing: {},
+    lastSync: '',
+    syncError: '',
+    creating: false,
+    fName: '',
+    fEmail: '',
+    fGender: 'other',
+    fBirthdate: ''
+})
+
+<template>
+    @extends(__layout__ + "workspace")
+    @block('workspace')
+        <div class="rs-page">
+            <header class="workspace-topbar">
+                <div>
+                    <p class="eyebrow"><span>05</span> Concurrent editing</p>
+                    <h1>Danh sách người dùng</h1>
+                </div>
+                <div class="completion-ring">
+                    <strong>{{ ids.length }}</strong><span>users</span>
+                </div>
+            </header>
+
+            <p class="rs-lead">Danh sách tự kéo lại mỗi 30 giây. Mỗi hàng có form sửa riêng — nếu người khác sửa hoặc xoá đúng bản ghi bạn đang mở, bản nháp của bạn được giữ nguyên và bạn được hỏi trước khi mất bất cứ thứ gì.</p>
+
+            <dl class="rs-stats">
+                <div class="rs-stat">
+                    <dt>Người dùng</dt>
+                    <dd>{{ ids.length }}</dd>
+                </div>
+                <div class="rs-stat">
+                    <dt>Nhịp đồng bộ</dt>
+                    <dd>30 <small>giây</small></dd>
+                </div>
+                <div class="rs-stat">
+                    <dt>Đồng bộ lần cuối</dt>
+                    @if(lastSync === '')
+                        <dd><small>chưa chạy</small></dd>
+                    @else
+                        <dd>{{ lastSync }}</dd>
+                    @endif
+                </div>
+            </dl>
+
+            @if(syncError !== '')
+                <p class="rs-alert rs-alert--danger rs-alert--error">{{ syncError }}</p>
+            @endif
+
+            <section class="rs-card">
+                <div class="rs-card-head">
+                    <h2>Thêm người dùng</h2>
+                    <p>Bản ghi mới được server cấp uuid và mốc version.</p>
+                </div>
+                <form class="rs-form-grid" @submit(createUser(event))>
+                    <label class="rs-field">
+                        <span>Họ tên</span>
+                        <input type="text" placeholder="Nguyễn Văn A" @bind(fName)>
+                    </label>
+                    <label class="rs-field">
+                        <span>Email</span>
+                        <input type="email" placeholder="a@saola.dev" @bind(fEmail)>
+                    </label>
+                    <label class="rs-field">
+                        <span>Giới tính</span>
+                        <select @bind(fGender)>
+                            <option value="male">male</option>
+                            <option value="female">female</option>
+                            <option value="other">other</option>
+                        </select>
+                    </label>
+                    <label class="rs-field">
+                        <span>Ngày sinh</span>
+                        <input type="date" @bind(fBirthdate)>
+                    </label>
+                    <div class="rs-form-actions">
+                        <button type="submit" class="rs-btn rs-btn-primary" @disabled(creating)>Thêm người dùng</button>
+                    </div>
+                </form>
+            </section>
+
+            <div class="rs-list-head">
+                <h2>Bản ghi</h2>
+                <div class="rs-list-tools">
+                    <span class="rs-pulse"><span class="rs-pulse-dot"></span> Tự đồng bộ mỗi 30 giây</span>
+                    <button type="button" class="rs-btn rs-btn-sm rs-btn-ghost" @click(load())>Đồng bộ ngay</button>
+                </div>
+            </div>
+
+            <div class="rs-list">
+                @foreach(ids as id)
+                    @key(id)
+                    <div class="rs-slot">
+                        {{-- record đổi ref ⇒ Component đẩy prop mới vào ĐÚNG instance con
+                             đang sống, nên state form của nó không bị thổi bay. --}}
+                        @include('web.modules.roster.item', ['uid' => id, 'record' => records[id] ?? null])
+                    </div>
+                @endforeach
+            </div>
+
+            @if(ids.length === 0)
+                <p class="rs-empty">Chưa có ai trong danh sách. Thêm người dùng đầu tiên ở form phía trên.</p>
+            @endif
+        </div>
+    @endblock
+</template>
+
+<script setup lang="ts">
+    const API = '/api/api/roster';
+
+    export default {
+        name: 'RosterPage',
+
+        // ─── Lifecycle ──────────────────────────────────────────
+        // started/stopped: kích hoạt & huỷ kích hoạt bình thường.
+        // resumed/paused : quay lại & rời PageCache (DOM còn, view ngủ).
+        started() { this.activate(); },
+        resumed() { this.activate(); },
+        stopped() { this.deactivate(); },
+        paused() { this.deactivate(); },
+        destroyed() { this.deactivate(); },
+
+        activate() {
+            if (this._timer) return;
+            this._timer = setInterval(() => this.load(), 30000);
+            this._off = [
+                // Hàng con báo lên "tôi đang mở form" — parent cần biết để KHÔNG
+                // gỡ hàng khi server đã xoá bản ghi đó.
+                App.Event.on('roster:editing', (uid, on) => {
+                    const next = { ...editing };
+                    if (on) next[uid] = true; else delete next[uid];
+                    setEditing(next);
+                }),
+                // Bản ghi vừa lưu do chính hàng con đẩy lên — gộp ngay để hàng
+                // không hiện dữ liệu cũ trong lúc chờ lượt fetch kế tiếp.
+                App.Event.on('roster:record', (rec) => {
+                    if (!rec || !rec.uuid) return;
+                    setRecords({ ...records, [rec.uuid]: rec });
+                    if (!ids.includes(rec.uuid)) setIds([...ids, rec.uuid]);
+                }),
+                App.Event.on('roster:refresh', () => this.load())
+            ];
+            this.load();
+        },
+
+        deactivate() {
+            clearInterval(this._timer);
+            this._timer = null;
+            (this._off || []).forEach(off => off());
+            this._off = [];
+        },
+
+        // ─── Fetch ──────────────────────────────────────────────
+        async load() {
+            try {
+                const res = await App.Http.get(API);
+                setSyncError('');
+                this.applyServer(res.data.data || []);
+            } catch (e) {
+                setSyncError('Không tải được danh sách: ' + (e.message || e));
+            }
+        },
+
+        /**
+         * Hoà bản server vào state hiện tại.
+         *
+         * Hai quy tắc giữ cho form đang mở không bị đập:
+         *   1. updated_at không đổi ⇒ GIỮ NGUYÊN object ref cũ. Ref không đổi
+         *      thì Component không đẩy prop, hàng đó không render lại.
+         *   2. Bản ghi biến mất mà hàng đó đang được sửa ⇒ giữ id lại trong
+         *      danh sách và đặt record = null. null chính là tín hiệu "bia mộ"
+         *      để item view hiện khối "người khác vừa xoá".
+         */
+        applyServer(list) {
+            const byId = {};
+            for (const u of list) byId[u.uuid] = u;
+
+            const nextIds = [];
+            for (const id of ids) {
+                if (byId[id] || editing[id]) nextIds.push(id);
+            }
+            for (const u of list) {
+                if (!ids.includes(u.uuid)) nextIds.push(u.uuid);
+            }
+
+            const nextRecords = {};
+            let changed = nextIds.length !== ids.length;
+            for (let i = 0; i < nextIds.length; i++) {
+                const id = nextIds[i];
+                if (id !== ids[i]) changed = true;
+
+                const fresh = byId[id] || null;
+                const cur = records[id];
+                const same = fresh && cur && cur.updated_at === fresh.updated_at;
+                nextRecords[id] = same ? cur : fresh;
+                if (nextRecords[id] !== cur) changed = true;
+            }
+
+            if (changed) {
+                setIds(nextIds);
+                setRecords(nextRecords);
+            }
+            setLastSync(new Date().toLocaleTimeString());
+        },
+
+        // ─── Create ─────────────────────────────────────────────
+        async createUser(event) {
+            event.preventDefault();
+            if (creating) return;
+            setCreating(true);
+            try {
+                await App.Http.post(API, {
+                    name: fName,
+                    email: fEmail,
+                    gender: fGender,
+                    birthdate: fBirthdate
+                });
+                setFName('');
+                setFEmail('');
+                setFBirthdate('');
+                setSyncError('');
+                await this.load();
+            } catch (e) {
+                setSyncError('Không tạo được user: ' + (e.message || e));
+            } finally {
+                setCreating(false);
+            }
+        }
+    };
+</script>
+
+<link rel="stylesheet" href="/static/saola/roster.css">

@@ -4,9 +4,9 @@
     pings: []
 })
 <template>
-    @extends(__layout__ + "base")
+    @extends(__layout__ + "public")
     @block('content')
-        <section @class(["ping", "active": count > 0])>
+        <section @class(["ping", "active": count !== 0])>
             <h1>Ping Module — Hydration Test</h1>
             <p>Hello, {{ name }}! 👋</p>
 
@@ -42,13 +42,3 @@
         }
     };
 </script>
-
-<style scoped>
-    .ping {
-        padding: 24px;
-        font-family: system-ui, sans-serif;
-    }
-    .active h1 {
-        color: #2563eb;
-    }
-</style>

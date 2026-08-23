@@ -12,30 +12,15 @@ class HomeController extends WebController
         return $this->response([]);
     }
 
+
     public function about()
     {
         return $this->response([]);
     }
 
-    public function architecture()
-    {
-        return $this->response([]);
-    }
 
-    public function compiler()
-    {
-        return $this->response([]);
-    }
 
-    public function runtime()
-    {
-        return $this->response([]);
-    }
 
-    public function gettingStarted()
-    {
-        return $this->response([]);
-    }
 
     public function privacy()
     {
