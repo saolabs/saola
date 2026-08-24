@@ -14,17 +14,18 @@ export default defineConfig({
         'tests/',
         '**/*.spec.js',
         '**/*.test.js',
-        'resources/js/onejs/views/**',
-        'resources/js/onejs/examples/**',
+        'resources/js/saola/**',
       ],
     },
   },
   resolve: {
+    // Giữ khớp với vite.config.js + tsconfig.json.
     alias: {
-      '@app': path.resolve(__dirname, './resources/js/onejs'),
-      '@core': path.resolve(__dirname, './resources/js/onejs/core'),
-      '@helpers': path.resolve(__dirname, './resources/js/onejs/helpers'),
-      '@services': path.resolve(__dirname, './resources/js/onejs/core/services'),
+      '@': path.resolve(__dirname, './resources/js'),
+      '@sao': path.resolve(__dirname, './resources/saola'),
+      '@web': path.resolve(__dirname, './resources/saola/web'),
+      '@admin': path.resolve(__dirname, './resources/saola/admin'),
+      '@mobile': path.resolve(__dirname, './resources/saola/mobile'),
     },
   },
 });

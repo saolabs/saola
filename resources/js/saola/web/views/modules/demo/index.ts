@@ -303,7 +303,7 @@ class IndexView extends View {
                     this.html(`1cb12447`, "a", parentElement,
                         { attrs: { "href": { type: 'static', value: "/" } } },
                         (parentElement: any) => [
-                        this.text('SAOLA LABS')
+                        this.text('SAOLABS')
                         ]),
                     this.html(`c13c35fb`, "div", parentElement, {}, (parentElement: any) => [
                         this.html(`69452823`, "a", parentElement,

@@ -1,0 +1,96 @@
+<template>
+    <section class="home-section home-section--fog" id="compare">
+        <div class="section-head section-head-split">
+            <div>
+                <p class="kicker"><span>SO SÁNH</span> Khác gì lựa chọn quen thuộc</p>
+                <h2>Cùng một bài toán,<br>năm cách trả lời khác nhau.</h2>
+            </div>
+            <p>Bảng này không nói cách nào tốt hơn tuyệt đối. Nó nói mỗi cách đặt chi phí ở đâu — và Saola đặt chi phí vào bước biên dịch để đổi lấy việc không phải giữ hai bản template đồng bộ bằng tay.</p>
+        </div>
+        <div class="compare-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Tiêu chí</th>
+                        <th scope="col" class="col-sao">Saola</th>
+                        <th scope="col">Blade + Alpine</th>
+                        <th scope="col">Livewire</th>
+                        <th scope="col">Inertia + Vue/React</th>
+                        <th scope="col">SPA + REST API</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">HTML của lần tải đầu</th>
+                        <td class="col-sao">Đầy đủ nội dung</td>
+                        <td>Đầy đủ nội dung</td>
+                        <td>Đầy đủ nội dung</td>
+                        <td>Đầy đủ nếu bật SSR</td>
+                        <td><span class="cmp-no">Div rỗng</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Tương tác sau khi tải</th>
+                        <td class="col-sao">Chạy tại client, không round-trip</td>
+                        <td>Chạy tại client, phạm vi hẹp</td>
+                        <td><span class="cmp-no">Mỗi tương tác một request</span></td>
+                        <td>Chạy tại client</td>
+                        <td>Chạy tại client</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Nguồn sinh HTML và JS</th>
+                        <td class="col-sao"><span class="cmp-yes">Cùng một AST</span></td>
+                        <td>Hai nguồn viết tay</td>
+                        <td>Server sinh HTML, JS chỉ vá DOM</td>
+                        <td>Hai nguồn viết tay</td>
+                        <td>Một nguồn, chỉ ở client</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ngôn ngữ viết view</th>
+                        <td class="col-sao">Một cú pháp <code>.sao</code></td>
+                        <td>Blade cộng JavaScript rời</td>
+                        <td>Blade cộng PHP class</td>
+                        <td>Vue hoặc React, tách khỏi Blade</td>
+                        <td>Framework JavaScript</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cần tầng API riêng</th>
+                        <td class="col-sao">Không bắt buộc</td>
+                        <td>Không</td>
+                        <td>Không</td>
+                        <td>Không, props đi qua adapter</td>
+                        <td><span class="cmp-no">Bắt buộc</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Đa mặt tiền, tách bundle</th>
+                        <td class="col-sao"><span class="cmp-yes">Sẵn bốn context</span></td>
+                        <td>Tự dựng</td>
+                        <td>Tự dựng</td>
+                        <td>Tự dựng</td>
+                        <td>Tự dựng</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Vòng đời view có contract</th>
+                        <td class="col-sao">Bảy trạng thái, dọn theo ref-count</td>
+                        <td>Không có</td>
+                        <td>Theo component phía server</td>
+                        <td>Theo framework JavaScript</td>
+                        <td>Theo framework JavaScript</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Độ chín và cộng đồng</th>
+                        <td class="col-sao"><span class="cmp-no">Đang dựng nền</span></td>
+                        <td>Rất chín</td>
+                        <td>Rất chín</td>
+                        <td>Rất chín</td>
+                        <td>Rất chín</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+</template>
+
+<script setup lang="ts">
+    export default { name: 'HomeCompare' };
+</script>

@@ -14,10 +14,9 @@
     "paths": {
       "@/*": ["resources/js/*"],
       "@sao/*": ["resources/saola/*"],
-      "@sao/admin/*": ["resources/saola/admin/*"],
-      "@sao/app/*": ["resources/saola/app/*"],
-      "@sao/web/*": ["resources/saola/web/*"],
-      "@sao/mobile/*": ["resources/saola/mobile/*"]
+      "@web/*": ["resources/saola/web/*"],
+      "@admin/*": ["resources/saola/admin/*"],
+      "@mobile/*": ["resources/saola/mobile/*"]
     }
   },
   "include": [

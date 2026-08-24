@@ -1,0 +1,16 @@
+<template>
+    <section class="start-cta">
+        <div>
+            <p class="kicker"><span>BẮT ĐẦU</span> Không cần tin, cứ mở ra xem</p>
+            <h2>Tài liệu đầy đủ và<br>component đang chạy thật.</h2>
+        </div>
+        <div class="hero-actions">
+            <a class="button button-light" href="/docs/getting-started">Bắt đầu trong 4 bước <span>↗</span></a>
+            <a class="button button-light" href="/components">Xem component <span>↗</span></a>
+        </div>
+    </section>
+</template>
+
+<script setup lang="ts">
+    export default { name: 'HomeCta' };
+</script>

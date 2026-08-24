@@ -1,0 +1,35 @@
+@states({ openFaq: 0 })
+
+<template>
+    <section class="faq-grid" id="faq">
+        <div class="section-head">
+            <p class="kicker"><span>FAQ</span> Hỏi nhanh</p>
+            <h2>Sáu câu hỏi hay gặp nhất.</h2>
+        </div>
+        <div class="value-accordion">
+            <article @class(['value-item', 'open': openFaq === 0])>
+                <button @click(setOpenFaq(0))><span>01</span><strong>Saola có thay thế Laravel không?</strong><i>+</i></button>
+                @if(openFaq === 0)
+                    <p>Không. Saola là lớp view và runtime chạy trên Laravel. Route, middleware, policy, Eloquent, queue và toàn bộ hệ sinh thái Laravel giữ nguyên. Cái Saola thay là cách bạn viết tầng view và cách trang đó sống tiếp sau khi tải xong.</p>
+                @endif
+            </article>
+            <article @class(['value-item', 'open': openFaq === 1])>
+                <button @click(setOpenFaq(1))><span>02</span><strong>Tôi có phải bỏ Blade đang có không?</strong><i>+</i></button>
+                @if(openFaq === 1)
+                    <p>Không. Đầu ra phía server của một file <code>.sao</code> chính là Blade template, nằm cùng chỗ với view Blade bạn đang có. Bạn chuyển dần từng trang, không cần viết lại cả ứng dụng trong một lần.</p>
+                @endif
+            </article>
+
+            <article @class(['value-item', 'open': openFaq === 5])>
+                <button @click(setOpenFaq(5))><span>06</span><strong>Đã biết Blade thì học mất bao lâu?</strong><i>+</i></button>
+                @if(openFaq === 5)
+                    <p>Cú pháp giữ hình dạng directive quen thuộc của Blade, nên phần điều khiển luồng gần như đọc được ngay. Cái mới cần nắm là ba thứ: state khai báo ở đầu file, setter sinh tự động, và ranh giới giữa giá trị reactive với giá trị tính một lần.</p>
+                @endif
+            </article>
+        </div>
+    </section>
+</template>
+
+<script setup lang="ts">
+    export default { name: 'HomeFaq' };
+</script>

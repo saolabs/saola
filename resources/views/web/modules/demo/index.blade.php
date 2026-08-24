@@ -26,7 +26,7 @@
             <div @class([$__VIEW_ID__ . '-3996f6ab', 'paper-noise'])></div>
 
             <nav @class([$__VIEW_ID__ . '-a78834ce', 'demo-nav']) @attr(['aria-label' => 'Điều hướng trang demo'])>
-                <a @class([$__VIEW_ID__ . '-1cb12447']) @attr(['href' => '/'])>SAOLA LABS</a>
+                <a @class([$__VIEW_ID__ . '-1cb12447']) @attr(['href' => '/'])>SAOLABS</a>
                 <div @class([$__VIEW_ID__ . '-c13c35fb'])>
                     <a @class([$__VIEW_ID__ . '-69452823']) @attr(['href' => '#playground'])>Playground</a>
                     <a @class([$__VIEW_ID__ . '-cd4d96c2']) @attr(['href' => '#coverage'])>Phạm vi hỗ trợ</a>

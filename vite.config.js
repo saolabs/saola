@@ -38,18 +38,19 @@ export default defineConfig({
             ...(useLocalSaolaClient ? {
                 '@saolabs/client': path.resolve(__dirname, '../client/dist/index.js'),
             } : {}),
-            // Source directories (for IDE and Vite dev)
+            // Source directories (for IDE and Vite dev).
+            // Alias gốc theo context → '@web/app', '@web/assets', '@web/views'…
+            // PHẢI khớp "paths" trong tsconfig.json, nếu không IDE báo đỏ còn
+            // Vite vẫn build được (hoặc ngược lại).
             '@': path.resolve(__dirname, 'resources/js'),
-            '@saola': path.resolve(__dirname, 'resources/saola'),
-            '@saola/core': path.resolve(__dirname, 'resources/saola/core'),
-            '@saola/app': path.resolve(__dirname, 'resources/saola/app'),
+            '@sao': path.resolve(__dirname, 'resources/saola'),
+            '@web': path.resolve(__dirname, 'resources/saola/web'),
+            '@admin': path.resolve(__dirname, 'resources/saola/admin'),
+            '@mobile': path.resolve(__dirname, 'resources/saola/mobile'),
             
             // Compiled directories
             '@compiled': path.resolve(__dirname, 'resources/js/saola'),
             '@views': path.resolve(__dirname, `resources/js/saola/${context}`),
-            
-            // App directories
-            '@app': path.resolve(__dirname, 'resources/js/app'),
         }
     },
     // Local client is rebuilt before every dev run. Vite's dependency cache is
@@ -63,6 +64,7 @@ export default defineConfig({
         force: useLocalSaolaClient,
         ...(useLocalSaolaClient ? { exclude: ['@saolabs/client'] } : {}),
     },
+    publicDir: false,
     build: {
         sourcemap: true, // Enable source maps for debugging
         outDir: `public/static/saola/${context}`,
@@ -79,7 +81,7 @@ export default defineConfig({
                     if (names.some((n) => n.endsWith('.css'))) {
                         return 'css/[name][extname]';
                     }
-                    return 'assets/[name].[ext]';
+                    return 'assets/[name]-[hash].[ext]';
                 }
             }
         }

@@ -27,7 +27,7 @@
                         <p class="form-error">Please add both your name and email.</p>
                     @endif
                     <label><span>What should we discuss?</span><select @bind(topic)><option>Architecture review</option><option>Hydration migration</option><option>Compiler integration</option><option>Performance audit</option></select></label>
-                    <label><span>Context</span><textarea maxlength="500" placeholder="What is the application doing today, and where does it become difficult?" @bind(message) @input(setMessageLength(event.target.value.length))></textarea><small>{{ messageLength }} / 500</small></label>
+                    <label><span>Context</span><textarea maxlength="500" placeholder="What is the application doing today, and where does it become difficult?" @bind(message) @input(trackLength(event))></textarea><small>{{ messageLength }} / 500</small></label>
                     @if(attempted && messageLength < 12)
                         <p class="form-error">Give us at least 12 characters of context.</p>
                     @endif
@@ -41,6 +41,11 @@
 <script setup lang="ts">
     export default {
         name: 'ContactPage',
+        trackLength(event) {
+            // .length phải nằm trong <script setup>: trong directive nó bị
+            // preprocessor đổi sang count() của PHP rồi lọt sang đầu ra JS.
+            setMessageLength(event.target.value.length);
+        },
         sendContact(event) {
             event.preventDefault();
             setAttempted(true);

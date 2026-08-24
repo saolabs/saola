@@ -54,11 +54,8 @@
         "jsdom": "^25.0.0",
         "laravel-vite-plugin": "^1.2.0",
         "tailwindcss": "^4.0.0",
-        "terser-webpack-plugin": "^5.3.14",
         "vite": "^6.4.0",
-        "vitest": "^3.0.0",
-        "webpack": "^5.95.0",
-        "webpack-cli": "^5.1.4"
+        "vitest": "^3.0.0"
     },
     "dependencies": {
         "@saolabs/client": "^1.0.0"

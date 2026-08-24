@@ -1,0 +1,34 @@
+@import('web.modules.home.parts.ovcard')
+
+<template>
+    <section class="home-section" id="usecase">
+        <div class="section-head section-head-split">
+            <div>
+                <p class="kicker"><span>DÀNH CHO AI</span> Hợp và chưa hợp</p>
+                <h2>Saola hợp nhất<br>với bốn tình huống này.</h2>
+            </div>
+            <p>Nếu đội bạn đã đứng vững trên Laravel và đang cân nhắc thêm một frontend riêng, đây đúng là chỗ Saola tiết kiệm nhiều nhất.</p>
+        </div>
+        <div class="ov-grid">
+            <ovcard eyebrow="01 / NỘI BỘ" title="Ứng dụng nội bộ & admin panel">
+                <p>Bảng dữ liệu, form nhiều bước, phân quyền theo vai trò. Cần tương tác mượt nhưng không cần đánh đổi bằng một frontend tách rời.</p>
+            </ovcard>
+            <ovcard eyebrow="02 / SEO + UX" title="Sản phẩm cần cả SEO lẫn tương tác">
+                <p>Trang danh mục, chi tiết sản phẩm, blog có bộ lọc. Crawler nhận HTML đầy đủ; người dùng nhận trải nghiệm không tải lại trang.</p>
+            </ovcard>
+            <ovcard eyebrow="03 / ĐA MẶT TIỀN" title="Nhiều mặt tiền trên một backend">
+                <p>Web công khai, admin, webview mobile và api dùng chung model, policy và service layer nhưng tách route, middleware lẫn bundle.</p>
+            </ovcard>
+            <ovcard eyebrow="04 / ĐỘI LARAVEL" title="Đội Laravel muốn SPA mà không đổi nghề">
+                <p>Eloquent, middleware, policy, queue giữ nguyên. Phần mới cần học là cú pháp view và cách state chảy — không phải một hệ sinh thái build khác.</p>
+            </ovcard>
+        </div>
+        <div class="ov-note ov-note--warn">
+            <strong>Chưa hợp khi:</strong> bạn cần một hệ sinh thái component bên thứ ba khổng lồ ngay hôm nay, hoặc đội đã chạy tốt trên React/Vue với đầy đủ tooling và người quen việc. Trong hai trường hợp đó, chi phí chuyển sang Saola lớn hơn cái nó tiết kiệm.
+        </div>
+    </section>
+</template>
+
+<script setup lang="ts">
+    export default { name: 'HomeUsecase' };
+</script>

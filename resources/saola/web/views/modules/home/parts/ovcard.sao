@@ -1,0 +1,16 @@
+@props({
+    eyebrow: '',
+    title: ''
+})
+
+<template>
+    <div class="ov-card">
+        <span>{{ eyebrow }}</span>
+        <h3>{{ title }}</h3>
+        @children
+    </div>
+</template>
+
+<script setup lang="ts">
+    export default { name: 'HomeOvCard' };
+</script>

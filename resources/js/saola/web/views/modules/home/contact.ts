@@ -177,6 +177,11 @@ class ContactView extends View {
 
         this.__ctrl__.setUserDefinedConfig({
             name: 'ContactPage',
+                trackLength(event) {
+                    // .length phải nằm trong <script setup>: trong directive nó bị
+                    // preprocessor đổi sang count() của PHP rồi lọt sang đầu ra JS.
+                    setMessageLength(event.target.value.length);
+                },
                 sendContact(event) {
                     event.preventDefault();
                     setAttempted(true);
@@ -361,7 +366,7 @@ class ContactView extends View {
                                 this.html(`dfc41403`, "span", parentElement, {}, (parentElement: any) => [
                                     this.text('Context')
                                 ]),
-                                this.html(`24320d66`, "textarea", parentElement, { attrs: { "maxlength": { type: 'static', value: "500" }, "placeholder": { type: 'static', value: "What is the application doing today, and where does it become difficult?" } }, events: { input: [(event: any) => setMessageLength({"handler":"count","params":[event.target.value]})] }, bind: { key: 'message' } }),
+                                this.html(`24320d66`, "textarea", parentElement, { attrs: { "maxlength": { type: 'static', value: "500" }, "placeholder": { type: 'static', value: "What is the application doing today, and where does it become difficult?" } }, events: { input: [{"handler":"trackLength","params":[() => event]}] }, bind: { key: 'message' } }),
                                 this.html(`ccb5d383`, "small", parentElement, {}, (parentElement: any) => [
                                     this.output(`1a6e11ed`, parentElement, true, ["messageLength"], (parentElement: any) => messageLength),
                                     this.text(' / 500')

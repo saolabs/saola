@@ -1,0 +1,18 @@
+@props({
+    step: '',
+    cmd: ''
+})
+
+<template>
+    <li>
+        <span>{{ step }}</span>
+        <div>
+            @children
+        </div>
+        <code>{{ cmd }}</code>
+    </li>
+</template>
+
+<script setup lang="ts">
+    export default { name: 'HomeFlowStep' };
+</script>

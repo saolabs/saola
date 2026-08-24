@@ -141,7 +141,7 @@ class PublicView extends View {
                                     this.html(`2ef62801`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "logo-saola" }] },
                                         (parentElement) => [
-                                        this.text('Saola')
+                                        this.text('Sao')
                                         ]),
                                     this.html(`94cdf200`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "logo-labs" }] },
@@ -266,7 +266,7 @@ class PublicView extends View {
                                 this.html(`688e5753`, "span", parentElement,
                                     { classes: [{ type: 'static', value: "logo-saola" }] },
                                     (parentElement) => [
-                                    this.text('Saola')
+                                    this.text('Sao')
                                     ]),
                                 this.html(`1f828edb`, "span", parentElement,
                                     { classes: [{ type: 'static', value: "logo-labs" }] },
