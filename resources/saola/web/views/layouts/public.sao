@@ -6,7 +6,7 @@
                 <div class="site-shell">
                     <div class="site-header-row">
                         <a class="site-logo" href="/" aria-label="Trang chủ Saola">
-                            <span class="site-logo-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+                            <span class="site-logo-mark" aria-hidden="true"><img src="/static/saola/brand/saola-mark.svg" alt=""></span>
                             <span><span class="logo-saola">Sao</span><span class="logo-labs">Labs</span></span>
                         </a>
 
@@ -45,7 +45,7 @@
             <footer class="site-footer">
                 <div class="footer-intro">
                     <a class="site-logo site-logo-footer" href="/" aria-label="Trang chủ Saola">
-                        <span class="site-logo-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <span class="site-logo-mark" aria-hidden="true"><img src="/static/saola/brand/saola-mark.svg" alt=""></span>
                         <span><span class="logo-saola">Sao</span><span class="logo-labs">Labs</span></span>
                     </a>
                     <p>Một nguồn giao diện cho Blade SSR và JavaScript SPA. Được thiết kế quanh Laravel, không đứng bên cạnh Laravel.</p>

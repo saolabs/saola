@@ -2,7 +2,7 @@
 
 @useState($openFaq, 0)
 @wrapper
-<section @class([$__VIEW_ID__ . '-bbcd3398', 'faq-grid']) @attr(['id' => 'faq'])>
+<section @class([$__VIEW_ID__ . '-bbcd3398', 'faq-grid', 'home-section--fog']) @attr(['id' => 'faq'])>
         <div @class([$__VIEW_ID__ . '-88b70a58', 'section-head'])>
             <p @class([$__VIEW_ID__ . '-e444cc57', 'kicker'])><span @class([$__VIEW_ID__ . '-3d2849a4'])>FAQ</span> Hỏi nhanh</p>
             <h2 @class([$__VIEW_ID__ . '-ed9d4c8f'])>Sáu câu hỏi hay gặp nhất.</h2>

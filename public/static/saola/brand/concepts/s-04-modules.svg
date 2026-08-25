@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">SaoLabs S Modules</title>
+  <defs>
+    <linearGradient id="g4" x1="10" y1="8" x2="55" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/><stop offset=".48" stop-color="#3B82F6"/><stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="17" fill="url(#g4)"/>
+  <g fill="#fff">
+    <rect x="16" y="15" width="32" height="7" rx="3.5"/>
+    <rect x="14" y="18" width="7" height="16" rx="3.5"/>
+    <rect x="16" y="28.5" width="32" height="7" rx="3.5"/>
+    <rect x="43" y="31" width="7" height="16" rx="3.5"/>
+    <rect x="16" y="42" width="32" height="7" rx="3.5"/>
+  </g>
+</svg>

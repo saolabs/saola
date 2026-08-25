@@ -5,7 +5,7 @@
         <div @class([$__VIEW_ID__ . '-88b70a58']) @attr(['style' => 'position: absolute; top: 10%; right: 5%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(14,165,233,0.15) 0%, rgba(99,102,241,0.1) 40%, transparent 70%); z-index: -1; border-radius: 50%; pointer-events: none; filter: blur(40px);'])></div>
         <div @class([$__VIEW_ID__ . '-b545b1d4', 'home-hero-copy'])>
             <p @class([$__VIEW_ID__ . '-fa06b967', 'kicker'])><span @class([$__VIEW_ID__ . '-74be3ba7'])>SAOLA ECOSYSTEM</span> THE MODERN MONOLITH</p>
-            <h1 @class([$__VIEW_ID__ . '-b13cf56e'])>Xây dựng trải nghiệm SPA<br @class([$__VIEW_ID__ . '-ab8ccdf7'])><em @class([$__VIEW_ID__ . '-060b5a80'])>với backend bạn yêu thích.</em></h1>
+            <h1 @class([$__VIEW_ID__ . '-b13cf56e']) @attr(['style' => 'text-wrap: balance;'])>Trải nghiệm SPA mượt mà<br @class([$__VIEW_ID__ . '-ab8ccdf7'])><em @class([$__VIEW_ID__ . '-060b5a80'])>cùng backend bạn yêu thích.</em></h1>
             <p @class([$__VIEW_ID__ . '-38f64cbf', 'hero-lead'])>Phát triển Single-Page App với sự thanh lịch của server-side routing. Tận dụng trọn vẹn controller, middleware, và auth của Laravel mà không cần phải xây dựng riêng một tầng API.</p>
             <div @class([$__VIEW_ID__ . '-e19b2390', 'hero-actions'])>
                 <a @class([$__VIEW_ID__ . '-2aa4d48f', 'button', 'button-primary']) @attr(['href' => '/docs/getting-started', 'style' => 'box-shadow: 0 8px 25px rgba(14,165,233,0.3); border: 1px solid rgba(255,255,255,0.2);'])>Đọc tài liệu hướng dẫn <span @class([$__VIEW_ID__ . '-e74aa461'])>↗</span></a>

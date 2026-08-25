@@ -1,4 +1,4 @@
-@import('web.modules.home.parts.ovcard')
+@states({ activeUsecase: 0 })
 
 <template>
     <section class="home-section" id="usecase">
@@ -9,21 +9,156 @@
             </div>
             <p>Nếu đội bạn đã đứng vững trên Laravel và đang cân nhắc thêm một frontend riêng, đây đúng là chỗ Saola tiết kiệm nhiều nhất.</p>
         </div>
-        <div class="ov-grid">
-            <ovcard eyebrow="01 / NỘI BỘ" title="Ứng dụng nội bộ & admin panel">
-                <p>Bảng dữ liệu, form nhiều bước, phân quyền theo vai trò. Cần tương tác mượt nhưng không cần đánh đổi bằng một frontend tách rời.</p>
-            </ovcard>
-            <ovcard eyebrow="02 / SEO + UX" title="Sản phẩm cần cả SEO lẫn tương tác">
-                <p>Trang danh mục, chi tiết sản phẩm, blog có bộ lọc. Crawler nhận HTML đầy đủ; người dùng nhận trải nghiệm không tải lại trang.</p>
-            </ovcard>
-            <ovcard eyebrow="03 / ĐA MẶT TIỀN" title="Nhiều mặt tiền trên một backend">
-                <p>Web công khai, admin, webview mobile và api dùng chung model, policy và service layer nhưng tách route, middleware lẫn bundle.</p>
-            </ovcard>
-            <ovcard eyebrow="04 / ĐỘI LARAVEL" title="Đội Laravel muốn SPA mà không đổi nghề">
-                <p>Eloquent, middleware, policy, queue giữ nguyên. Phần mới cần học là cú pháp view và cách state chảy — không phải một hệ sinh thái build khác.</p>
-            </ovcard>
+        
+        <div class="usecase-tab-container">
+            <div class="usecase-tab-list">
+                <button @class(['usecase-tab-item', 'active': activeUsecase === 0]) @click(setActiveUsecase(0))>
+                    <span class="tab-num">01</span>
+                    <div class="tab-content">
+                        <h3>Ứng dụng nội bộ & admin panel</h3>
+                        <p>Bảng dữ liệu, form nhiều bước, phân quyền theo vai trò. Cần tương tác mượt nhưng không cần đánh đổi bằng một frontend tách rời.</p>
+                    </div>
+                </button>
+                <button @class(['usecase-tab-item', 'active': activeUsecase === 1]) @click(setActiveUsecase(1))>
+                    <span class="tab-num">02</span>
+                    <div class="tab-content">
+                        <h3>Sản phẩm cần cả SEO lẫn tương tác</h3>
+                        <p>Trang danh mục, chi tiết sản phẩm, blog có bộ lọc. Crawler nhận HTML đầy đủ; người dùng nhận trải nghiệm không tải lại trang.</p>
+                    </div>
+                </button>
+                <button @class(['usecase-tab-item', 'active': activeUsecase === 2]) @click(setActiveUsecase(2))>
+                    <span class="tab-num">03</span>
+                    <div class="tab-content">
+                        <h3>Nhiều mặt tiền trên một backend</h3>
+                        <p>Web công khai, admin, webview mobile và api dùng chung model, policy và service layer nhưng tách route, middleware lẫn bundle.</p>
+                    </div>
+                </button>
+                <button @class(['usecase-tab-item', 'active': activeUsecase === 3]) @click(setActiveUsecase(3))>
+                    <span class="tab-num">04</span>
+                    <div class="tab-content">
+                        <h3>Đội Laravel muốn SPA mà không đổi nghề</h3>
+                        <p>Eloquent, middleware, policy, queue giữ nguyên. Phần mới cần học là cú pháp view và cách state chảy — không phải một hệ sinh thái build khác.</p>
+                    </div>
+                </button>
+            </div>
+            
+            <div class="usecase-tab-panel">
+                @if(activeUsecase === 0)
+                    <div class="usecase-mockup mockup-admin">
+                        <div class="mockup-header">
+                            <div class="dots"><i></i><i></i><i></i></div>
+                            <div class="title">User Management</div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="mockup-toolbar">
+                                <div class="mockup-search">🔍 Search users...</div>
+                                <div class="mockup-btn">Add New</div>
+                            </div>
+                            <div class="mockup-table">
+                                <div class="mockup-tr head"><span>Name</span><span>Role</span><span>Status</span><span>Action</span></div>
+                                <div class="mockup-tr"><span>John Doe</span><span>Admin</span><span class="badge active">Active</span><span class="action">Edit</span></div>
+                                <div class="mockup-tr"><span>Jane Smith</span><span>Editor</span><span class="badge inactive">Inactive</span><span class="action">Edit</span></div>
+                                <div class="mockup-tr"><span>Mike Ross</span><span>User</span><span class="badge active">Active</span><span class="action">Edit</span></div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                
+                @if(activeUsecase === 1)
+                    <div class="usecase-mockup mockup-shop">
+                        <div class="mockup-header">
+                            <div class="dots"><i></i><i></i><i></i></div>
+                            <div class="title">Shop / Laptops</div>
+                        </div>
+                        <div class="mockup-body layout-split">
+                            <div class="mockup-sidebar">
+                                <b>Filters</b>
+                                <ul>
+                                    <li><input type="checkbox" checked> Apple (12)</li>
+                                    <li><input type="checkbox"> Dell (8)</li>
+                                    <li><input type="checkbox"> HP (15)</li>
+                                </ul>
+                                <b>Price</b>
+                                <div class="mockup-range"></div>
+                            </div>
+                            <div class="mockup-grid">
+                                <div class="mockup-product">
+                                    <div class="img"></div>
+                                    <div class="name">MacBook Pro 16"</div>
+                                    <div class="price">$2,499</div>
+                                </div>
+                                <div class="mockup-product">
+                                    <div class="img"></div>
+                                    <div class="name">MacBook Air M2</div>
+                                    <div class="price">$1,199</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                
+                @if(activeUsecase === 2)
+                    <div class="usecase-mockup mockup-code">
+                        <div class="mockup-header">
+                            <div class="dots"><i></i><i></i><i></i></div>
+                            <div class="title">Project Structure</div>
+                        </div>
+                        <div class="mockup-body">
+                            <ul class="tree">
+                                <li>📁 <b>app</b>
+                                    <ul>
+                                        <li>📁 <b>Models</b> <i>(Shared)</i>
+                                            <ul><li>📄 User.php</li><li>📄 Order.php</li></ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>📁 <b>routes</b>
+                                    <ul>
+                                        <li>📄 web.php <i>(Public site)</i></li>
+                                        <li>📄 admin.php <i>(Admin panel)</i></li>
+                                        <li>📄 api.php <i>(Mobile app)</i></li>
+                                    </ul>
+                                </li>
+                                <li>📁 <b>resources/saola</b>
+                                    <ul>
+                                        <li>📁 web <i>(Bundle 1)</i></li>
+                                        <li>📁 admin <i>(Bundle 2)</i></li>
+                                        <li>📁 mobile <i>(Bundle 3)</i></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                @endif
+                
+                @if(activeUsecase === 3)
+                    <div class="usecase-mockup mockup-code">
+                        <div class="mockup-header">
+                            <div class="dots"><i></i><i></i><i></i></div>
+                            <div class="title">counter.sao</div>
+                        </div>
+                        <div class="mockup-body">
+<div class="mockup-code-lines" style="font-family: monospace; font-size: 13px; line-height: 1.6;">
+    <div style="display: block;"><span class="token keyword"><span>@</span>states</span><span class="token punctuation">({</span><span style="margin-left: 0.5em;" class="token property">count</span><span class="token punctuation">:</span><span style="margin-left: 0.5em;" class="token number">0</span><span style="margin-left: 0.5em;" class="token punctuation">})</span></div>
+    <div style="display: block; min-height: 1.6em;"></div>
+    <div style="display: block;"><span class="token tag">&lt;template&gt;</span></div>
+    <div style="display: block; padding-left: 2em;"><span class="token tag">&lt;div&gt;</span></div>
+    <div style="display: block; padding-left: 4em;"><span class="token tag">&lt;h3&gt;</span>Count:<span style="margin-left: 0.5em;" class="token punctuation"><span>{</span>{</span><span style="margin-left: 0.5em;" class="token property">count</span><span style="margin-left: 0.5em;" class="token punctuation">}<span>}</span></span><span class="token tag">&lt;/h3&gt;</span></div>
+    <div style="display: block; padding-left: 4em;"><span class="token tag">&lt;button</span><span style="margin-left: 0.5em;" class="token attr-name"><span>@</span>click</span><span class="token punctuation">(</span><span class="token function">setCount</span><span class="token punctuation">(</span><span class="token property">count</span><span style="margin-left: 0.5em;" class="token operator">+</span><span style="margin-left: 0.5em;" class="token number">1</span><span class="token punctuation">))</span><span class="token tag">&gt;</span>+<span class="token tag">&lt;/button&gt;</span></div>
+    <div style="display: block; min-height: 1.6em;"></div>
+    <div style="display: block; padding-left: 4em;"><span class="token keyword"><span>@</span>if</span><span class="token punctuation">(</span><span class="token property">count</span><span style="margin-left: 0.5em;" class="token operator">></span><span style="margin-left: 0.5em;" class="token number">10</span><span class="token punctuation">)</span></div>
+    <div style="display: block; padding-left: 6em;"><span class="token tag">&lt;p&gt;</span>You clicked many times!<span class="token tag">&lt;/p&gt;</span></div>
+    <div style="display: block; padding-left: 4em;"><span class="token keyword"><span>@</span>endif</span></div>
+    <div style="display: block; padding-left: 2em;"><span class="token tag">&lt;/div&gt;</span></div>
+    <div style="display: block;"><span class="token tag">&lt;/template&gt;</span></div>
+</div>
+                        </div>
+                    </div>
+                @endif
+            </div>
         </div>
-        <div class="ov-note ov-note--warn">
+
+        <div class="ov-note ov-note--warn" style="margin-top: 30px;">
             <strong>Chưa hợp khi:</strong> bạn cần một hệ sinh thái component bên thứ ba khổng lồ ngay hôm nay, hoặc đội đã chạy tốt trên React/Vue với đầy đủ tooling và người quen việc. Trong hai trường hợp đó, chi phí chuyển sang Saola lớn hơn cái nó tiết kiệm.
         </div>
     </section>
@@ -31,4 +166,28 @@
 
 <script setup lang="ts">
     export default { name: 'HomeUsecase' };
+
+    if (typeof window !== 'undefined') {
+        let initInterval = setInterval(() => {
+            let container = document.querySelector('.usecase-tab-container');
+            if (container) {
+                clearInterval(initInterval);
+                let tabs = document.querySelectorAll('.usecase-tab-item');
+                let slideInterval;
+                const start = () => {
+                    clearInterval(slideInterval);
+                    slideInterval = setInterval(() => {
+                        let active = document.querySelector('.usecase-tab-item.active');
+                        let index = Array.from(tabs).indexOf(active);
+                        if (index === -1) index = 0;
+                        let next = (index + 1) % tabs.length;
+                        if (tabs[next]) tabs[next].click();
+                    }, 10000);
+                };
+                start();
+                container.addEventListener('mouseenter', () => clearInterval(slideInterval));
+                container.addEventListener('mouseleave', start);
+            }
+        }, 100);
+    }
 </script>

@@ -133,7 +133,7 @@ class FaqView extends View {
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
             this.html(`bbcd3398`, "section", parentElement,
-                { classes: [{ type: 'static', value: "faq-grid" }], attrs: { "id": { type: 'static', value: "faq" } } },
+                { classes: [{ type: 'static', value: "faq-grid" }, { type: 'static', value: "home-section--fog" }], attrs: { "id": { type: 'static', value: "faq" } } },
                 (parentElement: any) => [
                 this.html(`88b70a58`, "div", parentElement,
                     { classes: [{ type: 'static', value: "section-head" }] },

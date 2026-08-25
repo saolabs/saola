@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">SaoLabs S Fold</title>
+  <defs>
+    <linearGradient id="g3" x1="10" y1="8" x2="55" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/><stop offset=".48" stop-color="#3B82F6"/><stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="17" fill="url(#g3)"/>
+  <path d="M47 17.5H24L15.5 26l8.5 8h16l8.5 8-8.5 8H17" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

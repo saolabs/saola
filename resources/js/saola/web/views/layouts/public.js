@@ -133,9 +133,7 @@ class PublicView extends View {
                                 this.html(`1d2848b8`, "span", parentElement,
                                     { classes: [{ type: 'static', value: "site-logo-mark" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } },
                                     (parentElement) => [
-                                    this.html(`bcfa3008`, "i", parentElement, {}),
-                                    this.html(`862e33c8`, "i", parentElement, {}),
-                                    this.html(`64d27941`, "i", parentElement, {})
+                                    this.html(`905e7579`, "img", parentElement, { attrs: { "src": { type: 'static', value: "/static/saola/brand/saola-mark.svg" }, "alt": { type: 'static', value: "" } } })
                                     ]),
                                 this.html(`243f01a4`, "span", parentElement, {}, (parentElement) => [
                                     this.html(`2ef62801`, "span", parentElement,
@@ -258,9 +256,7 @@ class PublicView extends View {
                             this.html(`97b46bf5`, "span", parentElement,
                                 { classes: [{ type: 'static', value: "site-logo-mark" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } },
                                 (parentElement) => [
-                                this.html(`79f28304`, "i", parentElement, {}),
-                                this.html(`2de522bc`, "i", parentElement, {}),
-                                this.html(`5199c8d1`, "i", parentElement, {})
+                                this.html(`8e772a40`, "img", parentElement, { attrs: { "src": { type: 'static', value: "/static/saola/brand/saola-mark.svg" }, "alt": { type: 'static', value: "" } } })
                                 ]),
                             this.html(`788489b8`, "span", parentElement, {}, (parentElement) => [
                                 this.html(`688e5753`, "span", parentElement,

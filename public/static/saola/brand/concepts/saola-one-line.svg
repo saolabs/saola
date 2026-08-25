@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-labelledby="title desc">
+  <title id="title">SaoLabs Saola One Line</title>
+  <desc id="desc">Sao la cách điệu bằng một nét liên tục</desc>
+  <defs>
+    <linearGradient id="line-gradient" x1="15" y1="7" x2="68" y2="72" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="0.5" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+  <path d="M15 72C28 63 29 50 28 39C22 38 17 34 14 28C22 27 28 28 32 31C31 23 25 13 16 7C30 10 40 18 45 30C40 19 31 9 23 4C39 8 49 17 53 31C61 34 68 39 75 45C77 48 75 52 70 52C68 56 64 57 60 54C53 55 47 53 43 50C42 59 44 67 39 75C35 67 31 58 33 48C31 58 27 68 15 72Z" fill="none" stroke="url(#line-gradient)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

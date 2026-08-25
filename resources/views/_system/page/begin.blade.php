@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ $__env->yieldContent('favicon', asset('favicon.ico')) }}">
+    <link rel="icon" type="image/svg+xml" href="{{ $__env->yieldContent('favicon', asset('favicon.svg')) }}">
     @include($__partial__.'head')
 
     {{-- Saola assets (CSS + JS), dev-aware: Vite HMR khi `npm run dev`, static khi build --}}

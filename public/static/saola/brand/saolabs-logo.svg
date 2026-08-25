@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226 64" role="img" aria-labelledby="title desc">
+  <title id="title">SaoLabs</title>
+  <desc id="desc">SaoLabs, phát triển phần mềm và giải pháp AI</desc>
+  <defs>
+    <linearGradient id="logo-gradient" x1="10" y1="8" x2="55" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="0.48" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+    <linearGradient id="word-gradient" x1="132" y1="18" x2="218" y2="46" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+  <path d="M20 0H64V14H32L25 22H44L64 40L43 64H0V50H32L40 41H20L0 23L21 0Z" fill="url(#logo-gradient)"/>
+  <text x="78" y="42" fill="#0B1220" font-family="Roboto, Arial, sans-serif" font-size="31" font-weight="800" letter-spacing="-1.4">Sao</text>
+  <text x="132" y="42" fill="url(#word-gradient)" font-family="Roboto, Arial, sans-serif" font-size="31" font-weight="800" letter-spacing="-1.4">Labs</text>
+</svg>

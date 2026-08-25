@@ -6,9 +6,9 @@
         @include('web.modules.home.parts.features')
         @include('web.modules.home.parts.compare')
         @include('web.modules.home.parts.usecase')
-        @include('web.modules.home.parts.faq')
         @include('web.modules.home.parts.principle')
         @include('web.modules.home.parts.cta')
+        @include('web.modules.home.parts.faq')
     @endblock
 </template>
 

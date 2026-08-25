@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 96" role="img" aria-labelledby="title desc">
+  <title id="title">SaoLabs Saola Fusion</title>
+  <desc id="desc">Sao la nhìn nghiêng kết hợp liền nét với bình thí nghiệm, một chấm mắt và một nhịp mạch AI</desc>
+  <defs>
+    <linearGradient id="saola-gradient" x1="14" y1="8" x2="86" y2="92" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="0.55" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+  <path d="M14 88C26 80 31 69 29 57C23 54 18 49 15 43C24 42 32 46 37 51C38 33 31 18 20 8C40 13 52 30 54 49C65 51 75 57 84 64C87 67 85 72 80 73C76 77 71 77 66 72C59 74 53 72 48 69L56 84C59 89 56 92 51 92H30C25 92 22 88 25 83L36 64V59" fill="none" stroke="url(#saola-gradient)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M29 8C48 14 60 31 61 50" fill="none" stroke="url(#saola-gradient)" stroke-width="3.4" stroke-linecap="round"/>
+  <circle cx="68" cy="60" r="2.45" fill="#0EA5E9"/>
+  <path d="M32 84L38 78L44 83L51 76" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -133,13 +133,15 @@ class HeroView extends View {
                         ]),
                         this.text(' THE MODERN MONOLITH')
                         ]),
-                    this.html(`b13cf56e`, "h1", parentElement, {}, (parentElement: any) => [
-                        this.text('Xây dựng trải nghiệm SPA'),
+                    this.html(`b13cf56e`, "h1", parentElement,
+                        { attrs: { "style": { type: 'static', value: "text-wrap: balance;" } } },
+                        (parentElement: any) => [
+                        this.text('Trải nghiệm SPA mượt mà'),
                         this.html(`ab8ccdf7`, "br", parentElement, {}),
                         this.html(`060b5a80`, "em", parentElement, {}, (parentElement: any) => [
-                            this.text('với backend bạn yêu thích.')
+                            this.text('cùng backend bạn yêu thích.')
                         ])
-                    ]),
+                        ]),
                     this.html(`38f64cbf`, "p", parentElement,
                         { classes: [{ type: 'static', value: "hero-lead" }] },
                         (parentElement: any) => [

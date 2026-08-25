@@ -119,9 +119,11 @@ class PrincipleView extends View {
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
             this.html(`bbcd3398`, "section", parentElement,
-                { classes: [{ type: 'static', value: "principle-band" }] },
+                { classes: [{ type: 'static', value: "principle-showcase" }] },
                 (parentElement: any) => [
-                this.html(`88b70a58`, "div", parentElement, {}, (parentElement: any) => [
+                this.html(`88b70a58`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "principle-content" }] },
+                    (parentElement: any) => [
                     this.html(`e444cc57`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement: any) => [
@@ -130,25 +132,34 @@ class PrincipleView extends View {
                         ]),
                         this.text(' Điều Saola bảo vệ')
                         ]),
-                    this.html(`ed9d4c8f`, "h2", parentElement, {}, (parentElement: any) => [
-                        this.text('Server là sự thật.'),
-                        this.html(`8aa4720e`, "br", parentElement, {}),
-                        this.text('Client là sự tiếp nối.')
-                    ])
-                ]),
-                this.html(`b545b1d4`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "principle-copy" }] },
-                    (parentElement: any) => [
-                    this.html(`fa06b967`, "p", parentElement, {}, (parentElement: any) => [
-                        this.text('Phản hồi đầu tiên phải hoàn chỉnh và có thể hiểu được. JavaScript không “cứu” một trang rỗng; nó tiếp nhận chính view server vừa render và làm view đó sống lên.')
-                    ]),
-                    this.html(`f264583f`, "a", parentElement,
-                        { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-light" }], attrs: { "href": { type: 'static', value: "/about" } } },
+                    this.html(`ed9d4c8f`, "h2", parentElement,
+                        { classes: [{ type: 'static', value: "principle-title" }] },
                         (parentElement: any) => [
-                        this.text('Vì sao Saola tồn tại '),
-                        this.html(`ea2d923e`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('→')
-                        ])
+                        this.html(`3c308a77`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "line-1" }] },
+                            (parentElement: any) => [
+                            this.text('Server là sự thật.')
+                            ]),
+                        this.html(`fd6cf999`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "line-2" }] },
+                            (parentElement: any) => [
+                            this.text('Client là sự tiếp nối.')
+                            ])
+                        ]),
+                    this.html(`114ef863`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "principle-desc" }] },
+                        (parentElement: any) => [
+                        this.html(`961a3b1e`, "p", parentElement, {}, (parentElement: any) => [
+                            this.text('Phản hồi đầu tiên phải hoàn chỉnh và có thể hiểu được. JavaScript không “cứu” một trang rỗng; nó tiếp nhận chính view server vừa render và làm view đó sống lên.')
+                        ]),
+                        this.html(`d6fa163b`, "a", parentElement,
+                            { classes: [{ type: 'static', value: "button" }], attrs: { "href": { type: 'static', value: "/about" } } },
+                            (parentElement: any) => [
+                            this.text('Vì sao Saola tồn tại '),
+                            this.html(`1aac0442`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('→')
+                            ])
+                            ])
                         ])
                     ])
                 ])

@@ -8,13 +8,13 @@
             <p>Một hệ sinh thái trọn vẹn giúp bạn tập trung vào logic sản phẩm thay vì chắp vá các công cụ lại với nhau.</p>
         </div>
         <div class="map-grid">
-            <mapcard eyebrow="01 / SINGLE FILE" title="Mọi thứ trong một file" href="/docs/sao-file" link="Xem cấu trúc .sao ↗">
-                <p>Template, state, script và style hội tụ ở định dạng <code>.sao</code>. Quên việc nhảy qua lại giữa file Blade và component Vue/React.</p>
-            </mapcard>
-            <mapcard eyebrow="02 / TỐI ƯU SEO" title="SSR được cấu hình sẵn" href="/docs/lifecycle" link="Cơ chế hydration ↗">
+            <mapcard eyebrow="01 / TỐI ƯU SEO" title="SSR được cấu hình sẵn" href="/docs/lifecycle" link="Cơ chế hydration ↗">
                 <p>Server trả về HTML hoàn chỉnh ngay lần tải đầu. Trải nghiệm tức thì cho người dùng và crawler, không có khoảng trắng khó chịu.</p>
             </mapcard>
-            <mapcard eyebrow="03 / REACTIVE TỰ NHIÊN" title="Không Virtual DOM" href="/docs/reactivity" link="State & reactivity ↗" variant="dark">
+            <mapcard eyebrow="02 / SINGLE FILE" title="Mọi thứ trong một file" href="/docs/sao-file" link="Xem cấu trúc .sao ↗">
+                <p>Template, state, script và style hội tụ ở định dạng <code>.sao</code>. Quên việc nhảy qua lại giữa file Blade và component Vue/React.</p>
+            </mapcard>
+            <mapcard eyebrow="03 / REACTIVE TỰ NHIÊN" title="Không Virtual DOM" href="/docs/reactivity" link="State & reactivity ↗">
                 <p>Saola cập nhật chính xác từng vùng DOM thay đổi thay vì so sánh toàn bộ cây. Hiệu năng vượt trội và tiết kiệm bộ nhớ.</p>
             </mapcard>
             <mapcard eyebrow="04 / ROUTING TỪ SERVER" title="Server-based routing" href="/docs/contexts" link="Context & module ↗">

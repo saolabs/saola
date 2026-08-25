@@ -10,7 +10,7 @@
                 <div @class([$__VIEW_ID__ . '-01d00481', 'site-shell'])>
                     <div @class([$__VIEW_ID__ . '-9f34223d', 'site-header-row'])>
                         <a @class([$__VIEW_ID__ . '-8eeecdee', 'site-logo']) @attr(['href' => '/', 'aria-label' => 'Trang chủ Saola'])>
-                            <span @class([$__VIEW_ID__ . '-1d2848b8', 'site-logo-mark']) @attr(['aria-hidden' => 'true'])><i @class([$__VIEW_ID__ . '-bcfa3008'])></i><i @class([$__VIEW_ID__ . '-862e33c8'])></i><i @class([$__VIEW_ID__ . '-64d27941'])></i></span>
+                            <span @class([$__VIEW_ID__ . '-1d2848b8', 'site-logo-mark']) @attr(['aria-hidden' => 'true'])><img @class([$__VIEW_ID__ . '-905e7579']) @attr(['src' => '/static/saola/brand/saola-mark.svg', 'alt' => ''])></span>
                             <span @class([$__VIEW_ID__ . '-243f01a4'])><span @class([$__VIEW_ID__ . '-2ef62801', 'logo-saola'])>Sao</span><span @class([$__VIEW_ID__ . '-94cdf200', 'logo-labs'])>Labs</span></span>
                         </a>
 
@@ -51,7 +51,7 @@
             <footer @class([$__VIEW_ID__ . '-78151b5a', 'site-footer'])>
                 <div @class([$__VIEW_ID__ . '-78967ff6', 'footer-intro'])>
                     <a @class([$__VIEW_ID__ . '-101959dd', 'site-logo', 'site-logo-footer']) @attr(['href' => '/', 'aria-label' => 'Trang chủ Saola'])>
-                        <span @class([$__VIEW_ID__ . '-97b46bf5', 'site-logo-mark']) @attr(['aria-hidden' => 'true'])><i @class([$__VIEW_ID__ . '-79f28304'])></i><i @class([$__VIEW_ID__ . '-2de522bc'])></i><i @class([$__VIEW_ID__ . '-5199c8d1'])></i></span>
+                        <span @class([$__VIEW_ID__ . '-97b46bf5', 'site-logo-mark']) @attr(['aria-hidden' => 'true'])><img @class([$__VIEW_ID__ . '-8e772a40']) @attr(['src' => '/static/saola/brand/saola-mark.svg', 'alt' => ''])></span>
                         <span @class([$__VIEW_ID__ . '-788489b8'])><span @class([$__VIEW_ID__ . '-688e5753', 'logo-saola'])>Sao</span><span @class([$__VIEW_ID__ . '-1f828edb', 'logo-labs'])>Labs</span></span>
                     </a>
                     <p @class([$__VIEW_ID__ . '-891dca6b'])>Một nguồn giao diện cho Blade SSR và JavaScript SPA. Được thiết kế quanh Laravel, không đứng bên cạnh Laravel.</p>

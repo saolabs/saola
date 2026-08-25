@@ -143,28 +143,28 @@ class FeaturesView extends View {
                     { classes: [{ type: 'static', value: "map-grid" }] },
                     (parentElement: any) => [
                     this.include(`c26ee094`, 'web.modules.home.parts.mapcard', parentElement, [], (parentElement: any) => ({
-                            "eyebrow": "01 / SINGLE FILE",
-                            "title": "Mọi thứ trong một file",
-                            "href": "/docs/sao-file",
-                            "link": `Xem cấu trúc .sao ↗`,
-                            __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                            this.html(`4d8330ac`, "p", parentElement, {}, (parentElement: any) => [
-                                this.text('Template, state, script và style hội tụ ở định dạng '),
-                                this.html(`0a67dfc3`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('.sao')
-                                ]),
-                                this.text('. Quên việc nhảy qua lại giữa file Blade và component Vue/React.')
-                            ])
-                        ]
-                        })),
-                    this.include(`bdd4cecc`, 'web.modules.home.parts.mapcard', parentElement, [], (parentElement: any) => ({
-                            "eyebrow": "02 / TỐI ƯU SEO",
+                            "eyebrow": "01 / TỐI ƯU SEO",
                             "title": "SSR được cấu hình sẵn",
                             "href": "/docs/lifecycle",
                             "link": "Cơ chế hydration ↗",
                             __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                            this.html(`37aeefe2`, "p", parentElement, {}, (parentElement: any) => [
+                            this.html(`4d8330ac`, "p", parentElement, {}, (parentElement: any) => [
                                 this.text('Server trả về HTML hoàn chỉnh ngay lần tải đầu. Trải nghiệm tức thì cho người dùng và crawler, không có khoảng trắng khó chịu.')
+                            ])
+                        ]
+                        })),
+                    this.include(`bdd4cecc`, 'web.modules.home.parts.mapcard', parentElement, [], (parentElement: any) => ({
+                            "eyebrow": "02 / SINGLE FILE",
+                            "title": "Mọi thứ trong một file",
+                            "href": "/docs/sao-file",
+                            "link": `Xem cấu trúc .sao ↗`,
+                            __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
+                            this.html(`37aeefe2`, "p", parentElement, {}, (parentElement: any) => [
+                                this.text('Template, state, script và style hội tụ ở định dạng '),
+                                this.html(`07ae010a`, "code", parentElement, {}, (parentElement: any) => [
+                                    this.text('.sao')
+                                ]),
+                                this.text('. Quên việc nhảy qua lại giữa file Blade và component Vue/React.')
                             ])
                         ]
                         })),
@@ -173,7 +173,6 @@ class FeaturesView extends View {
                             "title": "Không Virtual DOM",
                             "href": "/docs/reactivity",
                             "link": "State & reactivity ↗",
-                            "variant": "dark",
                             __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
                             this.html(`397bf660`, "p", parentElement, {}, (parentElement: any) => [
                                 this.text('Saola cập nhật chính xác từng vùng DOM thay đổi thay vì so sánh toàn bộ cây. Hiệu năng vượt trội và tiết kiệm bộ nhớ.')

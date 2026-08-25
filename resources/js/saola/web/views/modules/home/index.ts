@@ -130,9 +130,9 @@ class IndexView extends View {
             this.include(`cf91f6e1`, 'web.modules.home.parts.features', parentElement, [], (parentElement: any) => ({})),
             this.include(`c8dd8447`, 'web.modules.home.parts.compare', parentElement, [], (parentElement: any) => ({})),
             this.include(`cdcde7d5`, 'web.modules.home.parts.usecase', parentElement, [], (parentElement: any) => ({})),
-            this.include(`eeda9939`, 'web.modules.home.parts.faq', parentElement, [], (parentElement: any) => ({})),
-            this.include(`e4c6fe66`, 'web.modules.home.parts.principle', parentElement, [], (parentElement: any) => ({})),
-            this.include(`ce0a61c6`, 'web.modules.home.parts.cta', parentElement, [], (parentElement: any) => ({}))
+            this.include(`eeda9939`, 'web.modules.home.parts.principle', parentElement, [], (parentElement: any) => ({})),
+            this.include(`e4c6fe66`, 'web.modules.home.parts.cta', parentElement, [], (parentElement: any) => ({})),
+            this.include(`ce0a61c6`, 'web.modules.home.parts.faq', parentElement, [], (parentElement: any) => ({}))
             ]);
             this.superViewPath = `${__layout__+"public"}`;
             return this.extendView(this.superViewPath, {});

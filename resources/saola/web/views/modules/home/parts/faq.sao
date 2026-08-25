@@ -1,7 +1,7 @@
 @states({ openFaq: 0 })
 
 <template>
-    <section class="faq-grid" id="faq">
+    <section class="faq-grid home-section--fog" id="faq">
         <div class="section-head">
             <p class="kicker"><span>FAQ</span> Hỏi nhanh</p>
             <h2>Sáu câu hỏi hay gặp nhất.</h2>

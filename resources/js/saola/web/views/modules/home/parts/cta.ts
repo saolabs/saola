@@ -118,42 +118,46 @@ class CtaView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`bbcd3398`, "section", parentElement,
-                { classes: [{ type: 'static', value: "start-cta" }] },
+            this.html(`d69e6b1d`, "div", parentElement,
+                { classes: [{ type: 'static', value: "cta-wrapper" }, { type: 'static', value: "home-section--fog" }] },
                 (parentElement: any) => [
-                this.html(`88b70a58`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`e444cc57`, "p", parentElement,
-                        { classes: [{ type: 'static', value: "kicker" }] },
-                        (parentElement: any) => [
-                        this.html(`3d2849a4`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('BẮT ĐẦU')
-                        ]),
-                        this.text(' Không cần tin, cứ mở ra xem')
-                        ]),
-                    this.html(`ed9d4c8f`, "h2", parentElement, {}, (parentElement: any) => [
-                        this.text('Tài liệu đầy đủ và'),
-                        this.html(`8aa4720e`, "br", parentElement, {}),
-                        this.text('component đang chạy thật.')
-                    ])
-                ]),
-                this.html(`b545b1d4`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "hero-actions" }] },
+                this.html(`a25f0cc6`, "section", parentElement,
+                    { classes: [{ type: 'static', value: "start-cta" }] },
                     (parentElement: any) => [
-                    this.html(`a836a3d1`, "a", parentElement,
-                        { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-light" }], attrs: { "href": { type: 'static', value: "/docs/getting-started" } } },
-                        (parentElement: any) => [
-                        this.text('Bắt đầu trong 4 bước '),
-                        this.html(`425a4061`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('↗')
+                    this.html(`5088d5b8`, "div", parentElement, {}, (parentElement: any) => [
+                        this.html(`6753e248`, "p", parentElement,
+                            { classes: [{ type: 'static', value: "kicker" }] },
+                            (parentElement: any) => [
+                            this.html(`87f5f860`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('BẮT ĐẦU')
+                            ]),
+                            this.text(' Không cần tin, cứ mở ra xem')
+                            ]),
+                        this.html(`679e9392`, "h2", parentElement, {}, (parentElement: any) => [
+                            this.text('Tài liệu đầy đủ và'),
+                            this.html(`630b54ea`, "br", parentElement, {}),
+                            this.text('component đang chạy thật.')
                         ])
-                        ]),
-                    this.html(`f264583f`, "a", parentElement,
-                        { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-light" }], attrs: { "href": { type: 'static', value: "/components" } } },
+                    ]),
+                    this.html(`b20f39ca`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "hero-actions" }] },
                         (parentElement: any) => [
-                        this.text('Xem component '),
-                        this.html(`ea2d923e`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('↗')
-                        ])
+                        this.html(`a2d1cfca`, "a", parentElement,
+                            { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-light" }], attrs: { "href": { type: 'static', value: "/docs/getting-started" } } },
+                            (parentElement: any) => [
+                            this.text('Bắt đầu trong 4 bước '),
+                            this.html(`a65d3020`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('↗')
+                            ])
+                            ]),
+                        this.html(`d4b72629`, "a", parentElement,
+                            { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-light" }], attrs: { "href": { type: 'static', value: "/components" } } },
+                            (parentElement: any) => [
+                            this.text('Xem component '),
+                            this.html(`bec1f50c`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('↗')
+                            ])
+                            ])
                         ])
                     ])
                 ])
