@@ -68,7 +68,41 @@ class GettingStartedView extends View {
 
 
         this.__ctrl__.setUserDefinedConfig({
+            start() {
+                    this.setupScrollObserver();
+                },
 
+                setupScrollObserver() {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const id = entry.target.getAttribute('id');
+                                document.querySelectorAll('.start-layout aside a').forEach(a => {
+                                    if (a.getAttribute('href') === '#' + id) {
+                                        a.classList.add('is-current');
+                                    } else {
+                                        a.classList.remove('is-current');
+                                    }
+                                });
+                            }
+                        });
+                    }, {
+                        rootMargin: '-10% 0px -70% 0px',
+                        threshold: 0
+                    });
+
+                    document.querySelectorAll('.start-steps > article').forEach(article => {
+                        observer.observe(article);
+                    });
+
+                    this.observer = observer;
+                },
+
+                destroy() {
+                    if (this.observer) {
+                        this.observer.disconnect();
+                    }
+                }
         });
 
         this.__ctrl__.setup({
@@ -115,341 +149,208 @@ class GettingStartedView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-doc', 'doc', (parentElement) => [
-            this.html(`7b338a08`, "section", parentElement,
+            this.html(`Bdoc1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "page-hero" }, { type: 'static', value: "page-hero-start" }] },
                 (parentElement) => [
-                this.html(`3bb16c04`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`f150187b`, "p", parentElement,
+                this.html(`Bdoc11`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc111`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement) => [
-                        this.html(`bac94b21`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc1111`, "span", parentElement, {}, (parentElement) => [
                             this.text('04 / GETTING STARTED')
                         ]),
                         this.text(' Từ route đầu tiên')
                         ]),
-                    this.html(`663d8ed0`, "h1", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc112`, "h1", parentElement, {}, (parentElement) => [
                         this.text('Giữ cách Laravel nghĩ.'),
-                        this.html(`c3c0e3f9`, "br", parentElement, {}),
-                        this.html(`27038dbc`, "em", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc1121`, "br", parentElement, {}),
+                        this.html(`Bdoc1122`, "em", parentElement, {}, (parentElement) => [
                             this.text('Thêm cách SPA chạy.')
                         ])
                     ])
                 ]),
-                this.html(`57baae1a`, "div", parentElement,
+                this.html(`Bdoc12`, "div", parentElement,
                     { classes: [{ type: 'static', value: "page-hero-aside" }] },
                     (parentElement) => [
-                    this.html(`8695e14e`, "p", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc121`, "p", parentElement, {}, (parentElement) => [
                         this.text('Bắt đầu từ module, route và controller quen thuộc; Saola thêm view source và pipeline biên dịch phía trên chúng.')
                     ]),
-                    this.html(`1f0b28a5`, "dl", parentElement, {}, (parentElement) => [
-                        this.html(`da4a7f2f`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`902aa345`, "dt", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc122`, "dl", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc1221`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc12211`, "dt", parentElement, {}, (parentElement) => [
                                 this.text('TIME TO MODEL')
                             ]),
-                            this.html(`e65d3a6b`, "dd", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc12212`, "dd", parentElement, {}, (parentElement) => [
                                 this.text('4 bước')
                             ])
                         ]),
-                        this.html(`e762468d`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`935f1ffd`, "dt", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc1222`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc12221`, "dt", parentElement, {}, (parentElement) => [
                                 this.text('REQUIRES')
                             ]),
-                            this.html(`df3e6b57`, "dd", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc12222`, "dd", parentElement, {}, (parentElement) => [
                                 this.text('PHP + Node.js')
                             ])
                         ])
                     ])
                     ])
                 ]),
-            this.html(`05ef4c27`, "section", parentElement,
+            this.html(`Bdoc2`, "section", parentElement,
                 { classes: [{ type: 'static', value: "start-layout" }] },
                 (parentElement) => [
-                this.html(`1d1c97ef`, "aside", parentElement, {}, (parentElement) => [
-                    this.html(`af939389`, "span", parentElement, {}, (parentElement) => [
+                this.html(`Bdoc21`, "aside", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc211`, "span", parentElement, {}, (parentElement) => [
                         this.text('TRÊN TRANG NÀY')
                     ]),
-                    this.html(`9fed5329`, "a", parentElement,
+                    this.html(`Bdoc212`, "a", parentElement,
                         { attrs: { "href": { type: 'static', value: "#module" } } },
                         (parentElement) => [
                         this.text('01 / Module')
                         ]),
-                    this.html(`0f7e9c10`, "a", parentElement,
+                    this.html(`Bdoc213`, "a", parentElement,
                         { attrs: { "href": { type: 'static', value: "#view" } } },
                         (parentElement) => [
                         this.text('02 / View')
                         ]),
-                    this.html(`f7533ff1`, "a", parentElement,
+                    this.html(`Bdoc214`, "a", parentElement,
                         { attrs: { "href": { type: 'static', value: "#compile" } } },
                         (parentElement) => [
                         this.text('03 / Compile')
                         ]),
-                    this.html(`c4032a15`, "a", parentElement,
+                    this.html(`Bdoc215`, "a", parentElement,
                         { attrs: { "href": { type: 'static', value: "#verify" } } },
                         (parentElement) => [
                         this.text('04 / Verify')
                         ])
                 ]),
-                this.html(`fbd9a84d`, "div", parentElement,
+                this.html(`Bdoc22`, "div", parentElement,
                     { classes: [{ type: 'static', value: "start-steps" }] },
                     (parentElement) => [
-                    this.html(`13e1b7a4`, "article", parentElement,
+                    this.html(`Bdoc221`, "article", parentElement,
                         { attrs: { "id": { type: 'static', value: "module" } } },
                         (parentElement) => [
-                        this.html(`d32c987e`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2211`, "span", parentElement, {}, (parentElement) => [
                             this.text('01')
                         ]),
-                        this.html(`f12e0938`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`fdb4a637`, "p", parentElement,
+                        this.html(`Bdoc2212`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22121`, "p", parentElement,
                                 { classes: [{ type: 'static', value: "kicker" }] },
                                 (parentElement) => [
-                                this.html(`dfb1c367`, "span", parentElement, {}, (parentElement) => [
+                                this.html(`Bdoc221211`, "span", parentElement, {}, (parentElement) => [
                                     this.text('ROUTE')
                                 ]),
                                 this.text(' Module first')
                                 ]),
-                            this.html(`8ea5a711`, "h2", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22122`, "h2", parentElement, {}, (parentElement) => [
                                 this.text('Khai báo route trong context.')
                             ]),
-                            this.html(`bf64746c`, "p", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22123`, "p", parentElement, {}, (parentElement) => [
                                 this.text('Module giữ controller, service và route gần nhau. Context quyết định registry và asset bundle nào phục vụ request.')
                             ]),
-                            this.html(`be4a014f`, "pre", parentElement, {}, (parentElement) => [
-                                this.html(`f1e9eb3b`, "code", parentElement, {}, (parentElement) => [
-                                    this.html(`cd37afa5`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }] },
-                                        (parentElement) => [
-                                        this.text('System::context(\'web\')')
-                                        ]),
-                                    this.html(`ce9df19d`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                        (parentElement) => [
-                                        this.text('->module(\'home\', [\'prefix\' => \'/\'])')
-                                        ]),
-                                    this.html(`58671c17`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                        (parentElement) => [
-                                        this.text('->controller(HomeController::class)')
-                                        ]),
-                                    this.html(`429fe6c8`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                        (parentElement) => [
-                                        this.text('->group(function ($module) {')
-                                        ]),
-                                    this.html(`90765127`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-2" }] },
-                                        (parentElement) => [
-                                        this.text('$module->get(\'/\', \'index\')->name(\'index\');')
-                                        ]),
-                                    this.html(`6c3b28bb`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                        (parentElement) => [
-                                        this.text('});')
-                                        ])
-                                ])
-                            ])
+                            this.include(`Bdoc2212c1`, 'web.components.code-block', parentElement, [], (parentElement) => ({
+                                    "lang": "php",
+                                    __ONE_CHILDREN_CONTENT__: (parentElement) => [
+                                    this.text('System::context(\'web\')\n    ->module(\'home\', [\'prefix\' => \'/\'])\n    ->controller(HomeController::class)\n    ->group(function ($module) {\n        $module->get(\'/\', \'index\')->name(\'index\');\n    });')
+                                ]
+                                }))
                         ])
                         ]),
-                    this.html(`7610ec67`, "article", parentElement,
+                    this.html(`Bdoc222`, "article", parentElement,
                         { attrs: { "id": { type: 'static', value: "view" } } },
                         (parentElement) => [
-                        this.html(`d55ac7a6`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2221`, "span", parentElement, {}, (parentElement) => [
                             this.text('02')
                         ]),
-                        this.html(`ea8aae76`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`b954152f`, "p", parentElement,
+                        this.html(`Bdoc2222`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22221`, "p", parentElement,
                                 { classes: [{ type: 'static', value: "kicker" }] },
                                 (parentElement) => [
-                                this.html(`b202356c`, "span", parentElement, {}, (parentElement) => [
+                                this.html(`Bdoc222211`, "span", parentElement, {}, (parentElement) => [
                                     this.text('VIEW')
                                 ]),
                                 this.text(' One source')
                                 ]),
-                            this.html(`39f642fd`, "h2", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22222`, "h2", parentElement, {}, (parentElement) => [
                                 this.text('Tạo view '),
-                                this.html(`fd9e158f`, "code", parentElement, {}, (parentElement) => [
+                                this.html(`Bdoc222221`, "code", parentElement, {}, (parentElement) => [
                                     this.text('.sao')
                                 ]),
                                 this.text('.')
                             ]),
-                            this.html(`69aef52a`, "p", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22223`, "p", parentElement, {}, (parentElement) => [
                                 this.text('Template có thể extends layout, điền block, khai báo state và gắn event. Compiler dùng cùng nguồn để tạo Blade và JavaScript.')
                             ]),
-                            this.html(`ae2f02ca`, "pre", parentElement, {}, (parentElement) => [
-                                this.html(`70127fb2`, "code", parentElement, {}, (parentElement) => [
-                                    this.html(`11b9d241`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }] },
-                                        (parentElement) => [
-                                        this.html(`13b21639`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "directive-token" }] },
-                                            (parentElement) => [
-                                            this.text('states({ count: 0 })')
-                                            ])
-                                        ]),
-                                    this.html(`4c624fdd`, "span", parentElement, { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-line-gap" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } }),
-                                    this.html(`2f0a3853`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }] },
-                                        (parentElement) => [
-                                        this.html(`89e10e87`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "html-token" }] },
-                                            (parentElement) => [
-                                            this.text('template')
-                                            ])
-                                        ]),
-                                    this.html(`12844ae9`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                        (parentElement) => [
-                                        this.html(`1022e064`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "directive-token" }] },
-                                            (parentElement) => [
-                                            this.text('extends(__layout__ + "public")')
-                                            ])
-                                        ]),
-                                    this.html(`9a42cda2`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                        (parentElement) => [
-                                        this.html(`a19cc106`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "directive-token" }] },
-                                            (parentElement) => [
-                                            this.text('block(\'content\')')
-                                            ])
-                                        ]),
-                                    this.html(`ab093b01`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-2" }] },
-                                        (parentElement) => [
-                                        this.html(`64286e09`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "html-token" }] },
-                                            (parentElement) => [
-                                            this.text('button '),
-                                            this.html(`d9e6265c`, "span", parentElement,
-                                                { classes: [{ type: 'static', value: "directive-token" }] },
-                                                (parentElement) => [
-                                                this.text('click(setCount(count + 1))')
-                                                ])
-                                            ])
-                                        ]),
-                                    this.html(`07d3eed3`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-3" }] },
-                                        (parentElement) => [
-                                        this.text('Count: '),
-                                        this.html(`10996eb3`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "mustache-token" }] },
-                                            (parentElement) => [
-                                            this.text('count')
-                                            ])
-                                        ]),
-                                    this.html(`345c7c25`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-2" }] },
-                                        (parentElement) => [
-                                        this.html(`a8b5bce2`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "html-token" }, { type: 'static', value: "html-token-close" }] },
-                                            (parentElement) => [
-                                            this.text('button')
-                                            ])
-                                        ]),
-                                    this.html(`fbb8d83e`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                        (parentElement) => [
-                                        this.html(`acd3ff23`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "directive-token" }] },
-                                            (parentElement) => [
-                                            this.text('endblock')
-                                            ])
-                                        ]),
-                                    this.html(`8e4f0806`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }] },
-                                        (parentElement) => [
-                                        this.html(`019114ed`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "html-token" }, { type: 'static', value: "html-token-close" }] },
-                                            (parentElement) => [
-                                            this.text('template')
-                                            ])
-                                        ])
-                                ])
-                            ])
+                            this.include(`Bdoc2222c1`, 'web.components.code-block', parentElement, [], (parentElement) => ({
+                                    "lang": "sao",
+                                    __ONE_CHILDREN_CONTENT__: (parentElement) => [
+                                    this.text('@states({ count: 0 })\n\n<template>\n    @extends(__layout__ + "public")\n    @block(\'content\')\n        <button @click(setCount(count + 1))>\n            Count: {{ count }}\n        </button>\n    @endblock\n</template>')
+                                ]
+                                }))
                         ])
                         ]),
-                    this.html(`f6357ac6`, "article", parentElement,
+                    this.html(`Bdoc223`, "article", parentElement,
                         { attrs: { "id": { type: 'static', value: "compile" } } },
                         (parentElement) => [
-                        this.html(`28f6beb4`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2231`, "span", parentElement, {}, (parentElement) => [
                             this.text('03')
                         ]),
-                        this.html(`329d456a`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`a23e2a55`, "p", parentElement,
+                        this.html(`Bdoc2232`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22321`, "p", parentElement,
                                 { classes: [{ type: 'static', value: "kicker" }] },
                                 (parentElement) => [
-                                this.html(`6c4cd7c4`, "span", parentElement, {}, (parentElement) => [
+                                this.html(`Bdoc223211`, "span", parentElement, {}, (parentElement) => [
                                     this.text('BUILD')
                                 ]),
                                 this.text(' Dual output')
                                 ]),
-                            this.html(`03234a81`, "h2", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22322`, "h2", parentElement, {}, (parentElement) => [
                                 this.text('Compile đúng context.')
                             ]),
-                            this.html(`9d146e16`, "p", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22323`, "p", parentElement, {}, (parentElement) => [
                                 this.text('Build tạo Blade view, JavaScript view registry và bundle client tương ứng. Watch mode giữ hai output đồng bộ trong lúc phát triển.')
                             ]),
-                            this.html(`5a4585dd`, "pre", parentElement, {}, (parentElement) => [
-                                this.html(`cdaba2c9`, "code", parentElement, {}, (parentElement) => [
-                                    this.html(`ed8447a4`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }] },
-                                        (parentElement) => [
-                                        this.text('npm run build:views:web')
-                                        ]),
-                                    this.html(`b6aea3b5`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }] },
-                                        (parentElement) => [
-                                        this.text('npm run build:web')
-                                        ]),
-                                    this.html(`eb41f970`, "span", parentElement, { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-line-gap" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } }),
-                                    this.html(`ab3dee8c`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-comment" }] },
-                                        (parentElement) => [
-                                        this.text('# development')
-                                        ]),
-                                    this.html(`1e8beaa1`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "code-line" }] },
-                                        (parentElement) => [
-                                        this.text('npm run dev:web')
-                                        ])
-                                ])
-                            ])
+                            this.include(`Bdoc2232c1`, 'web.components.code-block', parentElement, [], (parentElement) => ({
+                                    "lang": "bash",
+                                    __ONE_CHILDREN_CONTENT__: (parentElement) => [
+                                    this.text('npm run build:views:web\nnpm run build:web\n\n# development\nnpm run dev:web')
+                                ]
+                                }))
                         ])
                         ]),
-                    this.html(`436566c4`, "article", parentElement,
+                    this.html(`Bdoc224`, "article", parentElement,
                         { attrs: { "id": { type: 'static', value: "verify" } } },
                         (parentElement) => [
-                        this.html(`752758aa`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2241`, "span", parentElement, {}, (parentElement) => [
                             this.text('04')
                         ]),
-                        this.html(`73ce76b9`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`026f42c6`, "p", parentElement,
+                        this.html(`Bdoc2242`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22421`, "p", parentElement,
                                 { classes: [{ type: 'static', value: "kicker" }] },
                                 (parentElement) => [
-                                this.html(`bfe82e6d`, "span", parentElement, {}, (parentElement) => [
+                                this.html(`Bdoc224211`, "span", parentElement, {}, (parentElement) => [
                                     this.text('VERIFY')
                                 ]),
                                 this.text(' Both paths')
                                 ]),
-                            this.html(`2bea5833`, "h2", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22422`, "h2", parentElement, {}, (parentElement) => [
                                 this.text('Kiểm tra SSR lẫn SPA.')
                             ]),
-                            this.html(`c92eaa5b`, "p", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc22423`, "p", parentElement, {}, (parentElement) => [
                                 this.text('Tải trực tiếp URL để xác nhận HTML đầu tiên, sau đó điều hướng nội bộ, tương tác state, back/forward và kiểm tra không có listener trùng.')
                             ]),
-                            this.html(`e5627c77`, "ul", parentElement,
+                            this.html(`Bdoc22424`, "ul", parentElement,
                                 { classes: [{ type: 'static', value: "check-list" }] },
                                 (parentElement) => [
-                                this.html(`43193089`, "li", parentElement, {}, (parentElement) => [
+                                this.html(`Bdoc224241`, "li", parentElement, {}, (parentElement) => [
                                     this.text('View có nội dung khi JavaScript chưa chạy')
                                 ]),
-                                this.html(`c1b71561`, "li", parentElement, {}, (parentElement) => [
+                                this.html(`Bdoc224242`, "li", parentElement, {}, (parentElement) => [
                                     this.text('Hydration không tạo DOM hoặc event lần hai')
                                 ]),
-                                this.html(`89a3e6c3`, "li", parentElement, {}, (parentElement) => [
+                                this.html(`Bdoc224243`, "li", parentElement, {}, (parentElement) => [
                                     this.text('Route context đúng với web/admin/mobile')
                                 ]),
-                                this.html(`985a2dbd`, "li", parentElement, {}, (parentElement) => [
+                                this.html(`Bdoc224244`, "li", parentElement, {}, (parentElement) => [
                                     this.text('Rerender chỉ thay vùng reactive liên quan')
                                 ])
                                 ])
@@ -457,45 +358,45 @@ class GettingStartedView extends View {
                         ])
                     ])
                 ]),
-            this.html(`9fd19a30`, "section", parentElement,
+            this.html(`Bdoc3`, "section", parentElement,
                 { classes: [{ type: 'static', value: "start-cta" }] },
                 (parentElement) => [
-                this.html(`849145f1`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`0d56026d`, "p", parentElement,
+                this.html(`Bdoc31`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc311`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement) => [
-                        this.html(`773a2605`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc3111`, "span", parentElement, {}, (parentElement) => [
                             this.text('WORKING FIXTURE')
                         ]),
                         this.text(' Đừng chỉ đọc sơ đồ')
                         ]),
-                    this.html(`de7a1e42`, "h2", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc312`, "h2", parentElement, {}, (parentElement) => [
                         this.text('Xem state và navigation'),
-                        this.html(`939960ee`, "br", parentElement, {}),
+                        this.html(`Bdoc3121`, "br", parentElement, {}),
                         this.text('trên một view đang chạy.')
                     ])
                 ]),
-                this.html(`0ff18c59`, "a", parentElement,
+                this.html(`Bdoc32`, "a", parentElement,
                     { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-light" }], attrs: { "href": { type: 'static', value: "/todo-list" } } },
                     (parentElement) => [
                     this.text('Mở Todo demo '),
-                    this.html(`77b1ff2f`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc321`, "span", parentElement, {}, (parentElement) => [
                         this.text('↗')
                     ])
                     ])
                 ]),
-            this.html(`11678124`, "a", parentElement,
+            this.html(`Bdoc4`, "a", parentElement,
                 { classes: [{ type: 'static', value: "doc-next" }], attrs: { "href": { type: 'static', value: "/docs/architecture" } } },
                 (parentElement) => [
-                this.html(`d3123a87`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`29215666`, "span", parentElement, {}, (parentElement) => [
+                this.html(`Bdoc41`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc411`, "span", parentElement, {}, (parentElement) => [
                         this.text('Tiếp theo')
                     ]),
-                    this.html(`775cdfb1`, "strong", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc412`, "strong", parentElement, {}, (parentElement) => [
                         this.text('Kiến trúc hệ thống')
                     ])
                 ]),
-                this.html(`507799eb`, "span", parentElement,
+                this.html(`Bdoc42`, "span", parentElement,
                     { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }] },
                     (parentElement) => [
                     this.text('Đọc tiếp →')

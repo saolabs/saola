@@ -7,7 +7,7 @@
 })
 
 <template>
-    <a @class(['map-card', 'map-card-dark': variant === 'dark']) @attr({href: href})>
+    <a @class({'map-card', 'map-card-dark': variant === 'dark'}) @attr({href: href})>
         <span>{{ eyebrow }}</span>
         <h3>{{ title }}</h3>
         @children

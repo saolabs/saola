@@ -32,6 +32,9 @@
                 "views": "web/views",
                 "app": "web/app",
                 "registry": "web/registry.js"
+            },
+            "registry": {
+                "lazy": false
             }
         },
         "admin": {

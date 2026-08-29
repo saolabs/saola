@@ -5,7 +5,7 @@
         "email": "lan@saola.dev",
         "gender": "female",
         "birthdate": "1996-04-12",
-        "updated_at": 1755900000000
+        "updated_at": 1787772784196
     },
     {
         "uuid": "8c2d7e33-55aa-4f01-8b90-1122334455aa",
@@ -13,7 +13,7 @@
         "email": "bao@saola.dev",
         "gender": "male",
         "birthdate": "1992-11-16",
-        "updated_at": 1787481987962
+        "updated_at": 1787772761806
     },
     {
         "uuid": "b93f4411-77cd-42ab-9d0e-99887766ccdd",
@@ -22,5 +22,13 @@
         "gender": "other",
         "birthdate": "2000-01-25",
         "updated_at": 1755900000000
+    },
+    {
+        "name": "Bản ghi mới được server",
+        "email": "doanln16@gmail.com",
+        "gender": "female",
+        "birthdate": "2026-08-27",
+        "uuid": "0380b92f-3a2a-4723-b5f6-adab948c8887",
+        "updated_at": 1787772830713
     }
 ]

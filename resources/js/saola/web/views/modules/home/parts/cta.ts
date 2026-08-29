@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -31,6 +29,8 @@ export interface CtaProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class CtaViewController extends ViewController {
     constructor(view: View) {
@@ -44,7 +44,7 @@ class CtaViewController extends ViewController {
 }
 
 class CtaView extends View {
-    constructor(__data__: CtaProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, CtaViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -118,43 +118,43 @@ class CtaView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`d69e6b1d`, "div", parentElement,
+            this.html(`e1`, "div", parentElement,
                 { classes: [{ type: 'static', value: "cta-wrapper" }, { type: 'static', value: "home-section--fog" }] },
                 (parentElement: any) => [
-                this.html(`a25f0cc6`, "section", parentElement,
+                this.html(`e11`, "section", parentElement,
                     { classes: [{ type: 'static', value: "start-cta" }] },
                     (parentElement: any) => [
-                    this.html(`5088d5b8`, "div", parentElement, {}, (parentElement: any) => [
-                        this.html(`6753e248`, "p", parentElement,
+                    this.html(`e111`, "div", parentElement, {}, (parentElement: any) => [
+                        this.html(`e1111`, "p", parentElement,
                             { classes: [{ type: 'static', value: "kicker" }] },
                             (parentElement: any) => [
-                            this.html(`87f5f860`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`e11111`, "span", parentElement, {}, (parentElement: any) => [
                                 this.text('BẮT ĐẦU')
                             ]),
                             this.text(' Không cần tin, cứ mở ra xem')
                             ]),
-                        this.html(`679e9392`, "h2", parentElement, {}, (parentElement: any) => [
+                        this.html(`e1112`, "h2", parentElement, {}, (parentElement: any) => [
                             this.text('Tài liệu đầy đủ và'),
-                            this.html(`630b54ea`, "br", parentElement, {}),
+                            this.html(`e11121`, "br", parentElement, {}),
                             this.text('component đang chạy thật.')
                         ])
                     ]),
-                    this.html(`b20f39ca`, "div", parentElement,
+                    this.html(`e112`, "div", parentElement,
                         { classes: [{ type: 'static', value: "hero-actions" }] },
                         (parentElement: any) => [
-                        this.html(`a2d1cfca`, "a", parentElement,
+                        this.html(`e1121`, "a", parentElement,
                             { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-light" }], attrs: { "href": { type: 'static', value: "/docs/getting-started" } } },
                             (parentElement: any) => [
                             this.text('Bắt đầu trong 4 bước '),
-                            this.html(`a65d3020`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`e11211`, "span", parentElement, {}, (parentElement: any) => [
                                 this.text('↗')
                             ])
                             ]),
-                        this.html(`d4b72629`, "a", parentElement,
+                        this.html(`e1122`, "a", parentElement,
                             { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-light" }], attrs: { "href": { type: 'static', value: "/components" } } },
                             (parentElement: any) => [
                             this.text('Xem component '),
-                            this.html(`bec1f50c`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`e11221`, "span", parentElement, {}, (parentElement: any) => [
                                 this.text('↗')
                             ])
                             ])
@@ -169,7 +169,7 @@ class CtaView extends View {
 }
 
 // Export factory function
-export function WebModulesHomePartsCta(__data__: CtaProps = {}, systemData: any = {}): CtaView {
+export function WebModulesHomePartsCta(__data__ = {}, systemData = {}): CtaView {
     return new CtaView(__data__, systemData);
 }
 export default WebModulesHomePartsCta;

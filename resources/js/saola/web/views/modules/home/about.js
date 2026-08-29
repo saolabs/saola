@@ -129,62 +129,62 @@ class AboutView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-content', 'content', (parentElement) => [
-            this.html(`b4052a35`, "section", parentElement,
+            this.html(`Bcontent1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "page-intro" }, { type: 'static', value: "page-intro-split" }] },
                 (parentElement) => [
-                this.html(`90a6e493`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`f515bf66`, "p", parentElement,
+                this.html(`Bcontent11`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bcontent111`, "p", parentElement,
                         { classes: [{ type: 'static', value: "eyebrow" }] },
                         (parentElement) => [
-                        this.html(`e2f86203`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent1111`, "span", parentElement, {}, (parentElement) => [
                             this.text('PROJECT / SAOLA')
                         ]),
                         this.text(' Vì sao dự án tồn tại')
                         ]),
-                    this.html(`9b0938cb`, "h1", parentElement, {}, (parentElement) => [
+                    this.html(`Bcontent112`, "h1", parentElement, {}, (parentElement) => [
                         this.text('Web hiện đại không nên'),
-                        this.html(`f7127348`, "br", parentElement, {}),
-                        this.html(`d4f4199d`, "em", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent1121`, "br", parentElement, {}),
+                        this.html(`Bcontent1122`, "em", parentElement, {}, (parentElement) => [
                             this.text('đòi hai hệ thống.')
                         ])
                     ])
                 ]),
-                this.html(`9f45c023`, "p", parentElement, {}, (parentElement) => [
+                this.html(`Bcontent12`, "p", parentElement, {}, (parentElement) => [
                     this.text('Saola bắt đầu từ một câu hỏi thực dụng: làm sao giữ độ tin cậy và năng suất của Laravel, nhưng vẫn tạo được trải nghiệm ứng dụng nhanh, liên tục và có lifecycle rõ ràng?')
                 ])
                 ]),
-            this.html(`8aa0772c`, "section", parentElement,
+            this.html(`Bcontent2`, "section", parentElement,
                 { classes: [{ type: 'static', value: "manifesto-grid" }] },
                 (parentElement) => [
-                this.html(`301a68fc`, "div", parentElement,
+                this.html(`Bcontent21`, "div", parentElement,
                     { classes: [{ type: 'static', value: "manifesto-number" }] },
                     (parentElement) => [
                     this.text('01—04 / PRINCIPLES')
                     ]),
-                this.html(`7f8af112`, "div", parentElement,
+                this.html(`Bcontent22`, "div", parentElement,
                     { classes: [{ type: 'static', value: "value-accordion" }] },
                     (parentElement) => [
-                    this.html(`1f6b5560`, "article", parentElement,
+                    this.html(`Bcontent221`, "article", parentElement,
                         { classes: [{ type: 'static', value: "value-item" }, { type: 'binding', value: "open", factory: () => activeValue === 0, stateKeys: ["activeValue"] }] },
                         (parentElement) => [
-                        this.html(`ff5e7d64`, "button", parentElement,
+                        this.html(`Bcontent2211`, "button", parentElement,
                             { events: { click: [(event) => setActiveValue(0)] } },
                             (parentElement) => [
-                            this.html(`87b2c1c6`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22111`, "span", parentElement, {}, (parentElement) => [
                                 this.text('01')
                             ]),
-                            this.html(`772aefab`, "strong", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22112`, "strong", parentElement, {}, (parentElement) => [
                                 this.text('Một nguồn là điều kiện, không phải khẩu hiệu')
                             ]),
-                            this.html(`83d2d00c`, "i", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22113`, "i", parentElement, {}, (parentElement) => [
                                 this.text('+')
                             ])
                             ]),
-                        this.reactive(`787d96d6`, "if", parentReactive, parentElement, ["activeValue"], (parentReactive, parentElement) => {
+                        this.reactive(`Bcontent221r1`, "if", parentReactive, parentElement, ["activeValue"], (parentReactive, parentElement) => {
                             const reactiveContents = [];
                             if (activeValue === 0) {
                                 reactiveContents.push(
-                                this.html(`5bd50f04`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent221r1k11`, "p", parentElement, {}, (parentElement) => [
                                     this.text('Nếu Blade và JavaScript được viết riêng, chúng sẽ lệch nhau. Saola đặt compiler và AST ở giữa để structure, directive, children và marker được sinh từ cùng một view.')
                                 ])
                                 );
@@ -192,27 +192,27 @@ class AboutView extends View {
                             return reactiveContents;
                         })
                         ]),
-                    this.html(`e6209cd3`, "article", parentElement,
+                    this.html(`Bcontent222`, "article", parentElement,
                         { classes: [{ type: 'static', value: "value-item" }, { type: 'binding', value: "open", factory: () => activeValue === 1, stateKeys: ["activeValue"] }] },
                         (parentElement) => [
-                        this.html(`d9283f12`, "button", parentElement,
+                        this.html(`Bcontent2221`, "button", parentElement,
                             { events: { click: [(event) => setActiveValue(1)] } },
                             (parentElement) => [
-                            this.html(`6a26ad34`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22211`, "span", parentElement, {}, (parentElement) => [
                                 this.text('02')
                             ]),
-                            this.html(`54e0b6eb`, "strong", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22212`, "strong", parentElement, {}, (parentElement) => [
                                 this.text('Server phải hoàn thành trách nhiệm trước')
                             ]),
-                            this.html(`b0246e5b`, "i", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22213`, "i", parentElement, {}, (parentElement) => [
                                 this.text('+')
                             ])
                             ]),
-                        this.reactive(`9eb9af90`, "if", parentReactive, parentElement, ["activeValue"], (parentReactive, parentElement) => {
+                        this.reactive(`Bcontent222r1`, "if", parentReactive, parentElement, ["activeValue"], (parentReactive, parentElement) => {
                             const reactiveContents = [];
                             if (activeValue === 1) {
                                 reactiveContents.push(
-                                this.html(`4606aa95`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent222r1k11`, "p", parentElement, {}, (parentElement) => [
                                     this.text('Phản hồi đầu tiên phải có nội dung, có cấu trúc và hoạt động như một tài liệu web. Hydration nâng cấp nó thành ứng dụng; hydration không che giấu một server response rỗng.')
                                 ])
                                 );
@@ -220,27 +220,27 @@ class AboutView extends View {
                             return reactiveContents;
                         })
                         ]),
-                    this.html(`d548dd48`, "article", parentElement,
+                    this.html(`Bcontent223`, "article", parentElement,
                         { classes: [{ type: 'static', value: "value-item" }, { type: 'binding', value: "open", factory: () => activeValue === 2, stateKeys: ["activeValue"] }] },
                         (parentElement) => [
-                        this.html(`237c0a46`, "button", parentElement,
+                        this.html(`Bcontent2231`, "button", parentElement,
                             { events: { click: [(event) => setActiveValue(2)] } },
                             (parentElement) => [
-                            this.html(`a953a291`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22311`, "span", parentElement, {}, (parentElement) => [
                                 this.text('03')
                             ]),
-                            this.html(`cbd31918`, "strong", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22312`, "strong", parentElement, {}, (parentElement) => [
                                 this.text('Lifecycle phải nhìn thấy được')
                             ]),
-                            this.html(`ee477f05`, "i", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22313`, "i", parentElement, {}, (parentElement) => [
                                 this.text('+')
                             ])
                             ]),
-                        this.reactive(`6376662d`, "if", parentReactive, parentElement, ["activeValue"], (parentReactive, parentElement) => {
+                        this.reactive(`Bcontent223r1`, "if", parentReactive, parentElement, ["activeValue"], (parentReactive, parentElement) => {
                             const reactiveContents = [];
                             if (activeValue === 2) {
                                 reactiveContents.push(
-                                this.html(`bcf58435`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent223r1k11`, "p", parentElement, {}, (parentElement) => [
                                     this.text('Mount, active, pause, resume và destroy là những trạng thái có contract. Event, subscription, async resource và cache phải đi theo owner của chúng.')
                                 ])
                                 );
@@ -248,27 +248,27 @@ class AboutView extends View {
                             return reactiveContents;
                         })
                         ]),
-                    this.html(`641beadb`, "article", parentElement,
+                    this.html(`Bcontent224`, "article", parentElement,
                         { classes: [{ type: 'static', value: "value-item" }, { type: 'binding', value: "open", factory: () => activeValue === 3, stateKeys: ["activeValue"] }] },
                         (parentElement) => [
-                        this.html(`f655ded1`, "button", parentElement,
+                        this.html(`Bcontent2241`, "button", parentElement,
                             { events: { click: [(event) => setActiveValue(3)] } },
                             (parentElement) => [
-                            this.html(`3d9a38c6`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22411`, "span", parentElement, {}, (parentElement) => [
                                 this.text('04')
                             ]),
-                            this.html(`aa413e39`, "strong", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22412`, "strong", parentElement, {}, (parentElement) => [
                                 this.text('Đa nền tảng bắt đầu từ context đúng')
                             ]),
-                            this.html(`51937053`, "i", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22413`, "i", parentElement, {}, (parentElement) => [
                                 this.text('+')
                             ])
                             ]),
-                        this.reactive(`ef215791`, "if", parentReactive, parentElement, ["activeValue"], (parentReactive, parentElement) => {
+                        this.reactive(`Bcontent224r1`, "if", parentReactive, parentElement, ["activeValue"], (parentReactive, parentElement) => {
                             const reactiveContents = [];
                             if (activeValue === 3) {
                                 reactiveContents.push(
-                                this.html(`edf80019`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent224r1k11`, "p", parentElement, {}, (parentElement) => [
                                     this.text('Web, admin và mobile có thể dùng route map và registry riêng. Context được resolve theo request để worker dài hạn như Octane không làm rò trạng thái giữa người dùng.')
                                 ])
                                 );
@@ -278,27 +278,27 @@ class AboutView extends View {
                         ])
                     ])
                 ]),
-            this.html(`6c26f9b7`, "section", parentElement,
+            this.html(`Bcontent3`, "section", parentElement,
                 { classes: [{ type: 'static', value: "quote-panel" }] },
                 (parentElement) => [
-                this.html(`d2bc3963`, "p", parentElement, {}, (parentElement) => [
+                this.html(`Bcontent31`, "p", parentElement, {}, (parentElement) => [
                     this.text('“Framework đáng tin khi hành vi runtime khớp với cấu trúc mà lập trình viên nhìn thấy trong source.”')
                 ]),
-                this.html(`b19e2c09`, "span", parentElement, {}, (parentElement) => [
+                this.html(`Bcontent32`, "span", parentElement, {}, (parentElement) => [
                     this.text('SAOLA DESIGN PRINCIPLE / 2026')
                 ])
                 ]),
-            this.html(`4e212027`, "section", parentElement,
+            this.html(`Bcontent4`, "section", parentElement,
                 { classes: [{ type: 'static', value: "closing-cta" }] },
                 (parentElement) => [
-                this.html(`8ef866a8`, "h2", parentElement, {}, (parentElement) => [
+                this.html(`Bcontent41`, "h2", parentElement, {}, (parentElement) => [
                     this.text('Xem các nguyên tắc này chạy trên một route thật.')
                 ]),
-                this.html(`8f1c0163`, "a", parentElement,
+                this.html(`Bcontent42`, "a", parentElement,
                     { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }], attrs: { "href": { type: 'static', value: "/todo-list" } } },
                     (parentElement) => [
                     this.text('Mở interactive demo '),
-                    this.html(`4f37196e`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bcontent421`, "span", parentElement, {}, (parentElement) => [
                         this.text('↗')
                     ])
                     ])

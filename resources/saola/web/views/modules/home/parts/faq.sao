@@ -3,27 +3,27 @@
 <template>
     <section class="faq-grid home-section--fog" id="faq">
         <div class="section-head">
-            <p class="kicker"><span>FAQ</span> Hỏi nhanh</p>
-            <h2>Sáu câu hỏi hay gặp nhất.</h2>
+            <p class="kicker"><span>FAQ</span> Hỏi đáp nhanh</p>
+            <h2>Những câu hỏi thường gặp nhất.</h2>
         </div>
         <div class="value-accordion">
-            <article @class(['value-item', 'open': openFaq === 0])>
+            <article @class({'value-item', 'open': openFaq === 0})>
                 <button @click(setOpenFaq(0))><span>01</span><strong>Saola có thay thế Laravel không?</strong><i>+</i></button>
                 @if(openFaq === 0)
-                    <p>Không. Saola là lớp view và runtime chạy trên Laravel. Route, middleware, policy, Eloquent, queue và toàn bộ hệ sinh thái Laravel giữ nguyên. Cái Saola thay là cách bạn viết tầng view và cách trang đó sống tiếp sau khi tải xong.</p>
+                    <p>Không. Saola coi Laravel là nền tảng vững chắc. Eloquent, middleware, policy, queue vẫn giữ nguyên. Saola mang đến hai cải tiến: cách tổ chức mã nguồn (module tự động khai báo, context phân tách môi trường) và cơ chế View (một file <code>.sao</code> sinh mã cho cả Server và Client, biến trang web thành SPA sau lần tải đầu tiên).</p>
                 @endif
             </article>
-            <article @class(['value-item', 'open': openFaq === 1])>
-                <button @click(setOpenFaq(1))><span>02</span><strong>Tôi có phải bỏ Blade đang có không?</strong><i>+</i></button>
+            <article @class({'value-item', 'open': openFaq === 1})>
+                <button @click(setOpenFaq(1))><span>02</span><strong>Tôi có phải bỏ các file Blade hiện có không?</strong><i>+</i></button>
                 @if(openFaq === 1)
-                    <p>Không. Đầu ra phía server của một file <code>.sao</code> chính là Blade template, nằm cùng chỗ với view Blade bạn đang có. Bạn chuyển dần từng trang, không cần viết lại cả ứng dụng trong một lần.</p>
+                    <p>Không. Khi biên dịch, đầu ra phía server của file <code>.sao</code> chính là một file Blade template, có thể cùng tồn tại với các view cũ. Bạn có thể chuyển đổi dần từng trang mà không cần đập đi xây lại toàn bộ hệ thống.</p>
                 @endif
             </article>
 
-            <article @class(['value-item', 'open': openFaq === 5])>
-                <button @click(setOpenFaq(5))><span>06</span><strong>Đã biết Blade thì học mất bao lâu?</strong><i>+</i></button>
-                @if(openFaq === 5)
-                    <p>Cú pháp giữ hình dạng directive quen thuộc của Blade, nên phần điều khiển luồng gần như đọc được ngay. Cái mới cần nắm là ba thứ: state khai báo ở đầu file, setter sinh tự động, và ranh giới giữa giá trị reactive với giá trị tính một lần.</p>
+            <article @class({'value-item', 'open': openFaq === 2})>
+                <button @click(setOpenFaq(2))><span>03</span><strong>Đã rành Blade thì học Saola mất bao lâu?</strong><i>+</i></button>
+                @if(openFaq === 2)
+                    <p>Cú pháp Saola giữ nguyên hình dạng directive quen thuộc của Blade, nên bạn gần như có thể đọc hiểu ngay lập tức. Điều duy nhất cần nắm thêm là cách khai báo state ở đầu file, các hàm setter tự sinh, và ranh giới giữa giá trị phản ứng (reactive) với giá trị tĩnh.</p>
                 @endif
             </article>
         </div>

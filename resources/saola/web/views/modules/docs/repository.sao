@@ -1,0 +1,71 @@
+@import('web.components.code-window')
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>07</span> BACKEND</p>
+                <h1>Repository và truy vấn.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Repository là nơi duy nhất trong ứng dụng biết tới model. Khai báo một dòng <code>$model</code> là có sẵn CRUD, filter, cache, soft delete và chủ sở hữu bản ghi.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>KHAI BÁO</span> Một dòng là đủ</p>
+            <h2>Kế thừa <code>BaseRepository</code>, trỏ vào model.</h2>
+            <code-window label="PHP" title="app/Modules/User/Repositories/UserRepository.php" lang="php">
+@verbatim
+class UserRepository extends BaseRepository
+{
+    protected $model = User::class;
+}
+@endverbatim
+            </code-window>
+            <p>Không cần viết <code>all()</code>, <code>find()</code>, <code>create()</code>, <code>update()</code>, <code>delete()</code> — chúng đến từ các trait mà <code>BaseRepository</code> gộp sẵn.</p>
+
+            <p class="kicker"><span>THÀNH PHẦN</span> Repository là tổ hợp trait</p>
+            <h2>Mỗi nhóm hành vi là một trait riêng.</h2>
+            <p>Nhờ tách như vậy, một repository chỉ cần ghi đè đúng nhóm nó muốn đổi thay vì kế thừa một lớp khổng lồ.</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>BaseQuery</code></div><span>Dựng query gốc, join, select, sắp xếp</span><b>truy vấn</b></div>
+                <div><div class="dt-key"><code>BaseSearchQuery</code></div><span>Tìm kiếm theo từ khoá trên nhiều cột</span><b>truy vấn</b></div>
+                <div><div class="dt-key"><code>GettingAction</code></div><span><code>getAll</code>, <code>find</code>, <code>findBy</code>, <code>getBy</code>, hook <code>beforeGetData</code></span><b>đọc</b></div>
+                <div><div class="dt-key"><code>CRUDAction</code></div><span><code>create</code>, <code>createMany</code>, <code>save</code>, hook <code>beforeCreate</code>/<code>beforeUpdate</code></span><b>ghi</b></div>
+                <div><div class="dt-key"><code>FilterAction</code></div><span><code>getResults</code>, <code>countResults</code>, <code>trashed</code>, <code>buildFilter</code></span><b>lọc</b></div>
+                <div><div class="dt-key"><code>CacheAction</code></div><span><code>cache()</code> và đăng ký method nào được cache</span><b>cache</b></div>
+                <div><div class="dt-key"><code>OwnerAction</code></div><span>Ràng buộc bản ghi theo chủ sở hữu đang đăng nhập</span><b>quyền</b></div>
+                <div><div class="dt-key"><code>DataAction</code> · <code>FileAction</code></div><span>Chuẩn hoá dữ liệu vào và xử lý field kiểu file</span><b>phụ trợ</b></div>
+            </div>
+
+            <p class="kicker"><span>HOOK</span> Chèn vào giữa vòng đời</p>
+            <h2>Ghi đè hook thay vì viết lại cả method.</h2>
+            <code-window label="PHP" title="Repositories/UserRepository.php" lang="php">
+@verbatim
+class UserRepository extends BaseRepository
+{
+    protected $model = User::class;
+
+    public function beforeCreate($data)
+    {
+        $data['password'] = bcrypt($data['password']);
+        return $data;
+    }
+}
+@endverbatim
+            </code-window>
+            <div class="ov-note">
+                <code>CRUDAction</code> có công tắc ném lỗi: <code>disableThrowException()</code> để lấy lỗi qua <code>getCrudErrorMessage()</code> thay vì để exception bay lên. Hữu ích khi ghi hàng loạt và muốn gom lỗi.
+            </div>
+
+            <p class="kicker"><span>QUYỀN</span> Bản ghi của ai</p>
+            <h2><code>OwnerAction</code> ràng buộc theo actor.</h2>
+            <p><code>setActor()</code> cho biết ai đang thao tác; <code>setOwnerID()</code> giới hạn query trong phạm vi bản ghi của người đó. Dùng <code>unOwnerQuery()</code> khi cần cố tình vượt phạm vi, ví dụ trong màn hình quản trị.</p>
+
+            <p class="ov-note">
+                Repository trả model. Đừng đẩy thẳng model đó ra response — bọc bằng <a href="/docs/mask">Mask</a> để kiểm soát field nào lộ ra ngoài.
+            </p>
+        </div>
+    @endblock
+</template>

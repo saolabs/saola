@@ -2,10 +2,10 @@
     <section class="home-section home-section--fog" id="compare">
         <div class="section-head section-head-split">
             <div>
-                <p class="kicker"><span>SO SÁNH</span> Khác gì lựa chọn quen thuộc</p>
-                <h2>Cùng một bài toán,<br>năm cách trả lời khác nhau.</h2>
+                <p class="kicker"><span>SO SÁNH</span> Khác biệt so với các lựa chọn quen thuộc</p>
+                <h2>Cùng một bài toán,<br>năm cách giải quyết.</h2>
             </div>
-            <p>Bảng này không nói cách nào tốt hơn tuyệt đối. Nó nói mỗi cách đặt chi phí ở đâu — và Saola đặt chi phí vào bước biên dịch để đổi lấy việc không phải giữ hai bản template đồng bộ bằng tay.</p>
+            <p>Bảng so sánh này không nhằm mục đích khẳng định giải pháp nào tốt nhất tuyệt đối. Nó đánh giá sự khác biệt ở hai khía cạnh: kiến trúc hệ thống và cơ chế hiển thị. Saola tập trung giải quyết độ khó ở trình biên dịch nội bộ và mô hình module, để đổi lấy một kiến trúc phân tách rõ ràng và loại bỏ gánh nặng bảo trì hai phiên bản template (server và client).</p>
         </div>
         <div class="compare-table">
             <table>
@@ -20,6 +20,49 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr class="cmp-band"><th scope="row" colspan="6">Tầng kiến trúc ứng dụng</th></tr>
+                    <tr>
+                        <th scope="row">Tổ chức code và route</th>
+                        <td class="col-sao"><span class="cmp-yes">Module tự nạp, route trong module</span></td>
+                        <td>Tự tổ chức, route tập trung</td>
+                        <td>Tự tổ chức, route tập trung</td>
+                        <td>Tự tổ chức, route tập trung</td>
+                        <td>Tự tổ chức ở hai phía</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Đa mặt tiền, tách bundle</th>
+                        <td class="col-sao"><span class="cmp-yes">Sẵn bốn context</span></td>
+                        <td>Tự dựng</td>
+                        <td>Tự dựng</td>
+                        <td>Tự dựng</td>
+                        <td>Tự dựng</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Context theo request (Octane)</th>
+                        <td class="col-sao"><span class="cmp-yes">Registry request-scoped</span></td>
+                        <td>Tự lo</td>
+                        <td>Tự lo</td>
+                        <td>Tự lo</td>
+                        <td>Không áp dụng</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Hình dạng response chung</th>
+                        <td class="col-sao">Một controller trả được cả HTML và JSON</td>
+                        <td>Tự quy ước</td>
+                        <td>Component phía server</td>
+                        <td>Props qua adapter</td>
+                        <td>Tự quy ước ở tầng API</td>
+                    </tr>
+
+                    <tr class="cmp-band"><th scope="row" colspan="6">Tầng view và runtime</th></tr>
+                    <tr>
+                        <th scope="row">Nguồn sinh HTML và JS</th>
+                        <td class="col-sao"><span class="cmp-yes">Cùng một AST</span></td>
+                        <td>Hai nguồn viết tay</td>
+                        <td>Server sinh HTML, JS chỉ vá DOM</td>
+                        <td>Hai nguồn viết tay</td>
+                        <td>Một nguồn, chỉ ở client</td>
+                    </tr>
                     <tr>
                         <th scope="row">HTML của lần tải đầu</th>
                         <td class="col-sao">Đầy đủ nội dung</td>
@@ -35,14 +78,6 @@
                         <td><span class="cmp-no">Mỗi tương tác một request</span></td>
                         <td>Chạy tại client</td>
                         <td>Chạy tại client</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Nguồn sinh HTML và JS</th>
-                        <td class="col-sao"><span class="cmp-yes">Cùng một AST</span></td>
-                        <td>Hai nguồn viết tay</td>
-                        <td>Server sinh HTML, JS chỉ vá DOM</td>
-                        <td>Hai nguồn viết tay</td>
-                        <td>Một nguồn, chỉ ở client</td>
                     </tr>
                     <tr>
                         <th scope="row">Ngôn ngữ viết view</th>
@@ -61,16 +96,8 @@
                         <td><span class="cmp-no">Bắt buộc</span></td>
                     </tr>
                     <tr>
-                        <th scope="row">Đa mặt tiền, tách bundle</th>
-                        <td class="col-sao"><span class="cmp-yes">Sẵn bốn context</span></td>
-                        <td>Tự dựng</td>
-                        <td>Tự dựng</td>
-                        <td>Tự dựng</td>
-                        <td>Tự dựng</td>
-                    </tr>
-                    <tr>
                         <th scope="row">Vòng đời view có contract</th>
-                        <td class="col-sao">Bảy trạng thái, dọn theo ref-count</td>
+                        <td class="col-sao">Bảy trạng thái, dọn dẹp theo ref-count</td>
                         <td>Không có</td>
                         <td>Theo component phía server</td>
                         <td>Theo framework JavaScript</td>
@@ -78,7 +105,7 @@
                     </tr>
                     <tr>
                         <th scope="row">Độ chín và cộng đồng</th>
-                        <td class="col-sao"><span class="cmp-no">Đang dựng nền</span></td>
+                        <td class="col-sao"><span class="cmp-no">Đang xây dựng nền móng</span></td>
                         <td>Rất chín</td>
                         <td>Rất chín</td>
                         <td>Rất chín</td>

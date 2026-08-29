@@ -252,7 +252,6 @@ Syntax: `@eventName(handler)` trực tiếp trên HTML element:
 | `@error('field')` / `@enderror` | Validation error |
 | `@hasSection('name')` / `@endhassection` | Check section exists |
 | `@verbatim` / `@endverbatim` | Raw output, no compilation |
-| `@register` / `@endregister` | Raw JS code block |
 
 ### Output / Expressions
 

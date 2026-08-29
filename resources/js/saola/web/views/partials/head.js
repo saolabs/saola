@@ -108,7 +108,7 @@ class HeadView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement) => [
-            this.html(`51bfd8c9`, "meta", parentElement, { attrs: { "name": { type: 'static', value: "saola-context" }, "content": { type: 'static', value: "web" } } })
+            this.html(`e1`, "meta", parentElement, { attrs: { "name": { type: 'static', value: "saola-context" }, "content": { type: 'static', value: "web" } } })
             ]);
             }
         });

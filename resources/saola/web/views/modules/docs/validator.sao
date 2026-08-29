@@ -1,0 +1,63 @@
+@import('web.components.code-window')
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>09</span> BACKEND</p>
+                <h1>Validator và dữ liệu vào.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Validator của Saola bọc quanh validator của Laravel nhưng biết tới repository, nên kiểm tra được cả những ràng buộc phải hỏi cơ sở dữ liệu mới trả lời được.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>KHAI BÁO</span> Rule ở một chỗ</p>
+            <h2>Một lớp cho một bộ ràng buộc.</h2>
+            <code-window label="PHP" title="app/Modules/User/Validators/UserValidator.php" lang="php">
+@verbatim
+class UserValidator extends Validator
+{
+    public function rules()
+    {
+        return [
+            'name'  => 'required|max:255',
+            'email' => 'required|email',
+        ];
+    }
+}
+@endverbatim
+            </code-window>
+            <p>Constructor nhận <code>$request</code> và <code>$repository</code>. Nhờ vậy rule viết được điều kiện dựa trên dữ liệu đang có, không chỉ dựa trên payload.</p>
+
+            <p class="kicker"><span>VÒNG ĐỜI</span> Ba bước dựng rule</p>
+            <h2>Rule mặc định trước, rule riêng sau, rồi mở rộng.</h2>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>init()</code></div><span>Gắn request và repository vào validator</span><b>1</b></div>
+                <div><div class="dt-key"><code>addDefaultRules()</code></div><span>Nạp ràng buộc chung của hệ thống</span><b>2</b></div>
+                <div><div class="dt-key"><code>extends()</code></div><span>Chỗ để module cắm thêm rule của riêng nó</span><b>3</b></div>
+            </div>
+
+            <p class="ov-sub">Method có sẵn</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>addRule()</code></div><span>Thêm rule lẻ vào bộ đang dựng</span><b>rule</b></div>
+                <div><div class="dt-key"><code>checkUniqueProp()</code></div><span>Kiểm tra trùng qua repository, biết loại trừ chính bản ghi đang sửa</span><b>db</b></div>
+                <div><div class="dt-key"><code>checkRef()</code></div><span>Xác nhận khoá ngoại trỏ tới bản ghi có thật</span><b>db</b></div>
+                <div><div class="dt-key"><code>checkArrDate()</code></div><span>Ràng buộc khoảng ngày dạng mảng</span><b>định dạng</b></div>
+                <div><div class="dt-key"><code>parseInputs()</code></div><span>Chuẩn hoá payload trước khi đưa vào rule</span><b>chuẩn hoá</b></div>
+            </div>
+            <div class="ov-note">
+                Validator có <code>__get</code> và <code>__call</code> chuyển tiếp thẳng sang <code>$request</code>, nên trong rule cứ viết <code>$this-&gt;email</code> hay <code>$this-&gt;input('email')</code> như đang cầm request.
+            </div>
+
+            <p class="kicker"><span>ĐẶT Ở ĐÂU</span> Request hay Validator</p>
+            <h2>FormRequest cho ràng buộc tĩnh, Validator cho ràng buộc cần dữ liệu.</h2>
+            <p>Module <code>User</code> có sẵn <code>CreateUserRequest</code> và <code>UpdateUserRequest</code> — dạng FormRequest quen thuộc của Laravel, hợp với ràng buộc không cần hỏi cơ sở dữ liệu. Khi rule phải tra bảng, hoặc phải dùng chung giữa nhiều context, đưa xuống Validator để service gọi lại được.</p>
+
+            <p class="ov-note">
+                Đây mới là phần giới thiệu. Ví dụ chạy được của từng ràng buộc nằm trong <code>examples</code> của core.
+            </p>
+        </div>
+    @endblock
+</template>

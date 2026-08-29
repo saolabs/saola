@@ -6,7 +6,7 @@
 <template>
     @extends(__layout__ + "public")
     @block('content')
-        <section @class(["ping", "active": count !== 0])>
+        <section @class({'ping', 'active': count !== 0})>
             <h1>Ping Module — Hydration Test</h1>
             <p>Hello, {{ name }}! 👋</p>
 

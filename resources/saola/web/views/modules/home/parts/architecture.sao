@@ -1,0 +1,60 @@
+<template>
+    <section class="ax" id="architecture">
+        <div class="ax-head">
+            <div>
+                <p class="ax-label">Kiến trúc hệ thống</p>
+                <h2>Bốn mặt tiền,<br>một lõi duy nhất.</h2>
+            </div>
+            <p class="ax-sub">Context là ranh giới thực sự, không chỉ là thư mục. Mỗi context (web, admin, api, mobile) được trang bị prefix, middleware, hệ thống phân quyền, thư mục view và bundle asset riêng. Các module linh hoạt phục vụ cả bốn context mà không lo xung đột route hay resource.</p>
+        </div>
+
+        <div class="ax-ctx">
+            <div class="ax-row">
+                <code>web</code>
+                <b>/</b>
+                <span>Website công khai — SSR đầy đủ rồi hydrate thành SPA.</span>
+                <em>bundle web</em>
+            </div>
+            <div class="ax-row">
+                <code>admin</code>
+                <b>/admin</b>
+                <span>Khu vực quản trị — tích hợp middleware <i>auth</i> + <i>permission</i>.</span>
+                <em>bundle admin</em>
+            </div>
+            <div class="ax-row">
+                <code>api</code>
+                <b>/api</b>
+                <span>RESTful JSON tốc độ cao, bỏ qua giai đoạn render view.</span>
+                <em>không bundle</em>
+            </div>
+            <div class="ax-row">
+                <code>mobile</code>
+                <b>tuỳ cấu hình</b>
+                <span>Webview hoặc PWA, chia sẻ chung cơ chế view và state.</span>
+                <em>bundle mobile</em>
+            </div>
+        </div>
+
+        <div class="ax-mod">
+            <div class="ax-mod-copy">
+                <h3>Module độc lập, tự động nhận diện.</h3>
+                <p>Kiến trúc xoay quanh <code>app/Modules/</code>. Mỗi module sở hữu <code>ModuleServiceProvider.php</code> được nạp đệ quy tự động — hỗ trợ module lồng nhau không giới hạn. Route, controller nằm gọn trong module thay vì dồn ứ tại <code>routes/web.php</code>.</p>
+                <ul class="ax-list">
+                    <li>Thêm module mới <strong>không cần đụng đến file cấu hình trung tâm</strong>.</li>
+                    <li>Sử dụng chung Model, Policy, Service; nhưng tách biệt hoàn toàn Route, Middleware, Bundle.</li>
+                    <li><code>ViewContextService</code> cô lập registry <strong>theo từng request</strong> — loại bỏ triệt để lỗi rò rỉ state khi chạy trên Laravel Octane.</li>
+                </ul>
+                <a class="ax-link" href="/docs/contexts">Đọc chi tiết về Context &amp; Module <span>→</span></a>
+            </div>
+
+            <div class="ax-win">
+                <div class="ax-win-bar"><span>PHP</span><b>app/Modules/Roster/ModuleServiceProvider.php</b></div>
+                <pre><code><span class="code-line"><span class="ty">System</span><span class="op">::</span><span class="fn">context</span><span class="op">(</span><span class="st">'api'</span><span class="op">)-&gt;</span><span class="fn">module</span><span class="op">(</span><span class="st">'roster'</span><span class="op">, [</span></span><span class="code-line code-indent-1"><span class="st">'prefix'</span><span class="op"> =&gt;</span><span class="st"> '/roster'</span><span class="op">,</span><span class="st"> 'priority'</span><span class="op"> =&gt;</span><span class="st"> 5</span><span class="op">,</span></span><span class="code-line"><span class="op">])</span></span><span class="code-line code-indent-1"><span class="op">-&gt;</span><span class="fn">controller</span><span class="op">(</span><span class="ty">RosterController</span><span class="op">::</span><span class="kw">class</span><span class="op">)</span></span><span class="code-line code-indent-1"><span class="op">-&gt;</span><span class="fn">group</span><span class="op">(</span><span class="kw">function</span><span class="op"> (</span><span class="vr">$module</span><span class="op">) {</span></span><span class="code-line code-indent-2"><span class="vr">$module</span><span class="op">-&gt;</span><span class="fn">get</span><span class="op">(</span><span class="st">'/'</span><span class="op">,</span><span class="st"> 'index'</span><span class="op">)-&gt;</span><span class="fn">name</span><span class="op">(</span><span class="st">'index'</span><span class="op">);</span></span><span class="code-line code-indent-2"><span class="vr">$module</span><span class="op">-&gt;</span><span class="fn">post</span><span class="op">(</span><span class="st">'/'</span><span class="op">,</span><span class="st"> 'store'</span><span class="op">)-&gt;</span><span class="fn">name</span><span class="op">(</span><span class="st">'store'</span><span class="op">);</span></span><span class="code-line code-indent-2"><span class="vr">$module</span><span class="op">-&gt;</span><span class="fn">put</span><span class="op">(</span><span class="st">'/{uuid}'</span><span class="op">,</span><span class="st"> 'update'</span><span class="op">)-&gt;</span><span class="fn">name</span><span class="op">(</span><span class="st">'update'</span><span class="op">);</span></span><span class="code-line code-indent-1"><span class="op">});</span></span></code></pre>
+            </div>
+        </div>
+    </section>
+</template>
+
+<script setup lang="ts">
+    export default { name: 'HomeArchitecture' };
+</script>

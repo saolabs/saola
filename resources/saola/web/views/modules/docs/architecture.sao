@@ -3,36 +3,50 @@
     @block('doc')
         <section class="page-hero page-hero-architecture">
             <div>
-                <p class="kicker"><span>01 / ARCHITECTURE</span> Toàn cảnh hệ sinh thái</p>
-                <h1>Laravel ở lõi.<br><em>SPA ở trải nghiệm.</em></h1>
+                <p class="kicker"><span>01 / ARCHITECTURE</span> Tổng quan kiến trúc</p>
+                <h1>Laravel ở tầng lõi.<br><em>SPA ở trải nghiệm.</em></h1>
             </div>
-            <div class="page-hero-aside"><p>Saola là một chuỗi contract từ request tới DOM, không phải một frontend framework đặt cạnh Laravel.</p><dl><div><dt>INPUT</dt><dd>Route + context + data</dd></div><div><dt>OUTPUT</dt><dd>SSR → hydrate → SPA</dd></div></dl></div>
+            <div class="page-hero-aside"><p>Saola định nghĩa một chuỗi contract đồng nhất từ server request đến client DOM — hợp nhất sức mạnh backend Laravel với độ mượt mà của SPA mà không cần tách rời API.</p><dl><div><dt>INPUT</dt><dd>Route, Context & Controller</dd></div><div><dt>OUTPUT</dt><dd>SSR HTML → Hydrate → SPA Runtime</dd></div></dl></div>
         </section>
 
         <section class="stack-section">
-            <div class="section-index"><span>01</span><p>Bốn lớp<br>một luồng</p></div>
+            <div class="section-index"><span>01</span><p>Kiến trúc<br>4 tầng lõi</p></div>
             <div class="stack-diagram">
-                <article><span>APPLICATION</span><strong>Modules & contexts</strong><p>Web, admin và mobile tổ chức route, controller, view theo cùng một mô hình module.</p><i>04</i></article>
-                <article><span>CORE</span><strong>Laravel integration</strong><p>Route map, view response, SSR boot payload và request-scoped context.</p><i>03</i></article>
-                <article><span>COMPILER</span><strong>.sao → Blade + JS</strong><p>Một AST tạo hai output có cùng structure, directive và marker contract.</p><i>02</i></article>
-                <article><span>CLIENT</span><strong>Router & view runtime</strong><p>Hydration, lifecycle, reactivity, layout reuse và page cache phía trình duyệt.</p><i>01</i></article>
+                <article><span>APPLICATION</span><strong>Modules & Contexts</strong><p>Phân tách Web, Admin, Mobile thành các module độc lập; quản lý route, controller và view theo đúng ngữ cảnh.</p><i>04</i></article>
+                <article><span>CORE</span><strong>Laravel Integration</strong><p>Tích hợp sâu vào pipeline Laravel: điều phối context theo request, sinh SSR payload và kết nối view response.</p><i>03</i></article>
+                <article><span>COMPILER</span><strong>Dual AST Engine</strong><p>Một file <code>.sao</code> duy nhất biên dịch đồng thời ra Blade template (SSR) và JavaScript module (SPA runtime).</p><i>02</i></article>
+                <article><span>CLIENT</span><strong>Reactive SPA Runtime</strong><p>Tự động hydrate DOM có sẵn, duy trì reactive state, tái sử dụng layout và quản lý client cache thông minh.</p><i>01</i></article>
             </div>
         </section>
 
         <section class="request-section">
-            <div class="section-head compact"><p class="kicker"><span>REQUEST FLOW</span> Từ URL tới tương tác</p><h2>Một đường đi,<br>hai giai đoạn.</h2></div>
-            <ol class="flow-timeline">
-                <li><span>01</span><div><strong>Route chọn module và context</strong><p>Request web, admin hoặc mobile được resolve trong phạm vi hiện tại thay vì đọc một static map dùng chung cho mọi request.</p></div><code>GET /projects/42</code></li>
-                <li><span>02</span><div><strong>Controller trả view response</strong><p>Core xác định component route tương ứng, render Blade và tạo boot payload cho đúng context.</p></div><code>context: web</code></li>
-                <li><span>03</span><div><strong>Blade tạo HTML hoàn chỉnh</strong><p>Layout, block, include và children đã có nội dung trước khi runtime phía client khởi động.</p></div><code>SSR / READY</code></li>
-                <li><span>04</span><div><strong>Runtime claim DOM có sẵn</strong><p>Marker ổn định nối ViewController, state và event vào vùng DOM tương ứng.</p></div><code>HYDRATE / CLAIM</code></li>
-                <li><span>05</span><div><strong>Router tiếp quản điều hướng</strong><p>Navigation tiếp theo resolve view chain, reuse layout chung và chỉ mount phần thay đổi.</p></div><code>SPA / ACTIVE</code></li>
+            <div class="section-head compact"><p class="kicker"><span>REQUEST FLOW</span> Vòng đời từ URL đến tương tác</p><h2>Một mã nguồn,<br>hai giai đoạn vận hành.</h2></div>
+            <ol class="flowlane">
+                <li class="fl-phase"><span>SERVER-SIDE (SSR)</span></li>
+                <li class="fl"><b>01</b><strong>Định tuyến & Phân giải Context</strong><p>Request đi vào đúng Context (Web/Admin/Mobile), nạp route module tương ứng mà không tải dư thừa các registry khác.</p><code>GET /projects/42</code></li>
+                <li class="fl"><b>02</b><strong>Controller xử lý & tạo View Response</strong><p>Controller xử lý logic nghiệp vụ, gắn kết view component và đóng gói SSR boot payload chuẩn xác.</p><code>context: web</code></li>
+                <li class="fl"><b>03</b><strong>Blade kết xuất HTML hoàn chỉnh</strong><p>Toàn bộ layout, slot, component con và dữ liệu server được render thành HTML chuẩn SEO trước khi gửi về client.</p><code>SSR / READY</code></li>
+                <li class="fl-cross"><span>Truyền tải HTML trọn vẹn kèm Boot Payload qua HTTP</span></li>
+                <li class="fl-phase"><span>CLIENT-SIDE (SPA)</span></li>
+                <li class="fl"><b>04</b><strong>Hydration & Gắn kết Reactivity</strong><p>Client runtime tiếp quản DOM hiện hữu thông qua các marker định danh, kích hoạt event listener mà không render lại DOM có sẵn.</p><code>HYDRATE / CLAIM</code></li>
+                <li class="fl"><b>05</b><strong>Client Router chuyển sang chế độ SPA</strong><p>Các lượt chuyển trang sau đó chỉ nạp delta dữ liệu, tái sử dụng layout chung và chỉ cập nhật đúng vùng view thay đổi.</p><code>SPA / ACTIVE</code></li>
+                <li class="fl-loop"><span>Từ thời điểm này, ứng dụng hoạt động thuần SPA — trải nghiệm mượt mà tức thì, không tải lại trang.</span></li>
             </ol>
         </section>
 
         <section class="context-panel">
-            <div><p class="kicker"><span>OCTANE SAFE</span> Context thuộc request</p><h2>Không để request sau<br>kế thừa request trước.</h2></div>
-            <div><p>Worker sống lâu không đồng nghĩa state ứng dụng được phép sống lâu. Saola resolve route component theo context đang hoạt động và cô lập dữ liệu request-scoped, kể cả khi response là HTML hay JSON.</p><div class="context-cells"><span>WEB<small>public registry</small></span><span>ADMIN<small>admin registry</small></span><span>MOBILE<small>mobile registry</small></span></div></div>
+            <div>
+                <p class="kicker"><span>OCTANE SAFE</span> Context Isolate</p>
+                <h2>State sạch hoàn toàn<br>trên từng request.</h2>
+            </div>
+            <div>
+                <p>Trong các runtime sống lâu (Laravel Octane, FrankenPHP, Swoole), việc rò rỉ state giữa các request là rủi ro nghiêm trọng. Saola bảo vệ kiến trúc bằng cơ chế cô lập request-scoped: mỗi request nạp đúng context độc lập và tự động giải phóng bộ nhớ ngay sau khi hoàn tất chu kỳ render.</p>
+                <div class="context-cells">
+                    <span>WEB<small>public registry</small></span>
+                    <span>ADMIN<small>admin registry</small></span>
+                    <span>MOBILE<small>mobile registry</small></span>
+                </div>
+            </div>
         </section>
         <a class="doc-next" href="/docs/contexts">
             <div><span>Tiếp theo</span><strong>Context, module & controller</strong></div>

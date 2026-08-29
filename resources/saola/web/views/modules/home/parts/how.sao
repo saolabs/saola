@@ -1,25 +1,64 @@
-@import('web.modules.home.parts.flowstep')
+@states({ demoStep: 1, likes: 12 })
 
 <template>
-    <section class="request-section" id="how">
-        <div class="section-head">
-            <p class="kicker"><span>HOW IT WORKS</span> Ba bước, không phép màu</p>
-            <h2>Từ một file tới một trang sống.</h2>
+    <section class="dx" id="how">
+        <div class="dx-head">
+            <div>
+                <p class="dx-label">Cơ chế hoạt động</p>
+                <h2>Một mã nguồn duy nhất,<br>đi qua ba trạng thái.</h2>
+            </div>
+            <p class="dx-sub">Không có 'phép thuật' nào bị giấu kín. Bấm qua từng trạng thái để xem chính xác những gì trình biên dịch tạo ra và cách trình duyệt tiếp quản DOM.</p>
         </div>
-        <ol class="flow-timeline flow-timeline--grid">
-            <flowstep step="01" cmd="home.sao">
-                <strong>Viết một view <code>.sao</code></strong>
-                <p>Khai báo state ở đầu file, viết template bằng cú pháp kiểu JavaScript, đặt method trong <code>&lt;script setup&gt;</code>.</p>
-            </flowstep>
-            <flowstep step="02" cmd="sao-compile web">
-                <strong>Compiler sinh hai đầu ra</strong>
-                <p>Một lệnh tạo ra Blade template cho server và view TypeScript cho client, kèm registry ánh xạ view path tới factory.</p>
-            </flowstep>
-            <flowstep step="03" cmd="SSR → hydrate → SPA">
-                <strong>Trang render rồi sống lên</strong>
-                <p>Laravel trả HTML đầy đủ; runtime claim đúng DOM đó qua marker rồi tiếp quản state, event và điều hướng.</p>
-            </flowstep>
-        </ol>
+
+        <div class="dx-tabs" role="tablist" aria-label="Ba trạng thái của một view">
+            <button type="button" role="tab" @class({'dx-tab', 'is-on': demoStep === 1}) @click(setDemoStep(1))><span>01</span> Mã bạn viết</button>
+            <button type="button" role="tab" @class({'dx-tab', 'is-on': demoStep === 2}) @click(setDemoStep(2))><span>02</span> Compiler sinh ra</button>
+            <button type="button" role="tab" @class({'dx-tab', 'is-on': demoStep === 3}) @click(setDemoStep(3))><span>03</span> Trang hoạt động</button>
+        </div>
+
+        <div class="dx-panel">
+            @if(demoStep === 1)
+                <div class="dx-stage dx-stage-one">
+                    <div class="dx-win">
+                        <div class="dx-win-bar"><span>NGUỒN</span><b>user.sao</b></div>
+                        <pre><code><span class="code-line"><span class="kw">&#64;states</span><span class="op">({</span><span class="vr"> likes</span><span class="op">:</span><span class="st"> 12</span><span class="op"> })</span></span><span class="code-line code-line-gap"></span><span class="code-line"><span class="op">&lt;</span><span class="kw">template</span><span class="op">&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;</span><span class="fn">article</span><span class="vr"> class</span><span class="op">=</span><span class="st">"card"</span><span class="op">&gt;</span></span><span class="code-line code-indent-2"><span class="op">&lt;</span><span class="fn">h3</span><span class="op">&gt;</span>Saola runtime<span class="op">&lt;/</span><span class="fn">h3</span><span class="op">&gt;</span></span><span class="code-line code-indent-2"><span class="op">&lt;</span><span class="fn">button</span><span class="kw"> &#64;click</span><span class="op">(</span><span class="fn">setLikes</span><span class="op">(</span><span class="vr">likes</span><span class="op"> +</span><span class="st"> 1</span><span class="op">))&gt;</span></span><span class="code-line code-indent-3">♥ <span class="mustache-token"><span class="vr">likes</span></span></span><span class="code-line code-indent-2"><span class="op">&lt;/</span><span class="fn">button</span><span class="op">&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;/</span><span class="fn">article</span><span class="op">&gt;</span></span><span class="code-line"><span class="op">&lt;/</span><span class="kw">template</span><span class="op">&gt;</span></span></code></pre>
+                    </div>
+                    <p class="dx-note">State được khai báo gọn gàng ở đầu file. Hàm setter <code>setLikes</code> được sinh tự động từ tên state — không cần store phức tạp, không viết reducer, không cần tạo file riêng.</p>
+                </div>
+            @endif
+
+            @if(demoStep === 2)
+                <div class="dx-stage dx-stage-two">
+                    <div class="dx-win">
+                        <div class="dx-win-bar"><span>SERVER</span><b>user.blade.php</b></div>
+                        <pre><code><span class="code-line"><span class="kw">&#64;wrapper</span></span><span class="code-line"><span class="op">&lt;</span><span class="fn">article</span><span class="kw"> &#64;class</span><span class="op">([</span><span class="vr">$__VIEW_ID__</span><span class="op"> .</span><span class="st"> '-8a4e'</span><span class="op">,</span><span class="st"> 'card'</span><span class="op">])&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;</span><span class="fn">h3</span><span class="op">&gt;</span>Saola runtime<span class="op">&lt;/</span><span class="fn">h3</span><span class="op">&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;</span><span class="fn">button</span><span class="op">&gt;</span></span><span class="code-line code-indent-2">♥ <span class="kw">&#64;startMarker</span><span class="op">(</span><span class="st">'output'</span><span class="op">,</span><span class="st"> 'k2f1'</span><span class="op">)</span></span><span class="code-line code-indent-2"><span class="mustache-token"><span class="vr">$likes</span></span></span><span class="code-line code-indent-2"><span class="kw">&#64;endMarker</span><span class="op">(</span><span class="st">'output'</span><span class="op">,</span><span class="st"> 'k2f1'</span><span class="op">)</span></span><span class="code-line code-indent-1"><span class="op">&lt;/</span><span class="fn">button</span><span class="op">&gt;</span></span><span class="code-line"><span class="op">&lt;/</span><span class="fn">article</span><span class="op">&gt;</span></span><span class="code-line"><span class="kw">&#64;endWrapper</span></span></code></pre>
+                    </div>
+                    <div class="dx-win dx-win-dark">
+                        <div class="dx-win-bar"><span>CLIENT</span><b>user.js</b></div>
+                        <pre><code><span class="code-line"><span class="kw">const</span><span class="fn"> set$likes</span><span class="op"> =</span><span class="vr"> __STATE__</span><span class="op">.</span><span class="vr">__</span><span class="op">.</span><span class="fn">register</span><span class="op">(</span><span class="st">'likes'</span><span class="op">);</span></span><span class="code-line"><span class="kw">let</span><span class="vr"> likes</span><span class="op">:</span><span class="ty"> any</span><span class="op"> =</span><span class="st"> 12</span><span class="op">;</span></span><span class="code-line code-line-gap"></span><span class="code-line"><span class="kw">const</span><span class="fn"> setLikes</span><span class="op"> = (</span><span class="vr">state</span><span class="op">:</span><span class="ty"> any</span><span class="op">) =&gt; {</span></span><span class="code-line code-indent-1"><span class="vr">likes</span><span class="op"> =</span><span class="vr"> state</span><span class="op">;</span></span><span class="code-line code-indent-1"><span class="fn">set$likes</span><span class="op">(</span><span class="vr">state</span><span class="op">);</span></span><span class="code-line"><span class="op">};</span></span><span class="code-line"><span class="vr">__STATE__</span><span class="op">.</span><span class="vr">__</span><span class="op">.</span><span class="vr">setters</span><span class="op">.</span><span class="vr">setLikes</span><span class="op"> =</span><span class="fn"> setLikes</span><span class="op">;</span></span></code></pre>
+                    </div>
+                    <p class="dx-note dx-note-wide">Cùng một cây AST sinh ra cả hai phiên bản. Blade giữ các marker để đánh dấu vùng dữ liệu động; JavaScript giữ lại đúng tên setter bạn đã viết. (Đây là mã rút gọn để minh hoạ — file thực tế dài hơn, nhưng hoàn toàn tự động sinh).</p>
+                </div>
+            @endif
+
+            @if(demoStep === 3)
+                <div class="dx-stage dx-stage-three">
+                    <div class="dx-win">
+                        <div class="dx-win-bar"><span>TRÊN DÂY</span><b>HTML server gửi xuống</b></div>
+                        <pre><code><span class="code-line"><span class="op">&lt;</span><span class="fn">article</span><span class="vr"> class</span><span class="op">=</span><span class="st">"v7c1-8a4e card"</span><span class="op">&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;</span><span class="fn">h3</span><span class="op">&gt;</span>Saola runtime<span class="op">&lt;/</span><span class="fn">h3</span><span class="op">&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;</span><span class="fn">button</span><span class="op">&gt;</span></span><span class="code-line code-indent-2">♥ <span class="cm">&lt;!--s:o:{id}-s--&gt;</span></span><span class="code-line code-indent-2"><span class="st">12</span></span><span class="code-line code-indent-2"><span class="cm">&lt;!--s:o:{id}-e--&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;/</span><span class="fn">button</span><span class="op">&gt;</span></span><span class="code-line"><span class="op">&lt;/</span><span class="fn">article</span><span class="op">&gt;</span></span></code></pre>
+                    </div>
+
+                    <div class="dx-live">
+                        <span class="dx-live-tag"><i></i> Đang chạy trên trang này</span>
+                        <article class="dx-card">
+                            <h3>Saola runtime</h3>
+                            <button type="button" class="dx-heart" @click(setLikes(likes + 1))>♥ {{ likes }}</button>
+                        </article>
+                        <p>Crawler và người dùng đều nhận được kết quả <strong>12</strong> ngay từ byte đầu tiên. Runtime phía client tìm các marker, kết nối lại (hydrate) đúng element đó và tiếp quản vòng đời — hoàn toàn không gọi <code>appendChild</code> dư thừa, không chớp giật màn hình.</p>
+                    </div>
+                </div>
+            @endif
+        </div>
     </section>
 </template>
 

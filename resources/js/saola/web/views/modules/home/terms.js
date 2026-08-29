@@ -144,50 +144,50 @@ class TermsView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-content', 'content', (parentElement) => [
-            this.html(`b4052a35`, "section", parentElement,
+            this.html(`Bcontent1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "legal-hero" }, { type: 'static', value: "legal-hero-compact" }] },
                 (parentElement) => [
-                this.html(`82ed8433`, "p", parentElement,
+                this.html(`Bcontent11`, "p", parentElement,
                     { classes: [{ type: 'static', value: "eyebrow" }] },
                     (parentElement) => [
-                    this.html(`4cd48692`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bcontent111`, "span", parentElement, {}, (parentElement) => [
                         this.text('01')
                     ]),
                     this.text(' Legal / Terms')
                     ]),
-                this.html(`7342b39f`, "h1", parentElement, {}, (parentElement) => [
+                this.html(`Bcontent12`, "h1", parentElement, {}, (parentElement) => [
                     this.text('Terms for a'),
-                    this.html(`56049c15`, "br", parentElement, {}),
+                    this.html(`Bcontent121`, "br", parentElement, {}),
                     this.text('working prototype.')
                 ]),
-                this.html(`d9cbd0b2`, "p", parentElement, {}, (parentElement) => [
+                this.html(`Bcontent13`, "p", parentElement, {}, (parentElement) => [
                     this.text('This demo explains behavior; it is not a production service agreement.')
                 ])
                 ]),
-            this.html(`8aa0772c`, "section", parentElement,
+            this.html(`Bcontent2`, "section", parentElement,
                 { classes: [{ type: 'static', value: "terms-list" }] },
                 (parentElement) => [
-                this.html(`7af0c8fd`, "article", parentElement,
+                this.html(`Bcontent21`, "article", parentElement,
                     { classes: [{ type: 'binding', value: "open", factory: () => expanded === 1, stateKeys: ["expanded"] }] },
                     (parentElement) => [
-                    this.html(`0ff23b85`, "button", parentElement,
+                    this.html(`Bcontent211`, "button", parentElement,
                         { events: { click: [(event) => setExpanded(expanded === 1 ? 0 : 1)] } },
                         (parentElement) => [
-                        this.html(`6bd41432`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent2111`, "span", parentElement, {}, (parentElement) => [
                             this.text('01')
                         ]),
-                        this.html(`e4d697bf`, "strong", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent2112`, "strong", parentElement, {}, (parentElement) => [
                             this.text('Purpose of this site')
                         ]),
-                        this.html(`8f623436`, "i", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent2113`, "i", parentElement, {}, (parentElement) => [
                             this.text('+')
                         ])
                         ]),
-                    this.reactive(`38f688a4`, "if", parentReactive, parentElement, ["expanded"], (parentReactive, parentElement) => {
+                    this.reactive(`Bcontent21r1`, "if", parentReactive, parentElement, ["expanded"], (parentReactive, parentElement) => {
                         const reactiveContents = [];
                         if (expanded === 1) {
                             reactiveContents.push(
-                            this.html(`4b0e1792`, "p", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent21r1k11`, "p", parentElement, {}, (parentElement) => [
                                 this.text('The pages exist to exercise Saola route navigation, nested layouts, reactive state, scoped styling and runtime asset cleanup.')
                             ])
                             );
@@ -195,27 +195,27 @@ class TermsView extends View {
                         return reactiveContents;
                     })
                     ]),
-                this.html(`c49c81c5`, "article", parentElement,
+                this.html(`Bcontent22`, "article", parentElement,
                     { classes: [{ type: 'binding', value: "open", factory: () => expanded === 2, stateKeys: ["expanded"] }] },
                     (parentElement) => [
-                    this.html(`980dd6c5`, "button", parentElement,
+                    this.html(`Bcontent221`, "button", parentElement,
                         { events: { click: [(event) => setExpanded(expanded === 2 ? 0 : 2)] } },
                         (parentElement) => [
-                        this.html(`808e3301`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent2211`, "span", parentElement, {}, (parentElement) => [
                             this.text('02')
                         ]),
-                        this.html(`2afb8a53`, "strong", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent2212`, "strong", parentElement, {}, (parentElement) => [
                             this.text('Data and persistence')
                         ]),
-                        this.html(`1d8f0459`, "i", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent2213`, "i", parentElement, {}, (parentElement) => [
                             this.text('+')
                         ])
                         ]),
-                    this.reactive(`faf8dd77`, "if", parentReactive, parentElement, ["expanded"], (parentReactive, parentElement) => {
+                    this.reactive(`Bcontent22r1`, "if", parentReactive, parentElement, ["expanded"], (parentReactive, parentElement) => {
                         const reactiveContents = [];
                         if (expanded === 2) {
                             reactiveContents.push(
-                            this.html(`f8b8bb83`, "p", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22r1k11`, "p", parentElement, {}, (parentElement) => [
                                 this.text('Interactions are intentionally local. Refreshing the browser resets task and form state because no persistence service is connected.')
                             ])
                             );
@@ -223,27 +223,27 @@ class TermsView extends View {
                         return reactiveContents;
                     })
                     ]),
-                this.html(`7f3d8652`, "article", parentElement,
+                this.html(`Bcontent23`, "article", parentElement,
                     { classes: [{ type: 'binding', value: "open", factory: () => expanded === 3, stateKeys: ["expanded"] }] },
                     (parentElement) => [
-                    this.html(`69001fbb`, "button", parentElement,
+                    this.html(`Bcontent231`, "button", parentElement,
                         { events: { click: [(event) => setExpanded(expanded === 3 ? 0 : 3)] } },
                         (parentElement) => [
-                        this.html(`5b4c5373`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent2311`, "span", parentElement, {}, (parentElement) => [
                             this.text('03')
                         ]),
-                        this.html(`e445b6b5`, "strong", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent2312`, "strong", parentElement, {}, (parentElement) => [
                             this.text('No warranty')
                         ]),
-                        this.html(`2aab0d20`, "i", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent2313`, "i", parentElement, {}, (parentElement) => [
                             this.text('+')
                         ])
                         ]),
-                    this.reactive(`5827bac7`, "if", parentReactive, parentElement, ["expanded"], (parentReactive, parentElement) => {
+                    this.reactive(`Bcontent23r1`, "if", parentReactive, parentElement, ["expanded"], (parentReactive, parentElement) => {
                         const reactiveContents = [];
                         if (expanded === 3) {
                             reactiveContents.push(
-                            this.html(`02a4dc4b`, "p", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent23r1k11`, "p", parentElement, {}, (parentElement) => [
                                 this.text('This interface is a test fixture for the evolving platform and should be evaluated as development software.')
                             ])
                             );
@@ -252,26 +252,26 @@ class TermsView extends View {
                     })
                     ])
                 ]),
-            this.html(`6c26f9b7`, "section", parentElement,
+            this.html(`Bcontent3`, "section", parentElement,
                 { classes: [{ type: 'static', value: "accept-panel" }] },
                 (parentElement) => [
-                this.html(`831b41c7`, "label", parentElement, {}, (parentElement) => [
-                    this.html(`5071e598`, "input", parentElement, { attrs: { "type": { type: 'static', value: "checkbox" } }, bind: { key: 'accepted' } }),
-                    this.html(`2348d881`, "span", parentElement, {}),
-                    this.html(`d052a684`, "p", parentElement, {}, (parentElement) => [
-                        this.html(`0de7eff6`, "strong", parentElement, {}, (parentElement) => [
+                this.html(`Bcontent31`, "label", parentElement, {}, (parentElement) => [
+                    this.html(`Bcontent311`, "input", parentElement, { attrs: { "type": { type: 'static', value: "checkbox" } }, bind: { key: 'accepted' } }),
+                    this.html(`Bcontent312`, "span", parentElement, {}),
+                    this.html(`Bcontent313`, "p", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent3131`, "strong", parentElement, {}, (parentElement) => [
                             this.text('I understand this is a demonstration.')
                         ]),
-                        this.html(`c0f3cdcb`, "small", parentElement, {}, (parentElement) => [
+                        this.html(`Bcontent3132`, "small", parentElement, {}, (parentElement) => [
                             this.text('Your choice is reactive and local to this view.')
                         ])
                     ])
                 ]),
-                this.html(`97f4c8ab`, "button", parentElement,
+                this.html(`Bcontent32`, "button", parentElement,
                     { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }], props: { "disabled": { type: 'binding', factory: () => !accepted, stateKeys: ["accepted"] } } },
                     (parentElement) => [
                     this.text('Continue '),
-                    this.html(`bb0e403c`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bcontent321`, "span", parentElement, {}, (parentElement) => [
                         this.text('→')
                     ])
                     ])

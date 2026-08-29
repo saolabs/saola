@@ -1,0 +1,63 @@
+@import('web.components.code-window')
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>13</span> BACKEND</p>
+                <h1>Hạ tầng lõi.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Ngoài bốn tầng nghiệp vụ, core còn mang sẵn một bộ hạ tầng: view engine, cache, hàng đợi, mail, đa ngôn ngữ, HTTP client, file và tác vụ bất đồng bộ.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>ENGINES</span> Nơi view được phân giải</p>
+            <h2>Engine là phần chạy dưới mọi request.</h2>
+            <p>Đây là nhóm bạn hiếm khi gọi trực tiếp nhưng luôn phụ thuộc vào. <code>ViewContextManager</code> chính là thứ cấp bảng <a href="/docs/system-vars">biến hệ thống</a>, còn <code>ViewPathResolver</code> là thứ biến <code>__layout__ + 'docs'</code> thành file thật.</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>ViewContextManager</code></div><span>Giữ cấu hình từng context và dựng bảng biến đường dẫn</span><b>view</b></div>
+                <div><div class="dt-key"><code>ViewContextRegistry</code></div><span>Sổ context theo request — Octane không rò state sang request sau</span><b>view</b></div>
+                <div><div class="dt-key"><code>ViewPathResolver</code></div><span>Biến biến đường dẫn thành file view thật</span><b>view</b></div>
+                <div><div class="dt-key"><code>ViewEngine</code> · <code>ViewManager</code></div><span>Render view và quản lý vòng đời phía server</span><b>view</b></div>
+                <div><div class="dt-key"><code>ViewDataEngine</code></div><span>Gom dữ liệu đưa xuống view, gồm cả phần cho hydrate</span><b>view</b></div>
+                <div><div class="dt-key"><code>CacheEngine</code></div><span>Cache theo domain và key chuẩn hoá — nền cho <code>CacheAction</code> của repository</span><b>cache</b></div>
+                <div><div class="dt-key"><code>ShortCode</code></div><span>Thẻ ngắn trong nội dung do người dùng nhập: <code>add</code>, <code>remove</code>, <code>apply</code></span><b>nội dung</b></div>
+                <div><div class="dt-key"><code>DCryptEngine</code></div><span>Mã hoá/giải mã hai chiều cho dữ liệu cần giấu mà vẫn phải đọc lại</span><b>bảo mật</b></div>
+                <div><div class="dt-key"><code>JsonData</code></div><span>Đọc ghi cấu trúc JSON như một kho dữ liệu nhỏ</span><b>dữ liệu</b></div>
+            </div>
+
+            <p class="kicker"><span>NỀN TẢNG</span> Việc chạy ngoài request</p>
+            <h2>Hàng đợi, mail và tác vụ bất đồng bộ.</h2>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>Queue</code></div><span><code>add()</code> đẩy việc vào hàng đợi, <code>delay()</code> hoãn, <code>setTimeout()</code> giới hạn thời gian chạy, <code>enabled()</code> để tắt trong môi trường không có worker</span><b>hàng đợi</b></div>
+                <div><div class="dt-key"><code>QueueWork</code></div><span>Đơn vị công việc mà worker nhặt lên xử lý</span><b>hàng đợi</b></div>
+                <div><div class="dt-key"><code>Email</code></div><span>Dựng và gửi mail: <code>addAddress()</code> rồi gửi; <code>__call</code> chuyển tiếp sang message của mailer bên dưới</span><b>mail</b></div>
+                <div><div class="dt-key"><code>Mailer\Job</code></div><span>Gửi mail qua hàng đợi thay vì chặn request</span><b>mail</b></div>
+                <div><div class="dt-key"><code>Await</code></div><span>Chờ kết quả bất đồng bộ trong luồng PHP đồng bộ</span><b>async</b></div>
+                <div><div class="dt-key"><code>Promise</code></div><span>Ghép nhiều tác vụ chạy song song rồi gom kết quả</span><b>async</b></div>
+            </div>
+            <div class="ov-note">
+                <code>Queue::enabled()</code> tồn tại để cùng một đoạn code chạy được ở máy dev không bật worker: hàng đợi tắt thì việc chạy đồng bộ ngay, không cần rẽ nhánh trong nghiệp vụ.
+            </div>
+
+            <p class="kicker"><span>RA NGOÀI</span> Mạng, file, ngôn ngữ</p>
+            <h2>Ba nhóm còn lại.</h2>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>Http\Client</code> · <code>Curl</code></div><span>Gọi API bên ngoài; <code>HttpPromise</code> cho nhiều request song song</span><b>mạng</b></div>
+                <div><div class="dt-key"><code>Http\BaseApi</code></div><span>Lớp nền để bọc một API bên thứ ba thành service của dự án</span><b>mạng</b></div>
+                <div><div class="dt-key"><code>Crawler</code> · <code>Crawl</code></div><span>Lấy và bóc tách nội dung trang ngoài</span><b>mạng</b></div>
+                <div><div class="dt-key"><code>Files\File</code></div><span><code>setPath</code>, <code>setContent</code>, <code>pull</code>, <code>push</code>, <code>update</code> — thao tác file theo đối tượng</span><b>file</b></div>
+                <div><div class="dt-key"><code>FileConverter</code> · <code>FileType</code></div><span>Chuyển định dạng và nhận dạng loại file</span><b>file</b></div>
+                <div><div class="dt-key"><code>FileUploaded</code></div><span>File người dùng tải lên — đi cùng <code>ModelFileMethods</code> ở tầng model</span><b>file</b></div>
+                <div><div class="dt-key"><code>Locale</code></div><span><code>set</code>, <code>get</code>, <code>setDefault</code>, <code>setCurrent</code> — ngôn ngữ hiện hành của request</span><b>ngôn ngữ</b></div>
+            </div>
+            <p>Chuỗi dạng <code>@text:admin.users.module.title</code> trong khai báo module đi qua đúng tầng <code>Locale</code> này — nhờ vậy tiêu đề module dịch được mà không phải viết code rẽ nhánh.</p>
+
+            <p class="ov-note">
+                Trang này chỉ điểm mặt để bạn biết cái gì có sẵn. Cách dùng chi tiết của từng nhóm nằm trong <code>core/docs</code> và thư mục <code>examples</code>.
+            </p>
+        </div>
+    @endblock
+</template>

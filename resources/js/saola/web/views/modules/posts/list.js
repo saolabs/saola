@@ -113,14 +113,14 @@ class ListView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement) => [
-            this.html(`bca678f9`, "h1", parentElement, {}, (parentElement) => [
-                this.output(`d11262e8`, parentElement, true, ["title"], (parentElement) => title)
+            this.html(`e1`, "h1", parentElement, {}, (parentElement) => [
+                this.output(`e1o1`, parentElement, true, ["title"], (parentElement) => title)
             ]),
-            this.html(`6de958cf`, "ul", parentElement, {}, (parentElement) => [
-                this.reactive(`cc92f7f7`, "foreach", parentReactive, parentElement, ["posts"], (parentReactive, parentElement) => {
+            this.html(`e2`, "ul", parentElement, {}, (parentElement) => [
+                this.reactive(`e2l1`, "foreach", parentReactive, parentElement, ["posts"], (parentReactive, parentElement) => {
                     return this.__foreach(posts, (post, __loopKey, __loopIndex, __loop) => [
-                        this.html(`27454eba-${__loopIndex}`, "li", parentElement, {}, (parentElement) => [
-                            this.output(`abe48791-${__loopIndex}`, parentElement, true, ["title"], (parentElement) => post.title)
+                        this.html(`e2l11-${__loopIndex}`, "li", parentElement, {}, (parentElement) => [
+                            this.output(`e2l11o1-${__loopIndex}`, parentElement, true, ["title"], (parentElement) => post.title)
                         ])
                     ])
                 })

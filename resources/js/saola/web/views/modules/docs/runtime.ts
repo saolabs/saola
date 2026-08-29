@@ -27,8 +27,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -38,6 +36,8 @@ export interface RuntimeProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class RuntimeViewController extends ViewController {
     constructor(view: View) {
@@ -51,7 +51,7 @@ class RuntimeViewController extends ViewController {
 }
 
 class RuntimeView extends View {
-    constructor(__data__: RuntimeProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, RuntimeViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -139,109 +139,109 @@ class RuntimeView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-doc', 'doc', (parentElement: any) => [
-            this.html(`7b338a08`, "section", parentElement,
+            this.html(`Bdoc1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "page-hero" }, { type: 'static', value: "page-hero-runtime" }] },
                 (parentElement: any) => [
-                this.html(`3bb16c04`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`f150187b`, "p", parentElement,
+                this.html(`Bdoc11`, "div", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc111`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement: any) => [
-                        this.html(`bac94b21`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc1111`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('03 / RUNTIME')
                         ]),
                         this.text(' DOM ownership & lifecycle')
                         ]),
-                    this.html(`663d8ed0`, "h1", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc112`, "h1", parentElement, {}, (parentElement: any) => [
                         this.text('Không render lại'),
-                        this.html(`c3c0e3f9`, "br", parentElement, {}),
-                        this.html(`27038dbc`, "em", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc1121`, "br", parentElement, {}),
+                        this.html(`Bdoc1122`, "em", parentElement, {}, (parentElement: any) => [
                             this.text('điều đã có.')
                         ])
                     ])
                 ]),
-                this.html(`57baae1a`, "div", parentElement,
+                this.html(`Bdoc12`, "div", parentElement,
                     { classes: [{ type: 'static', value: "page-hero-aside" }] },
                     (parentElement: any) => [
-                    this.html(`8695e14e`, "p", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc121`, "p", parentElement, {}, (parentElement: any) => [
                         this.text('Hydration là một chế độ mount có kiểm chứng: nhận DOM server tạo, nối behavior và chỉ fallback ở vùng không khớp.')
                     ]),
-                    this.html(`1f0b28a5`, "dl", parentElement, {}, (parentElement: any) => [
-                        this.html(`da4a7f2f`, "div", parentElement, {}, (parentElement: any) => [
-                            this.html(`902aa345`, "dt", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc122`, "dl", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc1221`, "div", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bdoc12211`, "dt", parentElement, {}, (parentElement: any) => [
                                 this.text('FIRST MODE')
                             ]),
-                            this.html(`e65d3a6b`, "dd", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bdoc12212`, "dd", parentElement, {}, (parentElement: any) => [
                                 this.text('hydrate')
                             ])
                         ]),
-                        this.html(`e762468d`, "div", parentElement, {}, (parentElement: any) => [
-                            this.html(`935f1ffd`, "dt", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc1222`, "div", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bdoc12221`, "dt", parentElement, {}, (parentElement: any) => [
                                 this.text('NEXT MODE')
                             ]),
-                            this.html(`df3e6b57`, "dd", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bdoc12222`, "dd", parentElement, {}, (parentElement: any) => [
                                 this.text('client mount')
                             ])
                         ])
                     ])
                     ])
                 ]),
-            this.html(`05ef4c27`, "section", parentElement,
+            this.html(`Bdoc2`, "section", parentElement,
                 { classes: [{ type: 'static', value: "phase-lab" }] },
                 (parentElement: any) => [
-                this.html(`c9c6be59`, "div", parentElement,
+                this.html(`Bdoc21`, "div", parentElement,
                     { classes: [{ type: 'static', value: "phase-tabs" }], attrs: { "role": { type: 'static', value: "group" }, "aria-label": { type: 'static', value: "Các giai đoạn runtime" } } },
                     (parentElement: any) => [
-                    this.html(`8fdfba2a`, "button", parentElement,
+                    this.html(`Bdoc211`, "button", parentElement,
                         { classes: [{ type: 'binding', value: "active", factory: () => activePhase === 'ssr', stateKeys: ["activePhase"] }], events: { click: [(event: any) => setActivePhase('ssr')] } },
                         (parentElement: any) => [
-                        this.html(`7c88577b`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc2111`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('01')
                         ]),
                         this.text(' SSR')
                         ]),
-                    this.html(`658050f7`, "button", parentElement,
+                    this.html(`Bdoc212`, "button", parentElement,
                         { classes: [{ type: 'binding', value: "active", factory: () => activePhase === 'hydrate', stateKeys: ["activePhase"] }], events: { click: [(event: any) => setActivePhase('hydrate')] } },
                         (parentElement: any) => [
-                        this.html(`208b7983`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc2121`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('02')
                         ]),
                         this.text(' Hydrate')
                         ]),
-                    this.html(`93c2814e`, "button", parentElement,
+                    this.html(`Bdoc213`, "button", parentElement,
                         { classes: [{ type: 'binding', value: "active", factory: () => activePhase === 'reactive', stateKeys: ["activePhase"] }], events: { click: [(event: any) => setActivePhase('reactive')] } },
                         (parentElement: any) => [
-                        this.html(`6d8fd3f7`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc2131`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('03')
                         ]),
                         this.text(' Rerender')
                         ]),
-                    this.html(`426cef1e`, "button", parentElement,
+                    this.html(`Bdoc214`, "button", parentElement,
                         { classes: [{ type: 'binding', value: "active", factory: () => activePhase === 'cache', stateKeys: ["activePhase"] }], events: { click: [(event: any) => setActivePhase('cache')] } },
                         (parentElement: any) => [
-                        this.html(`4c413dd0`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc2141`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('04')
                         ]),
                         this.text(' Cache')
                         ])
                     ]),
-                this.html(`fbd9a84d`, "div", parentElement,
+                this.html(`Bdoc22`, "div", parentElement,
                     { classes: [{ type: 'static', value: "phase-display" }] },
                     (parentElement: any) => [
-                    this.reactive(`74173366`, "if", parentReactive, parentElement, ["activePhase"], (parentReactive: any, parentElement: any) => {
+                    this.reactive(`Bdoc22r1`, "if", parentReactive, parentElement, ["activePhase"], (parentReactive: any, parentElement: any) => {
                         const reactiveContents = [];
                         if (activePhase === 'ssr') {
                             reactiveContents.push(
-                            this.html(`e7367464`, "div", parentElement, {}, (parentElement: any) => [
-                                this.html(`5649f122`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bdoc22r1k11`, "div", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k111`, "span", parentElement, {}, (parentElement: any) => [
                                     this.text('SERVER / COMPLETE')
                                 ]),
-                                this.html(`e7189715`, "h2", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k112`, "h2", parentElement, {}, (parentElement: any) => [
                                     this.text('Blade gửi HTML có nội dung.')
                                 ]),
-                                this.html(`98e4965e`, "p", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k113`, "p", parentElement, {}, (parentElement: any) => [
                                     this.text('Layout, block, include và children được đặt đúng vị trí. Boot payload mang view ID, route data và context cần cho client.')
                                 ]),
-                                this.html(`02dbd94e`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k114`, "code", parentElement, {}, (parentElement: any) => [
                                     this.text('created → DOM ready')
                                 ])
                             ])
@@ -249,17 +249,17 @@ class RuntimeView extends View {
                         }
                         else if (activePhase === 'reactive') {
                             reactiveContents.push(
-                            this.html(`015e7fca`, "div", parentElement, {}, (parentElement: any) => [
-                                this.html(`0ed6f8a1`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bdoc22r1k21`, "div", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k211`, "span", parentElement, {}, (parentElement: any) => [
                                     this.text('CLIENT / UPDATE')
                                 ]),
-                                this.html(`c96d7dc5`, "h2", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k212`, "h2", parentElement, {}, (parentElement: any) => [
                                     this.text('State chỉ đánh thức vùng phụ thuộc.')
                                 ]),
-                                this.html(`eb2a6be1`, "p", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k213`, "p", parentElement, {}, (parentElement: any) => [
                                     this.text('Thay đổi được batch theo frame. Reactive node render lại giữa marker của chính nó rồi start children mới và cleanup cây cũ.')
                                 ]),
-                                this.html(`afc5519e`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k214`, "code", parentElement, {}, (parentElement: any) => [
                                     this.text('state change → schedule → patch')
                                 ])
                             ])
@@ -267,17 +267,17 @@ class RuntimeView extends View {
                         }
                         else if (activePhase === 'cache') {
                             reactiveContents.push(
-                            this.html(`83874d5b`, "div", parentElement, {}, (parentElement: any) => [
-                                this.html(`5a2eba3e`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bdoc22r1k31`, "div", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k311`, "span", parentElement, {}, (parentElement: any) => [
                                     this.text('NAVIGATION / RESTORE')
                                 ]),
-                                this.html(`c7a6e6a9`, "h2", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k312`, "h2", parentElement, {}, (parentElement: any) => [
                                     this.text('Back không nhất thiết render lại.')
                                 ]),
-                                this.html(`361a391f`, "p", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k313`, "p", parentElement, {}, (parentElement: any) => [
                                     this.text('View có thể pause, detach DOM vào PageCache, giữ state rồi resume cùng scroll position khi popstate quay lại.')
                                 ]),
-                                this.html(`67e22bd8`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k314`, "code", parentElement, {}, (parentElement: any) => [
                                     this.text('active ⇄ paused → destroyed')
                                 ])
                             ])
@@ -285,17 +285,17 @@ class RuntimeView extends View {
                         }
                         else {
                             reactiveContents.push(
-                            this.html(`c652da34`, "div", parentElement, {}, (parentElement: any) => [
-                                this.html(`2df41008`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bdoc22r1k41`, "div", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k411`, "span", parentElement, {}, (parentElement: any) => [
                                     this.text('CLIENT / CLAIM')
                                 ]),
-                                this.html(`a6a0375e`, "h2", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k412`, "h2", parentElement, {}, (parentElement: any) => [
                                     this.text('Runtime nhận lại DOM thay vì tạo bản sao.')
                                 ]),
-                                this.html(`e5ec980b`, "p", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k413`, "p", parentElement, {}, (parentElement: any) => [
                                     this.text('Marker và stable identity được đối chiếu. State, event và subscriptions gắn đúng một lần; mismatch chỉ rerender cục bộ.')
                                 ]),
-                                this.html(`7e4ae459`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bdoc22r1k414`, "code", parentElement, {}, (parentElement: any) => [
                                     this.text('claim → reconcile → start')
                                 ])
                             ])
@@ -303,166 +303,166 @@ class RuntimeView extends View {
                         }
                         return reactiveContents;
                     }),
-                    this.html(`bc986368`, "div", parentElement,
+                    this.html(`Bdoc221`, "div", parentElement,
                         { classes: [{ type: 'static', value: "marker-visual" }] },
                         (parentElement: any) => [
-                        this.html(`6303a5a3`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc2211`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('<!-- view:start -->')
                         ]),
-                        this.html(`a71a4ce1`, "div", parentElement, {}, (parentElement: any) => [
-                            this.html(`ff74274b`, "i", parentElement, {}),
-                            this.html(`826b6ccc`, "i", parentElement, {}),
-                            this.html(`92ed573a`, "i", parentElement, {}),
-                            this.html(`796f99f4`, "strong", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc2212`, "div", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bdoc22121`, "i", parentElement, {}),
+                            this.html(`Bdoc22122`, "i", parentElement, {}),
+                            this.html(`Bdoc22123`, "i", parentElement, {}),
+                            this.html(`Bdoc22124`, "strong", parentElement, {}, (parentElement: any) => [
                                 this.text('EXISTING DOM')
                             ])
                         ]),
-                        this.html(`4bceac81`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc2213`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('<!-- view:end -->')
                         ])
                         ])
                     ])
                 ]),
-            this.html(`9fd19a30`, "section", parentElement,
+            this.html(`Bdoc3`, "section", parentElement,
                 { classes: [{ type: 'static', value: "lifecycle-section" }] },
                 (parentElement: any) => [
-                this.html(`849145f1`, "div", parentElement,
+                this.html(`Bdoc31`, "div", parentElement,
                     { classes: [{ type: 'static', value: "section-head" }, { type: 'static', value: "compact" }] },
                     (parentElement: any) => [
-                    this.html(`0d56026d`, "p", parentElement,
+                    this.html(`Bdoc311`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement: any) => [
-                        this.html(`773a2605`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3111`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('LIFECYCLE')
                         ]),
                         this.text(' Tài nguyên có điểm bắt đầu và kết thúc')
                         ]),
-                    this.html(`de7a1e42`, "h2", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc312`, "h2", parentElement, {}, (parentElement: any) => [
                         this.text('Một state machine'),
-                        this.html(`939960ee`, "br", parentElement, {}),
+                        this.html(`Bdoc3121`, "br", parentElement, {}),
                         this.text('có thể quan sát.')
                     ])
                     ]),
-                this.html(`97e5628b`, "div", parentElement,
+                this.html(`Bdoc32`, "div", parentElement,
                     { classes: [{ type: 'static', value: "lifecycle-rail" }] },
                     (parentElement: any) => [
-                    this.html(`59ebb7c1`, "article", parentElement, {}, (parentElement: any) => [
-                        this.html(`ce56689b`, "span", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc321`, "article", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3211`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('01')
                         ]),
-                        this.html(`6e241d27`, "strong", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3212`, "strong", parentElement, {}, (parentElement: any) => [
                             this.text('created')
                         ]),
-                        this.html(`88e948c8`, "p", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3213`, "p", parentElement, {}, (parentElement: any) => [
                             this.text('Khai báo state, render factory và chain.')
                         ])
                     ]),
-                    this.html(`6c495396`, "i", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc322`, "i", parentElement, {}, (parentElement: any) => [
                         this.text('→')
                     ]),
-                    this.html(`62360ed0`, "article", parentElement,
+                    this.html(`Bdoc323`, "article", parentElement,
                         { classes: [{ type: 'static', value: "active" }] },
                         (parentElement: any) => [
-                        this.html(`96441922`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3231`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('02')
                         ]),
-                        this.html(`cd478644`, "strong", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3232`, "strong", parentElement, {}, (parentElement: any) => [
                             this.text('active')
                         ]),
-                        this.html(`a1f0c4a2`, "p", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3233`, "p", parentElement, {}, (parentElement: any) => [
                             this.text('DOM mounted, event và subscription đang chạy.')
                         ])
                         ]),
-                    this.html(`4ea4f516`, "i", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc324`, "i", parentElement, {}, (parentElement: any) => [
                         this.text('⇄')
                     ]),
-                    this.html(`279f3d92`, "article", parentElement, {}, (parentElement: any) => [
-                        this.html(`077e8bd6`, "span", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc325`, "article", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3251`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('03')
                         ]),
-                        this.html(`afefe6cb`, "strong", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3252`, "strong", parentElement, {}, (parentElement: any) => [
                             this.text('paused')
                         ]),
-                        this.html(`9edab2fa`, "p", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3253`, "p", parentElement, {}, (parentElement: any) => [
                             this.text('DOM detach, thay đổi được ghi dirty để resume.')
                         ])
                     ]),
-                    this.html(`0bc0e461`, "i", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc326`, "i", parentElement, {}, (parentElement: any) => [
                         this.text('→')
                     ]),
-                    this.html(`b528b09c`, "article", parentElement, {}, (parentElement: any) => [
-                        this.html(`b08ba3e0`, "span", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc327`, "article", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3271`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('04')
                         ]),
-                        this.html(`385c8941`, "strong", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3272`, "strong", parentElement, {}, (parentElement: any) => [
                             this.text('destroyed')
                         ]),
-                        this.html(`586cc9e0`, "p", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bdoc3273`, "p", parentElement, {}, (parentElement: any) => [
                             this.text('Abort event, unsubscribe, huỷ RAF và release DOM.')
                         ])
                     ])
                     ])
                 ]),
-            this.html(`e3988c18`, "section", parentElement,
+            this.html(`Bdoc4`, "section", parentElement,
                 { classes: [{ type: 'static', value: "runtime-contracts" }] },
                 (parentElement: any) => [
-                this.html(`6f8acc56`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`5536b886`, "span", parentElement, {}, (parentElement: any) => [
+                this.html(`Bdoc41`, "div", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc411`, "span", parentElement, {}, (parentElement: any) => [
                         this.text('01 / INSERTION')
                     ]),
-                    this.html(`526a1ced`, "h3", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc412`, "h3", parentElement, {}, (parentElement: any) => [
                         this.text('Mọi node có anchor')
                     ]),
-                    this.html(`c4bd526b`, "p", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc413`, "p", parentElement, {}, (parentElement: any) => [
                         this.text('Wrapper, output, component và children đều render qua insertion point, tránh append mù vào container.')
                     ])
                 ]),
-                this.html(`f0346512`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`81072883`, "span", parentElement, {}, (parentElement: any) => [
+                this.html(`Bdoc42`, "div", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc421`, "span", parentElement, {}, (parentElement: any) => [
                         this.text('02 / OWNERSHIP')
                     ]),
-                    this.html(`f281a161`, "h3", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc422`, "h3", parentElement, {}, (parentElement: any) => [
                         this.text('Mỗi view cleanup phần mình')
                     ]),
-                    this.html(`76376fab`, "p", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc423`, "p", parentElement, {}, (parentElement: any) => [
                         this.text('Child view, block content và resource scoped đều theo lifecycle của owner rõ ràng.')
                     ])
                 ]),
-                this.html(`417a4297`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`3c4049e4`, "span", parentElement, {}, (parentElement: any) => [
+                this.html(`Bdoc43`, "div", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc431`, "span", parentElement, {}, (parentElement: any) => [
                         this.text('03 / RECONCILIATION')
                     ]),
-                    this.html(`2cf8c11f`, "h3", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc432`, "h3", parentElement, {}, (parentElement: any) => [
                         this.text('Mismatch có phạm vi')
                     ]),
-                    this.html(`66c22f8e`, "p", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc433`, "p", parentElement, {}, (parentElement: any) => [
                         this.text('Hydration cảnh báo và thay vùng sai thay vì buộc toàn bộ document render lại.')
                     ])
                 ]),
-                this.html(`796886d7`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`394badbf`, "span", parentElement, {}, (parentElement: any) => [
+                this.html(`Bdoc44`, "div", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc441`, "span", parentElement, {}, (parentElement: any) => [
                         this.text('04 / CONTEXT')
                     ]),
-                    this.html(`d305e9fb`, "h3", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc442`, "h3", parentElement, {}, (parentElement: any) => [
                         this.text('Registry đi cùng request')
                     ]),
-                    this.html(`a9cb02ef`, "p", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc443`, "p", parentElement, {}, (parentElement: any) => [
                         this.text('Route component map được chọn theo context hiện hành, không bị static state của Octane worker làm lệch.')
                     ])
                 ])
                 ]),
-            this.html(`24b6e3d2`, "a", parentElement,
+            this.html(`Bdoc5`, "a", parentElement,
                 { classes: [{ type: 'static', value: "doc-next" }], attrs: { "href": { type: 'static', value: "/docs/lifecycle" } } },
                 (parentElement: any) => [
-                this.html(`587d10b8`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`f908d9c5`, "span", parentElement, {}, (parentElement: any) => [
+                this.html(`Bdoc51`, "div", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc511`, "span", parentElement, {}, (parentElement: any) => [
                         this.text('Tiếp theo')
                     ]),
-                    this.html(`7e647603`, "strong", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bdoc512`, "strong", parentElement, {}, (parentElement: any) => [
                         this.text('Vòng đời & marker')
                     ])
                 ]),
-                this.html(`50bb0184`, "span", parentElement,
+                this.html(`Bdoc52`, "span", parentElement,
                     { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }] },
                     (parentElement: any) => [
                     this.text('Đọc tiếp →')
@@ -478,7 +478,7 @@ class RuntimeView extends View {
 }
 
 // Export factory function
-export function WebModulesDocsRuntime(__data__: RuntimeProps = {}, systemData: any = {}): RuntimeView {
+export function WebModulesDocsRuntime(__data__ = {}, systemData = {}): RuntimeView {
     return new RuntimeView(__data__, systemData);
 }
 export default WebModulesDocsRuntime;

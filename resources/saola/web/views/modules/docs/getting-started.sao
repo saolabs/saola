@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 <template>
     @extends(__layout__ + "docs")
     @block('doc')
@@ -9,9 +10,45 @@
         <section class="start-layout">
             <aside><span>TRÊN TRANG NÀY</span><a href="#module">01 / Module</a><a href="#view">02 / View</a><a href="#compile">03 / Compile</a><a href="#verify">04 / Verify</a></aside>
             <div class="start-steps">
-                <article id="module"><span>01</span><div><p class="kicker"><span>ROUTE</span> Module first</p><h2>Khai báo route trong context.</h2><p>Module giữ controller, service và route gần nhau. Context quyết định registry và asset bundle nào phục vụ request.</p><pre><code><span class="code-line">System::context('web')</span><span class="code-line code-indent-1">->module('home', ['prefix' => '/'])</span><span class="code-line code-indent-1">->controller(HomeController::class)</span><span class="code-line code-indent-1">->group(function ($module) {</span><span class="code-line code-indent-2">$module->get('/', 'index')->name('index');</span><span class="code-line code-indent-1">});</span></code></pre></div></article>
-                <article id="view"><span>02</span><div><p class="kicker"><span>VIEW</span> One source</p><h2>Tạo view <code>.sao</code>.</h2><p>Template có thể extends layout, điền block, khai báo state và gắn event. Compiler dùng cùng nguồn để tạo Blade và JavaScript.</p><pre><code><span class="code-line"><span class="directive-token">states({ count: 0 })</span></span><span class="code-line code-line-gap" aria-hidden="true"></span><span class="code-line"><span class="html-token">template</span></span><span class="code-line code-indent-1"><span class="directive-token">extends(__layout__ + "public")</span></span><span class="code-line code-indent-1"><span class="directive-token">block('content')</span></span><span class="code-line code-indent-2"><span class="html-token">button <span class="directive-token">click(setCount(count + 1))</span></span></span><span class="code-line code-indent-3">Count: <span class="mustache-token">count</span></span><span class="code-line code-indent-2"><span class="html-token html-token-close">button</span></span><span class="code-line code-indent-1"><span class="directive-token">endblock</span></span><span class="code-line"><span class="html-token html-token-close">template</span></span></code></pre></div></article>
-                <article id="compile"><span>03</span><div><p class="kicker"><span>BUILD</span> Dual output</p><h2>Compile đúng context.</h2><p>Build tạo Blade view, JavaScript view registry và bundle client tương ứng. Watch mode giữ hai output đồng bộ trong lúc phát triển.</p><pre><code><span class="code-line">npm run build:views:web</span><span class="code-line">npm run build:web</span><span class="code-line code-line-gap" aria-hidden="true"></span><span class="code-line code-comment"># development</span><span class="code-line">npm run dev:web</span></code></pre></div></article>
+                <article id="module"><span>01</span><div><p class="kicker"><span>ROUTE</span> Module first</p><h2>Khai báo route trong context.</h2><p>Module giữ controller, service và route gần nhau. Context quyết định registry và asset bundle nào phục vụ request.</p>
+                    <code-block lang="php">
+@verbatim
+System::context('web')
+    -&gt;module('home', ['prefix' =&gt; '/'])
+    -&gt;controller(HomeController::class)
+    -&gt;group(function ($module) {
+        $module-&gt;get('/', 'index')-&gt;name('index');
+    });
+@endverbatim
+                    </code-block>
+                </div></article>
+                <article id="view"><span>02</span><div><p class="kicker"><span>VIEW</span> One source</p><h2>Tạo view <code>.sao</code>.</h2><p>Template có thể extends layout, điền block, khai báo state và gắn event. Compiler dùng cùng nguồn để tạo Blade và JavaScript.</p>
+                    <code-block lang="sao">
+@verbatim
+&#64;states({ count: 0 })
+
+&lt;template&gt;
+    &#64;extends(__layout__ + "public")
+    &#64;block('content')
+        &lt;button &#64;click(setCount(count + 1))&gt;
+            Count: {{ count }}
+        &lt;/button&gt;
+    &#64;endblock
+&lt;/template&gt;
+@endverbatim
+                    </code-block>
+                </div></article>
+                <article id="compile"><span>03</span><div><p class="kicker"><span>BUILD</span> Dual output</p><h2>Compile đúng context.</h2><p>Build tạo Blade view, JavaScript view registry và bundle client tương ứng. Watch mode giữ hai output đồng bộ trong lúc phát triển.</p>
+                    <code-block lang="bash">
+@verbatim
+npm run build:views:web
+npm run build:web
+
+# development
+npm run dev:web
+@endverbatim
+                    </code-block>
+                </div></article>
                 <article id="verify"><span>04</span><div><p class="kicker"><span>VERIFY</span> Both paths</p><h2>Kiểm tra SSR lẫn SPA.</h2><p>Tải trực tiếp URL để xác nhận HTML đầu tiên, sau đó điều hướng nội bộ, tương tác state, back/forward và kiểm tra không có listener trùng.</p><ul class="check-list"><li>View có nội dung khi JavaScript chưa chạy</li><li>Hydration không tạo DOM hoặc event lần hai</li><li>Route context đúng với web/admin/mobile</li><li>Rerender chỉ thay vùng reactive liên quan</li></ul></div></article>
             </div>
         </section>
@@ -23,3 +60,43 @@
         </a>
     @endblock
 </template>
+
+<script setup>
+    export default {
+        start() {
+            this.setupScrollObserver();
+        },
+        
+        setupScrollObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        document.querySelectorAll('.start-layout aside a').forEach(a => {
+                            if (a.getAttribute('href') === '#' + id) {
+                                a.classList.add('is-current');
+                            } else {
+                                a.classList.remove('is-current');
+                            }
+                        });
+                    }
+                });
+            }, {
+                rootMargin: '-10% 0px -70% 0px',
+                threshold: 0
+            });
+            
+            document.querySelectorAll('.start-steps > article').forEach(article => {
+                observer.observe(article);
+            });
+            
+            this.observer = observer;
+        },
+        
+        destroy() {
+            if (this.observer) {
+                this.observer.disconnect();
+            }
+        }
+    }
+</script>

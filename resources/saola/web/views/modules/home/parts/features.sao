@@ -3,28 +3,28 @@
 <template>
     <section class="home-map" id="features">
         <div class="section-head">
-            <p class="kicker"><span>TÍNH NĂNG CỐT LÕI</span> Đơn giản hóa mọi thứ</p>
-            <h2>Những gì bạn nhận được.</h2>
-            <p>Một hệ sinh thái trọn vẹn giúp bạn tập trung vào logic sản phẩm thay vì chắp vá các công cụ lại với nhau.</p>
+            <p class="kicker"><span>BỐN LỚP</span> Một luồng từ request tới DOM</p>
+            <h2>Không chỉ là thư viện.<br>Là hệ sinh thái có hợp đồng rõ ràng.</h2>
+            <p>Mỗi lớp giải quyết một bài toán riêng và liên kết với lớp kế tiếp bằng một cấu trúc chặt chẽ (contract), chứ không dựa trên quy ước ngầm định.</p>
         </div>
         <div class="map-grid">
-            <mapcard eyebrow="01 / TỐI ƯU SEO" title="SSR được cấu hình sẵn" href="/docs/lifecycle" link="Cơ chế hydration ↗">
-                <p>Server trả về HTML hoàn chỉnh ngay lần tải đầu. Trải nghiệm tức thì cho người dùng và crawler, không có khoảng trắng khó chịu.</p>
+            <mapcard eyebrow="APPLICATION / 01" title="Module tự khai báo, hệ thống tự tìm" href="/docs/contexts" link="Context &amp; module ↗">
+                <p>Mỗi thư mục trong <code>app/Modules/</code> có <code>ModuleServiceProvider</code> được tự động nhận diện. Việc thêm hoặc lồng ghép module mới hoàn toàn không yêu cầu sửa file cấu hình trung tâm nào.</p>
             </mapcard>
-            <mapcard eyebrow="02 / SINGLE FILE" title="Mọi thứ trong một file" href="/docs/sao-file" link="Xem cấu trúc .sao ↗">
-                <p>Template, state, script và style hội tụ ở định dạng <code>.sao</code>. Quên việc nhảy qua lại giữa file Blade và component Vue/React.</p>
+            <mapcard eyebrow="APPLICATION / 02" title="Bốn mặt tiền, bốn bundle" href="/docs/contexts" link="Đăng ký context ↗">
+                <p>Môi trường Web, Admin, API và Mobile sở hữu prefix, middleware, permission và bundle JavaScript hoàn toàn tách biệt. Trong khi đó, Model, Policy và Service layer vẫn dùng chung một lõi Laravel duy nhất.</p>
             </mapcard>
-            <mapcard eyebrow="03 / REACTIVE TỰ NHIÊN" title="Không Virtual DOM" href="/docs/reactivity" link="State & reactivity ↗">
-                <p>Saola cập nhật chính xác từng vùng DOM thay đổi thay vì so sánh toàn bộ cây. Hiệu năng vượt trội và tiết kiệm bộ nhớ.</p>
+            <mapcard eyebrow="CORE / 03" title="Context gắn liền với request" href="/docs/architecture" link="Toàn cảnh kiến trúc ↗">
+                <p>Các thành phần route được resolve theo ngữ cảnh (context) của từng request. Thiết kế này đảm bảo các worker sống lâu như Laravel Octane không bao giờ bị rò rỉ state từ request trước sang request sau.</p>
             </mapcard>
-            <mapcard eyebrow="04 / ROUTING TỪ SERVER" title="Server-based routing" href="/docs/contexts" link="Context & module ↗">
-                <p>Giữ nguyên routing, controllers, middleware, auth, và state ở backend vững chãi của bạn — đúng nơi mà chúng thuộc về.</p>
+            <mapcard eyebrow="COMPILER / 04" title="Một cây AST, hai đầu ra" href="/docs/compiler" link="Compiler &amp; AST ↗">
+                <p>Chỉ từ một mã nguồn <code>.sao</code>, trình biên dịch tự động sinh ra mã Blade cho Server và TypeScript cho Client. Cả hai phiên bản đều đồng nhất về cấu trúc và marker, giúp bạn không phải viết tay mã nào hai lần.</p>
             </mapcard>
-            <mapcard eyebrow="05 / KHÔNG PHẢI FRAMEWORK MỚI" title="Không đập đi xây lại" href="/docs/runtime" link="Vòng đời view ↗">
-                <p>Saola là một lớp view làm cầu nối (adapter) giữa Laravel và trình duyệt. Đội ngũ của bạn không cần phải học một framework đồ sộ khác.</p>
+            <mapcard eyebrow="CLIENT / 05" title="Nhận lại DOM, không dựng lại" href="/docs/lifecycle" link="Vòng đời &amp; marker ↗">
+                <p>Server trả về HTML đầy đủ nội dung ngay từ byte đầu tiên để tối ưu SEO. Sau đó, Runtime phía client sử dụng marker để nhận diện và tiếp quản đúng vùng DOM đó, chỉ cập nhật những phần thay đổi thay vì dựng lại toàn bộ cây.</p>
             </mapcard>
-            <mapcard eyebrow="06 / DIRECTIVE QUEN THUỘC" title="Kế thừa phong cách Blade" href="/docs/directives" link="Tham chiếu directive ↗">
-                <p>Sử dụng ngay 43 directive mạnh mẽ. Cú pháp thân thiện, quen thuộc, giúp đội ngũ Laravel bắt nhịp chỉ trong một giờ.</p>
+            <mapcard eyebrow="COMPILER / 06" title="Giữ nguyên hình dạng Blade" href="/docs/directives" link="Tham chiếu directive ↗">
+                <p>Với 43 directive kế thừa nguyên vẹn từ Blade, cấu trúc điều khiển luồng của bạn vẫn vô cùng quen thuộc. Bạn chỉ cần làm quen thêm với cách khai báo state và ranh giới giữa giá trị phản ứng (reactive) và giá trị tĩnh.</p>
             </mapcard>
         </div>
     </section>

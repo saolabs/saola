@@ -1,0 +1,78 @@
+@import('web.components.code-window')
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>11</span> BACKEND</p>
+                <h1>Response và thương lượng đầu ra.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Một controller phục vụ được cả trình duyệt lẫn API mà không rẽ nhánh: <code>$this-&gt;response()</code> tự quyết trả HTML hay JSON dựa trên chính request.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>MỘT HÀM</span> Hai kiểu đầu ra</p>
+            <h2>Controller không cần biết ai đang gọi.</h2>
+            <p>Đây là lý do gần như mọi controller trong dự án chỉ có một dòng thân hàm. Cùng route đó, trình duyệt nhận trang đã render sẵn, còn <code>fetch</code> nhận JSON.</p>
+            <code-window label="PHP" title="app/Modules/Roster/Http/Controllers/Web/RosterController.php" lang="php">
+@verbatim
+class RosterController extends WebController
+{
+    protected $module = 'roster';
+
+    public function index()
+    {
+        return $this->response([]);
+    }
+}
+@endverbatim
+            </code-window>
+            <div class="directive-table">
+                <div><div class="dt-key">Trình duyệt</div><span>Accept là HTML → render Blade của route rồi trả trang</span><b>view</b></div>
+                <div><div class="dt-key">Fetch / API</div><span>Accept là JSON, hoặc context <code>api</code> không có view → trả JSON</span><b>json</b></div>
+            </div>
+
+            <p class="kicker"><span>PHÂN GIẢI</span> View đến từ tên route</p>
+            <h2>Không truyền đường dẫn thì nó tự tra.</h2>
+            <p>Khi không đưa <code>$bladePath</code>, <code>response()</code> hỏi <code>ViewContextManager::routeToViewPathConfig()</code> xem route tên đó ứng với view nào trong context hiện tại. Nhờ vậy một method phục vụ được nhiều route.</p>
+            <code-window label="PHP" title="app/Modules/Docs/.../DocsController.php" lang="php">
+@verbatim
+// 16 route /docs/* dùng chung đúng method này;
+// view resolve theo route name web.docs.{slug}
+public function page()
+{
+    return $this->response([]);
+}
+@endverbatim
+            </code-window>
+            <div class="ov-note">
+                Vì view suy từ <strong>tên route</strong>, route có tham số (<code>/docs/{slug}</code>) sẽ không có view cố định — và router phía client cũng không dựng được bản đồ path → component cho nó. Đó là lý do tài liệu khai báo 16 route tĩnh thay vì một route tham số.
+            </div>
+
+            <p class="kicker"><span>THAM SỐ</span> Khi cần ép</p>
+            <h2>Ba tham số, phần lớn thời gian chỉ dùng tham số đầu.</h2>
+            <code-window label="PHP" title="Chữ ký" lang="php">
+@verbatim
+$this->response(array $data = [], ?string $bladePath = null, array $options = [])
+@endverbatim
+            </code-window>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>$data</code></div><span>Dữ liệu đưa sang view, đồng thời là payload JSON</span><b>mảng</b></div>
+                <div><div class="dt-key"><code>$bladePath</code></div><span>Chỉ định view thay vì để tra theo route name</span><b>chuỗi</b></div>
+                <div><div class="dt-key"><code>status</code></div><span>Mã HTTP, mặc định 200</span><b>option</b></div>
+                <div><div class="dt-key"><code>headers</code></div><span>Header thêm vào response</span><b>option</b></div>
+                <div><div class="dt-key"><code>forceJson</code></div><span>Luôn trả JSON dù request muốn HTML</span><b>option</b></div>
+                <div><div class="dt-key"><code>forceView</code></div><span>Luôn render view</span><b>option</b></div>
+                <div><div class="dt-key"><code>includeView</code></div><span>Kèm thông tin view vào payload JSON — router client dùng để biết cần nạp component nào</span><b>option</b></div>
+                <div><div class="dt-key"><code>jsonOptions</code></div><span>Cờ cho <code>json_encode</code>, mặc định <code>JSON_UNESCAPED_UNICODE</code></span><b>option</b></div>
+            </div>
+            <p><code>wantsJsonResponse()</code> là nơi quyết định, và <code>autoResponse()</code> dùng khi bạn muốn tự gọi lại logic thương lượng đó ở chỗ khác.</p>
+
+            <p class="ov-note">
+                Đừng đẩy model thô vào <code>$data</code>: nó vừa là dữ liệu view vừa là payload JSON, nên mọi cột của bảng sẽ lộ ra API. Bọc <a href="/docs/mask">Mask</a> trước.
+            </p>
+        </div>
+    @endblock
+</template>

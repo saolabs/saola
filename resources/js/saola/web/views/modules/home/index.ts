@@ -27,8 +27,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -38,6 +36,8 @@ export interface IndexProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class IndexViewController extends ViewController {
     constructor(view: View) {
@@ -51,7 +51,7 @@ class IndexViewController extends ViewController {
 }
 
 class IndexView extends View {
-    constructor(__data__: IndexProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, IndexViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -125,14 +125,15 @@ class IndexView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-content', 'content', (parentElement: any) => [
-            this.include(`501029e0`, 'web.modules.home.parts.hero', parentElement, [], (parentElement: any) => ({})),
-            this.include(`142a7e71`, 'web.modules.home.parts.how', parentElement, [], (parentElement: any) => ({})),
-            this.include(`cf91f6e1`, 'web.modules.home.parts.features', parentElement, [], (parentElement: any) => ({})),
-            this.include(`c8dd8447`, 'web.modules.home.parts.compare', parentElement, [], (parentElement: any) => ({})),
-            this.include(`cdcde7d5`, 'web.modules.home.parts.usecase', parentElement, [], (parentElement: any) => ({})),
-            this.include(`eeda9939`, 'web.modules.home.parts.principle', parentElement, [], (parentElement: any) => ({})),
-            this.include(`e4c6fe66`, 'web.modules.home.parts.cta', parentElement, [], (parentElement: any) => ({})),
-            this.include(`ce0a61c6`, 'web.modules.home.parts.faq', parentElement, [], (parentElement: any) => ({}))
+            this.include(`Bcontentc1`, 'web.modules.home.parts.hero', parentElement, [], (parentElement: any) => ({})),
+            this.include(`Bcontentc2`, 'web.modules.home.parts.features', parentElement, [], (parentElement: any) => ({})),
+            this.include(`Bcontentc3`, 'web.modules.home.parts.architecture', parentElement, [], (parentElement: any) => ({})),
+            this.include(`Bcontentc4`, 'web.modules.home.parts.how', parentElement, [], (parentElement: any) => ({})),
+            this.include(`Bcontentc5`, 'web.modules.home.parts.usecase', parentElement, [], (parentElement: any) => ({})),
+            this.include(`Bcontentc6`, 'web.modules.home.parts.compare', parentElement, [], (parentElement: any) => ({})),
+            this.include(`Bcontentc7`, 'web.modules.home.parts.principle', parentElement, [], (parentElement: any) => ({})),
+            this.include(`Bcontentc8`, 'web.modules.home.parts.cta', parentElement, [], (parentElement: any) => ({})),
+            this.include(`Bcontentc9`, 'web.modules.home.parts.faq', parentElement, [], (parentElement: any) => ({}))
             ]);
             this.superViewPath = `${__layout__+"public"}`;
             return this.extendView(this.superViewPath, {});
@@ -143,7 +144,7 @@ class IndexView extends View {
 }
 
 // Export factory function
-export function WebModulesHomeIndex(__data__: IndexProps = {}, systemData: any = {}): IndexView {
+export function WebModulesHomeIndex(__data__ = {}, systemData = {}): IndexView {
     return new IndexView(__data__, systemData);
 }
 export default WebModulesHomeIndex;

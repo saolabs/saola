@@ -15,7 +15,7 @@
 })
 
 <template>
-    <article @class(['rs-row', 'rs-row--edit': editing, 'rs-row--gone': record === null])>
+    <article @class({'rs-row', 'rs-row--edit': editing, 'rs-row--gone': record === null})>
         @if(editing)
             {{-- Bị người khác XOÁ khi đang sửa: parent giữ hàng lại, record = null --}}
             @if(record === null)
@@ -116,7 +116,7 @@
                 </div>
             @else
                 <div class="rs-row-view">
-                    <span @class(['rs-avatar', 'rs-avatar--f': record['gender'] === 'female', 'rs-avatar--m': record['gender'] === 'male'])></span>
+                    <span @class({'rs-avatar', 'rs-avatar--f': record['gender'] === 'female', 'rs-avatar--m': record['gender'] === 'male'})></span>
                     <div class="rs-row-id">
                         <strong>{{ record['name'] }}</strong>
                         <span>{{ record['email'] }}</span>

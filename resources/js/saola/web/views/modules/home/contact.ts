@@ -27,8 +27,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -38,6 +36,8 @@ export interface ContactProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class ContactViewController extends ViewController {
     constructor(view: View) {
@@ -51,7 +51,7 @@ class ContactViewController extends ViewController {
 }
 
 class ContactView extends View {
-    constructor(__data__: ContactProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, ContactViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -200,7 +200,7 @@ class ContactView extends View {
             viewId: __VIEW_ID__,
             path: __VIEW_PATH__,
             scripts: [],
-            styles: [{"type":"code","scoped":true,"content":".contact-aside h1 em { color: var(--cobalt); font-style: normal; }"}],
+            styles: [{"type":"code","content":".contact-aside h1 em.s749c6dff { color: var(--cobalt); font-style: normal; }"}],
             resources: [],
             commitConstructorData: function(this: any) {
                 // Then update states from data
@@ -242,68 +242,90 @@ class ContactView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-content', 'content', (parentElement: any) => [
-            this.html(`b4052a35`, "section", parentElement,
-                { classes: [{ type: 'static', value: "contact-grid" }] },
+            this.html(`Bcontent1`, "section", parentElement,
+                { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "contact-grid" }] },
                 (parentElement: any) => [
-                this.html(`90a6e493`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "contact-aside" }] },
+                this.html(`Bcontent11`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "contact-aside" }] },
                     (parentElement: any) => [
-                    this.html(`f515bf66`, "p", parentElement,
-                        { classes: [{ type: 'static', value: "eyebrow" }] },
+                    this.html(`Bcontent111`, "p", parentElement,
+                        { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "eyebrow" }] },
                         (parentElement: any) => [
-                        this.html(`e2f86203`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bcontent1111`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "s749c6dff" }] },
+                            (parentElement: any) => [
                             this.text('01')
-                        ]),
+                            ]),
                         this.text(' Contact')
                         ]),
-                    this.html(`9b0938cb`, "h1", parentElement, {}, (parentElement: any) => [
-                        this.text('Bring us the'),
-                        this.html(`f7127348`, "br", parentElement, {}),
-                        this.html(`d4f4199d`, "em", parentElement, {}, (parentElement: any) => [
-                            this.text('difficult part.')
-                        ])
-                    ]),
-                    this.html(`7718bb8d`, "p", parentElement, {}, (parentElement: any) => [
-                        this.text('Tell us where your Laravel application is fighting the frontend. This form is deliberately client-only for the demo.')
-                    ]),
-                    this.html(`ed82504f`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "contact-meta" }] },
+                    this.html(`Bcontent112`, "h1", parentElement,
+                        { classes: [{ type: 'static', value: "s749c6dff" }] },
                         (parentElement: any) => [
-                        this.html(`566847c8`, "span", parentElement, {}, (parentElement: any) => [
+                        this.text('Bring us the'),
+                        this.html(`Bcontent1121`, "br", parentElement, { classes: [{ type: 'static', value: "s749c6dff" }] }),
+                        this.html(`Bcontent1122`, "em", parentElement,
+                            { classes: [{ type: 'static', value: "s749c6dff" }] },
+                            (parentElement: any) => [
+                            this.text('difficult part.')
+                            ])
+                        ]),
+                    this.html(`Bcontent113`, "p", parentElement,
+                        { classes: [{ type: 'static', value: "s749c6dff" }] },
+                        (parentElement: any) => [
+                        this.text('Tell us where your Laravel application is fighting the frontend. This form is deliberately client-only for the demo.')
+                        ]),
+                    this.html(`Bcontent114`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "contact-meta" }] },
+                        (parentElement: any) => [
+                        this.html(`Bcontent1141`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "s749c6dff" }] },
+                            (parentElement: any) => [
                             this.text('RESPONSE WINDOW')
-                        ]),
-                        this.html(`e20854bb`, "strong", parentElement, {}, (parentElement: any) => [
+                            ]),
+                        this.html(`Bcontent1142`, "strong", parentElement,
+                            { classes: [{ type: 'static', value: "s749c6dff" }] },
+                            (parentElement: any) => [
                             this.text('Usually within 2 working days')
-                        ]),
-                        this.html(`1e24c146`, "span", parentElement, {}, (parentElement: any) => [
+                            ]),
+                        this.html(`Bcontent1143`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "s749c6dff" }] },
+                            (parentElement: any) => [
                             this.text('BASED IN')
-                        ]),
-                        this.html(`b738344f`, "strong", parentElement, {}, (parentElement: any) => [
+                            ]),
+                        this.html(`Bcontent1144`, "strong", parentElement,
+                            { classes: [{ type: 'static', value: "s749c6dff" }] },
+                            (parentElement: any) => [
                             this.text('Ho Chi Minh City · Remote worldwide')
-                        ])
+                            ])
                         ])
                     ]),
-                this.html(`a74c2c3e`, "form", parentElement,
-                    { classes: [{ type: 'static', value: "contact-form" }], events: { submit: [{"handler":"sendContact","params":[() => event]}] } },
+                this.html(`Bcontent12`, "form", parentElement,
+                    { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "contact-form" }], events: { submit: [{"handler":"sendContact","params":[() => event]}] } },
                     (parentElement: any) => [
-                    this.reactive(`bec45ee0`, "if", parentReactive, parentElement, ["sent"], (parentReactive: any, parentElement: any) => {
+                    this.reactive(`Bcontent12r1`, "if", parentReactive, parentElement, ["sent"], (parentReactive: any, parentElement: any) => {
                         const reactiveContents = [];
                         if (sent) {
                             reactiveContents.push(
-                            this.html(`7df64c7b`, "div", parentElement,
-                                { classes: [{ type: 'static', value: "contact-success" }] },
+                            this.html(`Bcontent12r1k11`, "div", parentElement,
+                                { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "contact-success" }] },
                                 (parentElement: any) => [
-                                this.html(`7bbc6631`, "span", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bcontent12r1k111`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                    (parentElement: any) => [
                                     this.text('✓')
-                                ]),
-                                this.html(`cbcde4f0`, "h2", parentElement, {}, (parentElement: any) => [
+                                    ]),
+                                this.html(`Bcontent12r1k112`, "h2", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                    (parentElement: any) => [
                                     this.text('Message prepared.')
-                                ]),
-                                this.html(`fbcefe6a`, "p", parentElement, {}, (parentElement: any) => [
+                                    ]),
+                                this.html(`Bcontent12r1k113`, "p", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                    (parentElement: any) => [
                                     this.text('The demo stopped before a network request. In production, this is where an API action would take over.')
-                                ]),
-                                this.html(`722f870c`, "button", parentElement,
-                                    { classes: [{ type: 'static', value: "text-link" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"resetForm","params":[]}] } },
+                                    ]),
+                                this.html(`Bcontent12r1k114`, "button", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "text-link" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"resetForm","params":[]}] } },
                                     (parentElement: any) => [
                                     this.text('Write another message →')
                                     ])
@@ -312,28 +334,36 @@ class ContactView extends View {
                         }
                         else {
                             reactiveContents.push(
-                            this.html(`79aab806`, "div", parentElement,
-                                { classes: [{ type: 'static', value: "field-row" }] },
+                            this.html(`Bcontent12r1k21`, "div", parentElement,
+                                { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "field-row" }] },
                                 (parentElement: any) => [
-                                this.html(`9f323a7d`, "label", parentElement, {}, (parentElement: any) => [
-                                    this.html(`dc81da6d`, "span", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bcontent12r1k211`, "label", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                    (parentElement: any) => [
+                                    this.html(`Bcontent12r1k2111`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                        (parentElement: any) => [
                                         this.text('Your name')
+                                        ]),
+                                    this.html(`Bcontent12r1k2112`, "input", parentElement, { classes: [{ type: 'static', value: "s749c6dff" }], attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Nguyen An" } }, bind: { key: 'name' } })
                                     ]),
-                                    this.html(`5a58ad17`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Nguyen An" } }, bind: { key: 'name' } })
-                                ]),
-                                this.html(`8cc8559a`, "label", parentElement, {}, (parentElement: any) => [
-                                    this.html(`6b835f52`, "span", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bcontent12r1k212`, "label", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                    (parentElement: any) => [
+                                    this.html(`Bcontent12r1k2121`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                        (parentElement: any) => [
                                         this.text('Email')
-                                    ]),
-                                    this.html(`459b3dbe`, "input", parentElement, { attrs: { "type": { type: 'static', value: "email" }, "placeholder": { type: 'static', value: "an@company.com" } }, bind: { key: 'email' } })
-                                ])
+                                        ]),
+                                    this.html(`Bcontent12r1k2122`, "input", parentElement, { classes: [{ type: 'static', value: "s749c6dff" }], attrs: { "type": { type: 'static', value: "email" }, "placeholder": { type: 'static', value: "an@company.com" } }, bind: { key: 'email' } })
+                                    ])
                                 ]),
-                            this.reactive(`3c5efb8e`, "if", parentReactive, parentElement, ["attempted", "email", "name"], (parentReactive: any, parentElement: any) => {
+                            this.reactive(`Bcontent12r1k2r1`, "if", parentReactive, parentElement, ["attempted", "email", "name"], (parentReactive: any, parentElement: any) => {
                                 const reactiveContents = [];
                                 if (attempted && (!App.Helper.trim(name) || !App.Helper.trim(email))) {
                                     reactiveContents.push(
-                                    this.html(`53c28abe`, "p", parentElement,
-                                        { classes: [{ type: 'static', value: "form-error" }] },
+                                    this.html(`Bcontent12r1k2r1k11`, "p", parentElement,
+                                        { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "form-error" }] },
                                         (parentElement: any) => [
                                         this.text('Please add both your name and email.')
                                         ])
@@ -341,43 +371,61 @@ class ContactView extends View {
                                 }
                                 return reactiveContents;
                             }),
-                            this.html(`04df0ac9`, "label", parentElement, {}, (parentElement: any) => [
-                                this.html(`0c93e049`, "span", parentElement, {}, (parentElement: any) => [
-                                    this.text('What should we discuss?')
-                                ]),
-                                this.html(`5cc3aebc`, "select", parentElement,
-                                    { bind: { key: 'topic' } },
+                            this.html(`Bcontent12r1k22`, "label", parentElement,
+                                { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                (parentElement: any) => [
+                                this.html(`Bcontent12r1k221`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }] },
                                     (parentElement: any) => [
-                                    this.html(`57da3ced`, "option", parentElement, {}, (parentElement: any) => [
+                                    this.text('What should we discuss?')
+                                    ]),
+                                this.html(`Bcontent12r1k222`, "select", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }], bind: { key: 'topic' } },
+                                    (parentElement: any) => [
+                                    this.html(`Bcontent12r1k2221`, "option", parentElement,
+                                        { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                        (parentElement: any) => [
                                         this.text('Architecture review')
-                                    ]),
-                                    this.html(`1c08821b`, "option", parentElement, {}, (parentElement: any) => [
+                                        ]),
+                                    this.html(`Bcontent12r1k2222`, "option", parentElement,
+                                        { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                        (parentElement: any) => [
                                         this.text('Hydration migration')
-                                    ]),
-                                    this.html(`ae004155`, "option", parentElement, {}, (parentElement: any) => [
+                                        ]),
+                                    this.html(`Bcontent12r1k2223`, "option", parentElement,
+                                        { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                        (parentElement: any) => [
                                         this.text('Compiler integration')
-                                    ]),
-                                    this.html(`c08dbe29`, "option", parentElement, {}, (parentElement: any) => [
+                                        ]),
+                                    this.html(`Bcontent12r1k2224`, "option", parentElement,
+                                        { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                        (parentElement: any) => [
                                         this.text('Performance audit')
+                                        ])
                                     ])
-                                    ])
-                            ]),
-                            this.html(`cf4a41cd`, "label", parentElement, {}, (parentElement: any) => [
-                                this.html(`dfc41403`, "span", parentElement, {}, (parentElement: any) => [
-                                    this.text('Context')
                                 ]),
-                                this.html(`24320d66`, "textarea", parentElement, { attrs: { "maxlength": { type: 'static', value: "500" }, "placeholder": { type: 'static', value: "What is the application doing today, and where does it become difficult?" } }, events: { input: [{"handler":"trackLength","params":[() => event]}] }, bind: { key: 'message' } }),
-                                this.html(`ccb5d383`, "small", parentElement, {}, (parentElement: any) => [
-                                    this.output(`1a6e11ed`, parentElement, true, ["messageLength"], (parentElement: any) => messageLength),
+                            this.html(`Bcontent12r1k23`, "label", parentElement,
+                                { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                (parentElement: any) => [
+                                this.html(`Bcontent12r1k231`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                    (parentElement: any) => [
+                                    this.text('Context')
+                                    ]),
+                                this.html(`Bcontent12r1k232`, "textarea", parentElement, { classes: [{ type: 'static', value: "s749c6dff" }], attrs: { "maxlength": { type: 'static', value: "500" }, "placeholder": { type: 'static', value: "What is the application doing today, and where does it become difficult?" } }, events: { input: [{"handler":"trackLength","params":[() => event]}] }, bind: { key: 'message' } }),
+                                this.html(`Bcontent12r1k233`, "small", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                    (parentElement: any) => [
+                                    this.output(`Bcontent12r1k233o1`, parentElement, true, ["messageLength"], (parentElement: any) => messageLength),
                                     this.text(' / 500')
-                                ])
-                            ]),
-                            this.reactive(`1bc8df80`, "if", parentReactive, parentElement, ["attempted", "messageLength"], (parentReactive: any, parentElement: any) => {
+                                    ])
+                                ]),
+                            this.reactive(`Bcontent12r1k2r2`, "if", parentReactive, parentElement, ["attempted", "messageLength"], (parentReactive: any, parentElement: any) => {
                                 const reactiveContents = [];
                                 if (attempted && messageLength < 12) {
                                     reactiveContents.push(
-                                    this.html(`07231773`, "p", parentElement,
-                                        { classes: [{ type: 'static', value: "form-error" }] },
+                                    this.html(`Bcontent12r1k2r2k11`, "p", parentElement,
+                                        { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "form-error" }] },
                                         (parentElement: any) => [
                                         this.text('Give us at least 12 characters of context.')
                                         ])
@@ -385,13 +433,15 @@ class ContactView extends View {
                                 }
                                 return reactiveContents;
                             }),
-                            this.html(`bffbda96`, "button", parentElement,
-                                { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }], attrs: { "type": { type: 'static', value: "submit" } } },
+                            this.html(`Bcontent12r1k24`, "button", parentElement,
+                                { classes: [{ type: 'static', value: "s749c6dff" }, { type: 'static', value: "button" }, { type: 'static', value: "button-primary" }], attrs: { "type": { type: 'static', value: "submit" } } },
                                 (parentElement: any) => [
                                 this.text('Prepare message '),
-                                this.html(`8f24f0a4`, "span", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bcontent12r1k241`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "s749c6dff" }] },
+                                    (parentElement: any) => [
                                     this.text('→')
-                                ])
+                                    ])
                                 ])
                             );
                         }
@@ -409,7 +459,7 @@ class ContactView extends View {
 }
 
 // Export factory function
-export function WebModulesHomeContact(__data__: ContactProps = {}, systemData: any = {}): ContactView {
+export function WebModulesHomeContact(__data__ = {}, systemData = {}): ContactView {
     return new ContactView(__data__, systemData);
 }
 export default WebModulesHomeContact;

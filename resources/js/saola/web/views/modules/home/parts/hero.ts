@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -31,6 +29,8 @@ export interface HeroProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class HeroViewController extends ViewController {
     constructor(view: View) {
@@ -44,7 +44,7 @@ class HeroViewController extends ViewController {
 }
 
 class HeroView extends View {
-    constructor(__data__: HeroProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, HeroViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -118,465 +118,585 @@ class HeroView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`bbcd3398`, "section", parentElement,
-                { classes: [{ type: 'static', value: "home-hero" }], attrs: { "style": { type: 'static', value: "position: relative; overflow: visible;" } } },
+            this.html(`e1`, "section", parentElement,
+                { classes: [{ type: 'static', value: "hx-hero" }] },
                 (parentElement: any) => [
-                this.html(`88b70a58`, "div", parentElement, { attrs: { "style": { type: 'static', value: "position: absolute; top: 10%; right: 5%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(14,165,233,0.15) 0%, rgba(99,102,241,0.1) 40%, transparent 70%); z-index: -1; border-radius: 50%; pointer-events: none; filter: blur(40px);" } } }),
-                this.html(`b545b1d4`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "home-hero-copy" }] },
+                this.html(`e11`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "hx-copy" }] },
                     (parentElement: any) => [
-                    this.html(`fa06b967`, "p", parentElement,
-                        { classes: [{ type: 'static', value: "kicker" }] },
-                        (parentElement: any) => [
-                        this.html(`74be3ba7`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('SAOLA ECOSYSTEM')
-                        ]),
-                        this.text(' THE MODERN MONOLITH')
-                        ]),
-                    this.html(`b13cf56e`, "h1", parentElement,
-                        { attrs: { "style": { type: 'static', value: "text-wrap: balance;" } } },
-                        (parentElement: any) => [
-                        this.text('Trải nghiệm SPA mượt mà'),
-                        this.html(`ab8ccdf7`, "br", parentElement, {}),
-                        this.html(`060b5a80`, "em", parentElement, {}, (parentElement: any) => [
-                            this.text('cùng backend bạn yêu thích.')
-                        ])
-                        ]),
-                    this.html(`38f64cbf`, "p", parentElement,
-                        { classes: [{ type: 'static', value: "hero-lead" }] },
-                        (parentElement: any) => [
-                        this.text('Phát triển Single-Page App với sự thanh lịch của server-side routing. Tận dụng trọn vẹn controller, middleware, và auth của Laravel mà không cần phải xây dựng riêng một tầng API.')
-                        ]),
-                    this.html(`e19b2390`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "hero-actions" }] },
-                        (parentElement: any) => [
-                        this.html(`2aa4d48f`, "a", parentElement,
-                            { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }], attrs: { "href": { type: 'static', value: "/docs/getting-started" }, "style": { type: 'static', value: "box-shadow: 0 8px 25px rgba(14,165,233,0.3); border: 1px solid rgba(255,255,255,0.2);" } } },
+                    this.html(`e111`, "h1", parentElement, {}, (parentElement: any) => [
+                        this.html(`e1111`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "hx-punch" }] },
                             (parentElement: any) => [
-                            this.text('Đọc tài liệu hướng dẫn '),
-                            this.html(`e74aa461`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('↗')
-                            ])
+                            this.text('Một')
                             ]),
-                        this.html(`f9cc4702`, "a", parentElement,
-                            { classes: [{ type: 'static', value: "text-link" }], attrs: { "href": { type: 'static', value: "#features" } } },
+                        this.text(' lõi Laravel.'),
+                        this.html(`e1112`, "br", parentElement, {}),
+                        this.html(`e1113`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "hx-punch" }] },
                             (parentElement: any) => [
-                            this.text('Tại sao chọn Saola? '),
-                            this.html(`c0639405`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('→')
-                            ])
-                            ])
-                        ]),
-                    this.html(`e0bad0db`, "dl", parentElement,
-                        { classes: [{ type: 'static', value: "hero-facts" }] },
+                            this.text('Không')
+                            ]),
+                        this.text(' tách rời frontend.'),
+                        this.html(`e1114`, "br", parentElement, {}),
+                        this.html(`e1115`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "hx-punch" }] },
+                            (parentElement: any) => [
+                            this.text('Hai')
+                            ]),
+                        this.text(' đầu ra liền mạch.'),
+                        this.html(`e1116`, "br", parentElement, {})
+                    ]),
+                    this.html(`e112`, "p", parentElement,
+                        { classes: [{ type: 'static', value: "hx-lead" }] },
                         (parentElement: any) => [
-                        this.html(`61d58743`, "div", parentElement,
-                            { attrs: { "style": { type: 'static', value: "background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);" } } },
+                        this.text('Không phải một giải pháp chắp vá, Saola là hệ sinh thái toàn diện nâng tầm kiến trúc Laravel. Phân tách logic rành mạch với hệ thống Module và Context độc lập. Hợp nhất trải nghiệm hiển thị bằng một trình biên dịch đột phá — nơi chỉ một file '),
+                        this.html(`e1121`, "code", parentElement, {}, (parentElement: any) => [
+                            this.text('.sao')
+                        ]),
+                        this.text(' duy nhất tự động kiến tạo cả HTML chuẩn SEO lẫn ứng dụng SPA mượt mà. Tất cả nằm trong một luồng chảy xuyên suốt.')
+                        ]),
+                    this.html(`e113`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "hx-actions" }] },
+                        (parentElement: any) => [
+                        this.html(`e1131`, "a", parentElement,
+                            { classes: [{ type: 'static', value: "hx-btn" }, { type: 'static', value: "hx-btn-primary" }], attrs: { "href": { type: 'static', value: "/docs/getting-started" } } },
                             (parentElement: any) => [
-                            this.html(`8458f5b9`, "dt", parentElement, {}, (parentElement: any) => [
-                                this.text('PHONG CÁCH')
+                            this.text('Bắt đầu trong 4 bước')
                             ]),
-                            this.html(`bde4ee65`, "dd", parentElement, {}, (parentElement: any) => [
-                                this.text('Server-driven')
-                            ])
-                            ]),
-                        this.html(`f2f3d2ed`, "div", parentElement,
-                            { attrs: { "style": { type: 'static', value: "background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);" } } },
+                        this.html(`e1132`, "a", parentElement,
+                            { classes: [{ type: 'static', value: "hx-btn" }, { type: 'static', value: "hx-btn-ghost" }], attrs: { "href": { type: 'static', value: "#features" } } },
                             (parentElement: any) => [
-                            this.html(`52e4505f`, "dt", parentElement, {}, (parentElement: any) => [
-                                this.text('TRẢI NGHIỆM')
-                            ]),
-                            this.html(`cacb5949`, "dd", parentElement, {}, (parentElement: any) => [
-                                this.text('Client-side Routing')
-                            ])
-                            ]),
-                        this.html(`54ae8251`, "div", parentElement,
-                            { attrs: { "style": { type: 'static', value: "background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);" } } },
-                            (parentElement: any) => [
-                            this.html(`61033fcd`, "dt", parentElement, {}, (parentElement: any) => [
-                                this.text('TƯƠNG THÍCH')
-                            ]),
-                            this.html(`3da4cf8c`, "dd", parentElement, {}, (parentElement: any) => [
-                                this.text('Laravel 12+')
-                            ])
+                            this.text('Tìm hiểu thêm')
                             ])
                         ])
                     ]),
-                this.html(`c882ec26`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "target-stack" }], attrs: { "style": { type: 'static', value: "display: grid; gap: 20px; padding-left: 2vw; position: relative;" } } },
+                this.html(`e12`, "figure", parentElement,
+                    { classes: [{ type: 'static', value: "hx-object" }], attrs: { "aria-label": { type: 'static', value: "Một nguồn .sao sinh ra hai đầu ra" } } },
                     (parentElement: any) => [
-                    this.html(`2055e995`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "code-window" }, { type: 'static', value: "hero-code-block" }], attrs: { "style": { type: 'static', value: "box-shadow: 0 25px 50px rgba(0,0,0,0.12); transform: rotate(-2deg) translateY(0); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.6);" } } },
+                    this.html(`e121`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "hx-node" }, { type: 'static', value: "hx-node-source" }] },
                         (parentElement: any) => [
-                        this.html(`80187444`, "div", parentElement,
-                            { classes: [{ type: 'static', value: "window-bar" }] },
+                        this.html(`e1211`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "hx-node-tag" }] },
                             (parentElement: any) => [
-                            this.html(`047f0499`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('CONTROLLER')
+                            this.text('NGUỒN')
                             ]),
-                            this.html(`4e06cf36`, "b", parentElement, {}, (parentElement: any) => [
-                                this.text('UserController.php')
+                        this.html(`e1212`, "strong", parentElement, {}, (parentElement: any) => [
+                            this.text('user.sao')
+                        ]),
+                        this.html(`e1213`, "small", parentElement, {}, (parentElement: any) => [
+                            this.text('state · template · script setup')
+                        ]),
+                        this.html(`e1214`, "pre", parentElement,
+                            { classes: [{ type: 'static', value: "hx-mini" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } },
+                            (parentElement: any) => [
+                            this.html(`e12141`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "code-line" }] },
+                                (parentElement: any) => [
+                                this.html(`e121411`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "kw" }] },
+                                    (parentElement: any) => [
+                                    this.text('@states')
+                                    ]),
+                                this.html(`e121412`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('({')
+                                    ]),
+                                this.html(`e121413`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "vr" }] },
+                                    (parentElement: any) => [
+                                    this.text(' likes')
+                                    ]),
+                                this.html(`e121414`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text(':')
+                                    ]),
+                                this.html(`e121415`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "st" }] },
+                                    (parentElement: any) => [
+                                    this.text(' 12')
+                                    ]),
+                                this.html(`e121416`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text(' })')
+                                    ])
+                                ]),
+                            this.html(`e12142`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "code-line" }] },
+                                (parentElement: any) => [
+                                this.html(`e121421`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('<')
+                                    ]),
+                                this.html(`e121422`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "kw" }] },
+                                    (parentElement: any) => [
+                                    this.text('template')
+                                    ]),
+                                this.html(`e121423`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('>')
+                                    ])
+                                ]),
+                            this.html(`e12143`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
+                                (parentElement: any) => [
+                                this.html(`e121431`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('<')
+                                    ]),
+                                this.html(`e121432`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "fn" }] },
+                                    (parentElement: any) => [
+                                    this.text('article')
+                                    ]),
+                                this.html(`e121433`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "vr" }] },
+                                    (parentElement: any) => [
+                                    this.text(' class')
+                                    ]),
+                                this.html(`e121434`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('=')
+                                    ]),
+                                this.html(`e121435`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "st" }] },
+                                    (parentElement: any) => [
+                                    this.text('"card"')
+                                    ]),
+                                this.html(`e121436`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('>')
+                                    ])
+                                ]),
+                            this.html(`e12144`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-2" }] },
+                                (parentElement: any) => [
+                                this.html(`e121441`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('<')
+                                    ]),
+                                this.html(`e121442`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "fn" }] },
+                                    (parentElement: any) => [
+                                    this.text('button')
+                                    ]),
+                                this.html(`e121443`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "kw" }] },
+                                    (parentElement: any) => [
+                                    this.text(' @click')
+                                    ]),
+                                this.html(`e121444`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('(')
+                                    ]),
+                                this.html(`e121445`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "fn" }] },
+                                    (parentElement: any) => [
+                                    this.text('setLikes')
+                                    ]),
+                                this.html(`e121446`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('(')
+                                    ]),
+                                this.html(`e121447`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "vr" }] },
+                                    (parentElement: any) => [
+                                    this.text('likes')
+                                    ]),
+                                this.html(`e121448`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('+')
+                                    ]),
+                                this.html(`e121449`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "st" }] },
+                                    (parentElement: any) => [
+                                    this.text('1')
+                                    ]),
+                                this.html(`e12144e10_`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "op" }] },
+                                    (parentElement: any) => [
+                                    this.text('))>')
+                                    ])
+                                ]),
+                            this.html(`e12145`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-3" }] },
+                                (parentElement: any) => [
+                                this.text('♥ '),
+                                this.html(`e121451`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "mustache-token" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1214511`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "vr" }] },
+                                        (parentElement: any) => [
+                                        this.text('likes')
+                                        ])
+                                    ])
+                                ])
                             ])
+                        ]),
+                    this.html(`e122`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "hx-split" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } },
+                        (parentElement: any) => [
+                        this.html(`e1221`, "span", parentElement, {}, (parentElement: any) => [
+                            this.text('sao-compile <context>')
+                        ])
+                        ]),
+                    this.html(`e123`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "hx-outs" }] },
+                        (parentElement: any) => [
+                        this.html(`e1231`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "hx-arm" }, { type: 'static', value: "hx-arm-l" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } },
+                            (parentElement: any) => [
+                            this.text('SSR')
                             ]),
-                        this.html(`3a427f36`, "pre", parentElement, {}, (parentElement: any) => [
-                            this.html(`a7a7cc5a`, "code", parentElement, {}, (parentElement: any) => [
-                                this.html(`bb462263`, "span", parentElement,
+                        this.html(`e1232`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "hx-arm" }, { type: 'static', value: "hx-arm-r" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } },
+                            (parentElement: any) => [
+                            this.text('hydrate')
+                            ]),
+                        this.html(`e1233`, "div", parentElement,
+                            { classes: [{ type: 'static', value: "hx-node" }] },
+                            (parentElement: any) => [
+                            this.html(`e12331`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "hx-node-tag" }] },
+                                (parentElement: any) => [
+                                this.text('SERVER')
+                                ]),
+                            this.html(`e12332`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.text('user.blade.php')
+                            ]),
+                            this.html(`e12333`, "small", parentElement, {}, (parentElement: any) => [
+                                this.text('HTML đầy đủ ở lần tải đầu')
+                            ]),
+                            this.html(`e12334`, "pre", parentElement,
+                                { classes: [{ type: 'static', value: "hx-mini" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } },
+                                (parentElement: any) => [
+                                this.html(`e123341`, "span", parentElement,
                                     { classes: [{ type: 'static', value: "code-line" }] },
                                     (parentElement: any) => [
-                                    this.html(`c0200cbd`, "span", parentElement,
+                                    this.html(`e1233411`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "kw" }] },
                                         (parentElement: any) => [
-                                        this.text('class')
-                                        ]),
-                                    this.html(`e7ca4651`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "ty" }] },
-                                        (parentElement: any) => [
-                                        this.text('UserController')
-                                        ]),
-                                    this.html(`4a466dc0`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "kw" }] },
-                                        (parentElement: any) => [
-                                        this.text('extends')
-                                        ]),
-                                    this.html(`c638f073`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "ty" }] },
-                                        (parentElement: any) => [
-                                        this.text('Controller')
+                                        this.text('@wrapper')
                                         ])
                                     ]),
-                                this.html(`93e8e1a5`, "span", parentElement,
+                                this.html(`e123342`, "span", parentElement,
                                     { classes: [{ type: 'static', value: "code-line" }] },
                                     (parentElement: any) => [
-                                    this.html(`9b2be056`, "span", parentElement,
+                                    this.html(`e1233421`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "op" }] },
                                         (parentElement: any) => [
-                                        this.text('{')
-                                        ])
-                                    ]),
-                                this.html(`d2bf8abb`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                    (parentElement: any) => [
-                                    this.html(`74c71822`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "kw" }] },
-                                        (parentElement: any) => [
-                                        this.text('public function')
+                                        this.text('<')
                                         ]),
-                                    this.html(`91dc3187`, "span", parentElement,
+                                    this.html(`e1233422`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "fn" }] },
                                         (parentElement: any) => [
-                                        this.text('show')
+                                        this.text('article')
                                         ]),
-                                    this.html(`63bd0b2c`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('(')
-                                        ]),
-                                    this.html(`b7d8ff21`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "ty" }] },
-                                        (parentElement: any) => [
-                                        this.text('User')
-                                        ]),
-                                    this.html(`8bd39a56`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "vr" }] },
-                                        (parentElement: any) => [
-                                        this.text('$user')
-                                        ]),
-                                    this.html(`118e4c80`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text(')')
-                                        ])
-                                    ]),
-                                this.html(`0f2b4e4a`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                    (parentElement: any) => [
-                                    this.html(`793be278`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('{')
-                                        ])
-                                    ]),
-                                this.html(`8b352f9c`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-2" }] },
-                                    (parentElement: any) => [
-                                    this.html(`b00f4db5`, "span", parentElement,
+                                    this.html(`e1233423`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "kw" }] },
                                         (parentElement: any) => [
-                                        this.text('return')
+                                        this.text(' @class')
                                         ]),
-                                    this.html(`c7a18ff6`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "vr" }] },
-                                        (parentElement: any) => [
-                                        this.text('$this')
-                                        ]),
-                                    this.html(`f716b373`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('->')
-                                        ]),
-                                    this.html(`8191ed39`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "fn" }] },
-                                        (parentElement: any) => [
-                                        this.text('response')
-                                        ]),
-                                    this.html(`db06798e`, "span", parentElement,
+                                    this.html(`e1233424`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "op" }] },
                                         (parentElement: any) => [
                                         this.text('([')
-                                        ])
-                                    ]),
-                                this.html(`12b34e50`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-3" }] },
-                                    (parentElement: any) => [
-                                    this.html(`223690f5`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "st" }] },
-                                        (parentElement: any) => [
-                                        this.text('\'user\'')
                                         ]),
-                                    this.html(`d88f8fc6`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('=>')
-                                        ]),
-                                    this.html(`e76e445e`, "span", parentElement,
+                                    this.html(`e1233425`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "vr" }] },
                                         (parentElement: any) => [
-                                        this.text('$user')
+                                        this.text('$__VIEW_ID__')
                                         ]),
-                                    this.html(`b2871ad5`, "span", parentElement,
+                                    this.html(`e1233426`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "op" }] },
                                         (parentElement: any) => [
                                         this.text(',')
-                                        ])
-                                    ]),
-                                this.html(`a8d59a38`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-2" }] },
-                                    (parentElement: any) => [
-                                    this.html(`dddfd6ec`, "span", parentElement,
+                                        ]),
+                                    this.html(`e1233427`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "st" }] },
+                                        (parentElement: any) => [
+                                        this.text(' \'card\'')
+                                        ]),
+                                    this.html(`e1233428`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "op" }] },
                                         (parentElement: any) => [
-                                        this.text(']);')
+                                        this.text('])>')
                                         ])
                                     ]),
-                                this.html(`87fae7c4`, "span", parentElement,
+                                this.html(`e123343`, "span", parentElement,
                                     { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
                                     (parentElement: any) => [
-                                    this.html(`8e6e070d`, "span", parentElement,
+                                    this.html(`e1233431`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "op" }] },
                                         (parentElement: any) => [
-                                        this.text('}')
-                                        ])
+                                        this.text('<')
+                                        ]),
+                                    this.html(`e1233432`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "fn" }] },
+                                        (parentElement: any) => [
+                                        this.text('button')
+                                        ]),
+                                    this.html(`e1233433`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text('>')
+                                        ]),
+                                    this.text('♥')
                                     ]),
-                                this.html(`17e8ef62`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }] },
+                                this.html(`e123344`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-2" }] },
                                     (parentElement: any) => [
-                                    this.html(`ac69e478`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('}')
-                                        ])
-                                    ])
-                            ])
-                        ])
-                        ]),
-                    this.html(`c9206f66`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "code-window" }, { type: 'static', value: "code-window-dark" }, { type: 'static', value: "hero-code-block" }], attrs: { "style": { type: 'static', value: "box-shadow: 0 30px 60px rgba(0,0,0,0.25); transform: rotate(3deg) translateY(0); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.1);" } } },
-                        (parentElement: any) => [
-                        this.html(`83b9f047`, "div", parentElement,
-                            { classes: [{ type: 'static', value: "window-bar" }] },
-                            (parentElement: any) => [
-                            this.html(`94c6c745`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('VIEW')
-                            ]),
-                            this.html(`fb69b9d8`, "b", parentElement, {}, (parentElement: any) => [
-                                this.text('user.sao')
-                            ])
-                            ]),
-                        this.html(`9df3d6f2`, "pre", parentElement, {}, (parentElement: any) => [
-                            this.html(`db709166`, "code", parentElement, {}, (parentElement: any) => [
-                                this.html(`8f68429d`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }] },
-                                    (parentElement: any) => [
-                                    this.html(`a7a1f6c3`, "span", parentElement,
+                                    this.html(`e1233441`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "kw" }] },
                                         (parentElement: any) => [
-                                        this.text('@vars')
+                                        this.text('@startMarker')
                                         ]),
-                                    this.html(`cfe8c0cf`, "span", parentElement,
+                                    this.html(`e1233442`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "op" }] },
                                         (parentElement: any) => [
                                         this.text('(')
                                         ]),
-                                    this.html(`3c78ff3a`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "vr" }] },
+                                    this.html(`e1233443`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "st" }] },
                                         (parentElement: any) => [
-                                        this.text('user')
+                                        this.text('\'output\'')
                                         ]),
-                                    this.html(`bcf9584a`, "span", parentElement,
+                                    this.html(`e1233444`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text(',')
+                                        ]),
+                                    this.html(`e1233445`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "st" }] },
+                                        (parentElement: any) => [
+                                        this.text(' \'k2f1\'')
+                                        ]),
+                                    this.html(`e1233446`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "op" }] },
                                         (parentElement: any) => [
                                         this.text(')')
                                         ])
                                     ]),
-                                this.html(`4198e723`, "span", parentElement, { classes: [{ type: 'static', value: "code-line" }] }),
-                                this.html(`fe9db4b4`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }] },
+                                this.html(`e123345`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-2" }] },
                                     (parentElement: any) => [
-                                    this.html(`3763c5bb`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('<')
-                                        ]),
-                                    this.html(`07997a91`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "kw" }] },
-                                        (parentElement: any) => [
-                                        this.text('template')
-                                        ]),
-                                    this.html(`78ab257d`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('>')
-                                        ])
-                                    ]),
-                                this.html(`b990dc44`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                    (parentElement: any) => [
-                                    this.html(`5b65b19e`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('<')
-                                        ]),
-                                    this.html(`a97387ff`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "fn" }] },
-                                        (parentElement: any) => [
-                                        this.text('h1')
-                                        ]),
-                                    this.html(`5248ca7f`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('>')
-                                        ]),
-                                    this.html(`879c020f`, "span", parentElement,
+                                    this.html(`e1233451`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "mustache-token" }] },
                                         (parentElement: any) => [
-                                        this.html(`97196704`, "span", parentElement,
+                                        this.html(`e12334511`, "span", parentElement,
                                             { classes: [{ type: 'static', value: "vr" }] },
                                             (parentElement: any) => [
-                                            this.text('user')
-                                            ]),
-                                        this.html(`7f8c4e42`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "op" }] },
-                                            (parentElement: any) => [
-                                            this.text('[')
-                                            ]),
-                                        this.html(`82695b19`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "st" }] },
-                                            (parentElement: any) => [
-                                            this.text('\'name\'')
-                                            ]),
-                                        this.html(`441dc656`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "op" }] },
-                                            (parentElement: any) => [
-                                            this.text(']')
+                                            this.text('$likes')
                                             ])
-                                        ]),
-                                    this.html(`0dd0a041`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('</')
-                                        ]),
-                                    this.html(`33860137`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "fn" }] },
-                                        (parentElement: any) => [
-                                        this.text('h1')
-                                        ]),
-                                    this.html(`4cc5fe85`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('>')
-                                        ])
-                                    ]),
-                                this.html(`b32ec6c2`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
-                                    (parentElement: any) => [
-                                    this.html(`cc2db4fa`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('<')
-                                        ]),
-                                    this.html(`4642a6a5`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "fn" }] },
-                                        (parentElement: any) => [
-                                        this.text('p')
-                                        ]),
-                                    this.html(`628cdca6`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('>')
-                                        ]),
-                                    this.text('Tham gia từ: '),
-                                    this.html(`035ddfbe`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "mustache-token" }] },
-                                        (parentElement: any) => [
-                                        this.html(`ca43bd86`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "vr" }] },
-                                            (parentElement: any) => [
-                                            this.text('user')
-                                            ]),
-                                        this.html(`91a455d6`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "op" }] },
-                                            (parentElement: any) => [
-                                            this.text('[')
-                                            ]),
-                                        this.html(`5d339c5d`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "st" }] },
-                                            (parentElement: any) => [
-                                            this.text('\'created_at\'')
-                                            ]),
-                                        this.html(`5a94ff70`, "span", parentElement,
-                                            { classes: [{ type: 'static', value: "op" }] },
-                                            (parentElement: any) => [
-                                            this.text(']')
-                                            ])
-                                        ]),
-                                    this.html(`49188f5b`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('</')
-                                        ]),
-                                    this.html(`5797ef49`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "fn" }] },
-                                        (parentElement: any) => [
-                                        this.text('p')
-                                        ]),
-                                    this.html(`e48adb8f`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('>')
-                                        ])
-                                    ]),
-                                this.html(`4703a6e0`, "span", parentElement,
-                                    { classes: [{ type: 'static', value: "code-line" }] },
-                                    (parentElement: any) => [
-                                    this.html(`67f2e846`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('</')
-                                        ]),
-                                    this.html(`25a5a846`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "kw" }] },
-                                        (parentElement: any) => [
-                                        this.text('template')
-                                        ]),
-                                    this.html(`8383312b`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "op" }] },
-                                        (parentElement: any) => [
-                                        this.text('>')
                                         ])
                                     ])
+                                ])
+                            ]),
+                        this.html(`e1234`, "div", parentElement,
+                            { classes: [{ type: 'static', value: "hx-node" }] },
+                            (parentElement: any) => [
+                            this.html(`e12341`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "hx-node-tag" }] },
+                                (parentElement: any) => [
+                                this.text('CLIENT')
+                                ]),
+                            this.html(`e12342`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.text('user.js')
+                            ]),
+                            this.html(`e12343`, "small", parentElement, {}, (parentElement: any) => [
+                                this.text('Claim lại đúng DOM đó')
+                            ]),
+                            this.html(`e12344`, "pre", parentElement,
+                                { classes: [{ type: 'static', value: "hx-mini" }], attrs: { "aria-hidden": { type: 'static', value: "true" } } },
+                                (parentElement: any) => [
+                                this.html(`e123441`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "code-line" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1234411`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "kw" }] },
+                                        (parentElement: any) => [
+                                        this.text('const')
+                                        ]),
+                                    this.html(`e1234412`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "fn" }] },
+                                        (parentElement: any) => [
+                                        this.text(' set$likes')
+                                        ]),
+                                    this.html(`e1234413`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text(' =')
+                                        ])
+                                    ]),
+                                this.html(`e123442`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1234421`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "vr" }] },
+                                        (parentElement: any) => [
+                                        this.text('__STATE__')
+                                        ]),
+                                    this.html(`e1234422`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text('.')
+                                        ]),
+                                    this.html(`e1234423`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "fn" }] },
+                                        (parentElement: any) => [
+                                        this.text('register')
+                                        ]),
+                                    this.html(`e1234424`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text('(')
+                                        ]),
+                                    this.html(`e1234425`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "st" }] },
+                                        (parentElement: any) => [
+                                        this.text('\'likes\'')
+                                        ]),
+                                    this.html(`e1234426`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text(')')
+                                        ])
+                                    ]),
+                                this.html(`e123443`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "code-line" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1234431`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "kw" }] },
+                                        (parentElement: any) => [
+                                        this.text('const')
+                                        ]),
+                                    this.html(`e1234432`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "fn" }] },
+                                        (parentElement: any) => [
+                                        this.text(' setLikes')
+                                        ]),
+                                    this.html(`e1234433`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text(' = (')
+                                        ]),
+                                    this.html(`e1234434`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "vr" }] },
+                                        (parentElement: any) => [
+                                        this.text('v')
+                                        ]),
+                                    this.html(`e1234435`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text(') => {')
+                                        ])
+                                    ]),
+                                this.html(`e123444`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1234441`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "vr" }] },
+                                        (parentElement: any) => [
+                                        this.text('likes')
+                                        ]),
+                                    this.html(`e1234442`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text(' =')
+                                        ]),
+                                    this.html(`e1234443`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "vr" }] },
+                                        (parentElement: any) => [
+                                        this.text(' v')
+                                        ]),
+                                    this.html(`e1234444`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text(';')
+                                        ])
+                                    ]),
+                                this.html(`e123445`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "code-line" }, { type: 'static', value: "code-indent-1" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1234451`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "fn" }] },
+                                        (parentElement: any) => [
+                                        this.text('set$likes')
+                                        ]),
+                                    this.html(`e1234452`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text('(')
+                                        ]),
+                                    this.html(`e1234453`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "vr" }] },
+                                        (parentElement: any) => [
+                                        this.text('v')
+                                        ]),
+                                    this.html(`e1234454`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "op" }] },
+                                        (parentElement: any) => [
+                                        this.text(');')
+                                        ])
+                                    ])
+                                ])
                             ])
                         ])
+                    ])
+                ]),
+            this.html(`e2`, "div", parentElement,
+                { classes: [{ type: 'static', value: "hx-strip" }] },
+                (parentElement: any) => [
+                this.html(`e21`, "dl", parentElement,
+                    { classes: [{ type: 'static', value: "hx-strip-grid" }] },
+                    (parentElement: any) => [
+                    this.html(`e211`, "div", parentElement, {}, (parentElement: any) => [
+                        this.html(`e2111`, "dt", parentElement, {}, (parentElement: any) => [
+                            this.text('4')
+                        ]),
+                        this.html(`e2112`, "dd", parentElement, {}, (parentElement: any) => [
+                            this.text('context: web · admin · api · mobile')
                         ])
+                    ]),
+                    this.html(`e212`, "div", parentElement, {}, (parentElement: any) => [
+                        this.html(`e2121`, "dt", parentElement, {}, (parentElement: any) => [
+                            this.text('0')
+                        ]),
+                        this.html(`e2122`, "dd", parentElement, {}, (parentElement: any) => [
+                            this.text('file cấu hình route trung tâm cần sửa')
+                        ])
+                    ]),
+                    this.html(`e213`, "div", parentElement, {}, (parentElement: any) => [
+                        this.html(`e2131`, "dt", parentElement, {}, (parentElement: any) => [
+                            this.text('2')
+                        ]),
+                        this.html(`e2132`, "dd", parentElement, {}, (parentElement: any) => [
+                            this.text('đầu ra được biên dịch từ một file .sao')
+                        ])
+                    ]),
+                    this.html(`e214`, "div", parentElement, {}, (parentElement: any) => [
+                        this.html(`e2141`, "dt", parentElement, {}, (parentElement: any) => [
+                            this.text('43')
+                        ]),
+                        this.html(`e2142`, "dd", parentElement, {}, (parentElement: any) => [
+                            this.text('directive giữ nguyên cú pháp Blade quen thuộc')
+                        ])
+                    ])
                     ])
                 ])
             ]);
@@ -587,7 +707,7 @@ class HeroView extends View {
 }
 
 // Export factory function
-export function WebModulesHomePartsHero(__data__: HeroProps = {}, systemData: any = {}): HeroView {
+export function WebModulesHomePartsHero(__data__ = {}, systemData = {}): HeroView {
     return new HeroView(__data__, systemData);
 }
 export default WebModulesHomePartsHero;

@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -31,6 +29,8 @@ export interface CompareProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class CompareViewController extends ViewController {
     constructor(view: View) {
@@ -44,7 +44,7 @@ class CompareViewController extends ViewController {
 }
 
 class CompareView extends View {
-    constructor(__data__: CompareProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, CompareViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -118,286 +118,384 @@ class CompareView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`bbcd3398`, "section", parentElement,
+            this.html(`e1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "home-section" }, { type: 'static', value: "home-section--fog" }], attrs: { "id": { type: 'static', value: "compare" } } },
                 (parentElement: any) => [
-                this.html(`88b70a58`, "div", parentElement,
+                this.html(`e11`, "div", parentElement,
                     { classes: [{ type: 'static', value: "section-head" }, { type: 'static', value: "section-head-split" }] },
                     (parentElement: any) => [
-                    this.html(`4f95a176`, "div", parentElement, {}, (parentElement: any) => [
-                        this.html(`dd8c47b3`, "p", parentElement,
+                    this.html(`e111`, "div", parentElement, {}, (parentElement: any) => [
+                        this.html(`e1111`, "p", parentElement,
                             { classes: [{ type: 'static', value: "kicker" }] },
                             (parentElement: any) => [
-                            this.html(`d0f3467d`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`e11111`, "span", parentElement, {}, (parentElement: any) => [
                                 this.text('SO SÁNH')
                             ]),
-                            this.text(' Khác gì lựa chọn quen thuộc')
+                            this.text(' Khác biệt so với các lựa chọn quen thuộc')
                             ]),
-                        this.html(`3f75a3fd`, "h2", parentElement, {}, (parentElement: any) => [
+                        this.html(`e1112`, "h2", parentElement, {}, (parentElement: any) => [
                             this.text('Cùng một bài toán,'),
-                            this.html(`d78bb666`, "br", parentElement, {}),
-                            this.text('năm cách trả lời khác nhau.')
+                            this.html(`e11121`, "br", parentElement, {}),
+                            this.text('năm cách giải quyết.')
                         ])
                     ]),
-                    this.html(`a485d755`, "p", parentElement, {}, (parentElement: any) => [
-                        this.text('Bảng này không nói cách nào tốt hơn tuyệt đối. Nó nói mỗi cách đặt chi phí ở đâu — và Saola đặt chi phí vào bước biên dịch để đổi lấy việc không phải giữ hai bản template đồng bộ bằng tay.')
+                    this.html(`e112`, "p", parentElement, {}, (parentElement: any) => [
+                        this.text('Bảng so sánh này không nhằm mục đích khẳng định giải pháp nào tốt nhất tuyệt đối. Nó đánh giá sự khác biệt ở hai khía cạnh: kiến trúc hệ thống và cơ chế hiển thị. Saola tập trung giải quyết độ khó ở trình biên dịch nội bộ và mô hình module, để đổi lấy một kiến trúc phân tách rõ ràng và loại bỏ gánh nặng bảo trì hai phiên bản template (server và client).')
                     ])
                     ]),
-                this.html(`b545b1d4`, "div", parentElement,
+                this.html(`e12`, "div", parentElement,
                     { classes: [{ type: 'static', value: "compare-table" }] },
                     (parentElement: any) => [
-                    this.html(`1153644d`, "table", parentElement, {}, (parentElement: any) => [
-                        this.html(`dd0a490a`, "thead", parentElement, {}, (parentElement: any) => [
-                            this.html(`49ec586f`, "tr", parentElement, {}, (parentElement: any) => [
-                                this.html(`79f9ff93`, "th", parentElement,
+                    this.html(`e121`, "table", parentElement, {}, (parentElement: any) => [
+                        this.html(`e1211`, "thead", parentElement, {}, (parentElement: any) => [
+                            this.html(`e12111`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121111`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "col" } } },
                                     (parentElement: any) => [
                                     this.text('Tiêu chí')
                                     ]),
-                                this.html(`e8508ec8`, "th", parentElement,
+                                this.html(`e121112`, "th", parentElement,
                                     { classes: [{ type: 'static', value: "col-sao" }], attrs: { "scope": { type: 'static', value: "col" } } },
                                     (parentElement: any) => [
                                     this.text('Saola')
                                     ]),
-                                this.html(`2eeb73ff`, "th", parentElement,
+                                this.html(`e121113`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "col" } } },
                                     (parentElement: any) => [
                                     this.text('Blade + Alpine')
                                     ]),
-                                this.html(`babaf958`, "th", parentElement,
+                                this.html(`e121114`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "col" } } },
                                     (parentElement: any) => [
                                     this.text('Livewire')
                                     ]),
-                                this.html(`326678f8`, "th", parentElement,
+                                this.html(`e121115`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "col" } } },
                                     (parentElement: any) => [
                                     this.text('Inertia + Vue/React')
                                     ]),
-                                this.html(`9fb18ae5`, "th", parentElement,
+                                this.html(`e121116`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "col" } } },
                                     (parentElement: any) => [
                                     this.text('SPA + REST API')
                                     ])
                             ])
                         ]),
-                        this.html(`7f65604e`, "tbody", parentElement, {}, (parentElement: any) => [
-                            this.html(`8dad2439`, "tr", parentElement, {}, (parentElement: any) => [
-                                this.html(`301bc4e9`, "th", parentElement,
+                        this.html(`e1212`, "tbody", parentElement, {}, (parentElement: any) => [
+                            this.html(`e12121`, "tr", parentElement,
+                                { classes: [{ type: 'static', value: "cmp-band" }] },
+                                (parentElement: any) => [
+                                this.html(`e121211`, "th", parentElement,
+                                    { attrs: { "scope": { type: 'static', value: "row" }, "colspan": { type: 'static', value: "6" } } },
+                                    (parentElement: any) => [
+                                    this.text('Tầng kiến trúc ứng dụng')
+                                    ])
+                                ]),
+                            this.html(`e12122`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121221`, "th", parentElement,
+                                    { attrs: { "scope": { type: 'static', value: "row" } } },
+                                    (parentElement: any) => [
+                                    this.text('Tổ chức code và route')
+                                    ]),
+                                this.html(`e121222`, "td", parentElement,
+                                    { classes: [{ type: 'static', value: "col-sao" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1212221`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "cmp-yes" }] },
+                                        (parentElement: any) => [
+                                        this.text('Module tự nạp, route trong module')
+                                        ])
+                                    ]),
+                                this.html(`e121223`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự tổ chức, route tập trung')
+                                ]),
+                                this.html(`e121224`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự tổ chức, route tập trung')
+                                ]),
+                                this.html(`e121225`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự tổ chức, route tập trung')
+                                ]),
+                                this.html(`e121226`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự tổ chức ở hai phía')
+                                ])
+                            ]),
+                            this.html(`e12123`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121231`, "th", parentElement,
+                                    { attrs: { "scope": { type: 'static', value: "row" } } },
+                                    (parentElement: any) => [
+                                    this.text('Đa mặt tiền, tách bundle')
+                                    ]),
+                                this.html(`e121232`, "td", parentElement,
+                                    { classes: [{ type: 'static', value: "col-sao" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1212321`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "cmp-yes" }] },
+                                        (parentElement: any) => [
+                                        this.text('Sẵn bốn context')
+                                        ])
+                                    ]),
+                                this.html(`e121233`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự dựng')
+                                ]),
+                                this.html(`e121234`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự dựng')
+                                ]),
+                                this.html(`e121235`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự dựng')
+                                ]),
+                                this.html(`e121236`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự dựng')
+                                ])
+                            ]),
+                            this.html(`e12124`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121241`, "th", parentElement,
+                                    { attrs: { "scope": { type: 'static', value: "row" } } },
+                                    (parentElement: any) => [
+                                    this.text('Context theo request (Octane)')
+                                    ]),
+                                this.html(`e121242`, "td", parentElement,
+                                    { classes: [{ type: 'static', value: "col-sao" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1212421`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "cmp-yes" }] },
+                                        (parentElement: any) => [
+                                        this.text('Registry request-scoped')
+                                        ])
+                                    ]),
+                                this.html(`e121243`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự lo')
+                                ]),
+                                this.html(`e121244`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự lo')
+                                ]),
+                                this.html(`e121245`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự lo')
+                                ]),
+                                this.html(`e121246`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Không áp dụng')
+                                ])
+                            ]),
+                            this.html(`e12125`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121251`, "th", parentElement,
+                                    { attrs: { "scope": { type: 'static', value: "row" } } },
+                                    (parentElement: any) => [
+                                    this.text('Hình dạng response chung')
+                                    ]),
+                                this.html(`e121252`, "td", parentElement,
+                                    { classes: [{ type: 'static', value: "col-sao" }] },
+                                    (parentElement: any) => [
+                                    this.text('Một controller trả được cả HTML và JSON')
+                                    ]),
+                                this.html(`e121253`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự quy ước')
+                                ]),
+                                this.html(`e121254`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Component phía server')
+                                ]),
+                                this.html(`e121255`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Props qua adapter')
+                                ]),
+                                this.html(`e121256`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Tự quy ước ở tầng API')
+                                ])
+                            ]),
+                            this.html(`e12126`, "tr", parentElement,
+                                { classes: [{ type: 'static', value: "cmp-band" }] },
+                                (parentElement: any) => [
+                                this.html(`e121261`, "th", parentElement,
+                                    { attrs: { "scope": { type: 'static', value: "row" }, "colspan": { type: 'static', value: "6" } } },
+                                    (parentElement: any) => [
+                                    this.text('Tầng view và runtime')
+                                    ])
+                                ]),
+                            this.html(`e12127`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121271`, "th", parentElement,
+                                    { attrs: { "scope": { type: 'static', value: "row" } } },
+                                    (parentElement: any) => [
+                                    this.text('Nguồn sinh HTML và JS')
+                                    ]),
+                                this.html(`e121272`, "td", parentElement,
+                                    { classes: [{ type: 'static', value: "col-sao" }] },
+                                    (parentElement: any) => [
+                                    this.html(`e1212721`, "span", parentElement,
+                                        { classes: [{ type: 'static', value: "cmp-yes" }] },
+                                        (parentElement: any) => [
+                                        this.text('Cùng một AST')
+                                        ])
+                                    ]),
+                                this.html(`e121273`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Hai nguồn viết tay')
+                                ]),
+                                this.html(`e121274`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Server sinh HTML, JS chỉ vá DOM')
+                                ]),
+                                this.html(`e121275`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Hai nguồn viết tay')
+                                ]),
+                                this.html(`e121276`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.text('Một nguồn, chỉ ở client')
+                                ])
+                            ]),
+                            this.html(`e12128`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121281`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "row" } } },
                                     (parentElement: any) => [
                                     this.text('HTML của lần tải đầu')
                                     ]),
-                                this.html(`ce75cd42`, "td", parentElement,
+                                this.html(`e121282`, "td", parentElement,
                                     { classes: [{ type: 'static', value: "col-sao" }] },
                                     (parentElement: any) => [
                                     this.text('Đầy đủ nội dung')
                                     ]),
-                                this.html(`457c955f`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121283`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Đầy đủ nội dung')
                                 ]),
-                                this.html(`45f02287`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121284`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Đầy đủ nội dung')
                                 ]),
-                                this.html(`b955e6d2`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121285`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Đầy đủ nếu bật SSR')
                                 ]),
-                                this.html(`083b33c1`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.html(`0997092a`, "span", parentElement,
+                                this.html(`e121286`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1212861`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "cmp-no" }] },
                                         (parentElement: any) => [
                                         this.text('Div rỗng')
                                         ])
                                 ])
                             ]),
-                            this.html(`882d5cab`, "tr", parentElement, {}, (parentElement: any) => [
-                                this.html(`ba550c5b`, "th", parentElement,
+                            this.html(`e12129`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121291`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "row" } } },
                                     (parentElement: any) => [
                                     this.text('Tương tác sau khi tải')
                                     ]),
-                                this.html(`54dffeda`, "td", parentElement,
+                                this.html(`e121292`, "td", parentElement,
                                     { classes: [{ type: 'static', value: "col-sao" }] },
                                     (parentElement: any) => [
                                     this.text('Chạy tại client, không round-trip')
                                     ]),
-                                this.html(`c722ea5d`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121293`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Chạy tại client, phạm vi hẹp')
                                 ]),
-                                this.html(`3e7423f9`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.html(`4cde2420`, "span", parentElement,
+                                this.html(`e121294`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1212941`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "cmp-no" }] },
                                         (parentElement: any) => [
                                         this.text('Mỗi tương tác một request')
                                         ])
                                 ]),
-                                this.html(`ca7e945f`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121295`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Chạy tại client')
                                 ]),
-                                this.html(`6787453d`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e121296`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Chạy tại client')
                                 ])
                             ]),
-                            this.html(`ac7b9f93`, "tr", parentElement, {}, (parentElement: any) => [
-                                this.html(`0abb521a`, "th", parentElement,
-                                    { attrs: { "scope": { type: 'static', value: "row" } } },
-                                    (parentElement: any) => [
-                                    this.text('Nguồn sinh HTML và JS')
-                                    ]),
-                                this.html(`ec937c06`, "td", parentElement,
-                                    { classes: [{ type: 'static', value: "col-sao" }] },
-                                    (parentElement: any) => [
-                                    this.html(`be27755a`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "cmp-yes" }] },
-                                        (parentElement: any) => [
-                                        this.text('Cùng một AST')
-                                        ])
-                                    ]),
-                                this.html(`bae9ebd3`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.text('Hai nguồn viết tay')
-                                ]),
-                                this.html(`ce00eb8b`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.text('Server sinh HTML, JS chỉ vá DOM')
-                                ]),
-                                this.html(`d07dce1b`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.text('Hai nguồn viết tay')
-                                ]),
-                                this.html(`011532cb`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.text('Một nguồn, chỉ ở client')
-                                ])
-                            ]),
-                            this.html(`f4637881`, "tr", parentElement, {}, (parentElement: any) => [
-                                this.html(`464845f2`, "th", parentElement,
+                            this.html(`e1212e10_`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e10_1`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "row" } } },
                                     (parentElement: any) => [
                                     this.text('Ngôn ngữ viết view')
                                     ]),
-                                this.html(`6bda1edc`, "td", parentElement,
+                                this.html(`e1212e10_2`, "td", parentElement,
                                     { classes: [{ type: 'static', value: "col-sao" }] },
                                     (parentElement: any) => [
                                     this.text('Một cú pháp '),
-                                    this.html(`7d1782a7`, "code", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1212e10_21`, "code", parentElement, {}, (parentElement: any) => [
                                         this.text('.sao')
                                     ])
                                     ]),
-                                this.html(`8a30856c`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e10_3`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Blade cộng JavaScript rời')
                                 ]),
-                                this.html(`a3e1c81d`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e10_4`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Blade cộng PHP class')
                                 ]),
-                                this.html(`91720c5f`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e10_5`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Vue hoặc React, tách khỏi Blade')
                                 ]),
-                                this.html(`91dd8fc1`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e10_6`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Framework JavaScript')
                                 ])
                             ]),
-                            this.html(`6597edba`, "tr", parentElement, {}, (parentElement: any) => [
-                                this.html(`2122cc93`, "th", parentElement,
+                            this.html(`e1212e11_`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e11_1`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "row" } } },
                                     (parentElement: any) => [
                                     this.text('Cần tầng API riêng')
                                     ]),
-                                this.html(`45190744`, "td", parentElement,
+                                this.html(`e1212e11_2`, "td", parentElement,
                                     { classes: [{ type: 'static', value: "col-sao" }] },
                                     (parentElement: any) => [
                                     this.text('Không bắt buộc')
                                     ]),
-                                this.html(`d531e344`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e11_3`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Không')
                                 ]),
-                                this.html(`d713d184`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e11_4`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Không')
                                 ]),
-                                this.html(`e3533c6a`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e11_5`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Không, props đi qua adapter')
                                 ]),
-                                this.html(`dd5f8b83`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.html(`6cd7c5eb`, "span", parentElement,
+                                this.html(`e1212e11_6`, "td", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1212e11_61`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "cmp-no" }] },
                                         (parentElement: any) => [
                                         this.text('Bắt buộc')
                                         ])
                                 ])
                             ]),
-                            this.html(`8df5b560`, "tr", parentElement, {}, (parentElement: any) => [
-                                this.html(`45c45f5a`, "th", parentElement,
-                                    { attrs: { "scope": { type: 'static', value: "row" } } },
-                                    (parentElement: any) => [
-                                    this.text('Đa mặt tiền, tách bundle')
-                                    ]),
-                                this.html(`2f6bc071`, "td", parentElement,
-                                    { classes: [{ type: 'static', value: "col-sao" }] },
-                                    (parentElement: any) => [
-                                    this.html(`503211cd`, "span", parentElement,
-                                        { classes: [{ type: 'static', value: "cmp-yes" }] },
-                                        (parentElement: any) => [
-                                        this.text('Sẵn bốn context')
-                                        ])
-                                    ]),
-                                this.html(`ddc611c2`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.text('Tự dựng')
-                                ]),
-                                this.html(`eb85c516`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.text('Tự dựng')
-                                ]),
-                                this.html(`5fc6e73f`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.text('Tự dựng')
-                                ]),
-                                this.html(`c9c288b0`, "td", parentElement, {}, (parentElement: any) => [
-                                    this.text('Tự dựng')
-                                ])
-                            ]),
-                            this.html(`c5a9e0e7`, "tr", parentElement, {}, (parentElement: any) => [
-                                this.html(`a057896d`, "th", parentElement,
+                            this.html(`e1212e12_`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e12_1`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "row" } } },
                                     (parentElement: any) => [
                                     this.text('Vòng đời view có contract')
                                     ]),
-                                this.html(`d4977128`, "td", parentElement,
+                                this.html(`e1212e12_2`, "td", parentElement,
                                     { classes: [{ type: 'static', value: "col-sao" }] },
                                     (parentElement: any) => [
-                                    this.text('Bảy trạng thái, dọn theo ref-count')
+                                    this.text('Bảy trạng thái, dọn dẹp theo ref-count')
                                     ]),
-                                this.html(`fee9cde8`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e12_3`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Không có')
                                 ]),
-                                this.html(`9c519129`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e12_4`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Theo component phía server')
                                 ]),
-                                this.html(`97814582`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e12_5`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Theo framework JavaScript')
                                 ]),
-                                this.html(`9fe906a2`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e12_6`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Theo framework JavaScript')
                                 ])
                             ]),
-                            this.html(`71b332b4`, "tr", parentElement, {}, (parentElement: any) => [
-                                this.html(`e2fe5cbc`, "th", parentElement,
+                            this.html(`e1212e13_`, "tr", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e13_1`, "th", parentElement,
                                     { attrs: { "scope": { type: 'static', value: "row" } } },
                                     (parentElement: any) => [
                                     this.text('Độ chín và cộng đồng')
                                     ]),
-                                this.html(`8ca96ddc`, "td", parentElement,
+                                this.html(`e1212e13_2`, "td", parentElement,
                                     { classes: [{ type: 'static', value: "col-sao" }] },
                                     (parentElement: any) => [
-                                    this.html(`d18ad838`, "span", parentElement,
+                                    this.html(`e1212e13_21`, "span", parentElement,
                                         { classes: [{ type: 'static', value: "cmp-no" }] },
                                         (parentElement: any) => [
-                                        this.text('Đang dựng nền')
+                                        this.text('Đang xây dựng nền móng')
                                         ])
                                     ]),
-                                this.html(`4fab05e4`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e13_3`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Rất chín')
                                 ]),
-                                this.html(`d781159c`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e13_4`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Rất chín')
                                 ]),
-                                this.html(`8700b8fc`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e13_5`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Rất chín')
                                 ]),
-                                this.html(`9ad17705`, "td", parentElement, {}, (parentElement: any) => [
+                                this.html(`e1212e13_6`, "td", parentElement, {}, (parentElement: any) => [
                                     this.text('Rất chín')
                                 ])
                             ])
@@ -413,7 +511,7 @@ class CompareView extends View {
 }
 
 // Export factory function
-export function WebModulesHomePartsCompare(__data__: CompareProps = {}, systemData: any = {}): CompareView {
+export function WebModulesHomePartsCompare(__data__ = {}, systemData = {}): CompareView {
     return new CompareView(__data__, systemData);
 }
 export default WebModulesHomePartsCompare;

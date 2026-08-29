@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -36,6 +34,8 @@ export interface StatcardProps {
     [key: string]: any;
 }
 
+
+
 class StatcardViewController extends ViewController {
     constructor(view: View) {
         super(view, __VIEW_PATH__, __VIEW_TYPE__);
@@ -48,7 +48,7 @@ class StatcardViewController extends ViewController {
 }
 
 class StatcardView extends View {
-    constructor(__data__: StatcardProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, StatcardViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -131,16 +131,16 @@ class StatcardView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`d69e6b1d`, "div", parentElement,
+            this.html(`e1`, "div", parentElement,
                 { classes: [{ type: 'static', value: "cmp-slot" }, { type: 'binding', value: "cmp-slot--indigo", factory: () => tone === 'indigo', stateKeys: ["tone"] }] },
                 (parentElement: any) => [
-                this.html(`bda2927b`, "span", parentElement, {}, (parentElement: any) => [
-                    this.output(`eed61699`, parentElement, true, ["label"], (parentElement: any) => label)
+                this.html(`e11`, "span", parentElement, {}, (parentElement: any) => [
+                    this.output(`e11o1`, parentElement, true, ["label"], (parentElement: any) => label)
                 ]),
-                this.html(`c6aaed49`, "strong", parentElement, {}, (parentElement: any) => [
-                    this.output(`088db3a1`, parentElement, true, ["value"], (parentElement: any) => value)
+                this.html(`e12`, "strong", parentElement, {}, (parentElement: any) => [
+                    this.output(`e12o1`, parentElement, true, ["value"], (parentElement: any) => value)
                 ]),
-                this.html(`6b7c3ec4`, "div", parentElement,
+                this.html(`e13`, "div", parentElement,
                     { classes: [{ type: 'static', value: "cmp-slot-body" }] },
                     (parentElement: any) => [
                     ...this.__children(__ONE_CHILDREN_CONTENT__, parentElement)
@@ -154,7 +154,7 @@ class StatcardView extends View {
 }
 
 // Export factory function
-export function WebModulesComponentsStatcard(__data__: StatcardProps = {}, systemData: any = {}): StatcardView {
+export function WebModulesComponentsStatcard(__data__ = {}, systemData = {}): StatcardView {
     return new StatcardView(__data__, systemData);
 }
 export default WebModulesComponentsStatcard;

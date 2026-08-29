@@ -1,3 +1,4 @@
+@import('web.modules.stress.usercard')
 @states({
     users: [
         { id: 1, name: 'Mai Lan',  email: 'lan@saola.dev',  rev: 1, active: true,  roles: [{ name: 'admin' }, { name: 'dev' }] },
@@ -49,8 +50,8 @@
                 @foreach(users as user)
                     @key(user['id'])
                     <article class="stress__row" @transition('row') @click(selectUser(user['id']))>
-                        {{-- @include truyền BIỂU THỨC; attribute của custom tag chỉ nhận chuỗi tĩnh --}}
-                        @include('web.modules.stress.usercard', ['user' => user, 'highlight' => selectedId === user['id']])
+                        {{-- Thẻ tuỳ chỉnh nhận biểu thức qua tiền tố ':' — compiler suy stateKeys y như @include --}}
+                        <usercard :user="user" :highlight="selectedId === user['id']" />
 
                         {{-- @if trong loop → Reactive theo từng item (record marker riêng) --}}
                         @if(user['roles'].length > 0)

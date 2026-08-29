@@ -10,10 +10,10 @@
 
         <section class="phase-lab">
             <div class="phase-tabs" role="group" aria-label="Các giai đoạn runtime">
-                <button @class(['active': activePhase === 'ssr']) @click(setActivePhase('ssr'))><span>01</span> SSR</button>
-                <button @class(['active': activePhase === 'hydrate']) @click(setActivePhase('hydrate'))><span>02</span> Hydrate</button>
-                <button @class(['active': activePhase === 'reactive']) @click(setActivePhase('reactive'))><span>03</span> Rerender</button>
-                <button @class(['active': activePhase === 'cache']) @click(setActivePhase('cache'))><span>04</span> Cache</button>
+                <button @class({'active': activePhase === 'ssr'}) @click(setActivePhase('ssr'))><span>01</span> SSR</button>
+                <button @class({'active': activePhase === 'hydrate'}) @click(setActivePhase('hydrate'))><span>02</span> Hydrate</button>
+                <button @class({'active': activePhase === 'reactive'}) @click(setActivePhase('reactive'))><span>03</span> Rerender</button>
+                <button @class({'active': activePhase === 'cache'}) @click(setActivePhase('cache'))><span>04</span> Cache</button>
             </div>
             <div class="phase-display">
                 @if(activePhase === 'ssr')

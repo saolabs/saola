@@ -1,25 +1,73 @@
-@exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
     @block('doc')
-        <section @class([$__VIEW_ID__ . '-7b338a08', 'page-hero', 'page-hero-start'])>
-            <div @class([$__VIEW_ID__ . '-3bb16c04'])><p @class([$__VIEW_ID__ . '-f150187b', 'kicker'])><span @class([$__VIEW_ID__ . '-bac94b21'])>04 / GETTING STARTED</span> Từ route đầu tiên</p><h1 @class([$__VIEW_ID__ . '-663d8ed0'])>Giữ cách Laravel nghĩ.<br @class([$__VIEW_ID__ . '-c3c0e3f9'])><em @class([$__VIEW_ID__ . '-27038dbc'])>Thêm cách SPA chạy.</em></h1></div>
-            <div @class([$__VIEW_ID__ . '-57baae1a', 'page-hero-aside'])><p @class([$__VIEW_ID__ . '-8695e14e'])>Bắt đầu từ module, route và controller quen thuộc; Saola thêm view source và pipeline biên dịch phía trên chúng.</p><dl @class([$__VIEW_ID__ . '-1f0b28a5'])><div @class([$__VIEW_ID__ . '-da4a7f2f'])><dt @class([$__VIEW_ID__ . '-902aa345'])>TIME TO MODEL</dt><dd @class([$__VIEW_ID__ . '-e65d3a6b'])>4 bước</dd></div><div @class([$__VIEW_ID__ . '-e762468d'])><dt @class([$__VIEW_ID__ . '-935f1ffd'])>REQUIRES</dt><dd @class([$__VIEW_ID__ . '-df3e6b57'])>PHP + Node.js</dd></div></dl></div>
+        <section @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero', 'page-hero-start'])>
+            <div @class([$__VIEW_ID__ . '-Bdoc11'])><p @class([$__VIEW_ID__ . '-Bdoc111', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc1111'])>04 / GETTING STARTED</span> Từ route đầu tiên</p><h1 @class([$__VIEW_ID__ . '-Bdoc112'])>Giữ cách Laravel nghĩ.<br @class([$__VIEW_ID__ . '-Bdoc1121'])><em @class([$__VIEW_ID__ . '-Bdoc1122'])>Thêm cách SPA chạy.</em></h1></div>
+            <div @class([$__VIEW_ID__ . '-Bdoc12', 'page-hero-aside'])><p @class([$__VIEW_ID__ . '-Bdoc121'])>Bắt đầu từ module, route và controller quen thuộc; Saola thêm view source và pipeline biên dịch phía trên chúng.</p><dl @class([$__VIEW_ID__ . '-Bdoc122'])><div @class([$__VIEW_ID__ . '-Bdoc1221'])><dt @class([$__VIEW_ID__ . '-Bdoc12211'])>TIME TO MODEL</dt><dd @class([$__VIEW_ID__ . '-Bdoc12212'])>4 bước</dd></div><div @class([$__VIEW_ID__ . '-Bdoc1222'])><dt @class([$__VIEW_ID__ . '-Bdoc12221'])>REQUIRES</dt><dd @class([$__VIEW_ID__ . '-Bdoc12222'])>PHP + Node.js</dd></div></dl></div>
         </section>
 
-        <section @class([$__VIEW_ID__ . '-05ef4c27', 'start-layout'])>
-            <aside @class([$__VIEW_ID__ . '-1d1c97ef'])><span @class([$__VIEW_ID__ . '-af939389'])>TRÊN TRANG NÀY</span><a @class([$__VIEW_ID__ . '-9fed5329']) @attr(['href' => '#module'])>01 / Module</a><a @class([$__VIEW_ID__ . '-0f7e9c10']) @attr(['href' => '#view'])>02 / View</a><a @class([$__VIEW_ID__ . '-f7533ff1']) @attr(['href' => '#compile'])>03 / Compile</a><a @class([$__VIEW_ID__ . '-c4032a15']) @attr(['href' => '#verify'])>04 / Verify</a></aside>
-            <div @class([$__VIEW_ID__ . '-fbd9a84d', 'start-steps'])>
-                <article @class([$__VIEW_ID__ . '-13e1b7a4']) @attr(['id' => 'module'])><span @class([$__VIEW_ID__ . '-d32c987e'])>01</span><div @class([$__VIEW_ID__ . '-f12e0938'])><p @class([$__VIEW_ID__ . '-fdb4a637', 'kicker'])><span @class([$__VIEW_ID__ . '-dfb1c367'])>ROUTE</span> Module first</p><h2 @class([$__VIEW_ID__ . '-8ea5a711'])>Khai báo route trong context.</h2><p @class([$__VIEW_ID__ . '-bf64746c'])>Module giữ controller, service và route gần nhau. Context quyết định registry và asset bundle nào phục vụ request.</p><pre @class([$__VIEW_ID__ . '-be4a014f'])><code @class([$__VIEW_ID__ . '-f1e9eb3b'])><span @class([$__VIEW_ID__ . '-cd37afa5', 'code-line'])>System::context('web')</span><span @class([$__VIEW_ID__ . '-ce9df19d', 'code-line', 'code-indent-1'])>->module('home', ['prefix' => '/'])</span><span @class([$__VIEW_ID__ . '-58671c17', 'code-line', 'code-indent-1'])>->controller(HomeController::class)</span><span @class([$__VIEW_ID__ . '-429fe6c8', 'code-line', 'code-indent-1'])>->group(function ($module) {</span><span @class([$__VIEW_ID__ . '-90765127', 'code-line', 'code-indent-2'])>$module->get('/', 'index')->name('index');</span><span @class([$__VIEW_ID__ . '-6c3b28bb', 'code-line', 'code-indent-1'])>});</span></code></pre></div></article>
-                <article @class([$__VIEW_ID__ . '-7610ec67']) @attr(['id' => 'view'])><span @class([$__VIEW_ID__ . '-d55ac7a6'])>02</span><div @class([$__VIEW_ID__ . '-ea8aae76'])><p @class([$__VIEW_ID__ . '-b954152f', 'kicker'])><span @class([$__VIEW_ID__ . '-b202356c'])>VIEW</span> One source</p><h2 @class([$__VIEW_ID__ . '-39f642fd'])>Tạo view <code @class([$__VIEW_ID__ . '-fd9e158f'])>.sao</code>.</h2><p @class([$__VIEW_ID__ . '-69aef52a'])>Template có thể extends layout, điền block, khai báo state và gắn event. Compiler dùng cùng nguồn để tạo Blade và JavaScript.</p><pre @class([$__VIEW_ID__ . '-ae2f02ca'])><code @class([$__VIEW_ID__ . '-70127fb2'])><span @class([$__VIEW_ID__ . '-11b9d241', 'code-line'])><span @class([$__VIEW_ID__ . '-13b21639', 'directive-token'])>states({ count: 0 })</span></span><span @class([$__VIEW_ID__ . '-4c624fdd', 'code-line', 'code-line-gap']) @attr(['aria-hidden' => 'true'])></span><span @class([$__VIEW_ID__ . '-2f0a3853', 'code-line'])><span @class([$__VIEW_ID__ . '-89e10e87', 'html-token'])>template</span></span><span @class([$__VIEW_ID__ . '-12844ae9', 'code-line', 'code-indent-1'])><span @class([$__VIEW_ID__ . '-1022e064', 'directive-token'])>extends(__layout__ + "public")</span></span><span @class([$__VIEW_ID__ . '-9a42cda2', 'code-line', 'code-indent-1'])><span @class([$__VIEW_ID__ . '-a19cc106', 'directive-token'])>block('content')</span></span><span @class([$__VIEW_ID__ . '-ab093b01', 'code-line', 'code-indent-2'])><span @class([$__VIEW_ID__ . '-64286e09', 'html-token'])>button <span @class([$__VIEW_ID__ . '-d9e6265c', 'directive-token'])>click(setCount(count + 1))</span></span></span><span @class([$__VIEW_ID__ . '-07d3eed3', 'code-line', 'code-indent-3'])>Count: <span @class([$__VIEW_ID__ . '-10996eb3', 'mustache-token'])>count</span></span><span @class([$__VIEW_ID__ . '-345c7c25', 'code-line', 'code-indent-2'])><span @class([$__VIEW_ID__ . '-a8b5bce2', 'html-token', 'html-token-close'])>button</span></span><span @class([$__VIEW_ID__ . '-fbb8d83e', 'code-line', 'code-indent-1'])><span @class([$__VIEW_ID__ . '-acd3ff23', 'directive-token'])>endblock</span></span><span @class([$__VIEW_ID__ . '-8e4f0806', 'code-line'])><span @class([$__VIEW_ID__ . '-019114ed', 'html-token', 'html-token-close'])>template</span></span></code></pre></div></article>
-                <article @class([$__VIEW_ID__ . '-f6357ac6']) @attr(['id' => 'compile'])><span @class([$__VIEW_ID__ . '-28f6beb4'])>03</span><div @class([$__VIEW_ID__ . '-329d456a'])><p @class([$__VIEW_ID__ . '-a23e2a55', 'kicker'])><span @class([$__VIEW_ID__ . '-6c4cd7c4'])>BUILD</span> Dual output</p><h2 @class([$__VIEW_ID__ . '-03234a81'])>Compile đúng context.</h2><p @class([$__VIEW_ID__ . '-9d146e16'])>Build tạo Blade view, JavaScript view registry và bundle client tương ứng. Watch mode giữ hai output đồng bộ trong lúc phát triển.</p><pre @class([$__VIEW_ID__ . '-5a4585dd'])><code @class([$__VIEW_ID__ . '-cdaba2c9'])><span @class([$__VIEW_ID__ . '-ed8447a4', 'code-line'])>npm run build:views:web</span><span @class([$__VIEW_ID__ . '-b6aea3b5', 'code-line'])>npm run build:web</span><span @class([$__VIEW_ID__ . '-eb41f970', 'code-line', 'code-line-gap']) @attr(['aria-hidden' => 'true'])></span><span @class([$__VIEW_ID__ . '-ab3dee8c', 'code-line', 'code-comment'])># development</span><span @class([$__VIEW_ID__ . '-1e8beaa1', 'code-line'])>npm run dev:web</span></code></pre></div></article>
-                <article @class([$__VIEW_ID__ . '-436566c4']) @attr(['id' => 'verify'])><span @class([$__VIEW_ID__ . '-752758aa'])>04</span><div @class([$__VIEW_ID__ . '-73ce76b9'])><p @class([$__VIEW_ID__ . '-026f42c6', 'kicker'])><span @class([$__VIEW_ID__ . '-bfe82e6d'])>VERIFY</span> Both paths</p><h2 @class([$__VIEW_ID__ . '-2bea5833'])>Kiểm tra SSR lẫn SPA.</h2><p @class([$__VIEW_ID__ . '-c92eaa5b'])>Tải trực tiếp URL để xác nhận HTML đầu tiên, sau đó điều hướng nội bộ, tương tác state, back/forward và kiểm tra không có listener trùng.</p><ul @class([$__VIEW_ID__ . '-e5627c77', 'check-list'])><li @class([$__VIEW_ID__ . '-43193089'])>View có nội dung khi JavaScript chưa chạy</li><li @class([$__VIEW_ID__ . '-c1b71561'])>Hydration không tạo DOM hoặc event lần hai</li><li @class([$__VIEW_ID__ . '-89a3e6c3'])>Route context đúng với web/admin/mobile</li><li @class([$__VIEW_ID__ . '-985a2dbd'])>Rerender chỉ thay vùng reactive liên quan</li></ul></div></article>
+        <section @class([$__VIEW_ID__ . '-Bdoc2', 'start-layout'])>
+            <aside @class([$__VIEW_ID__ . '-Bdoc21'])><span @class([$__VIEW_ID__ . '-Bdoc211'])>TRÊN TRANG NÀY</span><a @class([$__VIEW_ID__ . '-Bdoc212']) @attr(['href' => '#module'])>01 / Module</a><a @class([$__VIEW_ID__ . '-Bdoc213']) @attr(['href' => '#view'])>02 / View</a><a @class([$__VIEW_ID__ . '-Bdoc214']) @attr(['href' => '#compile'])>03 / Compile</a><a @class([$__VIEW_ID__ . '-Bdoc215']) @attr(['href' => '#verify'])>04 / Verify</a></aside>
+            <div @class([$__VIEW_ID__ . '-Bdoc22', 'start-steps'])>
+                <article @class([$__VIEW_ID__ . '-Bdoc221']) @attr(['id' => 'module'])><span @class([$__VIEW_ID__ . '-Bdoc2211'])>01</span><div @class([$__VIEW_ID__ . '-Bdoc2212'])><p @class([$__VIEW_ID__ . '-Bdoc22121', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc221211'])>ROUTE</span> Module first</p><h2 @class([$__VIEW_ID__ . '-Bdoc22122'])>Khai báo route trong context.</h2><p @class([$__VIEW_ID__ . '-Bdoc22123'])>Module giữ controller, service và route gần nhau. Context quyết định registry và asset bundle nào phục vụ request.</p>
+                    @startMarker('component', 'Bdoc2212c1')
+                    @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@verbatim
+System::context('web')
+    -&gt;module('home', ['prefix' =&gt; '/'])
+    -&gt;controller(HomeController::class)
+    -&gt;group(function ($module) {
+        $module-&gt;get('/', 'index')-&gt;name('index');
+    });
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__0_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@include('web.components.code-block', ['lang' => "php", '__ONE_CHILDREN_CONTENT__' => $__code_block__0_content])
+@endMarker('component', 'Bdoc2212c1')
+                </div></article>
+                <article @class([$__VIEW_ID__ . '-Bdoc222']) @attr(['id' => 'view'])><span @class([$__VIEW_ID__ . '-Bdoc2221'])>02</span><div @class([$__VIEW_ID__ . '-Bdoc2222'])><p @class([$__VIEW_ID__ . '-Bdoc22221', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc222211'])>VIEW</span> One source</p><h2 @class([$__VIEW_ID__ . '-Bdoc22222'])>Tạo view <code @class([$__VIEW_ID__ . '-Bdoc222221'])>.sao</code>.</h2><p @class([$__VIEW_ID__ . '-Bdoc22223'])>Template có thể extends layout, điền block, khai báo state và gắn event. Compiler dùng cùng nguồn để tạo Blade và JavaScript.</p>
+                    @startMarker('component', 'Bdoc2222c1')
+                    @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_1'))
+@verbatim
+&#64;states({ count: 0 })
+
+&lt;template&gt;
+    &#64;extends(__layout__ + "public")
+    &#64;block('content')
+        &lt;button &#64;click(setCount(count + 1))&gt;
+            Count: {{ count }}
+        &lt;/button&gt;
+    &#64;endblock
+&lt;/template&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__1_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_1'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__1_content])
+@endMarker('component', 'Bdoc2222c1')
+                </div></article>
+                <article @class([$__VIEW_ID__ . '-Bdoc223']) @attr(['id' => 'compile'])><span @class([$__VIEW_ID__ . '-Bdoc2231'])>03</span><div @class([$__VIEW_ID__ . '-Bdoc2232'])><p @class([$__VIEW_ID__ . '-Bdoc22321', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc223211'])>BUILD</span> Dual output</p><h2 @class([$__VIEW_ID__ . '-Bdoc22322'])>Compile đúng context.</h2><p @class([$__VIEW_ID__ . '-Bdoc22323'])>Build tạo Blade view, JavaScript view registry và bundle client tương ứng. Watch mode giữ hai output đồng bộ trong lúc phát triển.</p>
+                    @startMarker('component', 'Bdoc2232c1')
+                    @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_2'))
+@verbatim
+npm run build:views:web
+npm run build:web
+
+# development
+npm run dev:web
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__2_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_2'))
+@include('web.components.code-block', ['lang' => "bash", '__ONE_CHILDREN_CONTENT__' => $__code_block__2_content])
+@endMarker('component', 'Bdoc2232c1')
+                </div></article>
+                <article @class([$__VIEW_ID__ . '-Bdoc224']) @attr(['id' => 'verify'])><span @class([$__VIEW_ID__ . '-Bdoc2241'])>04</span><div @class([$__VIEW_ID__ . '-Bdoc2242'])><p @class([$__VIEW_ID__ . '-Bdoc22421', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc224211'])>VERIFY</span> Both paths</p><h2 @class([$__VIEW_ID__ . '-Bdoc22422'])>Kiểm tra SSR lẫn SPA.</h2><p @class([$__VIEW_ID__ . '-Bdoc22423'])>Tải trực tiếp URL để xác nhận HTML đầu tiên, sau đó điều hướng nội bộ, tương tác state, back/forward và kiểm tra không có listener trùng.</p><ul @class([$__VIEW_ID__ . '-Bdoc22424', 'check-list'])><li @class([$__VIEW_ID__ . '-Bdoc224241'])>View có nội dung khi JavaScript chưa chạy</li><li @class([$__VIEW_ID__ . '-Bdoc224242'])>Hydration không tạo DOM hoặc event lần hai</li><li @class([$__VIEW_ID__ . '-Bdoc224243'])>Route context đúng với web/admin/mobile</li><li @class([$__VIEW_ID__ . '-Bdoc224244'])>Rerender chỉ thay vùng reactive liên quan</li></ul></div></article>
             </div>
         </section>
 
-        <section @class([$__VIEW_ID__ . '-9fd19a30', 'start-cta'])><div @class([$__VIEW_ID__ . '-849145f1'])><p @class([$__VIEW_ID__ . '-0d56026d', 'kicker'])><span @class([$__VIEW_ID__ . '-773a2605'])>WORKING FIXTURE</span> Đừng chỉ đọc sơ đồ</p><h2 @class([$__VIEW_ID__ . '-de7a1e42'])>Xem state và navigation<br @class([$__VIEW_ID__ . '-939960ee'])>trên một view đang chạy.</h2></div><a @class([$__VIEW_ID__ . '-0ff18c59', 'button', 'button-light']) @attr(['href' => '/todo-list'])>Mở Todo demo <span @class([$__VIEW_ID__ . '-77b1ff2f'])>↗</span></a></section>
-        <a @class([$__VIEW_ID__ . '-11678124', 'doc-next']) @attr(['href' => '/docs/architecture'])>
-            <div @class([$__VIEW_ID__ . '-d3123a87'])><span @class([$__VIEW_ID__ . '-29215666'])>Tiếp theo</span><strong @class([$__VIEW_ID__ . '-775cdfb1'])>Kiến trúc hệ thống</strong></div>
-            <span @class([$__VIEW_ID__ . '-507799eb', 'button', 'button-primary'])>Đọc tiếp →</span>
+        <section @class([$__VIEW_ID__ . '-Bdoc3', 'start-cta'])><div @class([$__VIEW_ID__ . '-Bdoc31'])><p @class([$__VIEW_ID__ . '-Bdoc311', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc3111'])>WORKING FIXTURE</span> Đừng chỉ đọc sơ đồ</p><h2 @class([$__VIEW_ID__ . '-Bdoc312'])>Xem state và navigation<br @class([$__VIEW_ID__ . '-Bdoc3121'])>trên một view đang chạy.</h2></div><a @class([$__VIEW_ID__ . '-Bdoc32', 'button', 'button-light']) @attr(['href' => '/todo-list'])>Mở Todo demo <span @class([$__VIEW_ID__ . '-Bdoc321'])>↗</span></a></section>
+        <a @class([$__VIEW_ID__ . '-Bdoc4', 'doc-next']) @attr(['href' => '/docs/architecture'])>
+            <div @class([$__VIEW_ID__ . '-Bdoc41'])><span @class([$__VIEW_ID__ . '-Bdoc411'])>Tiếp theo</span><strong @class([$__VIEW_ID__ . '-Bdoc412'])>Kiến trúc hệ thống</strong></div>
+            <span @class([$__VIEW_ID__ . '-Bdoc42', 'button', 'button-primary'])>Đọc tiếp →</span>
         </a>
     @endblock

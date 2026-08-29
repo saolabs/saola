@@ -1,0 +1,20 @@
+@props({
+    label: '',
+    title: '',
+    lang: 'none',
+    dark: false
+})
+<template>
+    <div @class({'code-window', 'code-window-dark': dark, 'code-window-plain': !label && !title})>
+        @if(label || title)
+            <div class="window-bar">
+                <span>{{ label }}</span>
+                <b>{{ title }}</b>
+                @if(!dark)
+                    <i>● ● ●</i>
+                @endif
+            </div>
+        @endif
+        <pre><code class="language-{{ lang }}">@children</code></pre>
+    </div>
+</template>

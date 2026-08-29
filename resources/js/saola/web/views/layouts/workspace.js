@@ -115,87 +115,87 @@ class WorkspaceView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-shell', 'shell', (parentElement) => [
-            this.html(`c8b05ef4`, "div", parentElement,
+            this.html(`Bshell1`, "div", parentElement,
                 { classes: [{ type: 'static', value: "workspace-frame" }] },
                 (parentElement) => [
-                this.html(`ae440fb1`, "aside", parentElement,
+                this.html(`Bshell11`, "aside", parentElement,
                     { classes: [{ type: 'static', value: "workspace-sidebar" }] },
                     (parentElement) => [
-                    this.html(`ee4d154a`, "a", parentElement,
+                    this.html(`Bshell111`, "a", parentElement,
                         { classes: [{ type: 'static', value: "brand" }, { type: 'static', value: "brand-inverse" }], attrs: { "href": { type: 'static', value: "/" } } },
                         (parentElement) => [
-                        this.html(`2081c39e`, "span", parentElement,
+                        this.html(`Bshell1111`, "span", parentElement,
                             { classes: [{ type: 'static', value: "brand-mark" }] },
                             (parentElement) => [
                             this.text('S')
                             ]),
-                        this.html(`484b9384`, "span", parentElement, {}, (parentElement) => [
-                            this.html(`af437a03`, "strong", parentElement, {}, (parentElement) => [
+                        this.html(`Bshell1112`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bshell11121`, "strong", parentElement, {}, (parentElement) => [
                                 this.text('SAOLA')
                             ]),
-                            this.html(`b04354bc`, "small", parentElement, {}, (parentElement) => [
+                            this.html(`Bshell11122`, "small", parentElement, {}, (parentElement) => [
                                 this.text('WORKSPACE')
                             ])
                         ])
                         ]),
-                    this.html(`f1d88df0`, "div", parentElement,
+                    this.html(`Bshell112`, "div", parentElement,
                         { classes: [{ type: 'static', value: "workspace-date" }] },
                         (parentElement) => [
-                        this.html(`bb8ce219`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bshell1121`, "span", parentElement, {}, (parentElement) => [
                             this.text('Today')
                         ]),
-                        this.html(`57a0cbe4`, "strong", parentElement, {}, (parentElement) => [
+                        this.html(`Bshell1122`, "strong", parentElement, {}, (parentElement) => [
                             this.text('Make room'),
-                            this.html(`36a9e72f`, "br", parentElement, {}),
+                            this.html(`Bshell11221`, "br", parentElement, {}),
                             this.text('for what matters.')
                         ])
                         ]),
-                    this.html(`76ddaf72`, "nav", parentElement,
+                    this.html(`Bshell113`, "nav", parentElement,
                         { classes: [{ type: 'static', value: "workspace-nav" }] },
                         (parentElement) => [
-                        this.html(`dfaa61d0`, "a", parentElement,
+                        this.html(`Bshell1131`, "a", parentElement,
                             { attrs: { "href": { type: 'static', value: "/todo-list" } } },
                             (parentElement) => [
-                            this.html(`cb4d927c`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bshell11311`, "span", parentElement, {}, (parentElement) => [
                                 this.text('01')
                             ]),
                             this.text(' Tasks')
                             ]),
-                        this.html(`2c228af7`, "a", parentElement,
+                        this.html(`Bshell1132`, "a", parentElement,
                             { attrs: { "href": { type: 'static', value: "/roster" } } },
                             (parentElement) => [
-                            this.html(`ca7daca6`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bshell11321`, "span", parentElement, {}, (parentElement) => [
                                 this.text('02')
                             ]),
                             this.text(' Roster')
                             ]),
-                        this.html(`937a1507`, "a", parentElement,
+                        this.html(`Bshell1133`, "a", parentElement,
                             { attrs: { "href": { type: 'static', value: "/" } } },
                             (parentElement) => [
-                            this.html(`65c71c6e`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bshell11331`, "span", parentElement, {}, (parentElement) => [
                                 this.text('03')
                             ]),
                             this.text(' Back to site')
                             ]),
-                        this.html(`98f2250a`, "a", parentElement,
+                        this.html(`Bshell1134`, "a", parentElement,
                             { attrs: { "href": { type: 'static', value: "/about" } } },
                             (parentElement) => [
-                            this.html(`c4e5d60d`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bshell11341`, "span", parentElement, {}, (parentElement) => [
                                 this.text('04')
                             ]),
                             this.text(' Philosophy')
                             ])
                         ]),
-                    this.html(`0236cb34`, "p", parentElement,
+                    this.html(`Bshell114`, "p", parentElement,
                         { classes: [{ type: 'static', value: "workspace-note" }] },
                         (parentElement) => [
                         this.text('State stays local to the page. The layout remains stable while the route changes.')
                         ])
                     ]),
-                this.html(`045faade`, "main", parentElement,
+                this.html(`Bshell12`, "main", parentElement,
                     { classes: [{ type: 'static', value: "workspace-main" }] },
                     (parentElement) => [
-                    this.blockOutlet(`20269ffe`, "workspace", parentElement)
+                    this.blockOutlet(`Bshell12b`, "workspace", parentElement)
                     ])
                 ])
             ]);

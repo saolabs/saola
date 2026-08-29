@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -38,6 +36,8 @@ export interface MapcardProps {
     [key: string]: any;
 }
 
+
+
 class MapcardViewController extends ViewController {
     constructor(view: View) {
         super(view, __VIEW_PATH__, __VIEW_TYPE__);
@@ -50,7 +50,7 @@ class MapcardViewController extends ViewController {
 }
 
 class MapcardView extends View {
-    constructor(__data__: MapcardProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, MapcardViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -137,18 +137,18 @@ class MapcardView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`737c191a`, "a", parentElement,
+            this.html(`e1`, "a", parentElement,
                 { classes: [{ type: 'static', value: "map-card" }, { type: 'binding', value: "map-card-dark", factory: () => variant === 'dark', stateKeys: ["variant"] }], attrs: { "href": { type: 'binding', value: href, factory: () => href, stateKeys: ["href"] } } },
                 (parentElement: any) => [
-                this.html(`2b9057b1`, "span", parentElement, {}, (parentElement: any) => [
-                    this.output(`946033b9`, parentElement, true, ["eyebrow"], (parentElement: any) => eyebrow)
+                this.html(`e11`, "span", parentElement, {}, (parentElement: any) => [
+                    this.output(`e11o1`, parentElement, true, ["eyebrow"], (parentElement: any) => eyebrow)
                 ]),
-                this.html(`2f7d4292`, "h3", parentElement, {}, (parentElement: any) => [
-                    this.output(`2534df8d`, parentElement, true, ["title"], (parentElement: any) => title)
+                this.html(`e12`, "h3", parentElement, {}, (parentElement: any) => [
+                    this.output(`e12o1`, parentElement, true, ["title"], (parentElement: any) => title)
                 ]),
                 ...this.__children(__ONE_CHILDREN_CONTENT__, parentElement),
-                this.html(`288850ca`, "i", parentElement, {}, (parentElement: any) => [
-                    this.output(`7223fa5e`, parentElement, true, ["link"], (parentElement: any) => link)
+                this.html(`e13`, "i", parentElement, {}, (parentElement: any) => [
+                    this.output(`e13o1`, parentElement, true, ["link"], (parentElement: any) => link)
                 ])
                 ])
             ]);
@@ -159,7 +159,7 @@ class MapcardView extends View {
 }
 
 // Export factory function
-export function WebModulesHomePartsMapcard(__data__: MapcardProps = {}, systemData: any = {}): MapcardView {
+export function WebModulesHomePartsMapcard(__data__ = {}, systemData = {}): MapcardView {
     return new MapcardView(__data__, systemData);
 }
 export default WebModulesHomePartsMapcard;

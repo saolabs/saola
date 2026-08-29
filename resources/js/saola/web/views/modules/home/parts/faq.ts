@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -31,6 +29,8 @@ export interface FaqProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class FaqViewController extends ViewController {
     constructor(view: View) {
@@ -44,7 +44,7 @@ class FaqViewController extends ViewController {
 }
 
 class FaqView extends View {
-    constructor(__data__: FaqProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, FaqViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -132,109 +132,113 @@ class FaqView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`bbcd3398`, "section", parentElement,
+            this.html(`e1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "faq-grid" }, { type: 'static', value: "home-section--fog" }], attrs: { "id": { type: 'static', value: "faq" } } },
                 (parentElement: any) => [
-                this.html(`88b70a58`, "div", parentElement,
+                this.html(`e11`, "div", parentElement,
                     { classes: [{ type: 'static', value: "section-head" }] },
                     (parentElement: any) => [
-                    this.html(`e444cc57`, "p", parentElement,
+                    this.html(`e111`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement: any) => [
-                        this.html(`3d2849a4`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`e1111`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('FAQ')
                         ]),
-                        this.text(' Hỏi nhanh')
+                        this.text(' Hỏi đáp nhanh')
                         ]),
-                    this.html(`ed9d4c8f`, "h2", parentElement, {}, (parentElement: any) => [
-                        this.text('Sáu câu hỏi hay gặp nhất.')
+                    this.html(`e112`, "h2", parentElement, {}, (parentElement: any) => [
+                        this.text('Những câu hỏi thường gặp nhất.')
                     ])
                     ]),
-                this.html(`b545b1d4`, "div", parentElement,
+                this.html(`e12`, "div", parentElement,
                     { classes: [{ type: 'static', value: "value-accordion" }] },
                     (parentElement: any) => [
-                    this.html(`9575d036`, "article", parentElement,
+                    this.html(`e121`, "article", parentElement,
                         { classes: [{ type: 'static', value: "value-item" }, { type: 'binding', value: "open", factory: () => openFaq === 0, stateKeys: ["openFaq"] }] },
                         (parentElement: any) => [
-                        this.html(`1bc8977d`, "button", parentElement,
+                        this.html(`e1211`, "button", parentElement,
                             { events: { click: [(event: any) => setOpenFaq(0)] } },
                             (parentElement: any) => [
-                            this.html(`4da627c8`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`e12111`, "span", parentElement, {}, (parentElement: any) => [
                                 this.text('01')
                             ]),
-                            this.html(`6cf9e65e`, "strong", parentElement, {}, (parentElement: any) => [
+                            this.html(`e12112`, "strong", parentElement, {}, (parentElement: any) => [
                                 this.text('Saola có thay thế Laravel không?')
                             ]),
-                            this.html(`4b3780d1`, "i", parentElement, {}, (parentElement: any) => [
+                            this.html(`e12113`, "i", parentElement, {}, (parentElement: any) => [
                                 this.text('+')
                             ])
                             ]),
-                        this.reactive(`c198301d`, "if", parentReactive, parentElement, ["openFaq"], (parentReactive: any, parentElement: any) => {
+                        this.reactive(`e121r1`, "if", parentReactive, parentElement, ["openFaq"], (parentReactive: any, parentElement: any) => {
                             const reactiveContents = [];
                             if (openFaq === 0) {
                                 reactiveContents.push(
-                                this.html(`312596ee`, "p", parentElement, {}, (parentElement: any) => [
-                                    this.text('Không. Saola là lớp view và runtime chạy trên Laravel. Route, middleware, policy, Eloquent, queue và toàn bộ hệ sinh thái Laravel giữ nguyên. Cái Saola thay là cách bạn viết tầng view và cách trang đó sống tiếp sau khi tải xong.')
+                                this.html(`e121r1k11`, "p", parentElement, {}, (parentElement: any) => [
+                                    this.text('Không. Saola coi Laravel là nền tảng vững chắc. Eloquent, middleware, policy, queue vẫn giữ nguyên. Saola mang đến hai cải tiến: cách tổ chức mã nguồn (module tự động khai báo, context phân tách môi trường) và cơ chế View (một file '),
+                                    this.html(`e121r1k111`, "code", parentElement, {}, (parentElement: any) => [
+                                        this.text('.sao')
+                                    ]),
+                                    this.text(' sinh mã cho cả Server và Client, biến trang web thành SPA sau lần tải đầu tiên).')
                                 ])
                                 );
                             }
                             return reactiveContents;
                         })
                         ]),
-                    this.html(`f21a86b1`, "article", parentElement,
+                    this.html(`e122`, "article", parentElement,
                         { classes: [{ type: 'static', value: "value-item" }, { type: 'binding', value: "open", factory: () => openFaq === 1, stateKeys: ["openFaq"] }] },
                         (parentElement: any) => [
-                        this.html(`f087df74`, "button", parentElement,
+                        this.html(`e1221`, "button", parentElement,
                             { events: { click: [(event: any) => setOpenFaq(1)] } },
                             (parentElement: any) => [
-                            this.html(`5e74edef`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`e12211`, "span", parentElement, {}, (parentElement: any) => [
                                 this.text('02')
                             ]),
-                            this.html(`ef45b241`, "strong", parentElement, {}, (parentElement: any) => [
-                                this.text('Tôi có phải bỏ Blade đang có không?')
+                            this.html(`e12212`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.text('Tôi có phải bỏ các file Blade hiện có không?')
                             ]),
-                            this.html(`989b4085`, "i", parentElement, {}, (parentElement: any) => [
+                            this.html(`e12213`, "i", parentElement, {}, (parentElement: any) => [
                                 this.text('+')
                             ])
                             ]),
-                        this.reactive(`0b397819`, "if", parentReactive, parentElement, ["openFaq"], (parentReactive: any, parentElement: any) => {
+                        this.reactive(`e122r1`, "if", parentReactive, parentElement, ["openFaq"], (parentReactive: any, parentElement: any) => {
                             const reactiveContents = [];
                             if (openFaq === 1) {
                                 reactiveContents.push(
-                                this.html(`f288a437`, "p", parentElement, {}, (parentElement: any) => [
-                                    this.text('Không. Đầu ra phía server của một file '),
-                                    this.html(`8d27c83f`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`e122r1k11`, "p", parentElement, {}, (parentElement: any) => [
+                                    this.text('Không. Khi biên dịch, đầu ra phía server của file '),
+                                    this.html(`e122r1k111`, "code", parentElement, {}, (parentElement: any) => [
                                         this.text('.sao')
                                     ]),
-                                    this.text(' chính là Blade template, nằm cùng chỗ với view Blade bạn đang có. Bạn chuyển dần từng trang, không cần viết lại cả ứng dụng trong một lần.')
+                                    this.text(' chính là một file Blade template, có thể cùng tồn tại với các view cũ. Bạn có thể chuyển đổi dần từng trang mà không cần đập đi xây lại toàn bộ hệ thống.')
                                 ])
                                 );
                             }
                             return reactiveContents;
                         })
                         ]),
-                    this.html(`d292e066`, "article", parentElement,
-                        { classes: [{ type: 'static', value: "value-item" }, { type: 'binding', value: "open", factory: () => openFaq === 5, stateKeys: ["openFaq"] }] },
+                    this.html(`e123`, "article", parentElement,
+                        { classes: [{ type: 'static', value: "value-item" }, { type: 'binding', value: "open", factory: () => openFaq === 2, stateKeys: ["openFaq"] }] },
                         (parentElement: any) => [
-                        this.html(`2eb01ab6`, "button", parentElement,
-                            { events: { click: [(event: any) => setOpenFaq(5)] } },
+                        this.html(`e1231`, "button", parentElement,
+                            { events: { click: [(event: any) => setOpenFaq(2)] } },
                             (parentElement: any) => [
-                            this.html(`d2321221`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('06')
+                            this.html(`e12311`, "span", parentElement, {}, (parentElement: any) => [
+                                this.text('03')
                             ]),
-                            this.html(`637f1eb9`, "strong", parentElement, {}, (parentElement: any) => [
-                                this.text('Đã biết Blade thì học mất bao lâu?')
+                            this.html(`e12312`, "strong", parentElement, {}, (parentElement: any) => [
+                                this.text('Đã rành Blade thì học Saola mất bao lâu?')
                             ]),
-                            this.html(`51cf42cd`, "i", parentElement, {}, (parentElement: any) => [
+                            this.html(`e12313`, "i", parentElement, {}, (parentElement: any) => [
                                 this.text('+')
                             ])
                             ]),
-                        this.reactive(`90cc5571`, "if", parentReactive, parentElement, ["openFaq"], (parentReactive: any, parentElement: any) => {
+                        this.reactive(`e123r1`, "if", parentReactive, parentElement, ["openFaq"], (parentReactive: any, parentElement: any) => {
                             const reactiveContents = [];
-                            if (openFaq === 5) {
+                            if (openFaq === 2) {
                                 reactiveContents.push(
-                                this.html(`ee5672a5`, "p", parentElement, {}, (parentElement: any) => [
-                                    this.text('Cú pháp giữ hình dạng directive quen thuộc của Blade, nên phần điều khiển luồng gần như đọc được ngay. Cái mới cần nắm là ba thứ: state khai báo ở đầu file, setter sinh tự động, và ranh giới giữa giá trị reactive với giá trị tính một lần.')
+                                this.html(`e123r1k11`, "p", parentElement, {}, (parentElement: any) => [
+                                    this.text('Cú pháp Saola giữ nguyên hình dạng directive quen thuộc của Blade, nên bạn gần như có thể đọc hiểu ngay lập tức. Điều duy nhất cần nắm thêm là cách khai báo state ở đầu file, các hàm setter tự sinh, và ranh giới giữa giá trị phản ứng (reactive) với giá trị tĩnh.')
                                 ])
                                 );
                             }
@@ -251,7 +255,7 @@ class FaqView extends View {
 }
 
 // Export factory function
-export function WebModulesHomePartsFaq(__data__: FaqProps = {}, systemData: any = {}): FaqView {
+export function WebModulesHomePartsFaq(__data__ = {}, systemData = {}): FaqView {
     return new FaqView(__data__, systemData);
 }
 export default WebModulesHomePartsFaq;

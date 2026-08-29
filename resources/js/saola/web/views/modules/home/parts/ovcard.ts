@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -35,6 +33,8 @@ export interface OvcardProps {
     [key: string]: any;
 }
 
+
+
 class OvcardViewController extends ViewController {
     constructor(view: View) {
         super(view, __VIEW_PATH__, __VIEW_TYPE__);
@@ -47,7 +47,7 @@ class OvcardViewController extends ViewController {
 }
 
 class OvcardView extends View {
-    constructor(__data__: OvcardProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, OvcardViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -128,14 +128,14 @@ class OvcardView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`d69e6b1d`, "div", parentElement,
+            this.html(`e1`, "div", parentElement,
                 { classes: [{ type: 'static', value: "ov-card" }] },
                 (parentElement: any) => [
-                this.html(`bda2927b`, "span", parentElement, {}, (parentElement: any) => [
-                    this.output(`eed61699`, parentElement, true, ["eyebrow"], (parentElement: any) => eyebrow)
+                this.html(`e11`, "span", parentElement, {}, (parentElement: any) => [
+                    this.output(`e11o1`, parentElement, true, ["eyebrow"], (parentElement: any) => eyebrow)
                 ]),
-                this.html(`743a1357`, "h3", parentElement, {}, (parentElement: any) => [
-                    this.output(`f58f8f3a`, parentElement, true, ["title"], (parentElement: any) => title)
+                this.html(`e12`, "h3", parentElement, {}, (parentElement: any) => [
+                    this.output(`e12o1`, parentElement, true, ["title"], (parentElement: any) => title)
                 ]),
                 ...this.__children(__ONE_CHILDREN_CONTENT__, parentElement)
                 ])
@@ -147,7 +147,7 @@ class OvcardView extends View {
 }
 
 // Export factory function
-export function WebModulesHomePartsOvcard(__data__: OvcardProps = {}, systemData: any = {}): OvcardView {
+export function WebModulesHomePartsOvcard(__data__ = {}, systemData = {}): OvcardView {
     return new OvcardView(__data__, systemData);
 }
 export default WebModulesHomePartsOvcard;

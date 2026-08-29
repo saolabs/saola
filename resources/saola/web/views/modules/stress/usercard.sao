@@ -4,7 +4,7 @@
 })
 
 <template>
-    <div @class(['ucard', 'ucard--hl': highlight])>
+    <div @class({'ucard', 'ucard--hl': highlight})>
         <div class="ucard__id">#{{ user['id'] }}</div>
         <div class="ucard__main">
             <strong>{{ user['name'] }}</strong>

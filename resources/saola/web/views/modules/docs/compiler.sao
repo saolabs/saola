@@ -1,3 +1,4 @@
+@import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
     @block('doc')
@@ -6,23 +7,31 @@
             <div class="page-hero-aside"><p>Compiler không chỉ đổi syntax. Nó bảo toàn ý nghĩa của view giữa Blade SSR và JavaScript runtime.</p><dl><div><dt>SOURCE</dt><dd>component.sao</dd></div><div><dt>TARGETS</dt><dd>.blade.php + .js</dd></div></dl></div>
         </section>
 
-        <section class="compiler-board">
-            <div class="code-window source-window"><div class="window-bar"><span>SOURCE</span><b>card.sao</b><i>● ● ●</i></div><pre><code><span class="html-token">article class="card"</span>
-  <span class="html-token">h2</span><span class="mustache-token">title</span><span class="html-token html-token-close">h2</span>
-  <span class="directive-token">children</span>
-<span class="html-token html-token-close">article</span></code></pre></div>
-            <div class="compile-spine"><span>PARSE</span><i>↓</i><strong>AST</strong><i>↙ ↘</i><span>GENERATE</span></div>
-            <div class="target-stack">
-                <div class="code-window"><div class="window-bar"><span>SERVER</span><b>card.blade.php</b></div><pre><code><span class="html-token">article class="card"</span>
-  <span class="html-token">h2</span><span class="mustache-token">$title</span><span class="html-token html-token-close">h2</span>
-  <span class="blade-raw-token">$__ONE_CHILDREN_CONTENT__</span>
-<span class="html-token html-token-close">article</span></code></pre></div>
-                <div class="code-window code-window-dark"><div class="window-bar"><span>CLIENT</span><b>Card.js</b></div><pre><code>return this.wrapper([
+        <section class="compiler-board" >
+            <code-window label="SOURCE" title="card.sao" lang="html">
+@verbatim&lt;article class="card"&gt;
+  &lt;h2&gt;{{ title }}&lt;/h2&gt;
+  @children
+&lt;/article&gt;@endverbatim
+            </code-window>
+
+            <div class="compile-spine" style="flex-direction: column; min-height: 180px;"><span>PARSE</span><i>↓</i><strong>AST</strong><i style="letter-spacing: 40px; font-size: 24px; margin-top: 10px;">↙ ↘</i><span>GENERATE</span></div>
+            <div class="target-stack" style="grid-template-columns: 1fr 1fr; align-items: stretch;">
+                <code-window label="SERVER" title="card.blade.php" lang="php">
+@verbatim&lt;article class="card"&gt;
+  &lt;h2&gt;{{ $title }}&lt;/h2&gt;
+  {!! $__ONE_CHILDREN_CONTENT__ !!}
+&lt;/article&gt;@endverbatim
+                </code-window>
+
+                <code-window label="CLIENT" title="Card.js" lang="js" dark>
+@verbatimreturn this.wrapper([
   this.html('article', [
     this.output(title),
     this.children()
   ])
-]);</code></pre></div>
+]);@endverbatim
+                </code-window>
             </div>
         </section>
 

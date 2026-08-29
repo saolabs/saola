@@ -20,12 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-const API = '/api/api/roster';
-
-
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -37,6 +31,12 @@ export interface ItemProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
+const API = '/api/api/roster';
+
+
+
 
 class ItemViewController extends ViewController {
     constructor(view: View) {
@@ -50,7 +50,7 @@ class ItemViewController extends ViewController {
 }
 
 class ItemView extends View {
-    constructor(__data__: ItemProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, ItemViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -351,35 +351,35 @@ class ItemView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`98f36c4a`, "article", parentElement,
+            this.html(`e1`, "article", parentElement,
                 { classes: [{ type: 'static', value: "rs-row" }, { type: 'binding', value: "rs-row--edit", factory: () => editing, stateKeys: ["editing"] }, { type: 'binding', value: "rs-row--gone", factory: () => record === null, stateKeys: ["null", "record"] }] },
                 (parentElement: any) => [
-                this.reactive(`ff2f222f`, "if", parentReactive, parentElement, ["editing"], (parentReactive: any, parentElement: any) => {
+                this.reactive(`e1r1`, "if", parentReactive, parentElement, ["editing"], (parentReactive: any, parentElement: any) => {
                     const reactiveContents = [];
                     if (editing) {
                         reactiveContents.push(
-                        this.reactive(`b692f4b0`, "if", parentReactive, parentElement, ["base", "null", "record"], (parentReactive: any, parentElement: any) => {
+                        this.reactive(`e1r1k1r1`, "if", parentReactive, parentElement, ["base", "null", "record"], (parentReactive: any, parentElement: any) => {
                             const reactiveContents = [];
                             if (record === null) {
                                 reactiveContents.push(
-                                this.html(`0c0f8951`, "div", parentElement,
+                                this.html(`e1r1k1r1k11`, "div", parentElement,
                                     { classes: [{ type: 'static', value: "rs-alert" }, { type: 'static', value: "rs-alert--danger" }] },
                                     (parentElement: any) => [
-                                    this.html(`097db133`, "strong", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1r1k1r1k111`, "strong", parentElement, {}, (parentElement: any) => [
                                         this.text('Người khác vừa xoá người dùng này')
                                     ]),
-                                    this.html(`3a480c72`, "p", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1r1k1r1k112`, "p", parentElement, {}, (parentElement: any) => [
                                         this.text('Bản nháp trong form vẫn còn nguyên. Tạo lại thành người dùng mới, hay bỏ bản nháp?')
                                     ]),
-                                    this.html(`43b9856b`, "div", parentElement,
+                                    this.html(`e1r1k1r1k113`, "div", parentElement,
                                         { classes: [{ type: 'static', value: "rs-alert-actions" }] },
                                         (parentElement: any) => [
-                                        this.html(`fc2e2e92`, "button", parentElement,
+                                        this.html(`e1r1k1r1k1131`, "button", parentElement,
                                             { classes: [{ type: 'static', value: "rs-btn" }, { type: 'static', value: "rs-btn-sm" }, { type: 'static', value: "rs-btn-primary" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"recreate","params":[]}] } },
                                             (parentElement: any) => [
                                             this.text('Tạo lại từ bản nháp')
                                             ]),
-                                        this.html(`c53285eb`, "button", parentElement,
+                                        this.html(`e1r1k1r1k1132`, "button", parentElement,
                                             { classes: [{ type: 'static', value: "rs-btn" }, { type: 'static', value: "rs-btn-sm" }, { type: 'static', value: "rs-btn-plain" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"cancelEdit","params":[]}] } },
                                             (parentElement: any) => [
                                             this.text('Bỏ bản nháp')
@@ -390,46 +390,46 @@ class ItemView extends View {
                             }
                             else if (base !== null && record['updated_at'] !== base['updated_at']) {
                                 reactiveContents.push(
-                                this.html(`45e2a7d9`, "div", parentElement,
+                                this.html(`e1r1k1r1k21`, "div", parentElement,
                                     { classes: [{ type: 'static', value: "rs-alert" }] },
                                     (parentElement: any) => [
-                                    this.html(`f780ab0f`, "strong", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1r1k1r1k211`, "strong", parentElement, {}, (parentElement: any) => [
                                         this.text('Người khác vừa sửa người dùng này')
                                     ]),
-                                    this.html(`0673200e`, "p", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1r1k1r1k212`, "p", parentElement, {}, (parentElement: any) => [
                                         this.text('Bản nháp của bạn chưa bị đụng tới. Chọn bản muốn giữ:')
                                     ]),
-                                    this.html(`df4b3209`, "ul", parentElement,
+                                    this.html(`e1r1k1r1k213`, "ul", parentElement,
                                         { classes: [{ type: 'static', value: "rs-diff" }] },
                                         (parentElement: any) => [
-                                        this.reactive(`341c1d09`, "if", parentReactive, parentElement, ["base", "record"], (parentReactive: any, parentElement: any) => {
+                                        this.reactive(`e1r1k1r1k213r1`, "if", parentReactive, parentElement, ["base", "record"], (parentReactive: any, parentElement: any) => {
                                             const reactiveContents = [];
                                             if (record['name'] !== base['name']) {
                                                 reactiveContents.push(
-                                                this.html(`b52c5d72`, "li", parentElement, {}, (parentElement: any) => [
-                                                    this.html(`e9fc0a83`, "span", parentElement,
+                                                this.html(`e1r1k1r1k213r1k11`, "li", parentElement, {}, (parentElement: any) => [
+                                                    this.html(`e1r1k1r1k213r1k111`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-key" }] },
                                                         (parentElement: any) => [
                                                         this.text('name')
                                                         ]),
-                                                    this.html(`741fc002`, "span", parentElement,
+                                                    this.html(`e1r1k1r1k213r1k112`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-theirs" }] },
                                                         (parentElement: any) => [
-                                                        this.html(`eb69e58a`, "em", parentElement, {}, (parentElement: any) => [
+                                                        this.html(`e1r1k1r1k213r1k1121`, "em", parentElement, {}, (parentElement: any) => [
                                                             this.text('Của họ')
                                                         ]),
-                                                        this.html(`142d846f`, "b", parentElement, {}, (parentElement: any) => [
-                                                            this.output(`408f7bc1`, parentElement, true, ["record"], (parentElement: any) => record['name'])
+                                                        this.html(`e1r1k1r1k213r1k1122`, "b", parentElement, {}, (parentElement: any) => [
+                                                            this.output(`e1r1k1r1k213r1k1122o1`, parentElement, true, ["record"], (parentElement: any) => record['name'])
                                                         ])
                                                         ]),
-                                                    this.html(`714be425`, "span", parentElement,
+                                                    this.html(`e1r1k1r1k213r1k113`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-mine" }] },
                                                         (parentElement: any) => [
-                                                        this.html(`eb812103`, "em", parentElement, {}, (parentElement: any) => [
+                                                        this.html(`e1r1k1r1k213r1k1131`, "em", parentElement, {}, (parentElement: any) => [
                                                             this.text('Của bạn')
                                                         ]),
-                                                        this.html(`fb46644a`, "b", parentElement, {}, (parentElement: any) => [
-                                                            this.output(`c9d3a48b`, parentElement, true, ["fName"], (parentElement: any) => fName)
+                                                        this.html(`e1r1k1r1k213r1k1132`, "b", parentElement, {}, (parentElement: any) => [
+                                                            this.output(`e1r1k1r1k213r1k1132o1`, parentElement, true, ["fName"], (parentElement: any) => fName)
                                                         ])
                                                         ])
                                                 ])
@@ -437,34 +437,34 @@ class ItemView extends View {
                                             }
                                             return reactiveContents;
                                         }),
-                                        this.reactive(`4ef6c5c7`, "if", parentReactive, parentElement, ["base", "record"], (parentReactive: any, parentElement: any) => {
+                                        this.reactive(`e1r1k1r1k213r2`, "if", parentReactive, parentElement, ["base", "record"], (parentReactive: any, parentElement: any) => {
                                             const reactiveContents = [];
                                             if (record['email'] !== base['email']) {
                                                 reactiveContents.push(
-                                                this.html(`d3b3a836`, "li", parentElement, {}, (parentElement: any) => [
-                                                    this.html(`3ab3b6f3`, "span", parentElement,
+                                                this.html(`e1r1k1r1k213r2k11`, "li", parentElement, {}, (parentElement: any) => [
+                                                    this.html(`e1r1k1r1k213r2k111`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-key" }] },
                                                         (parentElement: any) => [
                                                         this.text('email')
                                                         ]),
-                                                    this.html(`9cc24a44`, "span", parentElement,
+                                                    this.html(`e1r1k1r1k213r2k112`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-theirs" }] },
                                                         (parentElement: any) => [
-                                                        this.html(`5f61e8b9`, "em", parentElement, {}, (parentElement: any) => [
+                                                        this.html(`e1r1k1r1k213r2k1121`, "em", parentElement, {}, (parentElement: any) => [
                                                             this.text('Của họ')
                                                         ]),
-                                                        this.html(`35246fde`, "b", parentElement, {}, (parentElement: any) => [
-                                                            this.output(`4ebc64ec`, parentElement, true, ["record"], (parentElement: any) => record['email'])
+                                                        this.html(`e1r1k1r1k213r2k1122`, "b", parentElement, {}, (parentElement: any) => [
+                                                            this.output(`e1r1k1r1k213r2k1122o1`, parentElement, true, ["record"], (parentElement: any) => record['email'])
                                                         ])
                                                         ]),
-                                                    this.html(`d8f6b688`, "span", parentElement,
+                                                    this.html(`e1r1k1r1k213r2k113`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-mine" }] },
                                                         (parentElement: any) => [
-                                                        this.html(`e492adf7`, "em", parentElement, {}, (parentElement: any) => [
+                                                        this.html(`e1r1k1r1k213r2k1131`, "em", parentElement, {}, (parentElement: any) => [
                                                             this.text('Của bạn')
                                                         ]),
-                                                        this.html(`67b309b4`, "b", parentElement, {}, (parentElement: any) => [
-                                                            this.output(`a6467101`, parentElement, true, ["fEmail"], (parentElement: any) => fEmail)
+                                                        this.html(`e1r1k1r1k213r2k1132`, "b", parentElement, {}, (parentElement: any) => [
+                                                            this.output(`e1r1k1r1k213r2k1132o1`, parentElement, true, ["fEmail"], (parentElement: any) => fEmail)
                                                         ])
                                                         ])
                                                 ])
@@ -472,34 +472,34 @@ class ItemView extends View {
                                             }
                                             return reactiveContents;
                                         }),
-                                        this.reactive(`baf4cc07`, "if", parentReactive, parentElement, ["base", "record"], (parentReactive: any, parentElement: any) => {
+                                        this.reactive(`e1r1k1r1k213r3`, "if", parentReactive, parentElement, ["base", "record"], (parentReactive: any, parentElement: any) => {
                                             const reactiveContents = [];
                                             if (record['gender'] !== base['gender']) {
                                                 reactiveContents.push(
-                                                this.html(`5f24143d`, "li", parentElement, {}, (parentElement: any) => [
-                                                    this.html(`e83f51d9`, "span", parentElement,
+                                                this.html(`e1r1k1r1k213r3k11`, "li", parentElement, {}, (parentElement: any) => [
+                                                    this.html(`e1r1k1r1k213r3k111`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-key" }] },
                                                         (parentElement: any) => [
                                                         this.text('gender')
                                                         ]),
-                                                    this.html(`02767d60`, "span", parentElement,
+                                                    this.html(`e1r1k1r1k213r3k112`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-theirs" }] },
                                                         (parentElement: any) => [
-                                                        this.html(`c2505ec9`, "em", parentElement, {}, (parentElement: any) => [
+                                                        this.html(`e1r1k1r1k213r3k1121`, "em", parentElement, {}, (parentElement: any) => [
                                                             this.text('Của họ')
                                                         ]),
-                                                        this.html(`c9805ea1`, "b", parentElement, {}, (parentElement: any) => [
-                                                            this.output(`2bee6599`, parentElement, true, ["record"], (parentElement: any) => record['gender'])
+                                                        this.html(`e1r1k1r1k213r3k1122`, "b", parentElement, {}, (parentElement: any) => [
+                                                            this.output(`e1r1k1r1k213r3k1122o1`, parentElement, true, ["record"], (parentElement: any) => record['gender'])
                                                         ])
                                                         ]),
-                                                    this.html(`966d001a`, "span", parentElement,
+                                                    this.html(`e1r1k1r1k213r3k113`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-mine" }] },
                                                         (parentElement: any) => [
-                                                        this.html(`067fd720`, "em", parentElement, {}, (parentElement: any) => [
+                                                        this.html(`e1r1k1r1k213r3k1131`, "em", parentElement, {}, (parentElement: any) => [
                                                             this.text('Của bạn')
                                                         ]),
-                                                        this.html(`4a90fcfb`, "b", parentElement, {}, (parentElement: any) => [
-                                                            this.output(`9236a704`, parentElement, true, ["fGender"], (parentElement: any) => fGender)
+                                                        this.html(`e1r1k1r1k213r3k1132`, "b", parentElement, {}, (parentElement: any) => [
+                                                            this.output(`e1r1k1r1k213r3k1132o1`, parentElement, true, ["fGender"], (parentElement: any) => fGender)
                                                         ])
                                                         ])
                                                 ])
@@ -507,34 +507,34 @@ class ItemView extends View {
                                             }
                                             return reactiveContents;
                                         }),
-                                        this.reactive(`62a96f50`, "if", parentReactive, parentElement, ["base", "record"], (parentReactive: any, parentElement: any) => {
+                                        this.reactive(`e1r1k1r1k213r4`, "if", parentReactive, parentElement, ["base", "record"], (parentReactive: any, parentElement: any) => {
                                             const reactiveContents = [];
                                             if (record['birthdate'] !== base['birthdate']) {
                                                 reactiveContents.push(
-                                                this.html(`16883cc9`, "li", parentElement, {}, (parentElement: any) => [
-                                                    this.html(`21b4d18b`, "span", parentElement,
+                                                this.html(`e1r1k1r1k213r4k11`, "li", parentElement, {}, (parentElement: any) => [
+                                                    this.html(`e1r1k1r1k213r4k111`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-key" }] },
                                                         (parentElement: any) => [
                                                         this.text('birthdate')
                                                         ]),
-                                                    this.html(`0f6cb257`, "span", parentElement,
+                                                    this.html(`e1r1k1r1k213r4k112`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-theirs" }] },
                                                         (parentElement: any) => [
-                                                        this.html(`e86011c3`, "em", parentElement, {}, (parentElement: any) => [
+                                                        this.html(`e1r1k1r1k213r4k1121`, "em", parentElement, {}, (parentElement: any) => [
                                                             this.text('Của họ')
                                                         ]),
-                                                        this.html(`fb91be62`, "b", parentElement, {}, (parentElement: any) => [
-                                                            this.output(`833625ad`, parentElement, true, ["record"], (parentElement: any) => record['birthdate'])
+                                                        this.html(`e1r1k1r1k213r4k1122`, "b", parentElement, {}, (parentElement: any) => [
+                                                            this.output(`e1r1k1r1k213r4k1122o1`, parentElement, true, ["record"], (parentElement: any) => record['birthdate'])
                                                         ])
                                                         ]),
-                                                    this.html(`e1156ceb`, "span", parentElement,
+                                                    this.html(`e1r1k1r1k213r4k113`, "span", parentElement,
                                                         { classes: [{ type: 'static', value: "rs-diff-mine" }] },
                                                         (parentElement: any) => [
-                                                        this.html(`7f8a0e3d`, "em", parentElement, {}, (parentElement: any) => [
+                                                        this.html(`e1r1k1r1k213r4k1131`, "em", parentElement, {}, (parentElement: any) => [
                                                             this.text('Của bạn')
                                                         ]),
-                                                        this.html(`32335cce`, "b", parentElement, {}, (parentElement: any) => [
-                                                            this.output(`73ccfd00`, parentElement, true, ["fBirthdate"], (parentElement: any) => fBirthdate)
+                                                        this.html(`e1r1k1r1k213r4k1132`, "b", parentElement, {}, (parentElement: any) => [
+                                                            this.output(`e1r1k1r1k213r4k1132o1`, parentElement, true, ["fBirthdate"], (parentElement: any) => fBirthdate)
                                                         ])
                                                         ])
                                                 ])
@@ -543,15 +543,15 @@ class ItemView extends View {
                                             return reactiveContents;
                                         })
                                         ]),
-                                    this.html(`f56fefcc`, "div", parentElement,
+                                    this.html(`e1r1k1r1k214`, "div", parentElement,
                                         { classes: [{ type: 'static', value: "rs-alert-actions" }] },
                                         (parentElement: any) => [
-                                        this.html(`561f0a28`, "button", parentElement,
+                                        this.html(`e1r1k1r1k2141`, "button", parentElement,
                                             { classes: [{ type: 'static', value: "rs-btn" }, { type: 'static', value: "rs-btn-sm" }, { type: 'static', value: "rs-btn-ghost" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"takeTheirs","params":[]}] } },
                                             (parentElement: any) => [
                                             this.text('Lấy bản của họ')
                                             ]),
-                                        this.html(`bacab073`, "button", parentElement,
+                                        this.html(`e1r1k1r1k2142`, "button", parentElement,
                                             { classes: [{ type: 'static', value: "rs-btn" }, { type: 'static', value: "rs-btn-sm" }, { type: 'static', value: "rs-btn-primary" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"keepMine","params":[]}] } },
                                             (parentElement: any) => [
                                             this.text('Giữ bản của tôi')
@@ -562,91 +562,91 @@ class ItemView extends View {
                             }
                             return reactiveContents;
                         }),
-                        this.html(`5c677340`, "form", parentElement,
+                        this.html(`e1r1k11`, "form", parentElement,
                             { classes: [{ type: 'static', value: "rs-edit-form" }], events: { submit: [{"handler":"save","params":[() => event]}] } },
                             (parentElement: any) => [
-                            this.html(`2ad1b0a4`, "div", parentElement,
+                            this.html(`e1r1k111`, "div", parentElement,
                                 { classes: [{ type: 'static', value: "rs-edit-grid" }] },
                                 (parentElement: any) => [
-                                this.html(`eed3d3b6`, "label", parentElement,
+                                this.html(`e1r1k1111`, "label", parentElement,
                                     { classes: [{ type: 'static', value: "rs-field" }] },
                                     (parentElement: any) => [
-                                    this.html(`2e015e29`, "span", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1r1k11111`, "span", parentElement, {}, (parentElement: any) => [
                                         this.text('Họ tên')
                                     ]),
-                                    this.html(`a9ac609f`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Họ tên" } }, bind: { key: 'fName' } })
+                                    this.html(`e1r1k11112`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Họ tên" } }, bind: { key: 'fName' } })
                                     ]),
-                                this.html(`a922b96a`, "label", parentElement,
+                                this.html(`e1r1k1112`, "label", parentElement,
                                     { classes: [{ type: 'static', value: "rs-field" }] },
                                     (parentElement: any) => [
-                                    this.html(`3bee35ca`, "span", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1r1k11121`, "span", parentElement, {}, (parentElement: any) => [
                                         this.text('Email')
                                     ]),
-                                    this.html(`f0e0170e`, "input", parentElement, { attrs: { "type": { type: 'static', value: "email" }, "placeholder": { type: 'static', value: "Email" } }, bind: { key: 'fEmail' } })
+                                    this.html(`e1r1k11122`, "input", parentElement, { attrs: { "type": { type: 'static', value: "email" }, "placeholder": { type: 'static', value: "Email" } }, bind: { key: 'fEmail' } })
                                     ]),
-                                this.html(`c0c2efab`, "label", parentElement,
+                                this.html(`e1r1k1113`, "label", parentElement,
                                     { classes: [{ type: 'static', value: "rs-field" }] },
                                     (parentElement: any) => [
-                                    this.html(`d1afe131`, "span", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1r1k11131`, "span", parentElement, {}, (parentElement: any) => [
                                         this.text('Giới tính')
                                     ]),
-                                    this.html(`9ec2a7e8`, "select", parentElement,
+                                    this.html(`e1r1k11132`, "select", parentElement,
                                         { bind: { key: 'fGender' } },
                                         (parentElement: any) => [
-                                        this.html(`11058280`, "option", parentElement,
+                                        this.html(`e1r1k111321`, "option", parentElement,
                                             { attrs: { "value": { type: 'static', value: "male" } } },
                                             (parentElement: any) => [
                                             this.text('male')
                                             ]),
-                                        this.html(`201de61c`, "option", parentElement,
+                                        this.html(`e1r1k111322`, "option", parentElement,
                                             { attrs: { "value": { type: 'static', value: "female" } } },
                                             (parentElement: any) => [
                                             this.text('female')
                                             ]),
-                                        this.html(`b85f9b7b`, "option", parentElement,
+                                        this.html(`e1r1k111323`, "option", parentElement,
                                             { attrs: { "value": { type: 'static', value: "other" } } },
                                             (parentElement: any) => [
                                             this.text('other')
                                             ])
                                         ])
                                     ]),
-                                this.html(`8206f20c`, "label", parentElement,
+                                this.html(`e1r1k1114`, "label", parentElement,
                                     { classes: [{ type: 'static', value: "rs-field" }] },
                                     (parentElement: any) => [
-                                    this.html(`862bf751`, "span", parentElement, {}, (parentElement: any) => [
+                                    this.html(`e1r1k11141`, "span", parentElement, {}, (parentElement: any) => [
                                         this.text('Ngày sinh')
                                     ]),
-                                    this.html(`77b826df`, "input", parentElement, { attrs: { "type": { type: 'static', value: "date" } }, bind: { key: 'fBirthdate' } })
+                                    this.html(`e1r1k11142`, "input", parentElement, { attrs: { "type": { type: 'static', value: "date" } }, bind: { key: 'fBirthdate' } })
                                     ])
                                 ]),
-                            this.html(`57ce7bf9`, "div", parentElement,
+                            this.html(`e1r1k112`, "div", parentElement,
                                 { classes: [{ type: 'static', value: "rs-edit-foot" }] },
                                 (parentElement: any) => [
-                                this.reactive(`d1945de0`, "if", parentReactive, parentElement, ["base", "null"], (parentReactive: any, parentElement: any) => {
+                                this.reactive(`e1r1k112r1`, "if", parentReactive, parentElement, ["base", "null"], (parentReactive: any, parentElement: any) => {
                                     const reactiveContents = [];
                                     if (base !== null) {
                                         reactiveContents.push(
-                                        this.html(`4959c732`, "span", parentElement,
+                                        this.html(`e1r1k112r1k11`, "span", parentElement,
                                             { classes: [{ type: 'static', value: "rs-ver" }] },
                                             (parentElement: any) => [
                                             this.text('base v'),
-                                            this.output(`02a39936`, parentElement, true, ["base"], (parentElement: any) => base['updated_at'])
+                                            this.output(`e1r1k112r1k11o1`, parentElement, true, ["base"], (parentElement: any) => base['updated_at'])
                                             ])
                                         );
                                     }
                                     return reactiveContents;
                                 }),
-                                this.html(`cbbdefbf`, "span", parentElement, { classes: [{ type: 'static', value: "rs-spacer" }] }),
-                                this.reactive(`ffca4dfb`, "if", parentReactive, parentElement, ["null", "record"], (parentReactive: any, parentElement: any) => {
+                                this.html(`e1r1k1121`, "span", parentElement, { classes: [{ type: 'static', value: "rs-spacer" }] }),
+                                this.reactive(`e1r1k112r2`, "if", parentReactive, parentElement, ["null", "record"], (parentReactive: any, parentElement: any) => {
                                     const reactiveContents = [];
                                     if (record !== null) {
                                         reactiveContents.push(
-                                        this.html(`4701b367`, "button", parentElement,
+                                        this.html(`e1r1k112r2k11`, "button", parentElement,
                                             { classes: [{ type: 'static', value: "rs-btn" }, { type: 'static', value: "rs-btn-sm" }, { type: 'static', value: "rs-btn-plain" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"cancelEdit","params":[]}] } },
                                             (parentElement: any) => [
                                             this.text('Huỷ')
                                             ]),
-                                        this.html(`26b78bf0`, "button", parentElement,
+                                        this.html(`e1r1k112r2k12`, "button", parentElement,
                                             { classes: [{ type: 'static', value: "rs-btn" }, { type: 'static', value: "rs-btn-sm" }, { type: 'static', value: "rs-btn-primary" }], attrs: { "type": { type: 'static', value: "submit" } }, props: { "disabled": { type: 'binding', factory: () => busy, stateKeys: ["busy"] } } },
                                             (parentElement: any) => [
                                             this.text('Lưu thay đổi')
@@ -661,21 +661,21 @@ class ItemView extends View {
                     }
                     else {
                         reactiveContents.push(
-                        this.reactive(`e7a27576`, "if", parentReactive, parentElement, ["null", "record"], (parentReactive: any, parentElement: any) => {
+                        this.reactive(`e1r1k2r1`, "if", parentReactive, parentElement, ["null", "record"], (parentReactive: any, parentElement: any) => {
                             const reactiveContents = [];
                             if (record === null) {
                                 reactiveContents.push(
-                                this.html(`b4f9f9f7`, "div", parentElement,
+                                this.html(`e1r1k2r1k11`, "div", parentElement,
                                     { classes: [{ type: 'static', value: "rs-row-view" }] },
                                     (parentElement: any) => [
-                                    this.html(`aefb1ec6`, "span", parentElement, { classes: [{ type: 'static', value: "rs-avatar" }, { type: 'static', value: "rs-avatar--gone" }] }),
-                                    this.html(`0d7b7c7d`, "div", parentElement,
+                                    this.html(`e1r1k2r1k111`, "span", parentElement, { classes: [{ type: 'static', value: "rs-avatar" }, { type: 'static', value: "rs-avatar--gone" }] }),
+                                    this.html(`e1r1k2r1k112`, "div", parentElement,
                                         { classes: [{ type: 'static', value: "rs-row-id" }] },
                                         (parentElement: any) => [
-                                        this.html(`9e00257d`, "strong", parentElement, {}, (parentElement: any) => [
+                                        this.html(`e1r1k2r1k1121`, "strong", parentElement, {}, (parentElement: any) => [
                                             this.text('Bản ghi đã bị xoá')
                                         ]),
-                                        this.html(`9bcc448b`, "span", parentElement, {}, (parentElement: any) => [
+                                        this.html(`e1r1k2r1k1122`, "span", parentElement, {}, (parentElement: any) => [
                                             this.text('Hàng này sẽ biến mất ở lần đồng bộ tới.')
                                         ])
                                         ])
@@ -684,49 +684,49 @@ class ItemView extends View {
                             }
                             else {
                                 reactiveContents.push(
-                                this.html(`7971f7d4`, "div", parentElement,
+                                this.html(`e1r1k2r1k21`, "div", parentElement,
                                     { classes: [{ type: 'static', value: "rs-row-view" }] },
                                     (parentElement: any) => [
-                                    this.html(`1e5526c0`, "span", parentElement, { classes: [{ type: 'static', value: "rs-avatar" }, { type: 'binding', value: "rs-avatar--f", factory: () => record['gender'] === 'female', stateKeys: ["record"] }, { type: 'binding', value: "rs-avatar--m", factory: () => record['gender'] === 'male', stateKeys: ["record"] }] }),
-                                    this.html(`9453590d`, "div", parentElement,
+                                    this.html(`e1r1k2r1k211`, "span", parentElement, { classes: [{ type: 'static', value: "rs-avatar" }, { type: 'binding', value: "rs-avatar--f", factory: () => record['gender'] === 'female', stateKeys: ["record"] }, { type: 'binding', value: "rs-avatar--m", factory: () => record['gender'] === 'male', stateKeys: ["record"] }] }),
+                                    this.html(`e1r1k2r1k212`, "div", parentElement,
                                         { classes: [{ type: 'static', value: "rs-row-id" }] },
                                         (parentElement: any) => [
-                                        this.html(`aa010c5b`, "strong", parentElement, {}, (parentElement: any) => [
-                                            this.output(`ff0a6a25`, parentElement, true, ["record"], (parentElement: any) => record['name'])
+                                        this.html(`e1r1k2r1k2121`, "strong", parentElement, {}, (parentElement: any) => [
+                                            this.output(`e1r1k2r1k2121o1`, parentElement, true, ["record"], (parentElement: any) => record['name'])
                                         ]),
-                                        this.html(`7cea63bb`, "span", parentElement, {}, (parentElement: any) => [
-                                            this.output(`794625f4`, parentElement, true, ["record"], (parentElement: any) => record['email'])
+                                        this.html(`e1r1k2r1k2122`, "span", parentElement, {}, (parentElement: any) => [
+                                            this.output(`e1r1k2r1k2122o1`, parentElement, true, ["record"], (parentElement: any) => record['email'])
                                         ])
                                         ]),
-                                    this.html(`8b8d6bce`, "div", parentElement,
+                                    this.html(`e1r1k2r1k213`, "div", parentElement,
                                         { classes: [{ type: 'static', value: "rs-row-meta" }] },
                                         (parentElement: any) => [
-                                        this.html(`0bb6b2c8`, "span", parentElement,
+                                        this.html(`e1r1k2r1k2131`, "span", parentElement,
                                             { classes: [{ type: 'static', value: "rs-tag" }, { type: 'static', value: "rs-tag--brand" }] },
                                             (parentElement: any) => [
-                                            this.output(`f19d2410`, parentElement, true, ["record"], (parentElement: any) => record['gender'])
+                                            this.output(`e1r1k2r1k2131o1`, parentElement, true, ["record"], (parentElement: any) => record['gender'])
                                             ]),
-                                        this.html(`2fa3851d`, "span", parentElement,
+                                        this.html(`e1r1k2r1k2132`, "span", parentElement,
                                             { classes: [{ type: 'static', value: "rs-tag" }] },
                                             (parentElement: any) => [
-                                            this.output(`425ab885`, parentElement, true, ["record"], (parentElement: any) => record['birthdate'])
+                                            this.output(`e1r1k2r1k2132o1`, parentElement, true, ["record"], (parentElement: any) => record['birthdate'])
                                             ]),
-                                        this.html(`60ac1e93`, "span", parentElement,
+                                        this.html(`e1r1k2r1k2133`, "span", parentElement,
                                             { classes: [{ type: 'static', value: "rs-ver" }] },
                                             (parentElement: any) => [
                                             this.text('v'),
-                                            this.output(`7fca6ba3`, parentElement, true, ["record"], (parentElement: any) => record['updated_at'])
+                                            this.output(`e1r1k2r1k2133o1`, parentElement, true, ["record"], (parentElement: any) => record['updated_at'])
                                             ])
                                         ]),
-                                    this.html(`57a51cf0`, "div", parentElement,
+                                    this.html(`e1r1k2r1k214`, "div", parentElement,
                                         { classes: [{ type: 'static', value: "rs-row-actions" }] },
                                         (parentElement: any) => [
-                                        this.html(`e3ad8272`, "button", parentElement,
+                                        this.html(`e1r1k2r1k2141`, "button", parentElement,
                                             { classes: [{ type: 'static', value: "rs-btn" }, { type: 'static', value: "rs-btn-sm" }, { type: 'static', value: "rs-btn-ghost" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"beginEdit","params":[]}] } },
                                             (parentElement: any) => [
                                             this.text('Sửa')
                                             ]),
-                                        this.html(`a268dbad`, "button", parentElement,
+                                        this.html(`e1r1k2r1k2142`, "button", parentElement,
                                             { classes: [{ type: 'static', value: "rs-btn" }, { type: 'static', value: "rs-btn-sm" }, { type: 'static', value: "rs-btn-danger" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"remove","params":[]}] } },
                                             (parentElement: any) => [
                                             this.text('Xoá')
@@ -741,14 +741,14 @@ class ItemView extends View {
                     }
                     return reactiveContents;
                 }),
-                this.reactive(`27e8eebc`, "if", parentReactive, parentElement, ["note"], (parentReactive: any, parentElement: any) => {
+                this.reactive(`e1r2`, "if", parentReactive, parentElement, ["note"], (parentReactive: any, parentElement: any) => {
                     const reactiveContents = [];
                     if (note !== '') {
                         reactiveContents.push(
-                        this.html(`47c052f2`, "p", parentElement,
+                        this.html(`e1r2k11`, "p", parentElement,
                             { classes: [{ type: 'static', value: "rs-note" }] },
                             (parentElement: any) => [
-                            this.output(`ba5ed646`, parentElement, true, ["note"], (parentElement: any) => note)
+                            this.output(`e1r2k11o1`, parentElement, true, ["note"], (parentElement: any) => note)
                             ])
                         );
                     }
@@ -763,7 +763,7 @@ class ItemView extends View {
 }
 
 // Export factory function
-export function WebModulesRosterItem(__data__: ItemProps = {}, systemData: any = {}): ItemView {
+export function WebModulesRosterItem(__data__ = {}, systemData = {}): ItemView {
     return new ItemView(__data__, systemData);
 }
 export default WebModulesRosterItem;

@@ -1,3 +1,4 @@
+@import('web.modules.roster.item' as rosteritem)
 @states({
     ids: [],
     records: {},
@@ -96,7 +97,7 @@
                     <div class="rs-slot">
                         {{-- record đổi ref ⇒ Component đẩy prop mới vào ĐÚNG instance con
                              đang sống, nên state form của nó không bị thổi bay. --}}
-                        @include('web.modules.roster.item', ['uid' => id, 'record' => records[id] ?? null])
+                        <rosteritem :uid="id" :record="records[id] ?? null" />
                     </div>
                 @endforeach
             </div>

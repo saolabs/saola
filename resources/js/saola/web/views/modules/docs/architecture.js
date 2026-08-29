@@ -115,291 +115,323 @@ class ArchitectureView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-doc', 'doc', (parentElement) => [
-            this.html(`7b338a08`, "section", parentElement,
+            this.html(`Bdoc1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "page-hero" }, { type: 'static', value: "page-hero-architecture" }] },
                 (parentElement) => [
-                this.html(`3bb16c04`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`f150187b`, "p", parentElement,
+                this.html(`Bdoc11`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc111`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement) => [
-                        this.html(`bac94b21`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc1111`, "span", parentElement, {}, (parentElement) => [
                             this.text('01 / ARCHITECTURE')
                         ]),
-                        this.text(' Toàn cảnh hệ sinh thái')
+                        this.text(' Tổng quan kiến trúc')
                         ]),
-                    this.html(`663d8ed0`, "h1", parentElement, {}, (parentElement) => [
-                        this.text('Laravel ở lõi.'),
-                        this.html(`c3c0e3f9`, "br", parentElement, {}),
-                        this.html(`27038dbc`, "em", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc112`, "h1", parentElement, {}, (parentElement) => [
+                        this.text('Laravel ở tầng lõi.'),
+                        this.html(`Bdoc1121`, "br", parentElement, {}),
+                        this.html(`Bdoc1122`, "em", parentElement, {}, (parentElement) => [
                             this.text('SPA ở trải nghiệm.')
                         ])
                     ])
                 ]),
-                this.html(`57baae1a`, "div", parentElement,
+                this.html(`Bdoc12`, "div", parentElement,
                     { classes: [{ type: 'static', value: "page-hero-aside" }] },
                     (parentElement) => [
-                    this.html(`8695e14e`, "p", parentElement, {}, (parentElement) => [
-                        this.text('Saola là một chuỗi contract từ request tới DOM, không phải một frontend framework đặt cạnh Laravel.')
+                    this.html(`Bdoc121`, "p", parentElement, {}, (parentElement) => [
+                        this.text('Saola định nghĩa một chuỗi contract đồng nhất từ server request đến client DOM — hợp nhất sức mạnh backend Laravel với độ mượt mà của SPA mà không cần tách rời API.')
                     ]),
-                    this.html(`1f0b28a5`, "dl", parentElement, {}, (parentElement) => [
-                        this.html(`da4a7f2f`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`902aa345`, "dt", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc122`, "dl", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc1221`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc12211`, "dt", parentElement, {}, (parentElement) => [
                                 this.text('INPUT')
                             ]),
-                            this.html(`e65d3a6b`, "dd", parentElement, {}, (parentElement) => [
-                                this.text('Route + context + data')
+                            this.html(`Bdoc12212`, "dd", parentElement, {}, (parentElement) => [
+                                this.text('Route, Context & Controller')
                             ])
                         ]),
-                        this.html(`e762468d`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`935f1ffd`, "dt", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc1222`, "div", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc12221`, "dt", parentElement, {}, (parentElement) => [
                                 this.text('OUTPUT')
                             ]),
-                            this.html(`df3e6b57`, "dd", parentElement, {}, (parentElement) => [
-                                this.text('SSR → hydrate → SPA')
+                            this.html(`Bdoc12222`, "dd", parentElement, {}, (parentElement) => [
+                                this.text('SSR HTML → Hydrate → SPA Runtime')
                             ])
                         ])
                     ])
                     ])
                 ]),
-            this.html(`05ef4c27`, "section", parentElement,
+            this.html(`Bdoc2`, "section", parentElement,
                 { classes: [{ type: 'static', value: "stack-section" }] },
                 (parentElement) => [
-                this.html(`c9c6be59`, "div", parentElement,
+                this.html(`Bdoc21`, "div", parentElement,
                     { classes: [{ type: 'static', value: "section-index" }] },
                     (parentElement) => [
-                    this.html(`d20fe697`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc211`, "span", parentElement, {}, (parentElement) => [
                         this.text('01')
                     ]),
-                    this.html(`5b38df9e`, "p", parentElement, {}, (parentElement) => [
-                        this.text('Bốn lớp'),
-                        this.html(`27786653`, "br", parentElement, {}),
-                        this.text('một luồng')
+                    this.html(`Bdoc212`, "p", parentElement, {}, (parentElement) => [
+                        this.text('Kiến trúc'),
+                        this.html(`Bdoc2121`, "br", parentElement, {}),
+                        this.text('4 tầng lõi')
                     ])
                     ]),
-                this.html(`fbd9a84d`, "div", parentElement,
+                this.html(`Bdoc22`, "div", parentElement,
                     { classes: [{ type: 'static', value: "stack-diagram" }] },
                     (parentElement) => [
-                    this.html(`13e1b7a4`, "article", parentElement, {}, (parentElement) => [
-                        this.html(`d32c987e`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc221`, "article", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2211`, "span", parentElement, {}, (parentElement) => [
                             this.text('APPLICATION')
                         ]),
-                        this.html(`e55d5e26`, "strong", parentElement, {}, (parentElement) => [
-                            this.text('Modules & contexts')
+                        this.html(`Bdoc2212`, "strong", parentElement, {}, (parentElement) => [
+                            this.text('Modules & Contexts')
                         ]),
-                        this.html(`5cec9be9`, "p", parentElement, {}, (parentElement) => [
-                            this.text('Web, admin và mobile tổ chức route, controller, view theo cùng một mô hình module.')
+                        this.html(`Bdoc2213`, "p", parentElement, {}, (parentElement) => [
+                            this.text('Phân tách Web, Admin, Mobile thành các module độc lập; quản lý route, controller và view theo đúng ngữ cảnh.')
                         ]),
-                        this.html(`579935c7`, "i", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2214`, "i", parentElement, {}, (parentElement) => [
                             this.text('04')
                         ])
                     ]),
-                    this.html(`7610ec67`, "article", parentElement, {}, (parentElement) => [
-                        this.html(`d55ac7a6`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc222`, "article", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2221`, "span", parentElement, {}, (parentElement) => [
                             this.text('CORE')
                         ]),
-                        this.html(`1bd2dff9`, "strong", parentElement, {}, (parentElement) => [
-                            this.text('Laravel integration')
+                        this.html(`Bdoc2222`, "strong", parentElement, {}, (parentElement) => [
+                            this.text('Laravel Integration')
                         ]),
-                        this.html(`f0fe8469`, "p", parentElement, {}, (parentElement) => [
-                            this.text('Route map, view response, SSR boot payload và request-scoped context.')
+                        this.html(`Bdoc2223`, "p", parentElement, {}, (parentElement) => [
+                            this.text('Tích hợp sâu vào pipeline Laravel: điều phối context theo request, sinh SSR payload và kết nối view response.')
                         ]),
-                        this.html(`5f64ec0a`, "i", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2224`, "i", parentElement, {}, (parentElement) => [
                             this.text('03')
                         ])
                     ]),
-                    this.html(`f6357ac6`, "article", parentElement, {}, (parentElement) => [
-                        this.html(`28f6beb4`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc223`, "article", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2231`, "span", parentElement, {}, (parentElement) => [
                             this.text('COMPILER')
                         ]),
-                        this.html(`fcb0dc8c`, "strong", parentElement, {}, (parentElement) => [
-                            this.text('.sao → Blade + JS')
+                        this.html(`Bdoc2232`, "strong", parentElement, {}, (parentElement) => [
+                            this.text('Dual AST Engine')
                         ]),
-                        this.html(`011d29bc`, "p", parentElement, {}, (parentElement) => [
-                            this.text('Một AST tạo hai output có cùng structure, directive và marker contract.')
+                        this.html(`Bdoc2233`, "p", parentElement, {}, (parentElement) => [
+                            this.text('Một file '),
+                            this.html(`Bdoc22331`, "code", parentElement, {}, (parentElement) => [
+                                this.text('.sao')
+                            ]),
+                            this.text(' duy nhất biên dịch đồng thời ra Blade template (SSR) và JavaScript module (SPA runtime).')
                         ]),
-                        this.html(`bd17e466`, "i", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2234`, "i", parentElement, {}, (parentElement) => [
                             this.text('02')
                         ])
                     ]),
-                    this.html(`436566c4`, "article", parentElement, {}, (parentElement) => [
-                        this.html(`752758aa`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc224`, "article", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2241`, "span", parentElement, {}, (parentElement) => [
                             this.text('CLIENT')
                         ]),
-                        this.html(`1586ebf6`, "strong", parentElement, {}, (parentElement) => [
-                            this.text('Router & view runtime')
+                        this.html(`Bdoc2242`, "strong", parentElement, {}, (parentElement) => [
+                            this.text('Reactive SPA Runtime')
                         ]),
-                        this.html(`6bc6e8e4`, "p", parentElement, {}, (parentElement) => [
-                            this.text('Hydration, lifecycle, reactivity, layout reuse và page cache phía trình duyệt.')
+                        this.html(`Bdoc2243`, "p", parentElement, {}, (parentElement) => [
+                            this.text('Tự động hydrate DOM có sẵn, duy trì reactive state, tái sử dụng layout và quản lý client cache thông minh.')
                         ]),
-                        this.html(`fd309693`, "i", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2244`, "i", parentElement, {}, (parentElement) => [
                             this.text('01')
                         ])
                     ])
                     ])
                 ]),
-            this.html(`9fd19a30`, "section", parentElement,
+            this.html(`Bdoc3`, "section", parentElement,
                 { classes: [{ type: 'static', value: "request-section" }] },
                 (parentElement) => [
-                this.html(`849145f1`, "div", parentElement,
+                this.html(`Bdoc31`, "div", parentElement,
                     { classes: [{ type: 'static', value: "section-head" }, { type: 'static', value: "compact" }] },
                     (parentElement) => [
-                    this.html(`0d56026d`, "p", parentElement,
+                    this.html(`Bdoc311`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement) => [
-                        this.html(`773a2605`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc3111`, "span", parentElement, {}, (parentElement) => [
                             this.text('REQUEST FLOW')
                         ]),
-                        this.text(' Từ URL tới tương tác')
+                        this.text(' Vòng đời từ URL đến tương tác')
                         ]),
-                    this.html(`de7a1e42`, "h2", parentElement, {}, (parentElement) => [
-                        this.text('Một đường đi,'),
-                        this.html(`939960ee`, "br", parentElement, {}),
-                        this.text('hai giai đoạn.')
+                    this.html(`Bdoc312`, "h2", parentElement, {}, (parentElement) => [
+                        this.text('Một mã nguồn,'),
+                        this.html(`Bdoc3121`, "br", parentElement, {}),
+                        this.text('hai giai đoạn vận hành.')
                     ])
                     ]),
-                this.html(`2d39fc18`, "ol", parentElement,
-                    { classes: [{ type: 'static', value: "flow-timeline" }] },
+                this.html(`Bdoc32`, "ol", parentElement,
+                    { classes: [{ type: 'static', value: "flowlane" }] },
                     (parentElement) => [
-                    this.html(`be8bd502`, "li", parentElement, {}, (parentElement) => [
-                        this.html(`8afd3452`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc321`, "li", parentElement,
+                        { classes: [{ type: 'static', value: "fl-phase" }] },
+                        (parentElement) => [
+                        this.html(`Bdoc3211`, "span", parentElement, {}, (parentElement) => [
+                            this.text('SERVER-SIDE (SSR)')
+                        ])
+                        ]),
+                    this.html(`Bdoc322`, "li", parentElement,
+                        { classes: [{ type: 'static', value: "fl" }] },
+                        (parentElement) => [
+                        this.html(`Bdoc3221`, "b", parentElement, {}, (parentElement) => [
                             this.text('01')
                         ]),
-                        this.html(`613b7042`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`c87ec5a4`, "strong", parentElement, {}, (parentElement) => [
-                                this.text('Route chọn module và context')
-                            ]),
-                            this.html(`4e45348f`, "p", parentElement, {}, (parentElement) => [
-                                this.text('Request web, admin hoặc mobile được resolve trong phạm vi hiện tại thay vì đọc một static map dùng chung cho mọi request.')
-                            ])
+                        this.html(`Bdoc3222`, "strong", parentElement, {}, (parentElement) => [
+                            this.text('Định tuyến & Phân giải Context')
                         ]),
-                        this.html(`c67dbd27`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc3223`, "p", parentElement, {}, (parentElement) => [
+                            this.text('Request đi vào đúng Context (Web/Admin/Mobile), nạp route module tương ứng mà không tải dư thừa các registry khác.')
+                        ]),
+                        this.html(`Bdoc3224`, "code", parentElement, {}, (parentElement) => [
                             this.text('GET /projects/42')
                         ])
-                    ]),
-                    this.html(`0484a3fa`, "li", parentElement, {}, (parentElement) => [
-                        this.html(`2ab0b8e2`, "span", parentElement, {}, (parentElement) => [
+                        ]),
+                    this.html(`Bdoc323`, "li", parentElement,
+                        { classes: [{ type: 'static', value: "fl" }] },
+                        (parentElement) => [
+                        this.html(`Bdoc3231`, "b", parentElement, {}, (parentElement) => [
                             this.text('02')
                         ]),
-                        this.html(`fecbf7d0`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`ba78e364`, "strong", parentElement, {}, (parentElement) => [
-                                this.text('Controller trả view response')
-                            ]),
-                            this.html(`bf0ed161`, "p", parentElement, {}, (parentElement) => [
-                                this.text('Core xác định component route tương ứng, render Blade và tạo boot payload cho đúng context.')
-                            ])
+                        this.html(`Bdoc3232`, "strong", parentElement, {}, (parentElement) => [
+                            this.text('Controller xử lý & tạo View Response')
                         ]),
-                        this.html(`5a0b689d`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc3233`, "p", parentElement, {}, (parentElement) => [
+                            this.text('Controller xử lý logic nghiệp vụ, gắn kết view component và đóng gói SSR boot payload chuẩn xác.')
+                        ]),
+                        this.html(`Bdoc3234`, "code", parentElement, {}, (parentElement) => [
                             this.text('context: web')
                         ])
-                    ]),
-                    this.html(`d568b3c9`, "li", parentElement, {}, (parentElement) => [
-                        this.html(`46531af3`, "span", parentElement, {}, (parentElement) => [
+                        ]),
+                    this.html(`Bdoc324`, "li", parentElement,
+                        { classes: [{ type: 'static', value: "fl" }] },
+                        (parentElement) => [
+                        this.html(`Bdoc3241`, "b", parentElement, {}, (parentElement) => [
                             this.text('03')
                         ]),
-                        this.html(`a609ba77`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`04bc65b3`, "strong", parentElement, {}, (parentElement) => [
-                                this.text('Blade tạo HTML hoàn chỉnh')
-                            ]),
-                            this.html(`7f41f114`, "p", parentElement, {}, (parentElement) => [
-                                this.text('Layout, block, include và children đã có nội dung trước khi runtime phía client khởi động.')
-                            ])
+                        this.html(`Bdoc3242`, "strong", parentElement, {}, (parentElement) => [
+                            this.text('Blade kết xuất HTML hoàn chỉnh')
                         ]),
-                        this.html(`fbe5077b`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc3243`, "p", parentElement, {}, (parentElement) => [
+                            this.text('Toàn bộ layout, slot, component con và dữ liệu server được render thành HTML chuẩn SEO trước khi gửi về client.')
+                        ]),
+                        this.html(`Bdoc3244`, "code", parentElement, {}, (parentElement) => [
                             this.text('SSR / READY')
                         ])
-                    ]),
-                    this.html(`19e157e5`, "li", parentElement, {}, (parentElement) => [
-                        this.html(`9f97a795`, "span", parentElement, {}, (parentElement) => [
+                        ]),
+                    this.html(`Bdoc325`, "li", parentElement,
+                        { classes: [{ type: 'static', value: "fl-cross" }] },
+                        (parentElement) => [
+                        this.html(`Bdoc3251`, "span", parentElement, {}, (parentElement) => [
+                            this.text('Truyền tải HTML trọn vẹn kèm Boot Payload qua HTTP')
+                        ])
+                        ]),
+                    this.html(`Bdoc326`, "li", parentElement,
+                        { classes: [{ type: 'static', value: "fl-phase" }] },
+                        (parentElement) => [
+                        this.html(`Bdoc3261`, "span", parentElement, {}, (parentElement) => [
+                            this.text('CLIENT-SIDE (SPA)')
+                        ])
+                        ]),
+                    this.html(`Bdoc327`, "li", parentElement,
+                        { classes: [{ type: 'static', value: "fl" }] },
+                        (parentElement) => [
+                        this.html(`Bdoc3271`, "b", parentElement, {}, (parentElement) => [
                             this.text('04')
                         ]),
-                        this.html(`e359a748`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`cd91ff6f`, "strong", parentElement, {}, (parentElement) => [
-                                this.text('Runtime claim DOM có sẵn')
-                            ]),
-                            this.html(`3c0416e8`, "p", parentElement, {}, (parentElement) => [
-                                this.text('Marker ổn định nối ViewController, state và event vào vùng DOM tương ứng.')
-                            ])
+                        this.html(`Bdoc3272`, "strong", parentElement, {}, (parentElement) => [
+                            this.text('Hydration & Gắn kết Reactivity')
                         ]),
-                        this.html(`5c17a8f3`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc3273`, "p", parentElement, {}, (parentElement) => [
+                            this.text('Client runtime tiếp quản DOM hiện hữu thông qua các marker định danh, kích hoạt event listener mà không render lại DOM có sẵn.')
+                        ]),
+                        this.html(`Bdoc3274`, "code", parentElement, {}, (parentElement) => [
                             this.text('HYDRATE / CLAIM')
                         ])
-                    ]),
-                    this.html(`42b3e167`, "li", parentElement, {}, (parentElement) => [
-                        this.html(`397a18a7`, "span", parentElement, {}, (parentElement) => [
+                        ]),
+                    this.html(`Bdoc328`, "li", parentElement,
+                        { classes: [{ type: 'static', value: "fl" }] },
+                        (parentElement) => [
+                        this.html(`Bdoc3281`, "b", parentElement, {}, (parentElement) => [
                             this.text('05')
                         ]),
-                        this.html(`945efd31`, "div", parentElement, {}, (parentElement) => [
-                            this.html(`df2fd867`, "strong", parentElement, {}, (parentElement) => [
-                                this.text('Router tiếp quản điều hướng')
-                            ]),
-                            this.html(`521ab148`, "p", parentElement, {}, (parentElement) => [
-                                this.text('Navigation tiếp theo resolve view chain, reuse layout chung và chỉ mount phần thay đổi.')
-                            ])
+                        this.html(`Bdoc3282`, "strong", parentElement, {}, (parentElement) => [
+                            this.text('Client Router chuyển sang chế độ SPA')
                         ]),
-                        this.html(`8c73e47a`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc3283`, "p", parentElement, {}, (parentElement) => [
+                            this.text('Các lượt chuyển trang sau đó chỉ nạp delta dữ liệu, tái sử dụng layout chung và chỉ cập nhật đúng vùng view thay đổi.')
+                        ]),
+                        this.html(`Bdoc3284`, "code", parentElement, {}, (parentElement) => [
                             this.text('SPA / ACTIVE')
                         ])
-                    ])
+                        ]),
+                    this.html(`Bdoc329`, "li", parentElement,
+                        { classes: [{ type: 'static', value: "fl-loop" }] },
+                        (parentElement) => [
+                        this.html(`Bdoc3291`, "span", parentElement, {}, (parentElement) => [
+                            this.text('Từ thời điểm này, ứng dụng hoạt động thuần SPA — trải nghiệm mượt mà tức thì, không tải lại trang.')
+                        ])
+                        ])
                     ])
                 ]),
-            this.html(`e3988c18`, "section", parentElement,
+            this.html(`Bdoc4`, "section", parentElement,
                 { classes: [{ type: 'static', value: "context-panel" }] },
                 (parentElement) => [
-                this.html(`6f8acc56`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`6f07ed8c`, "p", parentElement,
+                this.html(`Bdoc41`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc411`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement) => [
-                        this.html(`ef468377`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc4111`, "span", parentElement, {}, (parentElement) => [
                             this.text('OCTANE SAFE')
                         ]),
-                        this.text(' Context thuộc request')
+                        this.text(' Context Isolate')
                         ]),
-                    this.html(`106b8ee6`, "h2", parentElement, {}, (parentElement) => [
-                        this.text('Không để request sau'),
-                        this.html(`f7a02534`, "br", parentElement, {}),
-                        this.text('kế thừa request trước.')
+                    this.html(`Bdoc412`, "h2", parentElement, {}, (parentElement) => [
+                        this.text('State sạch hoàn toàn'),
+                        this.html(`Bdoc4121`, "br", parentElement, {}),
+                        this.text('trên từng request.')
                     ])
                 ]),
-                this.html(`f0346512`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`8669e717`, "p", parentElement, {}, (parentElement) => [
-                        this.text('Worker sống lâu không đồng nghĩa state ứng dụng được phép sống lâu. Saola resolve route component theo context đang hoạt động và cô lập dữ liệu request-scoped, kể cả khi response là HTML hay JSON.')
+                this.html(`Bdoc42`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc421`, "p", parentElement, {}, (parentElement) => [
+                        this.text('Trong các runtime sống lâu (Laravel Octane, FrankenPHP, Swoole), việc rò rỉ state giữa các request là rủi ro nghiêm trọng. Saola bảo vệ kiến trúc bằng cơ chế cô lập request-scoped: mỗi request nạp đúng context độc lập và tự động giải phóng bộ nhớ ngay sau khi hoàn tất chu kỳ render.')
                     ]),
-                    this.html(`ad9ffbb4`, "div", parentElement,
+                    this.html(`Bdoc422`, "div", parentElement,
                         { classes: [{ type: 'static', value: "context-cells" }] },
                         (parentElement) => [
-                        this.html(`c629c188`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc4221`, "span", parentElement, {}, (parentElement) => [
                             this.text('WEB'),
-                            this.html(`968ff10e`, "small", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc42211`, "small", parentElement, {}, (parentElement) => [
                                 this.text('public registry')
                             ])
                         ]),
-                        this.html(`e1393b0c`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc4222`, "span", parentElement, {}, (parentElement) => [
                             this.text('ADMIN'),
-                            this.html(`be776094`, "small", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc42221`, "small", parentElement, {}, (parentElement) => [
                                 this.text('admin registry')
                             ])
                         ]),
-                        this.html(`7dd510e0`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc4223`, "span", parentElement, {}, (parentElement) => [
                             this.text('MOBILE'),
-                            this.html(`400cdb5d`, "small", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc42231`, "small", parentElement, {}, (parentElement) => [
                                 this.text('mobile registry')
                             ])
                         ])
                         ])
                 ])
                 ]),
-            this.html(`24b6e3d2`, "a", parentElement,
+            this.html(`Bdoc5`, "a", parentElement,
                 { classes: [{ type: 'static', value: "doc-next" }], attrs: { "href": { type: 'static', value: "/docs/contexts" } } },
                 (parentElement) => [
-                this.html(`587d10b8`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`f908d9c5`, "span", parentElement, {}, (parentElement) => [
+                this.html(`Bdoc51`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc511`, "span", parentElement, {}, (parentElement) => [
                         this.text('Tiếp theo')
                     ]),
-                    this.html(`7e647603`, "strong", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc512`, "strong", parentElement, {}, (parentElement) => [
                         this.text('Context, module & controller')
                     ])
                 ]),
-                this.html(`50bb0184`, "span", parentElement,
+                this.html(`Bdoc52`, "span", parentElement,
                     { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }] },
                     (parentElement) => [
                     this.text('Đọc tiếp →')

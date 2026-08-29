@@ -129,64 +129,64 @@ class PrivacyView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-content', 'content', (parentElement) => [
-            this.html(`b4052a35`, "section", parentElement,
+            this.html(`Bcontent1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "legal-hero" }] },
                 (parentElement) => [
-                this.html(`82ed8433`, "p", parentElement,
+                this.html(`Bcontent11`, "p", parentElement,
                     { classes: [{ type: 'static', value: "eyebrow" }] },
                     (parentElement) => [
-                    this.html(`4cd48692`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bcontent111`, "span", parentElement, {}, (parentElement) => [
                         this.text('01')
                     ]),
                     this.text(' Legal / Privacy')
                     ]),
-                this.html(`7342b39f`, "h1", parentElement, {}, (parentElement) => [
+                this.html(`Bcontent12`, "h1", parentElement, {}, (parentElement) => [
                     this.text('Privacy in'),
-                    this.html(`56049c15`, "br", parentElement, {}),
+                    this.html(`Bcontent121`, "br", parentElement, {}),
                     this.text('plain language.')
                 ]),
-                this.html(`d9cbd0b2`, "p", parentElement, {}, (parentElement) => [
+                this.html(`Bcontent13`, "p", parentElement, {}, (parentElement) => [
                     this.text('Last updated July 21, 2026 · Demo policy')
                 ])
                 ]),
-            this.html(`8aa0772c`, "section", parentElement,
+            this.html(`Bcontent2`, "section", parentElement,
                 { classes: [{ type: 'static', value: "legal-layout" }] },
                 (parentElement) => [
-                this.html(`aa1e3cea`, "aside", parentElement, {}, (parentElement) => [
-                    this.html(`4f420810`, "button", parentElement,
+                this.html(`Bcontent21`, "aside", parentElement, {}, (parentElement) => [
+                    this.html(`Bcontent211`, "button", parentElement,
                         { classes: [{ type: 'binding', value: "active", factory: () => activeSection === 'collection', stateKeys: ["activeSection"] }], events: { click: [(event) => setActiveSection('collection')] } },
                         (parentElement) => [
                         this.text('01 Information')
                         ]),
-                    this.html(`9fab04eb`, "button", parentElement,
+                    this.html(`Bcontent212`, "button", parentElement,
                         { classes: [{ type: 'binding', value: "active", factory: () => activeSection === 'use', stateKeys: ["activeSection"] }], events: { click: [(event) => setActiveSection('use')] } },
                         (parentElement) => [
                         this.text('02 How we use it')
                         ]),
-                    this.html(`56645b34`, "button", parentElement,
+                    this.html(`Bcontent213`, "button", parentElement,
                         { classes: [{ type: 'binding', value: "active", factory: () => activeSection === 'control', stateKeys: ["activeSection"] }], events: { click: [(event) => setActiveSection('control')] } },
                         (parentElement) => [
                         this.text('03 Your control')
                         ])
                 ]),
-                this.html(`7f8af112`, "div", parentElement,
+                this.html(`Bcontent22`, "div", parentElement,
                     { classes: [{ type: 'static', value: "legal-copy" }] },
                     (parentElement) => [
-                    this.reactive(`94d6f85f`, "if", parentReactive, parentElement, ["activeSection"], (parentReactive, parentElement) => {
+                    this.reactive(`Bcontent22r1`, "if", parentReactive, parentElement, ["activeSection"], (parentReactive, parentElement) => {
                         const reactiveContents = [];
                         if (activeSection === 'collection') {
                             reactiveContents.push(
-                            this.html(`e41b7cec`, "article", parentElement, {}, (parentElement) => [
-                                this.html(`a6338d4c`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22r1k11`, "article", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k111`, "span", parentElement, {}, (parentElement) => [
                                     this.text('01')
                                 ]),
-                                this.html(`5aafe843`, "h2", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k112`, "h2", parentElement, {}, (parentElement) => [
                                     this.text('Information we collect')
                                 ]),
-                                this.html(`a43ac34c`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k113`, "p", parentElement, {}, (parentElement) => [
                                     this.text('This demonstration stores Todo items only in the active client view. The contact and newsletter forms do not send data to a server.')
                                 ]),
-                                this.html(`a744fbd8`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k114`, "p", parentElement, {}, (parentElement) => [
                                     this.text('In a production application, data collection should be stated next to the interaction that causes it—not hidden in a long policy.')
                                 ])
                             ])
@@ -194,17 +194,17 @@ class PrivacyView extends View {
                         }
                         else if (activeSection === 'use') {
                             reactiveContents.push(
-                            this.html(`35c82bab`, "article", parentElement, {}, (parentElement) => [
-                                this.html(`be2aca1f`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22r1k21`, "article", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k211`, "span", parentElement, {}, (parentElement) => [
                                     this.text('02')
                                 ]),
-                                this.html(`6087e966`, "h2", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k212`, "h2", parentElement, {}, (parentElement) => [
                                     this.text('How information is used')
                                 ]),
-                                this.html(`11c41a8b`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k213`, "p", parentElement, {}, (parentElement) => [
                                     this.text('Saola itself does not prescribe analytics or tracking. Applications decide which services to use and must disclose those decisions.')
                                 ]),
-                                this.html(`7215a392`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k214`, "p", parentElement, {}, (parentElement) => [
                                     this.text('Hydration reuses the server-rendered DOM; it does not require duplicating personal data in a second hidden document.')
                                 ])
                             ])
@@ -212,17 +212,17 @@ class PrivacyView extends View {
                         }
                         else {
                             reactiveContents.push(
-                            this.html(`99c54da6`, "article", parentElement, {}, (parentElement) => [
-                                this.html(`549ef40c`, "span", parentElement, {}, (parentElement) => [
+                            this.html(`Bcontent22r1k31`, "article", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k311`, "span", parentElement, {}, (parentElement) => [
                                     this.text('03')
                                 ]),
-                                this.html(`f03d1522`, "h2", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k312`, "h2", parentElement, {}, (parentElement) => [
                                     this.text('Your control')
                                 ]),
-                                this.html(`b02b3f77`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k313`, "p", parentElement, {}, (parentElement) => [
                                     this.text('People should be able to inspect, correct and remove stored information through clear product controls.')
                                 ]),
-                                this.html(`ebe51929`, "p", parentElement, {}, (parentElement) => [
+                                this.html(`Bcontent22r1k314`, "p", parentElement, {}, (parentElement) => [
                                     this.text('For this demo, leaving the Todo route destroys its page instance unless page caching is explicitly enabled by the application.')
                                 ])
                             ])

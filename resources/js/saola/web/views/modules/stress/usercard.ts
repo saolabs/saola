@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -33,6 +31,8 @@ export interface UsercardProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class UsercardViewController extends ViewController {
     constructor(view: View) {
@@ -46,7 +46,7 @@ class UsercardViewController extends ViewController {
 }
 
 class UsercardView extends View {
-    constructor(__data__: UsercardProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, UsercardViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -89,7 +89,7 @@ class UsercardView extends View {
             viewId: __VIEW_ID__,
             path: __VIEW_PATH__,
             scripts: [],
-            styles: [{"type":"code","scoped":true,"content":".ucard { display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; }\n    .ucard__id { font: 700 13px/1 Courier, monospace; opacity: .55; }\n    .ucard__main { display: grid; }\n    .ucard__main small { opacity: .6; }\n    .ucard__rev { font: 12px/1 Courier, monospace; opacity: .5; }\n    .ucard--hl { outline: 2px solid var(--cobalt, #2b50ff); }"}],
+            styles: [{"type":"code","content":".ucard.sf3a5649b { display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; }\n    .ucard__id.sf3a5649b { font: 700 13px/1 Courier, monospace; opacity: .55; }\n    .ucard__main.sf3a5649b { display: grid; }\n    .ucard__main small.sf3a5649b { opacity: .6; }\n    .ucard__rev.sf3a5649b { font: 12px/1 Courier, monospace; opacity: .5; }\n    .ucard--hl.sf3a5649b { outline: 2px solid var(--cobalt, #2b50ff); }"}],
             resources: [],
             commitConstructorData: function(this: any) {
                 // Then update states from data
@@ -125,30 +125,34 @@ class UsercardView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`d69e6b1d`, "div", parentElement,
-                { classes: [{ type: 'static', value: "ucard" }, { type: 'binding', value: "ucard--hl", factory: () => highlight, stateKeys: ["highlight"] }] },
+            this.html(`e1`, "div", parentElement,
+                { classes: [{ type: 'static', value: "sf3a5649b" }, { type: 'static', value: "ucard" }, { type: 'binding', value: "ucard--hl", factory: () => highlight, stateKeys: ["highlight"] }] },
                 (parentElement: any) => [
-                this.html(`6add9c13`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "ucard__id" }] },
+                this.html(`e11`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "sf3a5649b" }, { type: 'static', value: "ucard__id" }] },
                     (parentElement: any) => [
                     this.text('#'),
-                    this.output(`ca637d8a`, parentElement, true, ["user"], (parentElement: any) => user['id'])
+                    this.output(`e11o1`, parentElement, true, ["user"], (parentElement: any) => user['id'])
                     ]),
-                this.html(`fccc82c8`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "ucard__main" }] },
+                this.html(`e12`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "sf3a5649b" }, { type: 'static', value: "ucard__main" }] },
                     (parentElement: any) => [
-                    this.html(`0820a58c`, "strong", parentElement, {}, (parentElement: any) => [
-                        this.output(`a11e2b83`, parentElement, true, ["user"], (parentElement: any) => user['name'])
+                    this.html(`e121`, "strong", parentElement,
+                        { classes: [{ type: 'static', value: "sf3a5649b" }] },
+                        (parentElement: any) => [
+                        this.output(`e121o1`, parentElement, true, ["user"], (parentElement: any) => user['name'])
+                        ]),
+                    this.html(`e122`, "small", parentElement,
+                        { classes: [{ type: 'static', value: "sf3a5649b" }] },
+                        (parentElement: any) => [
+                        this.output(`e122o1`, parentElement, true, ["user"], (parentElement: any) => user['email'])
+                        ])
                     ]),
-                    this.html(`8fe9dc9c`, "small", parentElement, {}, (parentElement: any) => [
-                        this.output(`c3cd4b08`, parentElement, true, ["user"], (parentElement: any) => user['email'])
-                    ])
-                    ]),
-                this.html(`6b7c3ec4`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "ucard__rev" }] },
+                this.html(`e13`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "sf3a5649b" }, { type: 'static', value: "ucard__rev" }] },
                     (parentElement: any) => [
                     this.text('rev '),
-                    this.output(`21020b82`, parentElement, true, ["user"], (parentElement: any) => user['rev'])
+                    this.output(`e13o1`, parentElement, true, ["user"], (parentElement: any) => user['rev'])
                     ])
                 ])
             ]);
@@ -159,7 +163,7 @@ class UsercardView extends View {
 }
 
 // Export factory function
-export function WebModulesStressUsercard(__data__: UsercardProps = {}, systemData: any = {}): UsercardView {
+export function WebModulesStressUsercard(__data__ = {}, systemData = {}): UsercardView {
     return new UsercardView(__data__, systemData);
 }
 export default WebModulesStressUsercard;

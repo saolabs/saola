@@ -1,13 +1,13 @@
 <template>
     <section class="principle-showcase">
         <div class="principle-content">
-            <p class="kicker"><span>DESIGN PRINCIPLE</span> Điều Saola bảo vệ</p>
+            <p class="kicker"><span>DESIGN PRINCIPLE</span> Triết lý thiết kế cốt lõi</p>
             <h2 class="principle-title">
-                <span class="line-1">Server là sự thật.</span>
+                <span class="line-1">Server là chân lý.</span>
                 <span class="line-2">Client là sự tiếp nối.</span>
             </h2>
             <div class="principle-desc">
-                <p>Phản hồi đầu tiên phải hoàn chỉnh và có thể hiểu được. JavaScript không “cứu” một trang rỗng; nó tiếp nhận chính view server vừa render và làm view đó sống lên.</p>
+                <p>Phản hồi đầu tiên từ server phải luôn hoàn chỉnh và mang đầy đủ nội dung. JavaScript không tồn tại để "cứu vãn" một trang web rỗng; nhiệm vụ của nó là tiếp nhận cấu trúc DOM đã được render và làm cho view đó trở nên sống động.</p>
                 <a class="button" href="/about">Vì sao Saola tồn tại <span>→</span></a>
             </div>
         </div>

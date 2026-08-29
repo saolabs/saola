@@ -4,40 +4,40 @@
     <section class="home-section" id="usecase">
         <div class="section-head section-head-split">
             <div>
-                <p class="kicker"><span>DÀNH CHO AI</span> Hợp và chưa hợp</p>
-                <h2>Saola hợp nhất<br>với bốn tình huống này.</h2>
+                <p class="kicker"><span>DÀNH CHO AI</span> Phù hợp và chưa phù hợp</p>
+                <h2>Bốn kịch bản hoàn hảo<br>để chọn Saola.</h2>
             </div>
-            <p>Nếu đội bạn đã đứng vững trên Laravel và đang cân nhắc thêm một frontend riêng, đây đúng là chỗ Saola tiết kiệm nhiều nhất.</p>
+            <p>Nếu dự án của bạn đã có nền móng vững chắc với Laravel và đang tìm kiếm trải nghiệm frontend mượt mà như SPA nhưng không muốn gánh vác độ phức tạp của một hệ thống tách rời, Saola chính là lựa chọn tối ưu.</p>
         </div>
         
         <div class="usecase-tab-container">
             <div class="usecase-tab-list">
-                <button @class(['usecase-tab-item', 'active': activeUsecase === 0]) @click(setActiveUsecase(0))>
+                <button @class({'usecase-tab-item', 'active': activeUsecase === 0}) @click(setActiveUsecase(0))>
                     <span class="tab-num">01</span>
                     <div class="tab-content">
-                        <h3>Ứng dụng nội bộ & admin panel</h3>
-                        <p>Bảng dữ liệu, form nhiều bước, phân quyền theo vai trò. Cần tương tác mượt nhưng không cần đánh đổi bằng một frontend tách rời.</p>
+                        <h3>Ứng dụng nội bộ & Admin Panel</h3>
+                        <p>Bảng dữ liệu phức tạp, form nhiều bước, phân quyền theo vai trò. Cần tốc độ tương tác cao mà không phải xây dựng API và Frontend riêng biệt.</p>
                     </div>
                 </button>
-                <button @class(['usecase-tab-item', 'active': activeUsecase === 1]) @click(setActiveUsecase(1))>
+                <button @class({'usecase-tab-item', 'active': activeUsecase === 1}) @click(setActiveUsecase(1))>
                     <span class="tab-num">02</span>
                     <div class="tab-content">
-                        <h3>Sản phẩm cần cả SEO lẫn tương tác</h3>
-                        <p>Trang danh mục, chi tiết sản phẩm, blog có bộ lọc. Crawler nhận HTML đầy đủ; người dùng nhận trải nghiệm không tải lại trang.</p>
+                        <h3>Sản phẩm cần SEO và tương tác mượt</h3>
+                        <p>Trang thương mại điện tử, danh mục sản phẩm, blog... Crawler đọc được HTML đầy đủ, trong khi người dùng có trải nghiệm SPA không cần tải lại trang.</p>
                     </div>
                 </button>
-                <button @class(['usecase-tab-item', 'active': activeUsecase === 2]) @click(setActiveUsecase(2))>
+                <button @class({'usecase-tab-item', 'active': activeUsecase === 2}) @click(setActiveUsecase(2))>
                     <span class="tab-num">03</span>
                     <div class="tab-content">
-                        <h3>Nhiều mặt tiền trên một backend</h3>
-                        <p>Web công khai, admin, webview mobile và api dùng chung model, policy và service layer nhưng tách route, middleware lẫn bundle.</p>
+                        <h3>Nhiều nền tảng trên chung một Backend</h3>
+                        <p>Web public, hệ thống Admin, Webview cho Mobile App chia sẻ chung Model và Logic, nhưng được phân tách an toàn ở tầng Route và View.</p>
                     </div>
                 </button>
-                <button @class(['usecase-tab-item', 'active': activeUsecase === 3]) @click(setActiveUsecase(3))>
+                <button @class({'usecase-tab-item', 'active': activeUsecase === 3}) @click(setActiveUsecase(3))>
                     <span class="tab-num">04</span>
                     <div class="tab-content">
-                        <h3>Đội Laravel muốn SPA mà không đổi nghề</h3>
-                        <p>Eloquent, middleware, policy, queue giữ nguyên. Phần mới cần học là cú pháp view và cách state chảy — không phải một hệ sinh thái build khác.</p>
+                        <h3>Đội ngũ Laravel muốn nâng cấp lên SPA</h3>
+                        <p>Giữ nguyên kiến thức về Eloquent, Middleware, Queue. Chỉ cần học thêm cú pháp View mới — không cần vật lộn với quy trình build Frontend tách biệt.</p>
                     </div>
                 </button>
             </div>
@@ -159,7 +159,7 @@
         </div>
 
         <div class="ov-note ov-note--warn" style="margin-top: 30px;">
-            <strong>Chưa hợp khi:</strong> bạn cần một hệ sinh thái component bên thứ ba khổng lồ ngay hôm nay, hoặc đội đã chạy tốt trên React/Vue với đầy đủ tooling và người quen việc. Trong hai trường hợp đó, chi phí chuyển sang Saola lớn hơn cái nó tiết kiệm.
+            <strong>Chưa phù hợp khi:</strong> Dự án yêu cầu hệ sinh thái component UI bên thứ ba đồ sộ có sẵn, hoặc team đã quá quen thuộc với React/Vue cùng các công cụ đi kèm. Trong những trường hợp này, chi phí chuyển đổi sang Saola có thể lớn hơn những lợi ích hệ thống mang lại.
         </div>
     </section>
 </template>

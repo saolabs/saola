@@ -108,10 +108,10 @@ class BaseView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement) => [
-            this.html(`d69e6b1d`, "div", parentElement,
+            this.html(`e1`, "div", parentElement,
                 { classes: [{ type: 'static', value: "saola-demo-root" }] },
                 (parentElement) => [
-                this.blockOutlet(`d9c86768`, "shell", parentElement)
+                this.blockOutlet(`e1b`, "shell", parentElement)
                 ])
             ]);
             }

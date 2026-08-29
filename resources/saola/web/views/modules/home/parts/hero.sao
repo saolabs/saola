@@ -1,32 +1,57 @@
 <template>
-    <section class="home-hero" style="position: relative; overflow: visible;">
-        <div style="position: absolute; top: 10%; right: 5%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(14,165,233,0.15) 0%, rgba(99,102,241,0.1) 40%, transparent 70%); z-index: -1; border-radius: 50%; pointer-events: none; filter: blur(40px);"></div>
-        <div class="home-hero-copy">
-            <p class="kicker"><span>SAOLA ECOSYSTEM</span> THE MODERN MONOLITH</p>
-            <h1 style="text-wrap: balance;">Trải nghiệm SPA mượt mà<br><em>cùng backend bạn yêu thích.</em></h1>
-            <p class="hero-lead">Phát triển Single-Page App với sự thanh lịch của server-side routing. Tận dụng trọn vẹn controller, middleware, và auth của Laravel mà không cần phải xây dựng riêng một tầng API.</p>
-            <div class="hero-actions">
-                <a class="button button-primary" href="/docs/getting-started" style="box-shadow: 0 8px 25px rgba(14,165,233,0.3); border: 1px solid rgba(255,255,255,0.2);">Đọc tài liệu hướng dẫn <span>↗</span></a>
-                <a class="text-link" href="#features">Tại sao chọn Saola? <span>→</span></a>
+    <section class="hx-hero">
+        <div class="hx-copy">
+            <h1>
+                <span class="hx-punch">Một</span> lõi Laravel.<br>
+                <span class="hx-punch">Không</span> tách rời frontend.<br>
+                <span class="hx-punch">Hai</span> đầu ra liền mạch.<br>
+            </h1>
+            <p class="hx-lead">Không phải một giải pháp chắp vá, Saola là hệ sinh thái toàn diện nâng tầm kiến trúc Laravel. Phân tách logic rành mạch với hệ thống Module và Context độc lập. Hợp nhất trải nghiệm hiển thị bằng một trình biên dịch đột phá — nơi chỉ một file <code>.sao</code> duy nhất tự động kiến tạo cả HTML chuẩn SEO lẫn ứng dụng SPA mượt mà. Tất cả nằm trong một luồng chảy xuyên suốt.</p>
+            <div class="hx-actions">
+                <a class="hx-btn hx-btn-primary" href="/docs/getting-started">Bắt đầu trong 4 bước</a>
+                <a class="hx-btn hx-btn-ghost" href="#features">Tìm hiểu thêm</a>
             </div>
-            <dl class="hero-facts">
-                <div style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);"><dt>PHONG CÁCH</dt><dd>Server-driven</dd></div>
-                <div style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);"><dt>TRẢI NGHIỆM</dt><dd>Client-side Routing</dd></div>
-                <div style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);"><dt>TƯƠNG THÍCH</dt><dd>Laravel 12+</dd></div>
-            </dl>
         </div>
 
-        <div class="target-stack" style="display: grid; gap: 20px; padding-left: 2vw; position: relative;">
-            <div class="code-window hero-code-block" style="box-shadow: 0 25px 50px rgba(0,0,0,0.12); transform: rotate(-2deg) translateY(0); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.6);">
-                <div class="window-bar"><span>CONTROLLER</span><b>UserController.php</b></div>
-                <pre><code><span class="code-line"><span class="kw">class</span> <span class="ty">UserController</span> <span class="kw">extends</span> <span class="ty">Controller</span></span><span class="code-line"><span class="op">{</span></span><span class="code-line code-indent-1"><span class="kw">public function</span> <span class="fn">show</span><span class="op">(</span><span class="ty">User</span> <span class="vr">$user</span><span class="op">)</span></span><span class="code-line code-indent-1"><span class="op">{</span></span><span class="code-line code-indent-2"><span class="kw">return</span> <span class="vr">$this</span><span class="op">-&gt;</span><span class="fn">response</span><span class="op">([</span></span><span class="code-line code-indent-3"><span class="st">'user'</span> <span class="op">=&gt;</span> <span class="vr">$user</span><span class="op">,</span></span><span class="code-line code-indent-2"><span class="op">]);</span></span><span class="code-line code-indent-1"><span class="op">}</span></span><span class="code-line"><span class="op">}</span></span></code></pre>
+        <figure class="hx-object" aria-label="Một nguồn .sao sinh ra hai đầu ra">
+            <div class="hx-node hx-node-source">
+                <span class="hx-node-tag">NGUỒN</span>
+                <strong>user.sao</strong>
+                <small>state · template · script setup</small>
+                <pre class="hx-mini" aria-hidden="true"><span class="code-line"><span class="kw">&#64;states</span><span class="op">({</span><span class="vr"> likes</span><span class="op">:</span><span class="st"> 12</span><span class="op"> })</span></span><span class="code-line"><span class="op">&lt;</span><span class="kw">template</span><span class="op">&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;</span><span class="fn">article</span><span class="vr"> class</span><span class="op">=</span><span class="st">"card"</span><span class="op">&gt;</span></span><span class="code-line code-indent-2"><span class="op">&lt;</span><span class="fn">button</span><span class="kw"> &#64;click</span><span class="op">(</span><span class="fn">setLikes</span><span class="op">(</span><span class="vr">likes</span><span class="op">+</span><span class="st">1</span><span class="op">))&gt;</span></span><span class="code-line code-indent-3">♥ <span class="mustache-token"><span class="vr">likes</span></span></span></pre>
             </div>
-            <div class="code-window code-window-dark hero-code-block" style="box-shadow: 0 30px 60px rgba(0,0,0,0.25); transform: rotate(3deg) translateY(0); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.1);">
-                <div class="window-bar"><span>VIEW</span><b>user.sao</b></div>
-                <pre><code><span class="code-line"><span class="kw">&#64;vars</span><span class="op">(</span><span class="vr">user</span><span class="op">)</span></span><span class="code-line"></span><span class="code-line"><span class="op">&lt;</span><span class="kw">template</span><span class="op">&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;</span><span class="fn">h1</span><span class="op">&gt;</span><span class="mustache-token"><span class="vr">user</span><span class="op">[</span><span class="st">'name'</span><span class="op">]</span></span><span class="op">&lt;/</span><span class="fn">h1</span><span class="op">&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;</span><span class="fn">p</span><span class="op">&gt;</span>Tham gia từ: <span class="mustache-token"><span class="vr">user</span><span class="op">[</span><span class="st">'created_at'</span><span class="op">]</span></span><span class="op">&lt;/</span><span class="fn">p</span><span class="op">&gt;</span></span><span class="code-line"><span class="op">&lt;/</span><span class="kw">template</span><span class="op">&gt;</span></span></code></pre>
+
+            <div class="hx-split" aria-hidden="true"><span>sao-compile &lt;context&gt;</span></div>
+
+            <div class="hx-outs">
+                <span class="hx-arm hx-arm-l" aria-hidden="true">SSR</span>
+                <span class="hx-arm hx-arm-r" aria-hidden="true">hydrate</span>
+
+                <div class="hx-node">
+                    <span class="hx-node-tag">SERVER</span>
+                    <strong>user.blade.php</strong>
+                    <small>HTML đầy đủ ở lần tải đầu</small>
+                    <pre class="hx-mini" aria-hidden="true"><span class="code-line"><span class="kw">&#64;wrapper</span></span><span class="code-line"><span class="op">&lt;</span><span class="fn">article</span><span class="kw"> &#64;class</span><span class="op">([</span><span class="vr">$__VIEW_ID__</span><span class="op">,</span><span class="st"> 'card'</span><span class="op">])&gt;</span></span><span class="code-line code-indent-1"><span class="op">&lt;</span><span class="fn">button</span><span class="op">&gt;</span>♥</span><span class="code-line code-indent-2"><span class="kw">&#64;startMarker</span><span class="op">(</span><span class="st">'output'</span><span class="op">,</span><span class="st"> 'k2f1'</span><span class="op">)</span></span><span class="code-line code-indent-2"><span class="mustache-token"><span class="vr">$likes</span></span></span></pre>
+                </div>
+
+                <div class="hx-node">
+                    <span class="hx-node-tag">CLIENT</span>
+                    <strong>user.js</strong>
+                    <small>Claim lại đúng DOM đó</small>
+                    <pre class="hx-mini" aria-hidden="true"><span class="code-line"><span class="kw">const</span><span class="fn"> set$likes</span><span class="op"> =</span></span><span class="code-line code-indent-1"><span class="vr">__STATE__</span><span class="op">.</span><span class="fn">register</span><span class="op">(</span><span class="st">'likes'</span><span class="op">)</span></span><span class="code-line"><span class="kw">const</span><span class="fn"> setLikes</span><span class="op"> = (</span><span class="vr">v</span><span class="op">) =&gt; {</span></span><span class="code-line code-indent-1"><span class="vr">likes</span><span class="op"> =</span><span class="vr"> v</span><span class="op">;</span></span><span class="code-line code-indent-1"><span class="fn">set$likes</span><span class="op">(</span><span class="vr">v</span><span class="op">);</span></span></pre>
+                </div>
             </div>
-        </div>
+        </figure>
     </section>
+
+    <div class="hx-strip">
+        <dl class="hx-strip-grid">
+            <div><dt>4</dt><dd>context: web · admin · api · mobile</dd></div>
+            <div><dt>0</dt><dd>file cấu hình route trung tâm cần sửa</dd></div>
+            <div><dt>2</dt><dd>đầu ra được biên dịch từ một file .sao</dd></div>
+            <div><dt>43</dt><dd>directive giữ nguyên cú pháp Blade quen thuộc</dd></div>
+        </dl>
+    </div>
 </template>
 
 <script setup lang="ts">

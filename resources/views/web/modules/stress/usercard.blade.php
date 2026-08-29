@@ -2,12 +2,12 @@
 
 <?php if(!isset($user) || (!$user && $user !== false)) $user = []; if(!isset($highlight) || (!$highlight && $highlight !== false)) $highlight = false; ?>
 @wrapper
-<div @class([$__VIEW_ID__ . '-d69e6b1d', 'ucard', 'ucard--hl'=> $highlight])>
-        <div @class([$__VIEW_ID__ . '-6add9c13', 'ucard__id'])>#@startMarker('output', 'ca637d8a'){{ $user['id'] }}@endMarker('output', 'ca637d8a')</div>
-        <div @class([$__VIEW_ID__ . '-fccc82c8', 'ucard__main'])>
-            <strong @class([$__VIEW_ID__ . '-0820a58c'])>@startMarker('output', 'a11e2b83'){{ $user['name'] }}@endMarker('output', 'a11e2b83')</strong>
-            <small @class([$__VIEW_ID__ . '-8fe9dc9c'])>@startMarker('output', 'c3cd4b08'){{ $user['email'] }}@endMarker('output', 'c3cd4b08')</small>
+<div @class([$__VIEW_ID__ . '-e1', 'sf3a5649b', 'ucard', 'ucard--hl'=> $highlight])>
+        <div @class([$__VIEW_ID__ . '-e11', 'sf3a5649b', 'ucard__id'])>#@startMarker('output', 'e11o1'){{ $user['id'] }}@endMarker('output', 'e11o1')</div>
+        <div @class([$__VIEW_ID__ . '-e12', 'sf3a5649b', 'ucard__main'])>
+            <strong @class([$__VIEW_ID__ . '-e121', 'sf3a5649b'])>@startMarker('output', 'e121o1'){{ $user['name'] }}@endMarker('output', 'e121o1')</strong>
+            <small @class([$__VIEW_ID__ . '-e122', 'sf3a5649b'])>@startMarker('output', 'e122o1'){{ $user['email'] }}@endMarker('output', 'e122o1')</small>
         </div>
-        <div @class([$__VIEW_ID__ . '-6b7c3ec4', 'ucard__rev'])>rev @startMarker('output', '21020b82'){{ $user['rev'] }}@endMarker('output', '21020b82')</div>
+        <div @class([$__VIEW_ID__ . '-e13', 'sf3a5649b', 'ucard__rev'])>rev @startMarker('output', 'e13o1'){{ $user['rev'] }}@endMarker('output', 'e13o1')</div>
     </div>
 @endWrapper

@@ -9,19 +9,19 @@
             <p>This demo explains behavior; it is not a production service agreement.</p>
         </section>
         <section class="terms-list">
-            <article @class(['open': expanded === 1])>
+            <article @class({'open': expanded === 1})>
                 <button @click(setExpanded(expanded === 1 ? 0 : 1))><span>01</span><strong>Purpose of this site</strong><i>+</i></button>
                 @if(expanded === 1)
                     <p>The pages exist to exercise Saola route navigation, nested layouts, reactive state, scoped styling and runtime asset cleanup.</p>
                 @endif
             </article>
-            <article @class(['open': expanded === 2])>
+            <article @class({'open': expanded === 2})>
                 <button @click(setExpanded(expanded === 2 ? 0 : 2))><span>02</span><strong>Data and persistence</strong><i>+</i></button>
                 @if(expanded === 2)
                     <p>Interactions are intentionally local. Refreshing the browser resets task and form state because no persistence service is connected.</p>
                 @endif
             </article>
-            <article @class(['open': expanded === 3])>
+            <article @class({'open': expanded === 3})>
                 <button @click(setExpanded(expanded === 3 ? 0 : 3))><span>03</span><strong>No warranty</strong><i>+</i></button>
                 @if(expanded === 3)
                     <p>This interface is a test fixture for the evolving platform and should be evaluated as development software.</p>

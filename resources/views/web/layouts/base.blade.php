@@ -5,10 +5,10 @@
 <link rel="stylesheet" href="/static/saola/demo-site.css">
 @endonce
 @wrapper
-    <div @class([$__VIEW_ID__ . '-d69e6b1d', 'saola-demo-root'])>
-        @startMarker('blockoutlet', 'd9c86768')
+    <div @class([$__VIEW_ID__ . '-e1', 'saola-demo-root'])>
+        @startMarker('blockoutlet', 'e1b')
         @useBlock('shell')
-        @endMarker('blockoutlet', 'd9c86768')
+        @endMarker('blockoutlet', 'e1b')
     </div>
 @endWrapper
     @pageEnd

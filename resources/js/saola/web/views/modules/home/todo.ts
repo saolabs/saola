@@ -27,8 +27,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -38,6 +36,8 @@ export interface TodoProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class TodoViewController extends ViewController {
     constructor(view: View) {
@@ -51,7 +51,7 @@ class TodoViewController extends ViewController {
 }
 
 class TodoView extends View {
-    constructor(__data__: TodoProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, TodoViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -202,7 +202,7 @@ class TodoView extends View {
             viewId: __VIEW_ID__,
             path: __VIEW_PATH__,
             scripts: [],
-            styles: [{"type":"code","scoped":true,"content":".todo-row.completed strong { text-decoration: line-through; color: #79808b; }\n    .todo-row.completed .todo-check { background: var(--cobalt); color: white; }"}],
+            styles: [{"type":"code","content":".todo-row.completed strong.s3bfa2ee6 { text-decoration: line-through; color: #79808b; }\n    .todo-row.completed .todo-check.s3bfa2ee6 { background: var(--cobalt); color: white; }"}],
             resources: [],
             commitConstructorData: function(this: any) {
                 // Then update states from data
@@ -243,130 +243,158 @@ class TodoView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-workspace', 'workspace', (parentElement: any) => [
-            this.html(`33ba6fc5`, "header", parentElement,
-                { classes: [{ type: 'static', value: "workspace-topbar" }] },
+            this.html(`Bworkspace1`, "header", parentElement,
+                { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "workspace-topbar" }] },
                 (parentElement: any) => [
-                this.html(`74083b07`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`6066db4b`, "p", parentElement,
-                        { classes: [{ type: 'static', value: "eyebrow" }] },
+                this.html(`Bworkspace11`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                    (parentElement: any) => [
+                    this.html(`Bworkspace111`, "p", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "eyebrow" }] },
                         (parentElement: any) => [
-                        this.html(`6cf41081`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bworkspace1111`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                            (parentElement: any) => [
                             this.text('01')
-                        ]),
+                            ]),
                         this.text(' Personal queue')
                         ]),
-                    this.html(`0ddacfc5`, "h1", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bworkspace112`, "h1", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                        (parentElement: any) => [
                         this.text('Good morning.')
-                    ])
-                ]),
-                this.html(`8d6a301b`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "completion-ring" }] },
-                    (parentElement: any) => [
-                    this.html(`07fe4995`, "strong", parentElement, {}, (parentElement: any) => [
-                        this.output(`54916756`, parentElement, true, ["completedCount"], (parentElement: any) => completedCount),
-                        this.text('/'),
-                        this.output(`29b9d7bb`, parentElement, true, ["todos"], (parentElement: any) => App.Helper.count(todos))
+                        ])
                     ]),
-                    this.html(`55822db1`, "span", parentElement, {}, (parentElement: any) => [
+                this.html(`Bworkspace12`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "completion-ring" }] },
+                    (parentElement: any) => [
+                    this.html(`Bworkspace121`, "strong", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                        (parentElement: any) => [
+                        this.output(`Bworkspace121o1`, parentElement, true, ["completedCount"], (parentElement: any) => completedCount),
+                        this.text('/'),
+                        this.output(`Bworkspace121o2`, parentElement, true, ["todos"], (parentElement: any) => App.Helper.count(todos))
+                        ]),
+                    this.html(`Bworkspace122`, "span", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                        (parentElement: any) => [
                         this.text('complete')
-                    ])
+                        ])
                     ])
                 ]),
-            this.html(`2532706c`, "section", parentElement,
-                { classes: [{ type: 'static', value: "todo-board" }] },
+            this.html(`Bworkspace2`, "section", parentElement,
+                { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "todo-board" }] },
                 (parentElement: any) => [
-                this.html(`9a7a2c94`, "form", parentElement,
-                    { classes: [{ type: 'static', value: "todo-entry" }], events: { submit: [{"handler":"addTodo","params":[() => event]}] } },
+                this.html(`Bworkspace21`, "form", parentElement,
+                    { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "todo-entry" }], events: { submit: [{"handler":"addTodo","params":[() => event]}] } },
                     (parentElement: any) => [
-                    this.html(`1239dd2e`, "label", parentElement,
-                        { attrs: { "for": { type: 'static', value: "new-task" } } },
+                    this.html(`Bworkspace211`, "label", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }], attrs: { "for": { type: 'static', value: "new-task" } } },
                         (parentElement: any) => [
                         this.text('Add one clear next step')
                         ]),
-                    this.html(`f5a4866b`, "div", parentElement, {}, (parentElement: any) => [
-                        this.html(`14eae2aa`, "input", parentElement, { attrs: { "id": { type: 'static', value: "new-task" }, "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "What needs your attention?" } }, bind: { key: 'newTodo' } }),
-                        this.html(`42ff8191`, "button", parentElement,
-                            { attrs: { "type": { type: 'static', value: "submit" } } },
+                    this.html(`Bworkspace212`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                        (parentElement: any) => [
+                        this.html(`Bworkspace2121`, "input", parentElement, { classes: [{ type: 'static', value: "s3bfa2ee6" }], attrs: { "id": { type: 'static', value: "new-task" }, "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "What needs your attention?" } }, bind: { key: 'newTodo' } }),
+                        this.html(`Bworkspace2122`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "s3bfa2ee6" }], attrs: { "type": { type: 'static', value: "submit" } } },
                             (parentElement: any) => [
                             this.text('Add task '),
-                            this.html(`49fa209a`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bworkspace21221`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                (parentElement: any) => [
                                 this.text('+')
+                                ])
                             ])
-                            ])
-                    ])
+                        ])
                     ]),
-                this.html(`aa5f781d`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "todo-toolbar" }] },
+                this.html(`Bworkspace22`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "todo-toolbar" }] },
                     (parentElement: any) => [
-                    this.html(`47c6ff27`, "div", parentElement, {}, (parentElement: any) => [
-                        this.html(`c0ff40d6`, "button", parentElement,
-                            { classes: [{ type: 'binding', value: "active", factory: () => filter === 'all', stateKeys: ["filter"] }], events: { click: [(event: any) => setFilter('all')] } },
+                    this.html(`Bworkspace221`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                        (parentElement: any) => [
+                        this.html(`Bworkspace2211`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'binding', value: "active", factory: () => filter === 'all', stateKeys: ["filter"] }], events: { click: [(event: any) => setFilter('all')] } },
                             (parentElement: any) => [
                             this.text('All '),
-                            this.html(`56d021bb`, "span", parentElement, {}, (parentElement: any) => [
-                                this.output(`ba497928`, parentElement, true, ["todos"], (parentElement: any) => App.Helper.count(todos))
-                            ])
+                            this.html(`Bworkspace22111`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                (parentElement: any) => [
+                                this.output(`Bworkspace22111o1`, parentElement, true, ["todos"], (parentElement: any) => App.Helper.count(todos))
+                                ])
                             ]),
-                        this.html(`47caf5de`, "button", parentElement,
-                            { classes: [{ type: 'binding', value: "active", factory: () => filter === 'active', stateKeys: ["filter"] }], events: { click: [(event: any) => setFilter('active')] } },
+                        this.html(`Bworkspace2212`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'binding', value: "active", factory: () => filter === 'active', stateKeys: ["filter"] }], events: { click: [(event: any) => setFilter('active')] } },
                             (parentElement: any) => [
                             this.text('Active '),
-                            this.html(`c1808610`, "span", parentElement, {}, (parentElement: any) => [
-                                this.output(`fd013c02`, parentElement, true, ["activeCount"], (parentElement: any) => activeCount)
-                            ])
+                            this.html(`Bworkspace22121`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                (parentElement: any) => [
+                                this.output(`Bworkspace22121o1`, parentElement, true, ["activeCount"], (parentElement: any) => activeCount)
+                                ])
                             ]),
-                        this.html(`f0106f39`, "button", parentElement,
-                            { classes: [{ type: 'binding', value: "active", factory: () => filter === 'done', stateKeys: ["filter"] }], events: { click: [(event: any) => setFilter('done')] } },
+                        this.html(`Bworkspace2213`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'binding', value: "active", factory: () => filter === 'done', stateKeys: ["filter"] }], events: { click: [(event: any) => setFilter('done')] } },
                             (parentElement: any) => [
                             this.text('Done '),
-                            this.html(`b8a215c9`, "span", parentElement, {}, (parentElement: any) => [
-                                this.output(`5a677e1d`, parentElement, true, ["completedCount"], (parentElement: any) => completedCount)
+                            this.html(`Bworkspace22131`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                (parentElement: any) => [
+                                this.output(`Bworkspace22131o1`, parentElement, true, ["completedCount"], (parentElement: any) => completedCount)
+                                ])
                             ])
-                            ])
-                    ]),
-                    this.html(`c99f5306`, "button", parentElement,
-                        { classes: [{ type: 'static', value: "clear-button" }], props: { "disabled": { type: 'binding', factory: () => completedCount === 0, stateKeys: ["completedCount"] } }, events: { click: [{"handler":"clearCompleted","params":[]}] } },
+                        ]),
+                    this.html(`Bworkspace222`, "button", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "clear-button" }], props: { "disabled": { type: 'binding', factory: () => completedCount === 0, stateKeys: ["completedCount"] } }, events: { click: [{"handler":"clearCompleted","params":[]}] } },
                         (parentElement: any) => [
                         this.text('Clear completed')
                         ])
                     ]),
-                this.html(`a734d4f3`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "todo-list" }] },
+                this.html(`Bworkspace23`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "todo-list" }] },
                     (parentElement: any) => [
-                    this.reactive(`05835365`, "if", parentReactive, parentElement, ["todos"], (parentReactive: any, parentElement: any) => {
+                    this.reactive(`Bworkspace23r1`, "if", parentReactive, parentElement, ["todos"], (parentReactive: any, parentElement: any) => {
                         const reactiveContents = [];
                         if (App.Helper.count(todos) === 0) {
                             reactiveContents.push(
-                            this.html(`b75e5ca7`, "div", parentElement,
-                                { classes: [{ type: 'static', value: "empty-state" }] },
+                            this.html(`Bworkspace23r1k11`, "div", parentElement,
+                                { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "empty-state" }] },
                                 (parentElement: any) => [
-                                this.html(`25a80dd0`, "span", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bworkspace23r1k111`, "span", parentElement,
+                                    { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                    (parentElement: any) => [
                                     this.text('○')
-                                ]),
-                                this.html(`7d094694`, "h2", parentElement, {}, (parentElement: any) => [
+                                    ]),
+                                this.html(`Bworkspace23r1k112`, "h2", parentElement,
+                                    { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                    (parentElement: any) => [
                                     this.text('Your queue is clear.')
-                                ]),
-                                this.html(`f32d7c84`, "p", parentElement, {}, (parentElement: any) => [
+                                    ]),
+                                this.html(`Bworkspace23r1k113`, "p", parentElement,
+                                    { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                    (parentElement: any) => [
                                     this.text('Add one meaningful task above.')
-                                ])
+                                    ])
                                 ])
                             );
                         }
                         else {
                             reactiveContents.push(
-                            this.reactive(`a1afe760`, "foreach", parentReactive, parentElement, ["todos"], (parentReactive: any, parentElement: any) => {
+                            this.reactive(`Bworkspace23r1k2l1`, "foreach", parentReactive, parentElement, ["todos"], (parentReactive: any, parentElement: any) => {
                                 return this.__foreach(todos, (todo: any, __loopKey: any, __loopIndex: any, __loop: any) => [
-                                    this.reactive(`8dd28e28-${todo['id']}`, "if", parentReactive, parentElement, ["filter"], (parentReactive: any, parentElement: any) => {
+                                    this.reactive(`Bworkspace23r1k2l1r1-${todo['id']}`, "if", parentReactive, parentElement, ["filter"], (parentReactive: any, parentElement: any) => {
                                         const reactiveContents = [];
                                         if (filter === 'all' || (filter === 'active' && !todo['completed']) || (filter === 'done' && todo['completed'])) {
                                             reactiveContents.push(
-                                            this.html(`da9a7a8e-${todo['id']}`, "article", parentElement,
-                                                { classes: [{ type: 'static', value: "todo-row" }, { type: 'binding', value: "completed", factory: () => todo['completed'], stateKeys: [] }] },
+                                            this.html(`Bworkspace23r1k2l1r1k11-${todo['id']}`, "article", parentElement,
+                                                { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "todo-row" }, { type: 'binding', value: "completed", factory: () => todo['completed'], stateKeys: [] }] },
                                                 (parentElement: any) => [
-                                                this.html(`3b156e92-${todo['id']}`, "button", parentElement,
-                                                    { classes: [{ type: 'static', value: "todo-check" }], attrs: { "aria-label": { type: 'static', value: "Toggle task" } }, events: { click: [{"handler":"toggleTodo","params":[todo['id']]}] } },
+                                                this.html(`Bworkspace23r1k2l1r1k111-${todo['id']}`, "button", parentElement,
+                                                    { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "todo-check" }], attrs: { "aria-label": { type: 'static', value: "Toggle task" } }, events: { click: [{"handler":"toggleTodo","params":[todo['id']]}] } },
                                                     (parentElement: any) => [
-                                                    this.reactive(`aba5abe7-${todo['id']}`, "if", parentReactive, parentElement, [], (parentReactive: any, parentElement: any) => {
+                                                    this.reactive(`Bworkspace23r1k2l1r1k111r1-${todo['id']}`, "if", parentReactive, parentElement, [], (parentReactive: any, parentElement: any) => {
                                                         const reactiveContents = [];
                                                         if (todo['completed']) {
                                                             reactiveContents.push(
@@ -376,17 +404,23 @@ class TodoView extends View {
                                                         return reactiveContents;
                                                     })
                                                     ]),
-                                                this.html(`82692654-${todo['id']}`, "div", parentElement, {}, (parentElement: any) => [
-                                                    this.html(`0185855c-${todo['id']}`, "strong", parentElement, {}, (parentElement: any) => [
-                                                        this.output(`70d19571-${todo['id']}`, parentElement, true, [], (parentElement: any) => todo['text'])
-                                                    ]),
-                                                    this.html(`3e7229d0-${todo['id']}`, "small", parentElement, {}, (parentElement: any) => [
+                                                this.html(`Bworkspace23r1k2l1r1k112-${todo['id']}`, "div", parentElement,
+                                                    { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                                    (parentElement: any) => [
+                                                    this.html(`Bworkspace23r1k2l1r1k1121-${todo['id']}`, "strong", parentElement,
+                                                        { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                                        (parentElement: any) => [
+                                                        this.output(`Bworkspace23r1k2l1r1k1121o1-${todo['id']}`, parentElement, true, [], (parentElement: any) => todo['text'])
+                                                        ]),
+                                                    this.html(`Bworkspace23r1k2l1r1k1122-${todo['id']}`, "small", parentElement,
+                                                        { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                                                        (parentElement: any) => [
                                                         this.text('SAOLA DEMO · TASK '),
-                                                        this.output(`4e67dbd4-${todo['id']}`, parentElement, true, [], (parentElement: any) => todo['id'])
-                                                    ])
-                                                ]),
-                                                this.html(`09d56e46-${todo['id']}`, "button", parentElement,
-                                                    { classes: [{ type: 'static', value: "todo-delete" }], attrs: { "aria-label": { type: 'static', value: "Delete task" } }, events: { click: [{"handler":"deleteTodo","params":[todo['id']]}] } },
+                                                        this.output(`Bworkspace23r1k2l1r1k1122o1-${todo['id']}`, parentElement, true, [], (parentElement: any) => todo['id'])
+                                                        ])
+                                                    ]),
+                                                this.html(`Bworkspace23r1k2l1r1k113-${todo['id']}`, "button", parentElement,
+                                                    { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "todo-delete" }], attrs: { "aria-label": { type: 'static', value: "Delete task" } }, events: { click: [{"handler":"deleteTodo","params":[todo['id']]}] } },
                                                     (parentElement: any) => [
                                                     this.text('×')
                                                     ])
@@ -402,17 +436,21 @@ class TodoView extends View {
                         return reactiveContents;
                     })
                     ]),
-                this.html(`f34c97bb`, "footer", parentElement,
-                    { classes: [{ type: 'static', value: "todo-summary" }] },
+                this.html(`Bworkspace24`, "footer", parentElement,
+                    { classes: [{ type: 'static', value: "s3bfa2ee6" }, { type: 'static', value: "todo-summary" }] },
                     (parentElement: any) => [
-                    this.html(`903fa463`, "p", parentElement, {}, (parentElement: any) => [
-                        this.html(`ee3f8d27`, "span", parentElement, {}, (parentElement: any) => [
-                            this.output(`372a21ea`, parentElement, true, ["activeCount"], (parentElement: any) => activeCount)
-                        ]),
+                    this.html(`Bworkspace241`, "p", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                        (parentElement: any) => [
+                        this.html(`Bworkspace2411`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "s3bfa2ee6" }] },
+                            (parentElement: any) => [
+                            this.output(`Bworkspace2411o1`, parentElement, true, ["activeCount"], (parentElement: any) => activeCount)
+                            ]),
                         this.text(' items still need attention.')
-                    ]),
-                    this.html(`f3e92dce`, "a", parentElement,
-                        { attrs: { "href": { type: 'static', value: "/about" } } },
+                        ]),
+                    this.html(`Bworkspace242`, "a", parentElement,
+                        { classes: [{ type: 'static', value: "s3bfa2ee6" }], attrs: { "href": { type: 'static', value: "/about" } } },
                         (parentElement: any) => [
                         this.text('Why Saola handles this differently →')
                         ])
@@ -428,7 +466,7 @@ class TodoView extends View {
 }
 
 // Export factory function
-export function WebModulesHomeTodo(__data__: TodoProps = {}, systemData: any = {}): TodoView {
+export function WebModulesHomeTodo(__data__ = {}, systemData = {}): TodoView {
     return new TodoView(__data__, systemData);
 }
 export default WebModulesHomeTodo;

@@ -11,25 +11,25 @@
         <section class="manifesto-grid">
             <div class="manifesto-number">01—04 / PRINCIPLES</div>
             <div class="value-accordion">
-                <article @class(['value-item', 'open': activeValue === 0])>
+                <article @class({'value-item', 'open': activeValue === 0})>
                     <button @click(setActiveValue(0))><span>01</span><strong>Một nguồn là điều kiện, không phải khẩu hiệu</strong><i>+</i></button>
                     @if(activeValue === 0)
                         <p>Nếu Blade và JavaScript được viết riêng, chúng sẽ lệch nhau. Saola đặt compiler và AST ở giữa để structure, directive, children và marker được sinh từ cùng một view.</p>
                     @endif
                 </article>
-                <article @class(['value-item', 'open': activeValue === 1])>
+                <article @class({'value-item', 'open': activeValue === 1})>
                     <button @click(setActiveValue(1))><span>02</span><strong>Server phải hoàn thành trách nhiệm trước</strong><i>+</i></button>
                     @if(activeValue === 1)
                         <p>Phản hồi đầu tiên phải có nội dung, có cấu trúc và hoạt động như một tài liệu web. Hydration nâng cấp nó thành ứng dụng; hydration không che giấu một server response rỗng.</p>
                     @endif
                 </article>
-                <article @class(['value-item', 'open': activeValue === 2])>
+                <article @class({'value-item', 'open': activeValue === 2})>
                     <button @click(setActiveValue(2))><span>03</span><strong>Lifecycle phải nhìn thấy được</strong><i>+</i></button>
                     @if(activeValue === 2)
                         <p>Mount, active, pause, resume và destroy là những trạng thái có contract. Event, subscription, async resource và cache phải đi theo owner của chúng.</p>
                     @endif
                 </article>
-                <article @class(['value-item', 'open': activeValue === 3])>
+                <article @class({'value-item', 'open': activeValue === 3})>
                     <button @click(setActiveValue(3))><span>04</span><strong>Đa nền tảng bắt đầu từ context đúng</strong><i>+</i></button>
                     @if(activeValue === 3)
                         <p>Web, admin và mobile có thể dùng route map và registry riêng. Context được resolve theo request để worker dài hạn như Octane không làm rò trạng thái giữa người dùng.</p>

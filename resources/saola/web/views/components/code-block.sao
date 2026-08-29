@@ -1,0 +1,9 @@
+@props({
+    lang: 'none',
+    dark: true
+})
+<template>
+    <div @class({'code-block', 'code-block-dark': dark})>
+        <pre><code class="language-{{ lang }}">@children</code></pre>
+    </div>
+</template>

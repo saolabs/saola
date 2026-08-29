@@ -34,9 +34,9 @@
             </form>
             <div class="todo-toolbar">
                 <div>
-                    <button @class(['active': filter === 'all']) @click(setFilter('all'))>All <span>{{ todos.length }}</span></button>
-                    <button @class(['active': filter === 'active']) @click(setFilter('active'))>Active <span>{{ activeCount }}</span></button>
-                    <button @class(['active': filter === 'done']) @click(setFilter('done'))>Done <span>{{ completedCount }}</span></button>
+                    <button @class({'active': filter === 'all'}) @click(setFilter('all'))>All <span>{{ todos.length }}</span></button>
+                    <button @class({'active': filter === 'active'}) @click(setFilter('active'))>Active <span>{{ activeCount }}</span></button>
+                    <button @class({'active': filter === 'done'}) @click(setFilter('done'))>Done <span>{{ completedCount }}</span></button>
                 </div>
                 <button class="clear-button" @disabled(completedCount === 0) @click(clearCompleted())>Clear completed</button>
             </div>
@@ -51,7 +51,7 @@
                     @foreach(todos as todo)
                         @key(todo['id'])
                         @if(filter === 'all' || (filter === 'active' && !todo['completed']) || (filter === 'done' && todo['completed']))
-                            <article @class(['todo-row', 'completed': todo['completed']])>
+                            <article @class({'todo-row', 'completed': todo['completed']})>
                                 <button class="todo-check" @click(toggleTodo(todo['id'])) aria-label="Toggle task">
                                     @if(todo['completed'])
                                         ✓

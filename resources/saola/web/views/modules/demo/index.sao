@@ -67,12 +67,12 @@
                 </div>
 
                 <div class="tab-tape" role="tablist" aria-label="Nhóm tính năng">
-                    <button data-demo-tab="state" @class(['is-active': selectedPanel === 'state']) @click(setSelectedPanel('state'))>State & event</button>
-                    <button data-demo-tab="binding" @class(['is-active': selectedPanel === 'binding']) @click(setSelectedPanel('binding'))>Binding</button>
-                    <button data-demo-tab="flow" @class(['is-active': selectedPanel === 'flow']) @click(setSelectedPanel('flow'))>Control flow</button>
+                    <button data-demo-tab="state" @class({'is-active': selectedPanel === 'state'}) @click(setSelectedPanel('state'))>State & event</button>
+                    <button data-demo-tab="binding" @class({'is-active': selectedPanel === 'binding'}) @click(setSelectedPanel('binding'))>Binding</button>
+                    <button data-demo-tab="flow" @class({'is-active': selectedPanel === 'flow'}) @click(setSelectedPanel('flow'))>Control flow</button>
                 </div>
 
-                <div data-demo-panel="binding" @class(['card-grid', 'is-hidden': selectedPanel !== 'binding'])>
+                <div data-demo-panel="binding" @class({'card-grid', 'is-hidden': selectedPanel !== 'binding'})>
                         <featurecard number="03" title="Two-way binding" source="&#64;bind(name)" tone="cyan">
                             <label class="field-label" for="demo-name">Tên mẫu</label>
                             <input id="demo-name" data-demo-name type="text" placeholder="Nhập một tên" @bind(name) @required(true)>
@@ -88,12 +88,12 @@
 
                         <featurecard number="05" title="Visibility & attributes" source="&#64;class · &#64;attr · &#64;style" tone="pink">
                             <button data-demo-visibility @click(setIsVisible(!isVisible))>Bật / tắt hai vùng</button>
-                            <p data-demo-visible="true" @class(['visibility-sample', 'is-hidden': !isVisible])>Vùng này hiện khi state là true.</p>
-                            <p data-demo-visible="false" @class(['visibility-sample', 'is-hidden': isVisible])>Vùng này hiện khi state là false.</p>
+                            <p data-demo-visible="true" @class({'visibility-sample', 'is-hidden': !isVisible})>Vùng này hiện khi state là true.</p>
+                            <p data-demo-visible="false" @class({'visibility-sample', 'is-hidden': isVisible})>Vùng này hiện khi state là false.</p>
                             <a @attr({href: '/compiler', title: `Compiler cho ${name}`})>Mở trang compiler</a>
                         </featurecard>
                 </div>
-                <div data-demo-panel="flow" @class(['card-grid', 'is-hidden': selectedPanel !== 'flow'])>
+                <div data-demo-panel="flow" @class({'card-grid', 'is-hidden': selectedPanel !== 'flow'})>
                         <featurecard number="06" title="If / elseif / else" source="&#64;if(status === 'ready')" tone="yellow">
                             <div class="status-buttons">
                                 <button data-demo-status="ready" @click(setStatus('ready'))>Ready</button>
@@ -118,7 +118,7 @@
                             <ul class="sample-list">
                                 @foreach(sampleItems as item)
                                     @key(item['id'])
-                                    <li @class(['is-enabled': item['enabled']])>{{ item['label'] }}</li>
+                                    <li @class({'is-enabled': item['enabled']})>{{ item['label'] }}</li>
                                 @endforeach
                             </ul>
                         </featurecard>
@@ -141,7 +141,7 @@
                             @endswitch
                         </featurecard>
                 </div>
-                <div data-demo-panel="state" @class(['card-grid', 'is-hidden': selectedPanel !== 'state'])>
+                <div data-demo-panel="state" @class({'card-grid', 'is-hidden': selectedPanel !== 'state'})>
                         <featurecard number="01" title="Reactive state" source="&#64;states({ count: 3 })" tone="pink">
                             <div class="counter-row">
                                 <button data-demo-count="decrease" aria-label="Giảm count" @click(setCount(count - 1)) @disabled(count === 0)>Giảm</button>

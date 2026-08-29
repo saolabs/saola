@@ -12,63 +12,63 @@
 @useState($completedCount, 1)
 @extends($__layout__ . "workspace")
     @block('workspace')
-        <header @class([$__VIEW_ID__ . '-33ba6fc5', 'workspace-topbar'])>
-            <div @class([$__VIEW_ID__ . '-74083b07'])>
-                <p @class([$__VIEW_ID__ . '-6066db4b', 'eyebrow'])><span @class([$__VIEW_ID__ . '-6cf41081'])>01</span> Personal queue</p>
-                <h1 @class([$__VIEW_ID__ . '-0ddacfc5'])>Good morning.</h1>
+        <header @class([$__VIEW_ID__ . '-Bworkspace1', 's3bfa2ee6', 'workspace-topbar'])>
+            <div @class([$__VIEW_ID__ . '-Bworkspace11', 's3bfa2ee6'])>
+                <p @class([$__VIEW_ID__ . '-Bworkspace111', 's3bfa2ee6', 'eyebrow'])><span @class([$__VIEW_ID__ . '-Bworkspace1111', 's3bfa2ee6'])>01</span> Personal queue</p>
+                <h1 @class([$__VIEW_ID__ . '-Bworkspace112', 's3bfa2ee6'])>Good morning.</h1>
             </div>
-            <div @class([$__VIEW_ID__ . '-8d6a301b', 'completion-ring'])>
-                <strong @class([$__VIEW_ID__ . '-07fe4995'])>@startMarker('output', '54916756'){{ $completedCount }}@endMarker('output', '54916756')/@startMarker('output', '29b9d7bb'){{ count($todos) }}@endMarker('output', '29b9d7bb')</strong><span @class([$__VIEW_ID__ . '-55822db1'])>complete</span>
+            <div @class([$__VIEW_ID__ . '-Bworkspace12', 's3bfa2ee6', 'completion-ring'])>
+                <strong @class([$__VIEW_ID__ . '-Bworkspace121', 's3bfa2ee6'])>@startMarker('output', 'Bworkspace121o1'){{ $completedCount }}@endMarker('output', 'Bworkspace121o1')/@startMarker('output', 'Bworkspace121o2'){{ count($todos) }}@endMarker('output', 'Bworkspace121o2')</strong><span @class([$__VIEW_ID__ . '-Bworkspace122', 's3bfa2ee6'])>complete</span>
             </div>
         </header>
 
-        <section @class([$__VIEW_ID__ . '-2532706c', 'todo-board'])>
-            <form @class([$__VIEW_ID__ . '-9a7a2c94', 'todo-entry'])>
-                <label @class([$__VIEW_ID__ . '-1239dd2e']) @attr(['for' => 'new-task'])>Add one clear next step</label>
-                <div @class([$__VIEW_ID__ . '-f5a4866b'])>
-                    <input @class([$__VIEW_ID__ . '-14eae2aa']) @attr(['id' => 'new-task', 'type' => 'text', 'placeholder' => 'What needs your attention?']) @bind($newTodo)>
-                    <button @class([$__VIEW_ID__ . '-42ff8191']) @attr(['type' => 'submit'])>Add task <span @class([$__VIEW_ID__ . '-49fa209a'])>+</span></button>
+        <section @class([$__VIEW_ID__ . '-Bworkspace2', 's3bfa2ee6', 'todo-board'])>
+            <form @class([$__VIEW_ID__ . '-Bworkspace21', 's3bfa2ee6', 'todo-entry'])>
+                <label @class([$__VIEW_ID__ . '-Bworkspace211', 's3bfa2ee6']) @attr(['for' => 'new-task'])>Add one clear next step</label>
+                <div @class([$__VIEW_ID__ . '-Bworkspace212', 's3bfa2ee6'])>
+                    <input @class([$__VIEW_ID__ . '-Bworkspace2121', 's3bfa2ee6']) @attr(['id' => 'new-task', 'type' => 'text', 'placeholder' => 'What needs your attention?']) @bind($newTodo)>
+                    <button @class([$__VIEW_ID__ . '-Bworkspace2122', 's3bfa2ee6']) @attr(['type' => 'submit'])>Add task <span @class([$__VIEW_ID__ . '-Bworkspace21221', 's3bfa2ee6'])>+</span></button>
                 </div>
             </form>
-            <div @class([$__VIEW_ID__ . '-aa5f781d', 'todo-toolbar'])>
-                <div @class([$__VIEW_ID__ . '-47c6ff27'])>
-                    <button @class([$__VIEW_ID__ . '-c0ff40d6', 'active'=> $filter === 'all'])>All <span @class([$__VIEW_ID__ . '-56d021bb'])>@startMarker('output', 'ba497928'){{ count($todos) }}@endMarker('output', 'ba497928')</span></button>
-                    <button @class([$__VIEW_ID__ . '-47caf5de', 'active'=> $filter === 'active'])>Active <span @class([$__VIEW_ID__ . '-c1808610'])>@startMarker('output', 'fd013c02'){{ $activeCount }}@endMarker('output', 'fd013c02')</span></button>
-                    <button @class([$__VIEW_ID__ . '-f0106f39', 'active'=> $filter === 'done'])>Done <span @class([$__VIEW_ID__ . '-b8a215c9'])>@startMarker('output', '5a677e1d'){{ $completedCount }}@endMarker('output', '5a677e1d')</span></button>
+            <div @class([$__VIEW_ID__ . '-Bworkspace22', 's3bfa2ee6', 'todo-toolbar'])>
+                <div @class([$__VIEW_ID__ . '-Bworkspace221', 's3bfa2ee6'])>
+                    <button @class([$__VIEW_ID__ . '-Bworkspace2211', 's3bfa2ee6', 'active'=> $filter === 'all'])>All <span @class([$__VIEW_ID__ . '-Bworkspace22111', 's3bfa2ee6'])>@startMarker('output', 'Bworkspace22111o1'){{ count($todos) }}@endMarker('output', 'Bworkspace22111o1')</span></button>
+                    <button @class([$__VIEW_ID__ . '-Bworkspace2212', 's3bfa2ee6', 'active'=> $filter === 'active'])>Active <span @class([$__VIEW_ID__ . '-Bworkspace22121', 's3bfa2ee6'])>@startMarker('output', 'Bworkspace22121o1'){{ $activeCount }}@endMarker('output', 'Bworkspace22121o1')</span></button>
+                    <button @class([$__VIEW_ID__ . '-Bworkspace2213', 's3bfa2ee6', 'active'=> $filter === 'done'])>Done <span @class([$__VIEW_ID__ . '-Bworkspace22131', 's3bfa2ee6'])>@startMarker('output', 'Bworkspace22131o1'){{ $completedCount }}@endMarker('output', 'Bworkspace22131o1')</span></button>
                 </div>
-                <button @class([$__VIEW_ID__ . '-c99f5306', 'clear-button']) @disabled($completedCount === 0)>Clear completed</button>
+                <button @class([$__VIEW_ID__ . '-Bworkspace222', 's3bfa2ee6', 'clear-button']) @disabled($completedCount === 0)>Clear completed</button>
             </div>
-            <div @class([$__VIEW_ID__ . '-a734d4f3', 'todo-list'])>
-                @startMarker('reactive', '05835365', ['stateKey' => ['todos'], 'type' => 'if'])
+            <div @class([$__VIEW_ID__ . '-Bworkspace23', 's3bfa2ee6', 'todo-list'])>
+                @startMarker('reactive', 'Bworkspace23r1', ['stateKey' => ['todos'], 'type' => 'if'])
                 @if(count($todos) === 0)
-                    <div @class([$__VIEW_ID__ . '-b75e5ca7', 'empty-state'])>
-                        <span @class([$__VIEW_ID__ . '-25a80dd0'])>○</span>
-                        <h2 @class([$__VIEW_ID__ . '-7d094694'])>Your queue is clear.</h2>
-                        <p @class([$__VIEW_ID__ . '-f32d7c84'])>Add one meaningful task above.</p>
+                    <div @class([$__VIEW_ID__ . '-Bworkspace23r1k11', 's3bfa2ee6', 'empty-state'])>
+                        <span @class([$__VIEW_ID__ . '-Bworkspace23r1k111', 's3bfa2ee6'])>○</span>
+                        <h2 @class([$__VIEW_ID__ . '-Bworkspace23r1k112', 's3bfa2ee6'])>Your queue is clear.</h2>
+                        <p @class([$__VIEW_ID__ . '-Bworkspace23r1k113', 's3bfa2ee6'])>Add one meaningful task above.</p>
                     </div>
                 @else
-                    @startMarker('reactive', 'a1afe760', ['stateKey' => ['todos'], 'type' => 'foreach'])
+                    @startMarker('reactive', 'Bworkspace23r1k2l1', ['stateKey' => ['todos'], 'type' => 'foreach'])
                     @foreach($todos as $todo)
-                        @startMarker('reactive', "8dd28e28-{$todo['id']}", ['stateKey' => ['filter'], 'type' => 'if'])
+                        @startMarker('reactive', "Bworkspace23r1k2l1r1-{$todo['id']}", ['stateKey' => ['filter'], 'type' => 'if'])
                         @if($filter === 'all' || ($filter === 'active' && !$todo['completed']) || ($filter === 'done' && $todo['completed']))
-                            <article @class([$__VIEW_ID__ . "-da9a7a8e-{$todo['id']}", 'todo-row', 'completed'=> $todo['completed']])>
-                                <button @class([$__VIEW_ID__ . "-3b156e92-{$todo['id']}", 'todo-check']) @attr(['aria-label' => 'Toggle task'])>
-                                    @startMarker('reactive', "aba5abe7-{$todo['id']}", ['stateKey' => [], 'type' => 'if'])
+                            <article @class([$__VIEW_ID__ . "-Bworkspace23r1k2l1r1k11-{$todo['id']}", 's3bfa2ee6', 'todo-row', 'completed'=> $todo['completed']])>
+                                <button @class([$__VIEW_ID__ . "-Bworkspace23r1k2l1r1k111-{$todo['id']}", 's3bfa2ee6', 'todo-check']) @attr(['aria-label' => 'Toggle task'])>
+                                    @startMarker('reactive', "Bworkspace23r1k2l1r1k111r1-{$todo['id']}", ['stateKey' => [], 'type' => 'if'])
                                     @if($todo['completed'])
                                         ✓
                                     @endif
-                                    @endMarker('reactive', "aba5abe7-{$todo['id']}")
+                                    @endMarker('reactive', "Bworkspace23r1k2l1r1k111r1-{$todo['id']}")
                                 </button>
-                                <div @class([$__VIEW_ID__ . "-82692654-{$todo['id']}"])><strong @class([$__VIEW_ID__ . "-0185855c-{$todo['id']}"])>@startMarker('output', "70d19571-{$todo['id']}"){{ $todo['text'] }}@endMarker('output', "70d19571-{$todo['id']}")</strong><small @class([$__VIEW_ID__ . "-3e7229d0-{$todo['id']}"])>SAOLA DEMO · TASK @startMarker('output', "4e67dbd4-{$todo['id']}"){{ $todo['id'] }}@endMarker('output', "4e67dbd4-{$todo['id']}")</small></div>
-                                <button @class([$__VIEW_ID__ . "-09d56e46-{$todo['id']}", 'todo-delete']) @attr(['aria-label' => 'Delete task'])>×</button>
+                                <div @class([$__VIEW_ID__ . "-Bworkspace23r1k2l1r1k112-{$todo['id']}", 's3bfa2ee6'])><strong @class([$__VIEW_ID__ . "-Bworkspace23r1k2l1r1k1121-{$todo['id']}", 's3bfa2ee6'])>@startMarker('output', "Bworkspace23r1k2l1r1k1121o1-{$todo['id']}"){{ $todo['text'] }}@endMarker('output', "Bworkspace23r1k2l1r1k1121o1-{$todo['id']}")</strong><small @class([$__VIEW_ID__ . "-Bworkspace23r1k2l1r1k1122-{$todo['id']}", 's3bfa2ee6'])>SAOLA DEMO · TASK @startMarker('output', "Bworkspace23r1k2l1r1k1122o1-{$todo['id']}"){{ $todo['id'] }}@endMarker('output', "Bworkspace23r1k2l1r1k1122o1-{$todo['id']}")</small></div>
+                                <button @class([$__VIEW_ID__ . "-Bworkspace23r1k2l1r1k113-{$todo['id']}", 's3bfa2ee6', 'todo-delete']) @attr(['aria-label' => 'Delete task'])>×</button>
                             </article>
                         @endif
-                        @endMarker('reactive', "8dd28e28-{$todo['id']}")
+                        @endMarker('reactive', "Bworkspace23r1k2l1r1-{$todo['id']}")
                     @endforeach
-                    @endMarker('reactive', 'a1afe760')
+                    @endMarker('reactive', 'Bworkspace23r1k2l1')
                 @endif
-                @endMarker('reactive', '05835365')
+                @endMarker('reactive', 'Bworkspace23r1')
             </div>
-            <footer @class([$__VIEW_ID__ . '-f34c97bb', 'todo-summary'])><p @class([$__VIEW_ID__ . '-903fa463'])><span @class([$__VIEW_ID__ . '-ee3f8d27'])>@startMarker('output', '372a21ea'){{ $activeCount }}@endMarker('output', '372a21ea')</span> items still need attention.</p><a @class([$__VIEW_ID__ . '-f3e92dce']) @attr(['href' => '/about'])>Why Saola handles this differently →</a></footer>
+            <footer @class([$__VIEW_ID__ . '-Bworkspace24', 's3bfa2ee6', 'todo-summary'])><p @class([$__VIEW_ID__ . '-Bworkspace241', 's3bfa2ee6'])><span @class([$__VIEW_ID__ . '-Bworkspace2411', 's3bfa2ee6'])>@startMarker('output', 'Bworkspace2411o1'){{ $activeCount }}@endMarker('output', 'Bworkspace2411o1')</span> items still need attention.</p><a @class([$__VIEW_ID__ . '-Bworkspace242', 's3bfa2ee6']) @attr(['href' => '/about'])>Why Saola handles this differently →</a></footer>
         </section>
     @endblock

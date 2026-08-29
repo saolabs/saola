@@ -1,0 +1,66 @@
+@import('web.components.code-window')
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>08</span> BACKEND</p>
+                <h1>Mask, model và collection.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Model biết mọi thứ về bảng — kể cả những cột không ai bên ngoài được thấy. Mask là lớp mặt nạ quyết định phần nào của model đi ra ngoài, và đi ra dưới hình dạng nào.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>MODEL</span> Eloquent cộng vài trait</p>
+            <h2>Model của Saola vẫn là Eloquent.</h2>
+            <p><code>Saola\Core\Models\Model</code> kế thừa thẳng Eloquent rồi gộp thêm bốn trait, nên mọi thứ bạn đã biết về Eloquent vẫn đúng.</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>SoftDeletes</code></div><span>Xoá mềm, đi kèm <code>trashed()</code> ở tầng repository</span><b>Laravel</b></div>
+                <div><div class="dt-key"><code>Uuid</code></div><span>Khoá phụ dạng uuid bên cạnh id tự tăng</span><b>core</b></div>
+                <div><div class="dt-key"><code>ModelEventMethods</code></div><span>Hook vòng đời model, ví dụ <code>canDelete()</code></span><b>core</b></div>
+                <div><div class="dt-key"><code>ModelFileMethods</code></div><span>Field kiểu file: lưu, dọn, sinh đường dẫn</span><b>core</b></div>
+            </div>
+
+            <p class="kicker"><span>MASK</span> Ranh giới ra ngoài</p>
+            <h2>Mask biến model thành object có kiểm soát.</h2>
+            <p>Trả model thô ra response nghĩa là mọi cột mới thêm vào bảng đều tự động lộ ra API. Mask đảo lại: chỉ những gì được khai báo mới đi ra.</p>
+            <code-window label="PHP" title="app/Modules/User/Masks/UserMask.php" lang="php">
+@verbatim
+class UserMask extends Mask
+{
+    public function init()
+    {
+        $this->map([
+            'id', 'name', 'email',
+            'joined_at' => 'created_at',
+        ]);
+    }
+}
+@endverbatim
+            </code-window>
+            <p>Mask hiện thực <code>ArrayAccess</code>, <code>Countable</code>, <code>IteratorAggregate</code>, <code>JsonSerializable</code> và <code>Arrayable</code> — nên dùng được như mảng, đếm được, lặp được, và <code>json_encode</code> thẳng ra đúng hình dạng đã khai báo.</p>
+
+            <p class="ov-sub">Vòng đời của một mask</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>init()</code></div><span>Thiết lập trước khi nhận dữ liệu — nơi gọi <code>map()</code>, <code>alias()</code>, <code>allow()</code></span><b>1</b></div>
+                <div><div class="dt-key"><code>onBeforeLoadRelations()</code></div><span>Chạy trước khi nạp quan hệ</span><b>2</b></div>
+                <div><div class="dt-key"><code>onLoaded()</code></div><span>Đã có dữ liệu và quan hệ — thêm field dẫn xuất ở đây</span><b>3</b></div>
+                <div><div class="dt-key"><code>onCompleted()</code></div><span>Chốt lại sau khi mọi thứ đã sẵn sàng</span><b>4</b></div>
+            </div>
+            <div class="ov-note">
+                <code>allow()</code> mở danh sách method được gọi từ template. Mặc định chỉ vài helper an toàn như <code>timeAgo</code>, <code>dateFormat</code>, <code>shortContent</code> — gọi method ngoài danh sách sẽ không đi qua được.
+            </div>
+
+            <p class="kicker"><span>COLLECTION</span> Nhiều bản ghi</p>
+            <h2>Một mask cho một bản ghi, collection cho danh sách.</h2>
+            <p>Khai báo <code>$collectionClass</code> để mask biết dùng lớp nào khi bọc nhiều bản ghi. <code>MaskCollection</code> giữ nguyên các phép quen thuộc như <code>collect</code>, <code>concat</code>, <code>reverse</code>.</p>
+            <p><code>EmptyMask</code> và <code>Nothing</code> là hai giá trị rỗng có kiểu — dùng thay <code>null</code> để template khỏi phải kiểm tra tồn tại trước mỗi lần đọc.</p>
+
+            <p class="ov-note">
+                Mask trả về mảng khi sang view, nên phía <code>.sao</code> đọc bằng <code>record['name']</code> chứ không phải <code>record.name</code>. Lý do và ranh giới đầy đủ nằm ở <a href="/docs/directives">tham chiếu directive</a>.
+            </p>
+        </div>
+    @endblock
+</template>

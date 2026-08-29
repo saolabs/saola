@@ -1,0 +1,64 @@
+@import('web.components.code-window')
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>12</span> RUNTIME</p>
+                <h1>Dịch vụ phía client.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Runtime gom mọi dịch vụ dùng chung vào một namespace <code>App</code>. Trong <code>&lt;script setup&gt;</code> của bất kỳ view nào cũng gọi thẳng được, không phải import.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>BẢNG TRA</span> Có gì trong App</p>
+            <h2>Mười ba dịch vụ, mỗi cái một việc.</h2>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>App.Event</code></div><span>Bus pub/sub. Kênh duy nhất để view con nói chuyện với view cha mà không cần tham chiếu lẫn nhau.</span><b>giao tiếp</b></div>
+                <div><div class="dt-key"><code>App.Store</code></div><span>Kho key-value reactive trong bộ nhớ, chia sẻ giữa các view. Khác state của view ở chỗ không chết theo view.</span><b>state</b></div>
+                <div><div class="dt-key"><code>App.Storage</code></div><span>Bọc <code>localStorage</code>: có TTL, phát sự kiện khi đổi, xuất/nhập cả kho.</span><b>lưu trữ</b></div>
+                <div><div class="dt-key"><code>App.Http</code></div><span>HTTP client trên nền <code>fetch</code>.</span><b>mạng</b></div>
+                <div><div class="dt-key"><code>App.API</code></div><span>Lớp trên <code>App.Http</code>, biết prefix và quy ước response của context <code>api</code>.</span><b>mạng</b></div>
+                <div><div class="dt-key"><code>App.Router</code></div><span>Điều hướng SPA: khớp path → component, đẩy history, giữ cache trang.</span><b>điều hướng</b></div>
+                <div><div class="dt-key"><code>App.View</code></div><span>Tra và dựng view theo đường dẫn, dùng khi cần mount thủ công.</span><b>view</b></div>
+                <div><div class="dt-key"><code>App.Registry</code></div><span>Bản đồ đường dẫn view → factory, do compiler sinh lúc build.</span><b>view</b></div>
+                <div><div class="dt-key"><code>App.Head</code></div><span>Nơi duy nhất được ghi vào <code>&lt;head&gt;</code>: title, meta, link. Tự hoàn tác tag của trang cũ khi chuyển trang.</span><b>tài liệu</b></div>
+                <div><div class="dt-key"><code>App.Marker</code></div><span>Sổ đăng ký marker — các comment node đánh dấu vùng reactive để hydrate bám vào.</span><b>hydrate</b></div>
+                <div><div class="dt-key"><code>App.Helper</code></div><span>Bản JavaScript của các helper PHP, để cùng một biểu thức chạy giống nhau ở hai đầu.</span><b>tiện ích</b></div>
+                <div><div class="dt-key"><code>App.Logger</code></div><span>Log theo cấp, tắt được ở production.</span><b>tiện ích</b></div>
+                <div><div class="dt-key"><code>App.Devtools</code></div><span>Phát sự kiện nội bộ cho công cụ debug: state đổi, view mount, marker khớp.</span><b>tiện ích</b></div>
+            </div>
+
+            <p class="kicker"><span>DÙNG THẬT</span> Con nói với cha</p>
+            <h2><code>App.Event</code> là đường đi ngược duy nhất.</h2>
+            <p>Props chỉ chảy từ cha xuống con. Muốn con báo ngược lên, dùng bus — cha đăng ký lúc mount và huỷ đăng ký lúc destroy.</p>
+            <code-window label="TS" title="modules/roster/index.sao — &lt;script setup&gt;" lang="js">
+@verbatim
+mounted() {
+    this._off = [
+        App.Event.on('roster:editing', (uid, on) => { /* … */ }),
+        App.Event.on('roster:refresh', () => this.load()),
+    ];
+}
+
+destroyed() {
+    (this._off || []).forEach(off => off());
+}
+@endverbatim
+            </code-window>
+            <div class="ov-note">
+                <code>on()</code> trả về hàm huỷ đăng ký. Không gọi nó lúc destroy thì listener của view cũ vẫn sống sau khi chuyển trang — rò rỉ này rất khó truy vì trang trông vẫn chạy.
+            </div>
+
+            <p class="ov-sub">Khi nào dùng cái nào</p>
+            <div class="directive-table">
+                <div><div class="dt-key">Dữ liệu chỉ của một view</div><span><code>&#64;states</code> — chết theo view, đúng ý</span><b>state</b></div>
+                <div><div class="dt-key">Dùng chung nhiều view, mất khi tải lại</div><span><code>App.Store</code></span><b>store</b></div>
+                <div><div class="dt-key">Phải sống qua lần tải lại</div><span><code>App.Storage</code></span><b>storage</b></div>
+                <div><div class="dt-key">Báo một sự việc, không giữ giá trị</div><span><code>App.Event</code></span><b>event</b></div>
+            </div>
+        </div>
+    @endblock
+</template>

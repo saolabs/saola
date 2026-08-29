@@ -27,8 +27,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -38,6 +36,8 @@ export interface IndexProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class IndexViewController extends ViewController {
     constructor(view: View) {
@@ -51,7 +51,7 @@ class IndexViewController extends ViewController {
 }
 
 class IndexView extends View {
-    constructor(__data__: IndexProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, IndexViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -248,7 +248,7 @@ class IndexView extends View {
             viewId: __VIEW_ID__,
             path: __VIEW_PATH__,
             scripts: [],
-            styles: [{"type":"code","scoped":true,"content":".demo-page {\n        --ink: #1f1b16;\n        --paper: #e8e0c0;\n        --pink: #ff71ce;\n        --cyan: #00ffcc;\n        --acid: #dfff00;\n        position: relative;\n        min-height: 100vh;\n        overflow: hidden;\n        background: var(--paper);\n        color: var(--ink);\n        font-family: Times New Roman, Times, serif;\n    }\n\n    .paper-noise {\n        position: fixed;\n        inset: 0;\n        z-index: 20;\n        pointer-events: none;\n        opacity: .22;\n        background-image: radial-gradient(rgba(31, 27, 22, .34) .7px, transparent .7px);\n        background-size: 5px 5px;\n        mix-blend-mode: multiply;\n    }\n\n    .demo-nav {\n        position: relative;\n        z-index: 2;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        padding: 20px clamp(18px, 4vw, 64px);\n        border-bottom: 3px solid var(--ink);\n        font: 700 13px/1 Helvetica, Arial, sans-serif;\n        letter-spacing: .08em;\n    }\n\n    .demo-nav a { color: inherit; text-decoration: none; }\n    .demo-nav > a { font-size: 18px; text-shadow: 2px 0 var(--pink), -2px 0 var(--cyan); }\n    .demo-nav div { display: flex; gap: 28px; }\n    .demo-nav div a { border-bottom: 2px solid transparent; }\n    .demo-nav div a:hover { border-color: var(--ink); }\n\n    .demo-hero {\n        position: relative;\n        display: grid;\n        grid-template-columns: 120px minmax(0, 1fr) 250px;\n        gap: clamp(24px, 5vw, 80px);\n        align-items: end;\n        min-height: 640px;\n        padding: 70px clamp(18px, 4vw, 64px) 90px;\n        background-image: radial-gradient(var(--pink) 1.4px, transparent 1.4px);\n        background-size: 16px 16px;\n    }\n\n    .demo-hero::before {\n        content: '';\n        position: absolute;\n        width: 420px;\n        height: 120px;\n        right: 8%;\n        top: 25%;\n        background: var(--acid);\n        transform: rotate(-7deg);\n        z-index: 0;\n    }\n\n    .demo-hero > * { position: relative; z-index: 1; }\n    .overline { margin: 0 0 18px; font: 700 15px/1 Courier, monospace; }\n\n    .demo-hero h1 {\n        margin: 0;\n        max-width: 900px;\n        font: 900 clamp(64px, 10vw, 150px)/.78 Helvetica, Arial, sans-serif;\n        letter-spacing: -.075em;\n        text-shadow: 4px 0 var(--pink), -4px 0 var(--cyan);\n    }\n\n    .demo-hero h1 em { font-family: Times New Roman, Times, serif; font-weight: 400; }\n    .hero-copy { max-width: 720px; margin: 42px 0 0; font-size: 21px; line-height: 1.45; }\n    .hero-copy code { font-family: Courier, monospace; font-size: .86em; }\n\n    .hero-stamp {\n        align-self: start;\n        display: grid;\n        place-items: center;\n        aspect-ratio: 1;\n        border: 3px solid var(--ink);\n        border-radius: 50%;\n        background: var(--cyan);\n        transform: rotate(-9deg);\n        font-family: Helvetica, Arial, sans-serif;\n    }\n\n    .hero-stamp span { font-size: 28px; font-weight: 900; }\n    .hero-stamp small { font: 13px/1 Courier, monospace; }\n\n    .hero-note {\n        padding: 24px;\n        border: 3px solid var(--ink);\n        background: var(--pink);\n        box-shadow: 8px 8px 0 var(--cyan);\n        transform: rotate(4deg);\n    }\n\n    .hero-note strong { display: block; font: 900 86px/.8 Helvetica, Arial, sans-serif; }\n    .hero-note span { display: block; margin-top: 12px; font: 700 17px/1.1 Helvetica, Arial, sans-serif; }\n    .hero-note p { margin: 26px 0 0; font: 13px/1.4 Courier, monospace; }\n\n    .proof-strip {\n        display: grid;\n        grid-template-columns: repeat(4, auto 1fr);\n        border-block: 3px solid var(--ink);\n        background: var(--ink);\n        color: var(--paper);\n        font-family: Courier, monospace;\n    }\n\n    .proof-strip span, .proof-strip strong { padding: 15px 18px; border-right: 1px dashed var(--paper); }\n    .proof-strip span { color: var(--cyan); font-size: 11px; }\n    .proof-strip strong { font-size: 13px; }\n\n    .playground, .coverage { padding: 110px clamp(18px, 5vw, 80px); }\n    .section-title { display: grid; grid-template-columns: 220px minmax(0, 820px); gap: 40px; align-items: start; margin-bottom: 70px; }\n    .section-title p { margin: 8px 0 0; font: 700 14px/1 Courier, monospace; }\n    .section-title h2 { margin: 0; font: 900 clamp(48px, 7vw, 104px)/.9 Helvetica, Arial, sans-serif; letter-spacing: -.055em; }\n\n    .tab-tape { display: flex; width: max-content; max-width: 100%; margin: 0 auto 54px; padding: 10px; background: rgba(255, 113, 206, .72); transform: rotate(-1.3deg); }\n    button, select, input { color: var(--ink); font: 700 14px/1 Helvetica, Arial, sans-serif; }\n    button { padding: 12px 16px; border: 2px solid var(--ink); background: var(--paper); box-shadow: 3px 3px 0 var(--ink); cursor: pointer; }\n    button:hover, button.is-active { background: var(--acid); transform: translate(-1px, -1px); }\n    button:disabled { cursor: not-allowed; opacity: .45; transform: none; }\n    .tab-tape button { box-shadow: none; border-right: 0; }\n    .tab-tape button:last-child { border-right: 2px solid var(--ink); }\n\n    .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 42px; max-width: 1380px; margin: 0 auto; }\n    .field-label { display: block; margin-bottom: 8px; font: 700 13px/1 Courier, monospace; }\n    input, select { width: 100%; box-sizing: border-box; padding: 13px; border: 2px solid var(--ink); background: rgba(255, 255, 255, .28); }\n    .live-output { padding: 16px; background: var(--cyan); font-size: 20px; }\n    .check-row { display: block; margin-bottom: 14px; font-family: Helvetica, Arial, sans-serif; }\n    .check-row input { width: auto; margin-right: 8px; }\n    .visibility-sample { padding: 13px; border: 2px dashed var(--ink); }\n    .counter-row { display: grid; grid-template-columns: 1fr 80px 1fr; align-items: center; gap: 12px; }\n    .counter-row strong { text-align: center; font: 900 56px/1 Helvetica, Arial, sans-serif; }\n    .progress-track { height: 18px; margin: 22px 0 10px; border: 2px solid var(--ink); background: var(--paper); }\n    .progress-track i { display: block; height: 100%; max-width: 100%; background: var(--pink); }\n    .number-run { display: flex; flex-wrap: wrap; gap: 7px; }\n    .number-run span { display: grid; place-items: center; width: 34px; height: 34px; border: 2px solid var(--ink); background: var(--acid); font: 700 15px/1 Courier, monospace; }\n    .sample-list { padding: 0; list-style: none; font-family: Courier, monospace; }\n    .sample-list li { padding: 8px 0; text-decoration: line-through; opacity: .55; }\n    .sample-list li.is-enabled { text-decoration: none; opacity: 1; }\n    .status-buttons { display: flex; flex-wrap: wrap; gap: 8px; }\n    .status-card, .runtime-result { padding: 16px; border: 2px solid var(--ink); }\n    .status-ready { background: var(--cyan); }\n    .status-building { background: var(--acid); }\n    .status-error { background: var(--pink); }\n\n    .coverage { position: relative; background: var(--ink); color: var(--paper); }\n    .coverage::before { content: ''; position: absolute; inset: 0; opacity: .16; background-image: repeating-linear-gradient(135deg, transparent 0 16px, var(--pink) 16px 18px); }\n    .coverage > * { position: relative; }\n    .section-title--small { margin-bottom: 60px; }\n    .section-title--small h2 { max-width: 970px; }\n    .coverage-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--paper); }\n    .coverage-grid article { min-height: 230px; padding: 26px; border: 1px solid var(--paper); }\n    .coverage-grid article:nth-child(2n) { background: var(--pink); color: var(--ink); }\n    .coverage-grid h3 { margin: 0 0 24px; font: 900 26px/1 Helvetica, Arial, sans-serif; }\n    .coverage-grid p { line-height: 1.8; }\n    .coverage-grid code { color: inherit; font: 14px/1.5 Courier, monospace; }\n    .coverage-grid span { display: block; margin-top: 20px; font: 13px/1.45 Helvetica, Arial, sans-serif; }\n    .ssr-ticket { width: fit-content; max-width: 720px; margin: 58px auto 0; padding: 18px 24px; border: 2px dashed var(--paper); background: var(--cyan); color: var(--ink); transform: rotate(-1deg); font-family: Courier, monospace; }\n\n    .demo-footer { display: flex; justify-content: space-between; padding: 28px clamp(18px, 4vw, 64px); border-top: 3px solid var(--ink); font: 700 13px/1 Courier, monospace; }\n    .demo-footer a { color: inherit; }\n\n    @media (max-width: 980px) {\n        .demo-hero { grid-template-columns: 90px 1fr; }\n        .hero-note { grid-column: 2; width: 230px; }\n        .card-grid, .coverage-grid { grid-template-columns: 1fr 1fr; }\n        .section-title { grid-template-columns: 1fr; }\n        .proof-strip { grid-template-columns: auto 1fr auto 1fr; }\n    }\n\n    @media (max-width: 680px) {\n        .demo-nav div { display: none; }\n        .demo-hero { display: block; min-height: 0; padding-top: 44px; }\n        .hero-stamp { width: 80px; margin-bottom: 42px; }\n        .demo-hero h1 { font-size: 54px; }\n        .hero-note { width: auto; margin-top: 46px; transform: rotate(2deg); }\n        .proof-strip { grid-template-columns: auto 1fr; }\n        .card-grid, .coverage-grid { grid-template-columns: 1fr; }\n        .playground, .coverage { padding-block: 72px; }\n        .section-title h2 { font-size: 46px; }\n        .tab-tape { width: 100%; overflow-x: auto; }\n        .tab-tape button { white-space: nowrap; }\n        .demo-footer { gap: 20px; flex-direction: column; }\n    }"},{"type":"href","href":"/static/saola/demo-site.css?v=3"}],
+            styles: [{"type":"code","content":".demo-page.s45d147d4 {\n        --ink: #1f1b16;\n        --paper: #e8e0c0;\n        --pink: #ff71ce;\n        --cyan: #00ffcc;\n        --acid: #dfff00;\n        position: relative;\n        min-height: 100vh;\n        overflow: hidden;\n        background: var(--paper);\n        color: var(--ink);\n        font-family: Times New Roman, Times, serif;\n    }\n\n    .paper-noise.s45d147d4 {\n        position: fixed;\n        inset: 0;\n        z-index: 20;\n        pointer-events: none;\n        opacity: .22;\n        background-image: radial-gradient(rgba(31, 27, 22, .34) .7px, transparent .7px);\n        background-size: 5px 5px;\n        mix-blend-mode: multiply;\n    }\n\n    .demo-nav.s45d147d4 {\n        position: relative;\n        z-index: 2;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        padding: 20px clamp(18px, 4vw, 64px);\n        border-bottom: 3px solid var(--ink);\n        font: 700 13px/1 Helvetica, Arial, sans-serif;\n        letter-spacing: .08em;\n    }\n\n    .demo-nav a.s45d147d4 { color: inherit; text-decoration: none; }\n    .demo-nav > a.s45d147d4 { font-size: 18px; text-shadow: 2px 0 var(--pink), -2px 0 var(--cyan); }\n    .demo-nav div.s45d147d4 { display: flex; gap: 28px; }\n    .demo-nav div a.s45d147d4 { border-bottom: 2px solid transparent; }\n    .demo-nav div a.s45d147d4:hover { border-color: var(--ink); }\n\n    .demo-hero.s45d147d4 {\n        position: relative;\n        display: grid;\n        grid-template-columns: 120px minmax(0, 1fr) 250px;\n        gap: clamp(24px, 5vw, 80px);\n        align-items: end;\n        min-height: 640px;\n        padding: 70px clamp(18px, 4vw, 64px) 90px;\n        background-image: radial-gradient(var(--pink) 1.4px, transparent 1.4px);\n        background-size: 16px 16px;\n    }\n\n    .demo-hero.s45d147d4::before {\n        content: '';\n        position: absolute;\n        width: 420px;\n        height: 120px;\n        right: 8%;\n        top: 25%;\n        background: var(--acid);\n        transform: rotate(-7deg);\n        z-index: 0;\n    }\n\n    .demo-hero > *.s45d147d4 { position: relative; z-index: 1; }\n    .overline.s45d147d4 { margin: 0 0 18px; font: 700 15px/1 Courier, monospace; }\n\n    .demo-hero h1.s45d147d4 {\n        margin: 0;\n        max-width: 900px;\n        font: 900 clamp(64px, 10vw, 150px)/.78 Helvetica, Arial, sans-serif;\n        letter-spacing: -.075em;\n        text-shadow: 4px 0 var(--pink), -4px 0 var(--cyan);\n    }\n\n    .demo-hero h1 em.s45d147d4 { font-family: Times New Roman, Times, serif; font-weight: 400; }\n    .hero-copy.s45d147d4 { max-width: 720px; margin: 42px 0 0; font-size: 21px; line-height: 1.45; }\n    .hero-copy code.s45d147d4 { font-family: Courier, monospace; font-size: .86em; }\n\n    .hero-stamp.s45d147d4 {\n        align-self: start;\n        display: grid;\n        place-items: center;\n        aspect-ratio: 1;\n        border: 3px solid var(--ink);\n        border-radius: 50%;\n        background: var(--cyan);\n        transform: rotate(-9deg);\n        font-family: Helvetica, Arial, sans-serif;\n    }\n\n    .hero-stamp span.s45d147d4 { font-size: 28px; font-weight: 900; }\n    .hero-stamp small.s45d147d4 { font: 13px/1 Courier, monospace; }\n\n    .hero-note.s45d147d4 {\n        padding: 24px;\n        border: 3px solid var(--ink);\n        background: var(--pink);\n        box-shadow: 8px 8px 0 var(--cyan);\n        transform: rotate(4deg);\n    }\n\n    .hero-note strong.s45d147d4 { display: block; font: 900 86px/.8 Helvetica, Arial, sans-serif; }\n    .hero-note span.s45d147d4 { display: block; margin-top: 12px; font: 700 17px/1.1 Helvetica, Arial, sans-serif; }\n    .hero-note p.s45d147d4 { margin: 26px 0 0; font: 13px/1.4 Courier, monospace; }\n\n    .proof-strip.s45d147d4 {\n        display: grid;\n        grid-template-columns: repeat(4, auto 1fr);\n        border-block: 3px solid var(--ink);\n        background: var(--ink);\n        color: var(--paper);\n        font-family: Courier, monospace;\n    }\n\n    .proof-strip span.s45d147d4, .proof-strip strong.s45d147d4 { padding: 15px 18px; border-right: 1px dashed var(--paper); }\n    .proof-strip span.s45d147d4 { color: var(--cyan); font-size: 11px; }\n    .proof-strip strong.s45d147d4 { font-size: 13px; }\n\n    .playground.s45d147d4, .coverage.s45d147d4 { padding: 110px clamp(18px, 5vw, 80px); }\n    .section-title.s45d147d4 { display: grid; grid-template-columns: 220px minmax(0, 820px); gap: 40px; align-items: start; margin-bottom: 70px; }\n    .section-title p.s45d147d4 { margin: 8px 0 0; font: 700 14px/1 Courier, monospace; }\n    .section-title h2.s45d147d4 { margin: 0; font: 900 clamp(48px, 7vw, 104px)/.9 Helvetica, Arial, sans-serif; letter-spacing: -.055em; }\n\n    .tab-tape.s45d147d4 { display: flex; width: max-content; max-width: 100%; margin: 0 auto 54px; padding: 10px; background: rgba(255, 113, 206, .72); transform: rotate(-1.3deg); }\n    button.s45d147d4, select.s45d147d4, input.s45d147d4 { color: var(--ink); font: 700 14px/1 Helvetica, Arial, sans-serif; }\n    button.s45d147d4 { padding: 12px 16px; border: 2px solid var(--ink); background: var(--paper); box-shadow: 3px 3px 0 var(--ink); cursor: pointer; }\n    button.s45d147d4:hover, button.is-active.s45d147d4 { background: var(--acid); transform: translate(-1px, -1px); }\n    button.s45d147d4:disabled { cursor: not-allowed; opacity: .45; transform: none; }\n    .tab-tape button.s45d147d4 { box-shadow: none; border-right: 0; }\n    .tab-tape button.s45d147d4:last-child { border-right: 2px solid var(--ink); }\n\n    .card-grid.s45d147d4 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 42px; max-width: 1380px; margin: 0 auto; }\n    .field-label.s45d147d4 { display: block; margin-bottom: 8px; font: 700 13px/1 Courier, monospace; }\n    input.s45d147d4, select.s45d147d4 { width: 100%; box-sizing: border-box; padding: 13px; border: 2px solid var(--ink); background: rgba(255, 255, 255, .28); }\n    .live-output.s45d147d4 { padding: 16px; background: var(--cyan); font-size: 20px; }\n    .check-row.s45d147d4 { display: block; margin-bottom: 14px; font-family: Helvetica, Arial, sans-serif; }\n    .check-row input.s45d147d4 { width: auto; margin-right: 8px; }\n    .visibility-sample.s45d147d4 { padding: 13px; border: 2px dashed var(--ink); }\n    .counter-row.s45d147d4 { display: grid; grid-template-columns: 1fr 80px 1fr; align-items: center; gap: 12px; }\n    .counter-row strong.s45d147d4 { text-align: center; font: 900 56px/1 Helvetica, Arial, sans-serif; }\n    .progress-track.s45d147d4 { height: 18px; margin: 22px 0 10px; border: 2px solid var(--ink); background: var(--paper); }\n    .progress-track i.s45d147d4 { display: block; height: 100%; max-width: 100%; background: var(--pink); }\n    .number-run.s45d147d4 { display: flex; flex-wrap: wrap; gap: 7px; }\n    .number-run span.s45d147d4 { display: grid; place-items: center; width: 34px; height: 34px; border: 2px solid var(--ink); background: var(--acid); font: 700 15px/1 Courier, monospace; }\n    .sample-list.s45d147d4 { padding: 0; list-style: none; font-family: Courier, monospace; }\n    .sample-list li.s45d147d4 { padding: 8px 0; text-decoration: line-through; opacity: .55; }\n    .sample-list li.is-enabled.s45d147d4 { text-decoration: none; opacity: 1; }\n    .status-buttons.s45d147d4 { display: flex; flex-wrap: wrap; gap: 8px; }\n    .status-card.s45d147d4, .runtime-result.s45d147d4 { padding: 16px; border: 2px solid var(--ink); }\n    .status-ready.s45d147d4 { background: var(--cyan); }\n    .status-building.s45d147d4 { background: var(--acid); }\n    .status-error.s45d147d4 { background: var(--pink); }\n\n    .coverage.s45d147d4 { position: relative; background: var(--ink); color: var(--paper); }\n    .coverage.s45d147d4::before { content: ''; position: absolute; inset: 0; opacity: .16; background-image: repeating-linear-gradient(135deg, transparent 0 16px, var(--pink) 16px 18px); }\n    .coverage > *.s45d147d4 { position: relative; }\n    .section-title--small.s45d147d4 { margin-bottom: 60px; }\n    .section-title--small h2.s45d147d4 { max-width: 970px; }\n    .coverage-grid.s45d147d4 { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--paper); }\n    .coverage-grid article.s45d147d4 { min-height: 230px; padding: 26px; border: 1px solid var(--paper); }\n    .coverage-grid article.s45d147d4:nth-child(2n) { background: var(--pink); color: var(--ink); }\n    .coverage-grid h3.s45d147d4 { margin: 0 0 24px; font: 900 26px/1 Helvetica, Arial, sans-serif; }\n    .coverage-grid p.s45d147d4 { line-height: 1.8; }\n    .coverage-grid code.s45d147d4 { color: inherit; font: 14px/1.5 Courier, monospace; }\n    .coverage-grid span.s45d147d4 { display: block; margin-top: 20px; font: 13px/1.45 Helvetica, Arial, sans-serif; }\n    .ssr-ticket.s45d147d4 { width: fit-content; max-width: 720px; margin: 58px auto 0; padding: 18px 24px; border: 2px dashed var(--paper); background: var(--cyan); color: var(--ink); transform: rotate(-1deg); font-family: Courier, monospace; }\n\n    .demo-footer.s45d147d4 { display: flex; justify-content: space-between; padding: 28px clamp(18px, 4vw, 64px); border-top: 3px solid var(--ink); font: 700 13px/1 Courier, monospace; }\n    .demo-footer a.s45d147d4 { color: inherit; }\n\n    @media (max-width: 980px) {\n        .demo-hero.s45d147d4 { grid-template-columns: 90px 1fr; }\n        .hero-note.s45d147d4 { grid-column: 2; width: 230px; }\n        .card-grid.s45d147d4, .coverage-grid.s45d147d4 { grid-template-columns: 1fr 1fr; }\n        .section-title.s45d147d4 { grid-template-columns: 1fr; }\n        .proof-strip.s45d147d4 { grid-template-columns: auto 1fr auto 1fr; }\n    }\n\n    @media (max-width: 680px) {\n        .demo-nav div.s45d147d4 { display: none; }\n        .demo-hero.s45d147d4 { display: block; min-height: 0; padding-top: 44px; }\n        .hero-stamp.s45d147d4 { width: 80px; margin-bottom: 42px; }\n        .demo-hero h1.s45d147d4 { font-size: 54px; }\n        .hero-note.s45d147d4 { width: auto; margin-top: 46px; transform: rotate(2deg); }\n        .proof-strip.s45d147d4 { grid-template-columns: auto 1fr; }\n        .card-grid.s45d147d4, .coverage-grid.s45d147d4 { grid-template-columns: 1fr; }\n        .playground.s45d147d4, .coverage.s45d147d4 { padding-block: 72px; }\n        .section-title h2.s45d147d4 { font-size: 46px; }\n        .tab-tape.s45d147d4 { width: 100%; overflow-x: auto; }\n        .tab-tape button.s45d147d4 { white-space: nowrap; }\n        .demo-footer.s45d147d4 { gap: 20px; flex-direction: column; }\n    }"},{"type":"href","href":"/static/saola/demo-site.css?v=3"}],
             resources: [{"tag":"link","uuid":"link-0","attrs":{"rel":"stylesheet","href":"/static/saola/demo-site.css?v=3"}}],
             commitConstructorData: function(this: any) {
                 // Then update states from data
@@ -293,269 +293,309 @@ class IndexView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-shell', 'shell', (parentElement: any) => [
-            this.html(`71bbd51d`, "main", parentElement,
-                { classes: [{ type: 'static', value: "demo-page" }] },
+            this.html(`Bshell1`, "main", parentElement,
+                { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "demo-page" }] },
                 (parentElement: any) => [
-                this.html(`3996f6ab`, "div", parentElement, { classes: [{ type: 'static', value: "paper-noise" }] }),
-                this.html(`a78834ce`, "nav", parentElement,
-                    { classes: [{ type: 'static', value: "demo-nav" }], attrs: { "aria-label": { type: 'static', value: "Điều hướng trang demo" } } },
+                this.html(`Bshell11`, "div", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "paper-noise" }] }),
+                this.html(`Bshell12`, "nav", parentElement,
+                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "demo-nav" }], attrs: { "aria-label": { type: 'static', value: "Điều hướng trang demo" } } },
                     (parentElement: any) => [
-                    this.html(`1cb12447`, "a", parentElement,
-                        { attrs: { "href": { type: 'static', value: "/" } } },
+                    this.html(`Bshell121`, "a", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "href": { type: 'static', value: "/" } } },
                         (parentElement: any) => [
                         this.text('SAOLABS')
                         ]),
-                    this.html(`c13c35fb`, "div", parentElement, {}, (parentElement: any) => [
-                        this.html(`69452823`, "a", parentElement,
-                            { attrs: { "href": { type: 'static', value: "#playground" } } },
+                    this.html(`Bshell122`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
+                        this.html(`Bshell1221`, "a", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "href": { type: 'static', value: "#playground" } } },
                             (parentElement: any) => [
                             this.text('Playground')
                             ]),
-                        this.html(`cd4d96c2`, "a", parentElement,
-                            { attrs: { "href": { type: 'static', value: "#coverage" } } },
+                        this.html(`Bshell1222`, "a", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "href": { type: 'static', value: "#coverage" } } },
                             (parentElement: any) => [
                             this.text('Phạm vi hỗ trợ')
                             ]),
-                        this.html(`22cee8fd`, "a", parentElement,
-                            { attrs: { "href": { type: 'static', value: "/docs/getting-started" } } },
+                        this.html(`Bshell1223`, "a", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "href": { type: 'static', value: "/docs/getting-started" } } },
                             (parentElement: any) => [
                             this.text('Tài liệu')
                             ])
-                    ])
-                    ]),
-                this.html(`25b5853e`, "header", parentElement,
-                    { classes: [{ type: 'static', value: "demo-hero" }] },
-                    (parentElement: any) => [
-                    this.html(`da12442d`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "hero-stamp" }] },
-                        (parentElement: any) => [
-                        this.html(`6b88dd0b`, "span", parentElement, {}, (parentElement: any) => [
-                            this.text('LIVE')
-                        ]),
-                        this.html(`c8cf5bdb`, "small", parentElement, {}, (parentElement: any) => [
-                            this.text('/demo')
                         ])
+                    ]),
+                this.html(`Bshell13`, "header", parentElement,
+                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "demo-hero" }] },
+                    (parentElement: any) => [
+                    this.html(`Bshell131`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "hero-stamp" }] },
+                        (parentElement: any) => [
+                        this.html(`Bshell1311`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.text('LIVE')
+                            ]),
+                        this.html(`Bshell1312`, "small", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.text('/demo')
+                            ])
                         ]),
-                    this.html(`c1c39a77`, "div", parentElement, {}, (parentElement: any) => [
-                        this.html(`5a0bb3fc`, "p", parentElement,
-                            { classes: [{ type: 'static', value: "overline" }] },
+                    this.html(`Bshell132`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
+                        this.html(`Bshell1321`, "p", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "overline" }] },
                             (parentElement: any) => [
                             this.text('Saola single-file component')
                             ]),
-                        this.html(`7d686606`, "h1", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bshell1322`, "h1", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
                             this.text('MỘT FILE.'),
-                            this.html(`6c02ded8`, "br", parentElement, {}),
-                            this.html(`a9d3960a`, "em", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bshell13221`, "br", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }] }),
+                            this.html(`Bshell13222`, "em", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
                                 this.text('HAI RUNTIME.')
-                            ]),
-                            this.html(`2a4be3ab`, "br", parentElement, {}),
+                                ]),
+                            this.html(`Bshell13223`, "br", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }] }),
                             this.text('MỌI THỨ'),
-                            this.html(`5c8d53e9`, "br", parentElement, {}),
+                            this.html(`Bshell13224`, "br", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }] }),
                             this.text('ĐANG CHẠY.')
-                        ]),
-                        this.html(`682aa896`, "p", parentElement,
-                            { classes: [{ type: 'static', value: "hero-copy" }] },
+                            ]),
+                        this.html(`Bshell1323`, "p", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "hero-copy" }] },
                             (parentElement: any) => [
                             this.text('Trang này là fixture trực tiếp của compiler: source '),
-                            this.html(`862d4a11`, "code", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bshell13231`, "code", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
                                 this.text('index.sao')
-                            ]),
+                                ]),
                             this.text(' tạo Blade cho lần tải đầu và TypeScript cho các tương tác sau hydration.')
                             ])
-                    ]),
-                    this.html(`67997262`, "aside", parentElement,
-                        { classes: [{ type: 'static', value: "hero-note" }] },
+                        ]),
+                    this.html(`Bshell133`, "aside", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "hero-note" }] },
                         (parentElement: any) => [
-                        this.html(`d1051098`, "strong", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bshell1331`, "strong", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
                             this.text(String(featureTotal ?? ''))
-                        ]),
-                        this.html(`6ef066f6`, "span", parentElement, {}, (parentElement: any) => [
+                            ]),
+                        this.html(`Bshell1332`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
                             this.text('nhóm cú pháp được tài liệu hóa')
-                        ]),
-                        this.html(`5a53f92e`, "p", parentElement, {}, (parentElement: any) => [
+                            ]),
+                        this.html(`Bshell1333`, "p", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
                             this.text('Không dùng dữ liệu API giả. Các giá trị bên dưới là dữ liệu mẫu được ghi nhãn rõ.')
-                        ])
+                            ])
                         ])
                     ]),
-                this.html(`48d182dc`, "section", parentElement,
-                    { classes: [{ type: 'static', value: "proof-strip" }], attrs: { "aria-label": { type: 'static', value: "Đầu ra của compiler" } } },
+                this.html(`Bshell14`, "section", parentElement,
+                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "proof-strip" }], attrs: { "aria-label": { type: 'static', value: "Đầu ra của compiler" } } },
                     (parentElement: any) => [
-                    this.html(`103de3c0`, "span", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bshell141`, "span", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
                         this.text('INPUT')
-                    ]),
-                    this.html(`5f0756c5`, "strong", parentElement, {}, (parentElement: any) => [
+                        ]),
+                    this.html(`Bshell142`, "strong", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
                         this.text('.sao')
-                    ]),
-                    this.html(`8ca99ec8`, "span", parentElement, {}, (parentElement: any) => [
+                        ]),
+                    this.html(`Bshell143`, "span", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
                         this.text('SERVER')
-                    ]),
-                    this.html(`461ec845`, "strong", parentElement, {}, (parentElement: any) => [
+                        ]),
+                    this.html(`Bshell144`, "strong", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
                         this.text('.blade.php')
-                    ]),
-                    this.html(`4451b5a7`, "span", parentElement, {}, (parentElement: any) => [
+                        ]),
+                    this.html(`Bshell145`, "span", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
                         this.text('CLIENT')
-                    ]),
-                    this.html(`03b0d6d4`, "strong", parentElement, {}, (parentElement: any) => [
+                        ]),
+                    this.html(`Bshell146`, "strong", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
                         this.text('.ts')
-                    ]),
-                    this.html(`955ebaf2`, "span", parentElement, {}, (parentElement: any) => [
+                        ]),
+                    this.html(`Bshell147`, "span", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
                         this.text('STYLE')
-                    ]),
-                    this.html(`c34aff53`, "strong", parentElement, {}, (parentElement: any) => [
+                        ]),
+                    this.html(`Bshell148`, "strong", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
                         this.text('scoped CSS')
-                    ])
-                    ]),
-                this.html(`ac1ed435`, "section", parentElement,
-                    { classes: [{ type: 'static', value: "playground" }], attrs: { "id": { type: 'static', value: "playground" } } },
-                    (parentElement: any) => [
-                    this.html(`a9964b08`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "section-title" }] },
-                        (parentElement: any) => [
-                        this.html(`6f013710`, "p", parentElement, {}, (parentElement: any) => [
-                            this.text('01 / Playground')
-                        ]),
-                        this.html(`395b70ea`, "h2", parentElement, {}, (parentElement: any) => [
-                            this.text('Chạm vào cú pháp.'),
-                            this.html(`8b4e932a`, "br", parentElement, {}),
-                            this.text('Nhìn state đổi ngay.')
                         ])
-                        ]),
-                    this.html(`91f4f5a0`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "tab-tape" }], attrs: { "role": { type: 'static', value: "tablist" }, "aria-label": { type: 'static', value: "Nhóm tính năng" } } },
+                    ]),
+                this.html(`Bshell15`, "section", parentElement,
+                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "playground" }], attrs: { "id": { type: 'static', value: "playground" } } },
+                    (parentElement: any) => [
+                    this.html(`Bshell151`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "section-title" }] },
                         (parentElement: any) => [
-                        this.html(`10b31a87`, "button", parentElement,
-                            { classes: [{ type: 'binding', value: "is-active", factory: () => selectedPanel === 'state', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-tab": { type: 'static', value: "state" } }, events: { click: [(event: any) => setSelectedPanel('state')] } },
+                        this.html(`Bshell1511`, "p", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.text('01 / Playground')
+                            ]),
+                        this.html(`Bshell1512`, "h2", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.text('Chạm vào cú pháp.'),
+                            this.html(`Bshell15121`, "br", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }] }),
+                            this.text('Nhìn state đổi ngay.')
+                            ])
+                        ]),
+                    this.html(`Bshell152`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "tab-tape" }], attrs: { "role": { type: 'static', value: "tablist" }, "aria-label": { type: 'static', value: "Nhóm tính năng" } } },
+                        (parentElement: any) => [
+                        this.html(`Bshell1521`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'binding', value: "is-active", factory: () => selectedPanel === 'state', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-tab": { type: 'static', value: "state" } }, events: { click: [(event: any) => setSelectedPanel('state')] } },
                             (parentElement: any) => [
                             this.text('State & event')
                             ]),
-                        this.html(`b9cdcb41`, "button", parentElement,
-                            { classes: [{ type: 'binding', value: "is-active", factory: () => selectedPanel === 'binding', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-tab": { type: 'static', value: "binding" } }, events: { click: [(event: any) => setSelectedPanel('binding')] } },
+                        this.html(`Bshell1522`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'binding', value: "is-active", factory: () => selectedPanel === 'binding', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-tab": { type: 'static', value: "binding" } }, events: { click: [(event: any) => setSelectedPanel('binding')] } },
                             (parentElement: any) => [
                             this.text('Binding')
                             ]),
-                        this.html(`9ead1b4b`, "button", parentElement,
-                            { classes: [{ type: 'binding', value: "is-active", factory: () => selectedPanel === 'flow', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-tab": { type: 'static', value: "flow" } }, events: { click: [(event: any) => setSelectedPanel('flow')] } },
+                        this.html(`Bshell1523`, "button", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'binding', value: "is-active", factory: () => selectedPanel === 'flow', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-tab": { type: 'static', value: "flow" } }, events: { click: [(event: any) => setSelectedPanel('flow')] } },
                             (parentElement: any) => [
                             this.text('Control flow')
                             ])
                         ]),
-                    this.html(`b754a903`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "card-grid" }, { type: 'binding', value: "is-hidden", factory: () => selectedPanel !== 'binding', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-panel": { type: 'static', value: "binding" } } },
+                    this.html(`Bshell153`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "card-grid" }, { type: 'binding', value: "is-hidden", factory: () => selectedPanel !== 'binding', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-panel": { type: 'static', value: "binding" } } },
                         (parentElement: any) => [
-                        this.include(`e3eb906c`, 'web.modules.demo.featurecard', parentElement, ["name"], (parentElement: any) => ({
+                        this.include(`Bshell153c1`, 'web.modules.demo.featurecard', parentElement, ["name"], (parentElement: any) => ({
                                 "number": "03",
                                 "title": "Two-way binding",
                                 "source": "&#64;App.Helper.bind(name)",
                                 "tone": "cyan",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                                this.html(`4f16c121`, "label", parentElement,
-                                    { classes: [{ type: 'static', value: "field-label" }], attrs: { "for": { type: 'static', value: "demo-name" } } },
+                                this.html(`Bshell153c11`, "label", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "field-label" }], attrs: { "for": { type: 'static', value: "demo-name" } } },
                                     (parentElement: any) => [
                                     this.text('Tên mẫu')
                                     ]),
-                                this.html(`0c819b78`, "input", parentElement, { attrs: { "id": { type: 'static', value: "demo-name" }, "data-demo-name": { type: 'static', value: true }, "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Nhập một tên" } }, props: { "required": { type: 'binding', factory: () => true, stateKeys: ["true"] } }, bind: { key: 'name' } }),
-                                this.html(`a1d02bec`, "p", parentElement,
-                                    { classes: [{ type: 'static', value: "live-output" }] },
+                                this.html(`Bshell153c12`, "input", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "id": { type: 'static', value: "demo-name" }, "data-demo-name": { type: 'static', value: true }, "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Nhập một tên" } }, props: { "required": { type: 'binding', factory: () => true, stateKeys: ["true"] } }, bind: { key: 'name' } }),
+                                this.html(`Bshell153c13`, "p", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "live-output" }] },
                                     (parentElement: any) => [
                                     this.text('Xin chào, '),
-                                    this.html(`1084f2dc`, "strong", parentElement,
-                                        { attrs: { "data-demo-name-output": { type: 'static', value: true } } },
+                                    this.html(`Bshell153c131`, "strong", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-name-output": { type: 'static', value: true } } },
                                         (parentElement: any) => [
-                                        this.output(`3dac18d4`, parentElement, true, ["name"], (parentElement: any) => name)
+                                        this.output(`Bshell153c131o1`, parentElement, true, ["name"], (parentElement: any) => name)
                                         ]),
                                     this.text('.')
                                     ])
                             ]
                             })),
-                        this.include(`4955c300`, 'web.modules.demo.featurecard', parentElement, [], (parentElement: any) => ({
+                        this.include(`Bshell153c2`, 'web.modules.demo.featurecard', parentElement, [], (parentElement: any) => ({
                                 "number": "04",
                                 "title": "Boolean attributes",
                                 "source": "&#64;checked · &#64;disabled · &#64;readonly",
                                 "tone": "yellow",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                                this.html(`8ea1bfd6`, "label", parentElement,
-                                    { classes: [{ type: 'static', value: "check-row" }] },
+                                this.html(`Bshell153c21`, "label", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "check-row" }] },
                                     (parentElement: any) => [
-                                    this.html(`fc0ed7b7`, "input", parentElement, { attrs: { "data-demo-accept": { type: 'static', value: true }, "type": { type: 'static', value: "checkbox" } }, props: { "checked": { type: 'binding', factory: () => accepted, stateKeys: ["accepted"] } }, bind: { key: 'accepted' } }),
+                                    this.html(`Bshell153c211`, "input", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-accept": { type: 'static', value: true }, "type": { type: 'static', value: "checkbox" } }, props: { "checked": { type: 'binding', factory: () => accepted, stateKeys: ["accepted"] } }, bind: { key: 'accepted' } }),
                                     this.text(' Đã đọc tài liệu cú pháp')
                                     ]),
-                                this.html(`8202d879`, "label", parentElement,
-                                    { classes: [{ type: 'static', value: "check-row" }] },
+                                this.html(`Bshell153c22`, "label", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "check-row" }] },
                                     (parentElement: any) => [
-                                    this.html(`79a83397`, "input", parentElement, { attrs: { "type": { type: 'static', value: "checkbox" } }, props: { "checked": { type: 'binding', factory: () => isLocked, stateKeys: ["isLocked"] } }, bind: { key: 'isLocked' } }),
+                                    this.html(`Bshell153c221`, "input", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "type": { type: 'static', value: "checkbox" } }, props: { "checked": { type: 'binding', factory: () => isLocked, stateKeys: ["isLocked"] } }, bind: { key: 'isLocked' } }),
                                     this.text(' Khóa trường ghi chú')
                                     ]),
-                                this.html(`a6a1575d`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Ghi chú mẫu" } }, props: { "readOnly": { type: 'binding', factory: () => isLocked, stateKeys: ["isLocked"] } }, bind: { key: 'note' } }),
-                                this.html(`3d23181b`, "button", parentElement,
-                                    { attrs: { "data-demo-continue": { type: 'static', value: true } }, props: { "disabled": { type: 'binding', factory: () => !accepted, stateKeys: ["accepted"] } } },
+                                this.html(`Bshell153c23`, "input", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Ghi chú mẫu" } }, props: { "readOnly": { type: 'binding', factory: () => isLocked, stateKeys: ["isLocked"] } }, bind: { key: 'note' } }),
+                                this.html(`Bshell153c24`, "button", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-continue": { type: 'static', value: true } }, props: { "disabled": { type: 'binding', factory: () => !accepted, stateKeys: ["accepted"] } } },
                                     (parentElement: any) => [
                                     this.text('Tiếp tục')
                                     ])
                             ]
                             })),
-                        this.include(`1a6c1cce`, 'web.modules.demo.featurecard', parentElement, [], (parentElement: any) => ({
+                        this.include(`Bshell153c3`, 'web.modules.demo.featurecard', parentElement, [], (parentElement: any) => ({
                                 "number": "05",
                                 "title": "Visibility & attributes",
                                 "source": "&#64;class · &#64;attr · &#64;style",
                                 "tone": "pink",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                                this.html(`587c9784`, "button", parentElement,
-                                    { attrs: { "data-demo-visibility": { type: 'static', value: true } }, events: { click: [(event: any) => setIsVisible(!isVisible)] } },
+                                this.html(`Bshell153c31`, "button", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-visibility": { type: 'static', value: true } }, events: { click: [(event: any) => setIsVisible(!isVisible)] } },
                                     (parentElement: any) => [
                                     this.text('Bật / tắt hai vùng')
                                     ]),
-                                this.html(`4ee781e3`, "p", parentElement,
-                                    { classes: [{ type: 'static', value: "visibility-sample" }, { type: 'binding', value: "is-hidden", factory: () => !isVisible, stateKeys: ["isVisible"] }], attrs: { "data-demo-visible": { type: 'static', value: "true" } } },
+                                this.html(`Bshell153c32`, "p", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "visibility-sample" }, { type: 'binding', value: "is-hidden", factory: () => !isVisible, stateKeys: ["isVisible"] }], attrs: { "data-demo-visible": { type: 'static', value: "true" } } },
                                     (parentElement: any) => [
                                     this.text('Vùng này hiện khi state là true.')
                                     ]),
-                                this.html(`300b4e0d`, "p", parentElement,
-                                    { classes: [{ type: 'static', value: "visibility-sample" }, { type: 'binding', value: "is-hidden", factory: () => isVisible, stateKeys: ["isVisible"] }], attrs: { "data-demo-visible": { type: 'static', value: "false" } } },
+                                this.html(`Bshell153c33`, "p", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "visibility-sample" }, { type: 'binding', value: "is-hidden", factory: () => isVisible, stateKeys: ["isVisible"] }], attrs: { "data-demo-visible": { type: 'static', value: "false" } } },
                                     (parentElement: any) => [
                                     this.text('Vùng này hiện khi state là false.')
                                     ]),
-                                this.html(`dfe72f20`, "a", parentElement,
-                                    { attrs: { "href": { type: 'binding', value: '/compiler', factory: () => '/compiler', stateKeys: [] }, "title": { type: 'binding', value: 'Compiler cho '+name, factory: () => 'Compiler cho '+name, stateKeys: ["name"] } } },
+                                this.html(`Bshell153c34`, "a", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "href": { type: 'binding', value: '/compiler', factory: () => '/compiler', stateKeys: [] }, "title": { type: 'binding', value: 'Compiler cho '+name, factory: () => 'Compiler cho '+name, stateKeys: ["name"] } } },
                                     (parentElement: any) => [
                                     this.text('Mở trang compiler')
                                     ])
                             ]
                             }))
                         ]),
-                    this.html(`c9e8675f`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "card-grid" }, { type: 'binding', value: "is-hidden", factory: () => selectedPanel !== 'flow', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-panel": { type: 'static', value: "flow" } } },
+                    this.html(`Bshell154`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "card-grid" }, { type: 'binding', value: "is-hidden", factory: () => selectedPanel !== 'flow', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-panel": { type: 'static', value: "flow" } } },
                         (parentElement: any) => [
-                        this.include(`af216946`, 'web.modules.demo.featurecard', parentElement, ["status"], (parentElement: any) => ({
+                        this.include(`Bshell154c1`, 'web.modules.demo.featurecard', parentElement, ["status"], (parentElement: any) => ({
                                 "number": "06",
                                 "title": "If / elseif / else",
                                 "source": "&#64;if(status === __STR_LIT_0__)",
                                 "tone": "yellow",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                                this.html(`2222fffe`, "div", parentElement,
-                                    { classes: [{ type: 'static', value: "status-buttons" }] },
+                                this.html(`Bshell154c11`, "div", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "status-buttons" }] },
                                     (parentElement: any) => [
-                                    this.html(`7d5fce38`, "button", parentElement,
-                                        { attrs: { "data-demo-status": { type: 'static', value: "ready" } }, events: { click: [(event: any) => setStatus('ready')] } },
+                                    this.html(`Bshell154c111`, "button", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-status": { type: 'static', value: "ready" } }, events: { click: [(event: any) => setStatus('ready')] } },
                                         (parentElement: any) => [
                                         this.text('Ready')
                                         ]),
-                                    this.html(`9afeba4e`, "button", parentElement,
-                                        { attrs: { "data-demo-status": { type: 'static', value: "building" } }, events: { click: [(event: any) => setStatus('building')] } },
+                                    this.html(`Bshell154c112`, "button", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-status": { type: 'static', value: "building" } }, events: { click: [(event: any) => setStatus('building')] } },
                                         (parentElement: any) => [
                                         this.text('Building')
                                         ]),
-                                    this.html(`6eed4f46`, "button", parentElement,
-                                        { attrs: { "data-demo-status": { type: 'static', value: "error" } }, events: { click: [(event: any) => setStatus('error')] } },
+                                    this.html(`Bshell154c113`, "button", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-status": { type: 'static', value: "error" } }, events: { click: [(event: any) => setStatus('error')] } },
                                         (parentElement: any) => [
                                         this.text('Error')
                                         ])
                                     ]),
-                                this.reactive(`27b760b5`, "if", parentReactive, parentElement, ["status"], (parentReactive: any, parentElement: any) => {
+                                this.reactive(`Bshell154c1r1`, "if", parentReactive, parentElement, ["status"], (parentReactive: any, parentElement: any) => {
                                     const reactiveContents = [];
                                     if (status === 'ready') {
                                         reactiveContents.push(
-                                        this.html(`dec06fbd`, "p", parentElement,
-                                            { classes: [{ type: 'static', value: "status-card" }, { type: 'static', value: "status-ready" }], attrs: { "data-demo-status-output": { type: 'static', value: true } } },
+                                        this.html(`Bshell154c1r1k11`, "p", parentElement,
+                                            { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "status-card" }, { type: 'static', value: "status-ready" }], attrs: { "data-demo-status-output": { type: 'static', value: true } } },
                                             (parentElement: any) => [
                                             this.text('Sẵn sàng biên dịch.')
                                             ])
@@ -563,8 +603,8 @@ class IndexView extends View {
                                     }
                                     else if (status === 'building') {
                                         reactiveContents.push(
-                                        this.html(`67bc53ba`, "p", parentElement,
-                                            { classes: [{ type: 'static', value: "status-card" }, { type: 'static', value: "status-building" }], attrs: { "data-demo-status-output": { type: 'static', value: true } } },
+                                        this.html(`Bshell154c1r1k21`, "p", parentElement,
+                                            { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "status-card" }, { type: 'static', value: "status-building" }], attrs: { "data-demo-status-output": { type: 'static', value: true } } },
                                             (parentElement: any) => [
                                             this.text('Đang biên dịch fixture.')
                                             ])
@@ -572,8 +612,8 @@ class IndexView extends View {
                                     }
                                     else {
                                         reactiveContents.push(
-                                        this.html(`763cf105`, "p", parentElement,
-                                            { classes: [{ type: 'static', value: "status-card" }, { type: 'static', value: "status-error" }], attrs: { "data-demo-status-output": { type: 'static', value: true } } },
+                                        this.html(`Bshell154c1r1k31`, "p", parentElement,
+                                            { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "status-card" }, { type: 'static', value: "status-error" }], attrs: { "data-demo-status-output": { type: 'static', value: true } } },
                                             (parentElement: any) => [
                                             this.text('Trạng thái lỗi mẫu.')
                                             ])
@@ -583,77 +623,79 @@ class IndexView extends View {
                                 })
                             ]
                             })),
-                        this.include(`9136e09e`, 'web.modules.demo.featurecard', parentElement, [], (parentElement: any) => ({
+                        this.include(`Bshell154c2`, 'web.modules.demo.featurecard', parentElement, [], (parentElement: any) => ({
                                 "number": "07",
                                 "title": "For & foreach",
                                 "source": "&#64;for · &#64;foreach · &#64;key",
                                 "tone": "pink",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                                this.html(`d2316e9d`, "div", parentElement,
-                                    { classes: [{ type: 'static', value: "number-run" }] },
+                                this.html(`Bshell154c21`, "div", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "number-run" }] },
                                     (parentElement: any) => [
-                                    this.reactive(`23292821`, "for", parentReactive, parentElement, ["count"], (parentReactive: any, parentElement: any) => {
+                                    this.reactive(`Bshell154c21l1`, "for", parentReactive, parentElement, ["count"], (parentReactive: any, parentElement: any) => {
                                         return this.__for("increment", 0, count, (__loop: any) => {
                                             let __forOutput = [];
                                             for (let i = 0; i < count; i++) {
                                                 __loop.setCurrentTimes(i);
                                                 __forOutput.push(
-                                                this.html(`7ac636e3-${i}`, "span", parentElement, {}, (parentElement: any) => [
-                                                    this.output(`f06b0864-${i}`, parentElement, true, ["i"], (parentElement: any) => i + 1)
-                                                ])
+                                                this.html(`Bshell154c21l11-${i}`, "span", parentElement,
+                                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                                    (parentElement: any) => [
+                                                    this.output(`Bshell154c21l11o1-${i}`, parentElement, true, ["i"], (parentElement: any) => i + 1)
+                                                    ])
                                                 );
                                             }
                                             return __forOutput;
                                         })
                                     })
                                     ]),
-                                this.html(`0b863907`, "ul", parentElement,
-                                    { classes: [{ type: 'static', value: "sample-list" }] },
+                                this.html(`Bshell154c22`, "ul", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "sample-list" }] },
                                     (parentElement: any) => [
-                                    this.reactive(`f3b01aa8`, "foreach", parentReactive, parentElement, ["sampleItems"], (parentReactive: any, parentElement: any) => {
+                                    this.reactive(`Bshell154c22l1`, "foreach", parentReactive, parentElement, ["sampleItems"], (parentReactive: any, parentElement: any) => {
                                         return this.__foreach(sampleItems, (item: any, __loopKey: any, __loopIndex: any, __loop: any) => [
-                                            this.html(`fcf1116c-${item['id']}`, "li", parentElement,
-                                                { classes: [{ type: 'binding', value: "is-enabled", factory: () => item['enabled'], stateKeys: [] }] },
+                                            this.html(`Bshell154c22l11-${item['id']}`, "li", parentElement,
+                                                { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'binding', value: "is-enabled", factory: () => item['enabled'], stateKeys: [] }] },
                                                 (parentElement: any) => [
-                                                this.output(`3f83bd5b-${item['id']}`, parentElement, true, [], (parentElement: any) => item['label'])
+                                                this.output(`Bshell154c22l11o1-${item['id']}`, parentElement, true, [], (parentElement: any) => item['label'])
                                                 ])
                                         ], (item: any) => item['id'])
                                     })
                                     ])
                             ]
                             })),
-                        this.include(`2b606f21`, 'web.modules.demo.featurecard', parentElement, ["selectedRuntime"], (parentElement: any) => ({
+                        this.include(`Bshell154c3`, 'web.modules.demo.featurecard', parentElement, ["selectedRuntime"], (parentElement: any) => ({
                                 "number": "08",
                                 "title": "Switch",
                                 "source": "&#64;switch(selectedRuntime)",
                                 "tone": "cyan",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                                this.html(`7f2a3c58`, "select", parentElement,
-                                    { attrs: { "data-demo-runtime": { type: 'static', value: true } }, bind: { key: 'selectedRuntime' } },
+                                this.html(`Bshell154c31`, "select", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-runtime": { type: 'static', value: true } }, bind: { key: 'selectedRuntime' } },
                                     (parentElement: any) => [
-                                    this.html(`9a32bb52`, "option", parentElement,
-                                        { attrs: { "value": { type: 'static', value: "blade" } } },
+                                    this.html(`Bshell154c311`, "option", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "value": { type: 'static', value: "blade" } } },
                                         (parentElement: any) => [
                                         this.text('Blade')
                                         ]),
-                                    this.html(`f3590e60`, "option", parentElement,
-                                        { attrs: { "value": { type: 'static', value: "typescript" } } },
+                                    this.html(`Bshell154c312`, "option", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "value": { type: 'static', value: "typescript" } } },
                                         (parentElement: any) => [
                                         this.text('TypeScript')
                                         ]),
-                                    this.html(`e548dc56`, "option", parentElement,
-                                        { attrs: { "value": { type: 'static', value: "css" } } },
+                                    this.html(`Bshell154c313`, "option", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "value": { type: 'static', value: "css" } } },
                                         (parentElement: any) => [
                                         this.text('Scoped CSS')
                                         ])
                                     ]),
-                                this.reactive(`261877d1`, "switch", parentReactive, parentElement, ["selectedRuntime"], (parentReactive: any, parentElement: any) => {
+                                this.reactive(`Bshell154c3r1`, "switch", parentReactive, parentElement, ["selectedRuntime"], (parentReactive: any, parentElement: any) => {
                                     const reactiveContents = [];
                                     switch (selectedRuntime) {
                                         case 'typescript':
                                             reactiveContents.push(
-                                            this.html(`b4defb38`, "p", parentElement,
-                                                { classes: [{ type: 'static', value: "runtime-result" }], attrs: { "data-demo-runtime-output": { type: 'static', value: true } } },
+                                            this.html(`Bshell154c3r1k11`, "p", parentElement,
+                                                { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "runtime-result" }], attrs: { "data-demo-runtime-output": { type: 'static', value: true } } },
                                                 (parentElement: any) => [
                                                 this.text('Client output giữ state, event và lifecycle.')
                                                 ])
@@ -661,8 +703,8 @@ class IndexView extends View {
                                             break;
                                         case 'css':
                                             reactiveContents.push(
-                                            this.html(`7114a758`, "p", parentElement,
-                                                { classes: [{ type: 'static', value: "runtime-result" }], attrs: { "data-demo-runtime-output": { type: 'static', value: true } } },
+                                            this.html(`Bshell154c3r1k21`, "p", parentElement,
+                                                { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "runtime-result" }], attrs: { "data-demo-runtime-output": { type: 'static', value: true } } },
                                                 (parentElement: any) => [
                                                 this.text('Selector được gắn scope theo view.')
                                                 ])
@@ -670,8 +712,8 @@ class IndexView extends View {
                                             break;
                                         default:
                                             reactiveContents.push(
-                                            this.html(`3fbd97db`, "p", parentElement,
-                                                { classes: [{ type: 'static', value: "runtime-result" }], attrs: { "data-demo-runtime-output": { type: 'static', value: true } } },
+                                            this.html(`Bshell154c3r1k31`, "p", parentElement,
+                                                { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "runtime-result" }], attrs: { "data-demo-runtime-output": { type: 'static', value: true } } },
                                                 (parentElement: any) => [
                                                 this.text('Server output trả HTML hoàn chỉnh.')
                                                 ])
@@ -683,335 +725,479 @@ class IndexView extends View {
                             ]
                             }))
                         ]),
-                    this.html(`5783ae25`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "card-grid" }, { type: 'binding', value: "is-hidden", factory: () => selectedPanel !== 'state', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-panel": { type: 'static', value: "state" } } },
+                    this.html(`Bshell155`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "card-grid" }, { type: 'binding', value: "is-hidden", factory: () => selectedPanel !== 'state', stateKeys: ["selectedPanel"] }], attrs: { "data-demo-panel": { type: 'static', value: "state" } } },
                         (parentElement: any) => [
-                        this.include(`0151fa95`, 'web.modules.demo.featurecard', parentElement, ["count"], (parentElement: any) => ({
+                        this.include(`Bshell155c1`, 'web.modules.demo.featurecard', parentElement, ["count"], (parentElement: any) => ({
                                 "number": "01",
                                 "title": "Reactive state",
                                 "source": "&#64;App.Helper.states({ count: 3 })",
                                 "tone": "pink",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                                this.html(`7ac45d3e`, "div", parentElement,
-                                    { classes: [{ type: 'static', value: "counter-row" }] },
+                                this.html(`Bshell155c11`, "div", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "counter-row" }] },
                                     (parentElement: any) => [
-                                    this.html(`c6a8091c`, "button", parentElement,
-                                        { attrs: { "data-demo-count": { type: 'static', value: "decrease" }, "aria-label": { type: 'static', value: "Giảm count" } }, props: { "disabled": { type: 'binding', factory: () => count === 0, stateKeys: ["count"] } }, events: { click: [(event: any) => setCount(count - 1)] } },
+                                    this.html(`Bshell155c111`, "button", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-count": { type: 'static', value: "decrease" }, "aria-label": { type: 'static', value: "Giảm count" } }, props: { "disabled": { type: 'binding', factory: () => count === 0, stateKeys: ["count"] } }, events: { click: [(event: any) => setCount(count - 1)] } },
                                         (parentElement: any) => [
                                         this.text('Giảm')
                                         ]),
-                                    this.html(`2a4b857b`, "strong", parentElement,
-                                        { attrs: { "data-demo-count-output": { type: 'static', value: true } } },
+                                    this.html(`Bshell155c112`, "strong", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-count-output": { type: 'static', value: true } } },
                                         (parentElement: any) => [
-                                        this.output(`344f0d1e`, parentElement, true, ["count"], (parentElement: any) => count)
+                                        this.output(`Bshell155c112o1`, parentElement, true, ["count"], (parentElement: any) => count)
                                         ]),
-                                    this.html(`808c6128`, "button", parentElement,
-                                        { attrs: { "data-demo-count": { type: 'static', value: "increase" }, "aria-label": { type: 'static', value: "Tăng count" } }, props: { "disabled": { type: 'binding', factory: () => count === MAX_COUNT, stateKeys: ["count"] } }, events: { click: [(event: any) => setCount(count + 1)] } },
+                                    this.html(`Bshell155c113`, "button", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "data-demo-count": { type: 'static', value: "increase" }, "aria-label": { type: 'static', value: "Tăng count" } }, props: { "disabled": { type: 'binding', factory: () => count === MAX_COUNT, stateKeys: ["count"] } }, events: { click: [(event: any) => setCount(count + 1)] } },
                                         (parentElement: any) => [
                                         this.text('Tăng')
                                         ])
                                     ]),
-                                this.html(`8a4ec305`, "div", parentElement,
-                                    { classes: [{ type: 'static', value: "progress-track" }] },
+                                this.html(`Bshell155c12`, "div", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "progress-track" }] },
                                     (parentElement: any) => [
-                                    this.html(`120c4376`, "i", parentElement, { attrs: { "style": { type: 'static', value: true }, "width": { type: 'static', value: true }, "count": { type: 'static', value: true } } })
+                                    this.html(`Bshell155c121`, "i", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }], styles: { "width": { type: 'binding', value: count * 10+'%', factory: () => count * 10+'%', stateKeys: ["count"] } } })
                                     ]),
-                                this.html(`5fe12573`, "small", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell155c13`, "small", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('Giới hạn mẫu: 0–'),
                                     this.text(String(MAX_COUNT ?? ''))
-                                ])
+                                    ])
                             ]
                             })),
-                        this.include(`21cfa9f6`, 'web.modules.demo.featurecard', parentElement, ["setCount"], (parentElement: any) => ({
+                        this.include(`Bshell155c2`, 'web.modules.demo.featurecard', parentElement, ["setCount"], (parentElement: any) => ({
                                 "number": "02",
                                 "title": "Events & setup",
                                 "source": "&#64;App.Helper.click(App.Helper.setCount(3)) · &lt;script setup&gt;",
                                 "tone": "cyan",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                                this.html(`29596de2`, "p", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell155c21`, "p", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('Event inline cập nhật state; khối setup bên dưới cũng khai báo method tái sử dụng.')
-                                ]),
-                                this.html(`3310bdda`, "button", parentElement,
-                                    { events: { click: [(event: any) => setCount(3)] } },
+                                    ]),
+                                this.html(`Bshell155c22`, "button", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }], events: { click: [(event: any) => setCount(3)] } },
                                     (parentElement: any) => [
                                     this.text('Đặt lại count')
                                     ]),
-                                this.html(`b1695bf6`, "button", parentElement,
-                                    { events: { dblclick: [(event: any) => setCount(MAX_COUNT)] } },
+                                this.html(`Bshell155c23`, "button", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }], events: { dblclick: [(event: any) => setCount(MAX_COUNT)] } },
                                     (parentElement: any) => [
                                     this.text('Nhấp đúp để đạt tối đa')
                                     ])
                             ]
                             })),
-                        this.include(`78b74471`, 'web.modules.demo.featurecard', parentElement, [], (parentElement: any) => ({
+                        this.include(`Bshell155c3`, 'web.modules.demo.featurecard', parentElement, [], (parentElement: any) => ({
                                 "number": "09",
                                 "title": "Props, import & children",
                                 "source": "&#64;props · &#64;import · &#64;children",
                                 "tone": "yellow",
                                 __ONE_CHILDREN_CONTENT__: (parentElement: any) => [
-                                this.html(`f184ae5c`, "p", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell155c31`, "p", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('Chính khung này là component '),
-                                    this.html(`f840c930`, "code", parentElement, {}, (parentElement: any) => [
+                                    this.html(`Bshell155c311`, "code", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                        (parentElement: any) => [
                                         this.text('featurecard')
-                                    ]),
+                                        ]),
                                     this.text(' được import. Tiêu đề và số là props; nội dung đoạn này đi qua slot '),
-                                    this.html(`0ea168d2`, "code", parentElement, {}, (parentElement: any) => [
+                                    this.html(`Bshell155c312`, "code", parentElement,
+                                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                        (parentElement: any) => [
                                         this.text('@children')
-                                    ]),
+                                        ]),
                                     this.text('.')
-                                ])
+                                    ])
                             ]
                             }))
                         ])
                     ]),
-                this.html(`09babe13`, "section", parentElement,
-                    { classes: [{ type: 'static', value: "coverage" }], attrs: { "id": { type: 'static', value: "coverage" } } },
+                this.html(`Bshell16`, "section", parentElement,
+                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "coverage" }], attrs: { "id": { type: 'static', value: "coverage" } } },
                     (parentElement: any) => [
-                    this.html(`a38bd2e5`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "section-title" }, { type: 'static', value: "section-title--small" }] },
+                    this.html(`Bshell161`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "section-title" }, { type: 'static', value: "section-title--small" }] },
                         (parentElement: any) => [
-                        this.html(`339663c0`, "p", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bshell1611`, "p", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
                             this.text('02 / Phạm vi hỗ trợ')
-                        ]),
-                        this.html(`892f4d90`, "h2", parentElement, {}, (parentElement: any) => [
+                            ]),
+                        this.html(`Bshell1612`, "h2", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
                             this.text('Một bản đồ cú pháp,'),
-                            this.html(`e7712337`, "br", parentElement, {}),
+                            this.html(`Bshell16121`, "br", parentElement, { classes: [{ type: 'static', value: "s45d147d4" }] }),
                             this.text('không phải danh sách trang trí.')
-                        ])
+                            ])
                         ]),
-                    this.html(`5e6196d1`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "coverage-grid" }] },
+                    this.html(`Bshell162`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "coverage-grid" }] },
                         (parentElement: any) => [
-                        this.html(`24dd0405`, "article", parentElement, {}, (parentElement: any) => [
-                            this.html(`cb9f18b2`, "h3", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bshell1621`, "article", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.html(`Bshell16211`, "h3", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
                                 this.text('Declarations')
-                            ]),
-                            this.html(`e507f63c`, "p", parentElement, {}, (parentElement: any) => [
-                                this.html(`0f9f3c92`, "code", parentElement, {}, (parentElement: any) => [
+                                ]),
+                            this.html(`Bshell16212`, "p", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.html(`Bshell162121`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@states')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`11228f95`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162122`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@state')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`1bd83dfd`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162123`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@props')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`8476cef6`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162124`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@const')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`25d54a81`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162125`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@let')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`2e57333e`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162126`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@vars')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`eb6834cf`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162127`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@import')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`88a4d770`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162128`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@await')
-                                ])
-                            ]),
-                            this.html(`4b211548`, "span", parentElement, {}, (parentElement: any) => [
+                                    ])
+                                ]),
+                            this.html(`Bshell16213`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
                                 this.text('Được minh họa trực tiếp hoặc dùng trong source của module.')
-                            ])
-                        ]),
-                        this.html(`5aa458e4`, "article", parentElement, {}, (parentElement: any) => [
-                            this.html(`26748bcc`, "h3", parentElement, {}, (parentElement: any) => [
+                                ])
+                            ]),
+                        this.html(`Bshell1622`, "article", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.html(`Bshell16221`, "h3", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
                                 this.text('Template')
-                            ]),
-                            this.html(`5faf36b1`, "p", parentElement, {}, (parentElement: any) => [
-                                this.html(`2d990fba`, "code", parentElement, {}, (parentElement: any) => [
+                                ]),
+                            this.html(`Bshell16222`, "p", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.html(`Bshell162221`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@extends')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`4a81cfbe`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162222`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@block')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`d7e74641`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162223`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@section')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`414c62c2`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162224`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@yield')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`c55390f6`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162225`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@include')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`24748e05`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162226`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@children')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`daffd75d`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162227`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@exec')
-                                ])
-                            ]),
-                            this.html(`01bc413c`, "span", parentElement, {}, (parentElement: any) => [
+                                    ])
+                                ]),
+                            this.html(`Bshell16223`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
                                 this.text('Trang dùng layout, block và component slot thực.')
-                            ])
-                        ]),
-                        this.html(`d1785dfa`, "article", parentElement, {}, (parentElement: any) => [
-                            this.html(`051ae83a`, "h3", parentElement, {}, (parentElement: any) => [
+                                ])
+                            ]),
+                        this.html(`Bshell1623`, "article", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.html(`Bshell16231`, "h3", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
                                 this.text('Control flow')
-                            ]),
-                            this.html(`fdae1d56`, "p", parentElement, {}, (parentElement: any) => [
-                                this.html(`64d42a83`, "code", parentElement, {}, (parentElement: any) => [
+                                ]),
+                            this.html(`Bshell16232`, "p", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.html(`Bshell162321`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@if')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`5a202243`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162322`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@foreach')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`e3537807`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162323`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@for')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`69767f16`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162324`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@while')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`1a038ceb`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162325`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@switch')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`6137dcae`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162326`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@break')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`ce112366`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162327`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@continue')
-                                ]),
+                                    ]),
                                 this.text(', '),
-                                this.html(`14d8ce2f`, "code", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bshell162328`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
                                     this.text('@ssr')
-                                ])
-                            ]),
-                            this.html(`d956ab68`, "span", parentElement, {}, (parentElement: any) => [
+                                    ])
+                                ]),
+                            this.html(`Bshell16233`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
                                 this.text('If, foreach, for và switch chạy trong tab Control flow.')
-                            ])
-                        ]),
-                        this.html(`b175ec3c`, "article", parentElement, {}, (parentElement: any) => [
-                            this.html(`94d98784`, "h3", parentElement, {}, (parentElement: any) => [
-                                this.text('Bindings')
-                            ]),
-                            this.html(`6f5bcdbd`, "p", parentElement, {}, (parentElement: any) => [
-                                this.html(`8e1de079`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@attr')
-                                ]),
-                                this.text(', '),
-                                this.html(`5f991a41`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@class')
-                                ]),
-                                this.text(', '),
-                                this.html(`e436284f`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@style')
-                                ]),
-                                this.text(', '),
-                                this.html(`5a992cc4`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@bind')
-                                ]),
-                                this.text(', '),
-                                this.html(`daa8e59d`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@val')
-                                ]),
-                                this.text(', '),
-                                this.html(`058b8fb0`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@show')
-                                ]),
-                                this.text(', '),
-                                this.html(`ac28fd2f`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@hide')
-                                ]),
-                                this.text(', boolean attributes')
-                            ]),
-                            this.html(`9e5a582a`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('Tab Binding cho phép kiểm tra trực tiếp.')
-                            ])
-                        ]),
-                        this.html(`b1dffe50`, "article", parentElement, {}, (parentElement: any) => [
-                            this.html(`c68584f1`, "h3", parentElement, {}, (parentElement: any) => [
-                                this.text('Forms & access')
-                            ]),
-                            this.html(`1ffcdb8e`, "p", parentElement, {}, (parentElement: any) => [
-                                this.html(`352f19a3`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@csrf')
-                                ]),
-                                this.text(', '),
-                                this.html(`1b8157dc`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@method')
-                                ]),
-                                this.text(', '),
-                                this.html(`916317ad`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@auth')
-                                ]),
-                                this.text(', '),
-                                this.html(`ab8b086a`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@guest')
-                                ]),
-                                this.text(', '),
-                                this.html(`33fff89c`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@can')
-                                ]),
-                                this.text(', '),
-                                this.html(`57bfe208`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@cannot')
-                                ]),
-                                this.text(', '),
-                                this.html(`76cda61c`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('@error')
                                 ])
                             ]),
-                            this.html(`1360a086`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bshell1624`, "article", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.html(`Bshell16241`, "h3", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.text('Bindings')
+                                ]),
+                            this.html(`Bshell16242`, "p", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.html(`Bshell162421`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@attr')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162422`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@class')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162423`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@style')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162424`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@bind')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162425`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@val')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162426`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@show')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162427`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@hide')
+                                    ]),
+                                this.text(', boolean attributes')
+                                ]),
+                            this.html(`Bshell16243`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.text('Tab Binding cho phép kiểm tra trực tiếp.')
+                                ])
+                            ]),
+                        this.html(`Bshell1625`, "article", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.html(`Bshell16251`, "h3", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.text('Forms & access')
+                                ]),
+                            this.html(`Bshell16252`, "p", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.html(`Bshell162521`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@csrf')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162522`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@method')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162523`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@auth')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162524`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@guest')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162525`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@can')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162526`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@cannot')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162527`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('@error')
+                                    ])
+                                ]),
+                            this.html(`Bshell16253`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
                                 this.text('Nhóm này cần request, session hoặc policy thật nên được kiểm chứng theo context ứng dụng.')
+                                ])
+                            ]),
+                        this.html(`Bshell1626`, "article", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.html(`Bshell16261`, "h3", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.text('Component blocks')
+                                ]),
+                            this.html(`Bshell16262`, "p", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.html(`Bshell162621`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('<script setup lang="ts">')
+                                    ]),
+                                this.text(', '),
+                                this.html(`Bshell162622`, "code", parentElement,
+                                    { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                    (parentElement: any) => [
+                                    this.text('<style scoped>')
+                                    ]),
+                                this.text(', magic variables và wrapper modern / legacy')
+                                ]),
+                            this.html(`Bshell16263`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "s45d147d4" }] },
+                                (parentElement: any) => [
+                                this.text('Module này dùng wrapper modern, TypeScript setup và scoped CSS.')
+                                ])
+                            ])
+                        ])
+                    ]),
+                this.html(`Bshell17`, "footer", parentElement,
+                    { classes: [{ type: 'static', value: "s45d147d4" }, { type: 'static', value: "demo-footer" }] },
+                    (parentElement: any) => [
+                    this.html(`Bshell171`, "p", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }] },
+                        (parentElement: any) => [
+                        this.text('Fixture: '),
+                        this.html(`Bshell1711`, "code", parentElement,
+                            { classes: [{ type: 'static', value: "s45d147d4" }] },
+                            (parentElement: any) => [
+                            this.text('web.modules.demo.index')
                             ])
                         ]),
-                        this.html(`919ac307`, "article", parentElement, {}, (parentElement: any) => [
-                            this.html(`75836397`, "h3", parentElement, {}, (parentElement: any) => [
-                                this.text('Component blocks')
-                            ]),
-                            this.html(`85b8a6c1`, "p", parentElement, {}, (parentElement: any) => [
-                                this.html(`b0861b21`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('<script setup lang="ts">')
-                                ]),
-                                this.text(', '),
-                                this.html(`efea05bf`, "code", parentElement, {}, (parentElement: any) => [
-                                    this.text('<style scoped>')
-                                ]),
-                                this.text(', magic variables và wrapper modern / legacy')
-                            ]),
-                            this.html(`7d5a1f72`, "span", parentElement, {}, (parentElement: any) => [
-                                this.text('Module này dùng wrapper modern, TypeScript setup và scoped CSS.')
-                            ])
-                        ])
-                        ])
-                    ]),
-                this.html(`ab9ce6e7`, "footer", parentElement,
-                    { classes: [{ type: 'static', value: "demo-footer" }] },
-                    (parentElement: any) => [
-                    this.html(`52a19f96`, "p", parentElement, {}, (parentElement: any) => [
-                        this.text('Fixture: '),
-                        this.html(`b598d4d6`, "code", parentElement, {}, (parentElement: any) => [
-                            this.text('web.modules.demo.index')
-                        ])
-                    ]),
-                    this.html(`aee14460`, "a", parentElement,
-                        { attrs: { "href": { type: 'static', value: "/" } } },
+                    this.html(`Bshell172`, "a", parentElement,
+                        { classes: [{ type: 'static', value: "s45d147d4" }], attrs: { "href": { type: 'static', value: "/" } } },
                         (parentElement: any) => [
                         this.text('Về trang chủ')
                         ])
                     ]),
-                this.output(`3b21e7a6`, parentElement, false, [], (parentElement: any) => DEMO_SCRIPT)
+                this.output(`Bshell1o1`, parentElement, false, [], (parentElement: any) => DEMO_SCRIPT)
                 ])
             ]);
             this.superViewPath = `${__layout__+'base'}`;
@@ -1023,7 +1209,7 @@ class IndexView extends View {
 }
 
 // Export factory function
-export function WebModulesDemoIndex(__data__: IndexProps = {}, systemData: any = {}): IndexView {
+export function WebModulesDemoIndex(__data__ = {}, systemData = {}): IndexView {
     return new IndexView(__data__, systemData);
 }
 export default WebModulesDemoIndex;

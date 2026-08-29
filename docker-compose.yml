@@ -58,7 +58,9 @@ services:
     image: redis:7-alpine
     container_name: one-laravel_redis
     ports:
-      - "6380:6379"
+      # 6380 bị thithu_redis giữ, 6381 bị seo-expert-redis giữ → dùng 6382.
+      # Cổng host này chỉ để redis-cli từ máy; app + redis-commander nối qua redis:6379 nội bộ.
+      - "6382:6379"
     volumes:
       - redis_data:/data
       - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
@@ -78,6 +80,9 @@ services:
   # Redis Commander - Web UI để quản lý Redis
   redis-commander:
     image: rediscommander/redis-commander:latest
+    # Image chỉ có bản amd64 → khai báo rõ để tắt cảnh báo platform trên Apple Silicon
+    # (vẫn chạy qua emulation).
+    platform: linux/amd64
     container_name: one-laravel_redis_commander
     ports:
       - "8687:8081"

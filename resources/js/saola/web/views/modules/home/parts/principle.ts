@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -31,6 +29,8 @@ export interface PrincipleProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class PrincipleViewController extends ViewController {
     constructor(view: View) {
@@ -44,7 +44,7 @@ class PrincipleViewController extends ViewController {
 }
 
 class PrincipleView extends View {
-    constructor(__data__: PrincipleProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, PrincipleViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -118,45 +118,45 @@ class PrincipleView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`bbcd3398`, "section", parentElement,
+            this.html(`e1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "principle-showcase" }] },
                 (parentElement: any) => [
-                this.html(`88b70a58`, "div", parentElement,
+                this.html(`e11`, "div", parentElement,
                     { classes: [{ type: 'static', value: "principle-content" }] },
                     (parentElement: any) => [
-                    this.html(`e444cc57`, "p", parentElement,
+                    this.html(`e111`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement: any) => [
-                        this.html(`3d2849a4`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`e1111`, "span", parentElement, {}, (parentElement: any) => [
                             this.text('DESIGN PRINCIPLE')
                         ]),
-                        this.text(' Điều Saola bảo vệ')
+                        this.text(' Triết lý thiết kế cốt lõi')
                         ]),
-                    this.html(`ed9d4c8f`, "h2", parentElement,
+                    this.html(`e112`, "h2", parentElement,
                         { classes: [{ type: 'static', value: "principle-title" }] },
                         (parentElement: any) => [
-                        this.html(`3c308a77`, "span", parentElement,
+                        this.html(`e1121`, "span", parentElement,
                             { classes: [{ type: 'static', value: "line-1" }] },
                             (parentElement: any) => [
-                            this.text('Server là sự thật.')
+                            this.text('Server là chân lý.')
                             ]),
-                        this.html(`fd6cf999`, "span", parentElement,
+                        this.html(`e1122`, "span", parentElement,
                             { classes: [{ type: 'static', value: "line-2" }] },
                             (parentElement: any) => [
                             this.text('Client là sự tiếp nối.')
                             ])
                         ]),
-                    this.html(`114ef863`, "div", parentElement,
+                    this.html(`e113`, "div", parentElement,
                         { classes: [{ type: 'static', value: "principle-desc" }] },
                         (parentElement: any) => [
-                        this.html(`961a3b1e`, "p", parentElement, {}, (parentElement: any) => [
-                            this.text('Phản hồi đầu tiên phải hoàn chỉnh và có thể hiểu được. JavaScript không “cứu” một trang rỗng; nó tiếp nhận chính view server vừa render và làm view đó sống lên.')
+                        this.html(`e1131`, "p", parentElement, {}, (parentElement: any) => [
+                            this.text('Phản hồi đầu tiên từ server phải luôn hoàn chỉnh và mang đầy đủ nội dung. JavaScript không tồn tại để "cứu vãn" một trang web rỗng; nhiệm vụ của nó là tiếp nhận cấu trúc DOM đã được render và làm cho view đó trở nên sống động.')
                         ]),
-                        this.html(`d6fa163b`, "a", parentElement,
+                        this.html(`e1132`, "a", parentElement,
                             { classes: [{ type: 'static', value: "button" }], attrs: { "href": { type: 'static', value: "/about" } } },
                             (parentElement: any) => [
                             this.text('Vì sao Saola tồn tại '),
-                            this.html(`1aac0442`, "span", parentElement, {}, (parentElement: any) => [
+                            this.html(`e11321`, "span", parentElement, {}, (parentElement: any) => [
                                 this.text('→')
                             ])
                             ])
@@ -171,7 +171,7 @@ class PrincipleView extends View {
 }
 
 // Export factory function
-export function WebModulesHomePartsPrinciple(__data__: PrincipleProps = {}, systemData: any = {}): PrincipleView {
+export function WebModulesHomePartsPrinciple(__data__ = {}, systemData = {}): PrincipleView {
     return new PrincipleView(__data__, systemData);
 }
 export default WebModulesHomePartsPrinciple;

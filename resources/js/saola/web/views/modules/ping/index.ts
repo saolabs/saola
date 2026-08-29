@@ -27,8 +27,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -38,6 +36,8 @@ export interface IndexProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class IndexViewController extends ViewController {
     constructor(view: View) {
@@ -51,7 +51,7 @@ class IndexViewController extends ViewController {
 }
 
 class IndexView extends View {
-    constructor(__data__: IndexProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, IndexViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -175,54 +175,54 @@ class IndexView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-content', 'content', (parentElement: any) => [
-            this.html(`b4052a35`, "section", parentElement,
+            this.html(`Bcontent1`, "section", parentElement,
                 { classes: [{ type: 'static', value: "ping" }, { type: 'binding', value: "active", factory: () => count !== 0, stateKeys: ["count"] }] },
                 (parentElement: any) => [
-                this.html(`ba3bf830`, "h1", parentElement, {}, (parentElement: any) => [
+                this.html(`Bcontent11`, "h1", parentElement, {}, (parentElement: any) => [
                     this.text('Ping Module — Hydration Test')
                 ]),
-                this.html(`9f45c023`, "p", parentElement, {}, (parentElement: any) => [
+                this.html(`Bcontent12`, "p", parentElement, {}, (parentElement: any) => [
                     this.text('Hello, '),
-                    this.output(`6e45b3ed`, parentElement, true, ["name"], (parentElement: any) => name),
+                    this.output(`Bcontent12o1`, parentElement, true, ["name"], (parentElement: any) => name),
                     this.text('! 👋')
                 ]),
-                this.html(`a1ce32e6`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`7d44863d`, "button", parentElement,
+                this.html(`Bcontent13`, "div", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bcontent131`, "button", parentElement,
                         { events: { click: [(event: any) => setCount(count + 1)] } },
                         (parentElement: any) => [
                         this.text('Ping (+1)')
                         ]),
-                    this.html(`5328c8d9`, "button", parentElement,
+                    this.html(`Bcontent132`, "button", parentElement,
                         { events: { click: [{"handler":"reset","params":[]}] } },
                         (parentElement: any) => [
                         this.text('Reset')
                         ]),
-                    this.html(`245b439b`, "span", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bcontent133`, "span", parentElement, {}, (parentElement: any) => [
                         this.text('Count: '),
-                        this.output(`3aa7ff3e`, parentElement, true, ["count"], (parentElement: any) => count)
+                        this.output(`Bcontent133o1`, parentElement, true, ["count"], (parentElement: any) => count)
                     ])
                 ]),
-                this.html(`f2f99f39`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`afbce0c4`, "label", parentElement, {}, (parentElement: any) => [
+                this.html(`Bcontent14`, "div", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bcontent141`, "label", parentElement, {}, (parentElement: any) => [
                         this.text('Your name:')
                     ]),
-                    this.html(`d492e6e2`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "name": { type: 'static', value: "name" }, "placeholder": { type: 'static', value: "Type a name..." } }, bind: { key: 'name' } })
+                    this.html(`Bcontent142`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "name": { type: 'static', value: "name" }, "placeholder": { type: 'static', value: "Type a name..." } }, bind: { key: 'name' } })
                 ]),
-                this.html(`6a16652b`, "button", parentElement,
+                this.html(`Bcontent15`, "button", parentElement,
                     { events: { click: [{"handler":"addPing","params":[]}] } },
                     (parentElement: any) => [
                     this.text('Add ping to list')
                     ]),
-                this.html(`304a3482`, "ul", parentElement, {}, (parentElement: any) => [
-                    this.reactive(`63183269`, "for", parentReactive, parentElement, ["count"], (parentReactive: any, parentElement: any) => {
+                this.html(`Bcontent16`, "ul", parentElement, {}, (parentElement: any) => [
+                    this.reactive(`Bcontent16l1`, "for", parentReactive, parentElement, ["count"], (parentReactive: any, parentElement: any) => {
                         return this.__for("increment", 0, count, (__loop: any) => {
                             let __forOutput = [];
                             for (let i = 0; i < count; i++) {
                                 __loop.setCurrentTimes(i);
                                 __forOutput.push(
-                                this.html(`ae68a1c5-${i}`, "li", parentElement, {}, (parentElement: any) => [
+                                this.html(`Bcontent16l11-${i}`, "li", parentElement, {}, (parentElement: any) => [
                                     this.text('Ping #'),
-                                    this.output(`7c7ba19b-${i}`, parentElement, true, ["i"], (parentElement: any) => i + 1)
+                                    this.output(`Bcontent16l11o1-${i}`, parentElement, true, ["i"], (parentElement: any) => i + 1)
                                 ])
                                 );
                             }
@@ -241,7 +241,7 @@ class IndexView extends View {
 }
 
 // Export factory function
-export function WebModulesPingIndex(__data__: IndexProps = {}, systemData: any = {}): IndexView {
+export function WebModulesPingIndex(__data__ = {}, systemData = {}): IndexView {
     return new IndexView(__data__, systemData);
 }
 export default WebModulesPingIndex;

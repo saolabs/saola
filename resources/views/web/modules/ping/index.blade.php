@@ -5,28 +5,28 @@
 @useState($pings, [])
 @extends($__layout__ . "public")
     @block('content')
-        <section @class([$__VIEW_ID__ . '-b4052a35', "ping", "active"=> $count !== 0])>
-            <h1 @class([$__VIEW_ID__ . '-ba3bf830'])>Ping Module — Hydration Test</h1>
-            <p @class([$__VIEW_ID__ . '-9f45c023'])>Hello, @startMarker('output', '6e45b3ed'){{ $name }}@endMarker('output', '6e45b3ed')! 👋</p>
+        <section @class([$__VIEW_ID__ . '-Bcontent1', 'ping', 'active'=> $count !== 0])>
+            <h1 @class([$__VIEW_ID__ . '-Bcontent11'])>Ping Module — Hydration Test</h1>
+            <p @class([$__VIEW_ID__ . '-Bcontent12'])>Hello, @startMarker('output', 'Bcontent12o1'){{ $name }}@endMarker('output', 'Bcontent12o1')! 👋</p>
 
-            <div @class([$__VIEW_ID__ . '-a1ce32e6'])>
-                <button @class([$__VIEW_ID__ . '-7d44863d'])>Ping (+1)</button>
-                <button @class([$__VIEW_ID__ . '-5328c8d9'])>Reset</button>
-                <span @class([$__VIEW_ID__ . '-245b439b'])>Count: @startMarker('output', '3aa7ff3e'){{ $count }}@endMarker('output', '3aa7ff3e')</span>
+            <div @class([$__VIEW_ID__ . '-Bcontent13'])>
+                <button @class([$__VIEW_ID__ . '-Bcontent131'])>Ping (+1)</button>
+                <button @class([$__VIEW_ID__ . '-Bcontent132'])>Reset</button>
+                <span @class([$__VIEW_ID__ . '-Bcontent133'])>Count: @startMarker('output', 'Bcontent133o1'){{ $count }}@endMarker('output', 'Bcontent133o1')</span>
             </div>
 
-            <div @class([$__VIEW_ID__ . '-f2f99f39'])>
-                <label @class([$__VIEW_ID__ . '-afbce0c4'])>Your name:</label>
-                <input @class([$__VIEW_ID__ . '-d492e6e2']) @attr(['type' => 'text', 'name' => 'name', 'placeholder' => 'Type a name...']) @bind($name) />
+            <div @class([$__VIEW_ID__ . '-Bcontent14'])>
+                <label @class([$__VIEW_ID__ . '-Bcontent141'])>Your name:</label>
+                <input @class([$__VIEW_ID__ . '-Bcontent142']) @attr(['type' => 'text', 'name' => 'name', 'placeholder' => 'Type a name...']) @bind($name) />
             </div>
 
-            <button @class([$__VIEW_ID__ . '-6a16652b'])>Add ping to list</button>
-            <ul @class([$__VIEW_ID__ . '-304a3482'])>
-                @startMarker('reactive', '63183269', ['stateKey' => ['count'], 'type' => 'for'])
+            <button @class([$__VIEW_ID__ . '-Bcontent15'])>Add ping to list</button>
+            <ul @class([$__VIEW_ID__ . '-Bcontent16'])>
+                @startMarker('reactive', 'Bcontent16l1', ['stateKey' => ['count'], 'type' => 'for'])
                 @for($i = 0; $i < $count; $i++)
-                    <li @class([$__VIEW_ID__ . "-ae68a1c5-{$i}"])>Ping #@startMarker('output', "7c7ba19b-{$i}"){{ $i + 1 }}@endMarker('output', "7c7ba19b-{$i}")</li>
+                    <li @class([$__VIEW_ID__ . "-Bcontent16l11-{$i}"])>Ping #@startMarker('output', "Bcontent16l11o1-{$i}"){{ $i + 1 }}@endMarker('output', "Bcontent16l11o1-{$i}")</li>
                 @endfor
-                @endMarker('reactive', '63183269')
+                @endMarker('reactive', 'Bcontent16l1')
             </ul>
         </section>
     @endblock

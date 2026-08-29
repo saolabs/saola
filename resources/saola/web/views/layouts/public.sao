@@ -13,7 +13,6 @@
                         <div class="site-header-collapse">
                             <nav class="site-nav" aria-label="Điều hướng chính">
                                 <a href="/docs">Tài liệu</a>
-                                <a href="/components">Component</a>
                                 <a href="/demo">Demo</a>
                                 <a href="/about">Dự án</a>
                             </nav>
@@ -26,7 +25,6 @@
                             <summary aria-label="Mở menu">☰</summary>
                             <nav aria-label="Điều hướng di động">
                                 <a href="/docs">Tài liệu</a>
-                                <a href="/components">Thư viện component</a>
                                 <a href="/demo">Interactive demo</a>
                                 <a href="/todo-list">Todo workspace</a>
                                 <a href="/roster">Roster sync</a>
@@ -48,7 +46,7 @@
                         <span class="site-logo-mark" aria-hidden="true"><img src="/static/saola/brand/saola-mark.svg" alt=""></span>
                         <span><span class="logo-saola">Sao</span><span class="logo-labs">Labs</span></span>
                     </a>
-                    <p>Một nguồn giao diện cho Blade SSR và JavaScript SPA. Được thiết kế quanh Laravel, không đứng bên cạnh Laravel.</p>
+                    <p>Kiến trúc multi-context modular trên Laravel: module tự khai báo route, context tách middleware và bundle, view sinh cả Blade lẫn JavaScript.</p>
                 </div>
                 <div class="footer-map">
                     <div><span>TÀI LIỆU</span><a href="/docs">Mục lục</a><a href="/docs/getting-started">Bắt đầu</a><a href="/docs/directives">Directive</a><a href="/docs/status">Giới hạn đã biết</a></div>

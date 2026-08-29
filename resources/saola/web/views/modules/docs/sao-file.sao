@@ -19,7 +19,7 @@
                 <article>
                     <span>01 / DECLARATIONS</span>
                     <strong>Đầu file</strong>
-                    <p><code class="directive-token">states</code> <code class="directive-token">props</code> <code class="directive-token">const</code> <code class="directive-token">let</code> <code class="directive-token">vars</code> <code class="directive-token">import</code> <code class="directive-token">await</code> — giữ nguyên thứ tự khai báo.</p>
+                    <p><code class="directive-token">import</code>&nbsp; <code class="directive-token">vars</code>&nbsp; <code class="directive-token">props</code>&nbsp; <code class="directive-token">states</code>&nbsp; <code class="directive-token">const</code>&nbsp; <code class="directive-token">let</code>&nbsp; <code class="directive-token">await</code> — giữ nguyên thứ tự khai báo.</p>
                 </article>
                 <article>
                     <span>02 / TEMPLATE</span>

@@ -6,7 +6,7 @@
 })
 
 <template>
-    <article @class(['feature-card', 'feature-card--pink': tone === 'pink', 'feature-card--cyan': tone === 'cyan', 'feature-card--yellow': tone === 'yellow'])>
+    <article @class({'feature-card', 'feature-card--pink': tone === 'pink', 'feature-card--cyan': tone === 'cyan', 'feature-card--yellow': tone === 'yellow'})>
         <header>
             <span>{{ number }}</span>
             <h3>{{ title }}</h3>

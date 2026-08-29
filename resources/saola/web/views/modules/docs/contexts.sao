@@ -1,3 +1,4 @@
+@import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
     @block('doc')
@@ -22,10 +23,15 @@
                 <div><div class="dt-key"><code>mobile</code></div><span>Context thứ tư cho webview/PWA, cùng cơ chế</span><b>tuỳ cấu hình</b></div>
             </div>
             <p class="ov-sub">Đăng ký context</p>
-            <div class="code-window">
-                <div class="window-bar"><span>PHP</span><b>app/Providers/ModuleServiceProvider.php</b></div>
-                <pre><code><span class="code-line">System::context('admin', [</span><span class="code-line code-indent-1">'prefix' =&gt; 'admin',</span><span class="code-line code-indent-1">'middleware' =&gt; ['web', 'auth', 'permission:admin'],</span><span class="code-line code-indent-1">'permission' =&gt; ['admin'],</span><span class="code-line">]);</span></code></pre>
-            </div>
+            <code-window label="PHP" title="app/Providers/ModuleServiceProvider.php" lang="php">
+@verbatim
+System::context('admin', [
+    'prefix' => 'admin',
+    'middleware' => ['web', 'auth', 'permission:admin'],
+    'permission' => ['admin'],
+]);
+@endverbatim
+            </code-window>
             <div class="ov-note">
                 Context không chỉ là namespace: <code>ViewContextService</code> giữ registry theo request. Worker sống lâu (Octane) không làm rò state của request trước sang request sau.
             </div>
@@ -47,10 +53,18 @@
                     <p>Route đăng ký trong <code>routes()</code> của module, không dồn vào <code>routes/web.php</code>.</p>
                 </div>
             </div>
-            <div class="code-window">
-                <div class="window-bar"><span>PHP</span><b>app/Modules/Roster/ModuleServiceProvider.php</b></div>
-                <pre><code><span class="code-line">System::context('api')-&gt;module('roster', ['prefix' =&gt; '/roster', 'priority' =&gt; 5])</span><span class="code-line code-indent-1">-&gt;controller(RosterController::class)</span><span class="code-line code-indent-1">-&gt;group(function ($module) {</span><span class="code-line code-indent-2">$module-&gt;get('/', 'index')-&gt;name('index');</span><span class="code-line code-indent-2">$module-&gt;post('/', 'store')-&gt;name('store');</span><span class="code-line code-indent-2">$module-&gt;put('/{uuid}', 'update')-&gt;name('update');</span><span class="code-line code-indent-2">$module-&gt;delete('/{uuid}', 'destroy')-&gt;name('destroy');</span><span class="code-line code-indent-1">});</span></code></pre>
-            </div>
+            <code-window label="PHP" title="app/Modules/Roster/ModuleServiceProvider.php" lang="php">
+@verbatim
+System::context('api')->module('roster', ['prefix' => '/roster', 'priority' => 5])
+    ->controller(RosterController::class)
+    ->group(function ($module) {
+        $module->get('/', 'index')->name('index');
+        $module->post('/', 'store')->name('store');
+        $module->put('/{uuid}', 'update')->name('update');
+        $module->delete('/{uuid}', 'destroy')->name('destroy');
+    });
+@endverbatim
+            </code-window>
 
             <p class="kicker"><span>CONTROLLER</span> Ba base, một hình dạng response</p>
             <h2>Controller biết mình đang ở context nào.</h2>
@@ -60,10 +74,18 @@
                 <div><div class="dt-key"><code>ApiController</code></div><span>Bộ <code>jsonSuccess/jsonError/jsonCreated/jsonNotFound/jsonConflict/jsonValidationError</code></span><b>api</b></div>
             </div>
             <p class="ov-sub">Hình dạng response API</p>
-            <div class="code-window">
-                <div class="window-bar"><span>JSON</span><b>ApiResponse</b></div>
-                <pre><code><span class="code-line">{</span><span class="code-line code-indent-1">"success": true,</span><span class="code-line code-indent-1">"statusCode": 200,</span><span class="code-line code-indent-1">"statusText": "ok",</span><span class="code-line code-indent-1">"message": "Success",</span><span class="code-line code-indent-1">"errors": [],</span><span class="code-line code-indent-1">"data": {}</span><span class="code-line">}</span></code></pre>
-            </div>
+            <code-window label="JSON" title="ApiResponse" lang="json">
+@verbatim
+{
+    "success": true,
+    "statusCode": 200,
+    "statusText": "ok",
+    "message": "Success",
+    "errors": [],
+    "data": {}
+}
+@endverbatim
+            </code-window>
             <div class="ov-note">
                 Cùng một controller phục vụ được cả SSR lẫn SPA: <code>response()</code> nhìn header <code>X-Sao-Response</code> và <code>X-Saola-View-Revision</code> do <code>HttpService</code> tự gắn để quyết định trả HTML hay JSON payload cho view runtime.
             </div>

@@ -20,8 +20,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -35,6 +33,8 @@ export interface FlowstepProps {
     [key: string]: any;
 }
 
+
+
 class FlowstepViewController extends ViewController {
     constructor(view: View) {
         super(view, __VIEW_PATH__, __VIEW_TYPE__);
@@ -47,7 +47,7 @@ class FlowstepViewController extends ViewController {
 }
 
 class FlowstepView extends View {
-    constructor(__data__: FlowstepProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, FlowstepViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -128,15 +128,15 @@ class FlowstepView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             return this.wrapper((parentElement: any) => [
-            this.html(`8b0931c9`, "li", parentElement, {}, (parentElement: any) => [
-                this.html(`45171ab8`, "span", parentElement, {}, (parentElement: any) => [
-                    this.output(`f1b4ad5a`, parentElement, true, ["step"], (parentElement: any) => step)
+            this.html(`e1`, "li", parentElement, {}, (parentElement: any) => [
+                this.html(`e11`, "span", parentElement, {}, (parentElement: any) => [
+                    this.output(`e11o1`, parentElement, true, ["step"], (parentElement: any) => step)
                 ]),
-                this.html(`83b23b6f`, "div", parentElement, {}, (parentElement: any) => [
+                this.html(`e12`, "div", parentElement, {}, (parentElement: any) => [
                     ...this.__children(__ONE_CHILDREN_CONTENT__, parentElement)
                 ]),
-                this.html(`fc67aca8`, "code", parentElement, {}, (parentElement: any) => [
-                    this.output(`f25bfef9`, parentElement, true, ["cmd"], (parentElement: any) => cmd)
+                this.html(`e13`, "code", parentElement, {}, (parentElement: any) => [
+                    this.output(`e13o1`, parentElement, true, ["cmd"], (parentElement: any) => cmd)
                 ])
             ])
             ]);
@@ -147,7 +147,7 @@ class FlowstepView extends View {
 }
 
 // Export factory function
-export function WebModulesHomePartsFlowstep(__data__: FlowstepProps = {}, systemData: any = {}): FlowstepView {
+export function WebModulesHomePartsFlowstep(__data__ = {}, systemData = {}): FlowstepView {
     return new FlowstepView(__data__, systemData);
 }
 export default WebModulesHomePartsFlowstep;

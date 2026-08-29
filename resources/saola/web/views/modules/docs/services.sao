@@ -1,0 +1,75 @@
+@import('web.components.code-window')
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>06</span> BACKEND</p>
+                <h1>Service và tầng nghiệp vụ.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Controller chỉ nhận request và trả response. Toàn bộ quy tắc nghiệp vụ nằm ở Service, và Service không bao giờ chạm thẳng vào bảng — nó đi qua Repository.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>PHÂN TẦNG</span> Bốn lớp, mỗi lớp một việc</p>
+            <h2>Mỗi tầng chỉ biết tầng ngay dưới nó.</h2>
+            <p>Đường đi của một request luôn theo thứ tự này. Nhảy cóc một tầng là chỗ code bắt đầu rối: controller gọi thẳng model, hay service tự viết query.</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>Controller</code></div><span>Nhận request, gọi service, trả response. Không chứa quy tắc nghiệp vụ.</span><b>HTTP</b></div>
+                <div><div class="dt-key"><code>Service</code></div><span>Quy tắc nghiệp vụ, điều phối nhiều repository, phát sự kiện.</span><b>nghiệp vụ</b></div>
+                <div><div class="dt-key"><code>Repository</code></div><span>Mọi truy vấn dữ liệu. Nơi duy nhất biết tới model.</span><b>dữ liệu</b></div>
+                <div><div class="dt-key"><code>Model</code></div><span>Bảng, quan hệ, cast. Eloquent thuần cộng vài trait của core.</span><b>ORM</b></div>
+            </div>
+
+            <p class="kicker"><span>BINDING</span> Interface trước, cài đặt sau</p>
+            <h2>Module tự bind interface của mình.</h2>
+            <p>Controller nhận <code>UserServiceInterface</code> qua constructor, không nhận lớp cụ thể. Đổi cài đặt chỉ sửa một dòng ở provider, không đụng chỗ dùng.</p>
+            <code-window label="PHP" title="app/Modules/User/ModuleServiceProvider.php" lang="php">
+@verbatim
+public function register(): void
+{
+    $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+    $this->app->bind(UserServiceInterface::class, UserService::class);
+}
+@endverbatim
+            </code-window>
+
+            <p class="kicker"><span>SERVICE</span> Nơi nghiệp vụ sống</p>
+            <h2>Service nhận repository, không nhận model.</h2>
+            <code-window label="PHP" title="app/Modules/User/Services/UserService.php" lang="php">
+@verbatim
+class UserService extends Service implements UserServiceInterface
+{
+    public function __construct(private UserRepositoryInterface $repo) {}
+
+    public function create(array $data)
+    {
+        static::on('user.creating', function ($data) { return $data; });
+        $user = $this->repo->create($data);
+        static::trigger('user.created', $user);
+        return $user;
+    }
+}
+@endverbatim
+            </code-window>
+            <p><code>Saola\Core\Services\Service</code> mang sẵn ba trait: <code>EventMethods</code> cho <code>on()</code>/<code>trigger()</code>, <code>MagicMethods</code> cho truy cập động, và <code>SmartInit</code> để khởi tạo phụ thuộc mà không phải viết constructor dài.</p>
+            <div class="ov-note">
+                <code>static::on()</code> đăng ký hook theo TÊN sự kiện chứ không theo instance — module khác nghe được <code>user.created</code> mà không cần biết <code>UserService</code> tồn tại. Đây là đường ghép nối giữa các module.
+            </div>
+
+            <p class="ov-sub">Service có sẵn trong core</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>BaseService</code></div><span>Service kèm <code>CRUDMethods</code>, dùng khi module chỉ cần CRUD tiêu chuẩn.</span><b>core</b></div>
+                <div><div class="dt-key"><code>ModuleService</code></div><span>Đọc registry module: slug, prefix, quyền, tiêu đề hiển thị.</span><b>core</b></div>
+                <div><div class="dt-key"><code>ViewService</code></div><span>Phân giải đường dẫn view theo context đang phục vụ.</span><b>core</b></div>
+                <div><div class="dt-key"><code>ThemeService</code></div><span>Chọn theme và đường dẫn asset tương ứng.</span><b>core</b></div>
+            </div>
+
+            <p class="ov-note">
+                Service <strong>không</strong> trả về model thô cho tầng trên. Trả Mask hoặc mảng đã lọc — xem <a href="/docs/mask">Mask &amp; collection</a>.
+            </p>
+        </div>
+    @endblock
+</template>

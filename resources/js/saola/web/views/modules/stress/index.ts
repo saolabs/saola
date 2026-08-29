@@ -27,8 +27,6 @@ const __VIEW_CONFIG__ = {
     prerenderSections: []
 };
 
-
-
 /**
  * Props của view — sinh tự động từ @props/@vars, không sửa tay.
  * Optional hết vì khai báo nào cũng có default.
@@ -38,6 +36,8 @@ export interface IndexProps {
     __SSR_VIEW_ID__?: string;
     [key: string]: any;
 }
+
+
 
 class IndexViewController extends ViewController {
     constructor(view: View) {
@@ -51,7 +51,7 @@ class IndexViewController extends ViewController {
 }
 
 class IndexView extends View {
-    constructor(__data__: IndexProps = {}, systemData: any = {}) {
+    constructor(__data__: any = {}, systemData: any = {}) {
         super(__VIEW_PATH__, __VIEW_TYPE__, IndexViewController);
         const App: Application = app("App") as Application;
         const __STATE__ = this.__ctrl__.states;
@@ -219,7 +219,7 @@ class IndexView extends View {
             viewId: __VIEW_ID__,
             path: __VIEW_PATH__,
             scripts: [],
-            styles: [{"type":"code","scoped":true,"content":".stress { display: grid; gap: 16px; }\n    .stress__bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }\n    .stress__bar input { flex: 1 1 220px; }\n    .stress__banner { padding: 8px 12px; background: rgba(43, 80, 255, .08); }\n    .stress__list { display: grid; gap: 8px; }\n    .stress__row { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center;\n        border: 1px solid rgba(0, 0, 0, .12); padding: 6px; cursor: pointer; }\n    .stress__roles { display: flex; gap: 6px; flex-wrap: wrap; }\n    .stress__roles--empty { opacity: .45; font-size: 13px; }\n    .chip { padding: 2px 8px; border: 1px solid currentColor; font-size: 12px; }\n    .chip--tag { opacity: .7; }\n    .stress__del { border: 0; background: none; font-size: 20px; line-height: 1; cursor: pointer; }\n    .stress__tags { display: flex; gap: 6px; flex-wrap: wrap; }\n    .stress__foot { display: flex; justify-content: space-between; align-items: center; }\n\n    .stress__backdrop { position: fixed; inset: 0; display: grid; place-items: center;\n        background: rgba(0, 0, 0, .45); }\n    .stress__modal { background: #fff; padding: 24px; min-width: 280px; }\n\n    /* @transition('row') — enter/leave cho hàng danh sách */\n    .row-enter-active, .row-leave-active { transition: opacity .18s ease, transform .18s ease; }\n    .row-enter-from, .row-leave-to { opacity: 0; transform: translateY(-6px); }\n\n    /* @transition('fade') — modal */\n    .fade-enter-active, .fade-leave-active { transition: opacity .15s ease; }\n    .fade-enter-from, .fade-leave-to { opacity: 0; }"}],
+            styles: [{"type":"code","content":".stress.se4890c80 { display: grid; gap: 16px; }\n    .stress__bar.se4890c80 { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }\n    .stress__bar input.se4890c80 { flex: 1 1 220px; }\n    .stress__banner.se4890c80 { padding: 8px 12px; background: rgba(43, 80, 255, .08); }\n    .stress__list.se4890c80 { display: grid; gap: 8px; }\n    .stress__row.se4890c80 { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center;\n        border: 1px solid rgba(0, 0, 0, .12); padding: 6px; cursor: pointer; }\n    .stress__roles.se4890c80 { display: flex; gap: 6px; flex-wrap: wrap; }\n    .stress__roles--empty.se4890c80 { opacity: .45; font-size: 13px; }\n    .chip.se4890c80 { padding: 2px 8px; border: 1px solid currentColor; font-size: 12px; }\n    .chip--tag.se4890c80 { opacity: .7; }\n    .stress__del.se4890c80 { border: 0; background: none; font-size: 20px; line-height: 1; cursor: pointer; }\n    .stress__tags.se4890c80 { display: flex; gap: 6px; flex-wrap: wrap; }\n    .stress__foot.se4890c80 { display: flex; justify-content: space-between; align-items: center; }\n\n    .stress__backdrop.se4890c80 { position: fixed; inset: 0; display: grid; place-items: center;\n        background: rgba(0, 0, 0, .45); }\n    .stress__modal.se4890c80 { background: #fff; padding: 24px; min-width: 280px; }\n\n    /* @transition('row') — enter/leave cho hàng danh sách */\n    .row-enter-active.se4890c80, .row-leave-active.se4890c80 { transition: opacity .18s ease, transform .18s ease; }\n    .row-enter-from.se4890c80, .row-leave-to.se4890c80 { opacity: 0; transform: translateY(-6px); }\n\n    /* @transition('fade') — modal */\n    .fade-enter-active.se4890c80, .fade-leave-active.se4890c80 { transition: opacity .15s ease; }\n    .fade-enter-from.se4890c80, .fade-leave-to.se4890c80 { opacity: 0; }"}],
             resources: [],
             commitConstructorData: function(this: any) {
                 // Then update states from data
@@ -261,97 +261,109 @@ class IndexView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-workspace', 'workspace', (parentElement: any) => [
-            this.html(`33ba6fc5`, "header", parentElement,
-                { classes: [{ type: 'static', value: "workspace-topbar" }] },
+            this.html(`Bworkspace1`, "header", parentElement,
+                { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "workspace-topbar" }] },
                 (parentElement: any) => [
-                this.html(`74083b07`, "div", parentElement, {}, (parentElement: any) => [
-                    this.html(`6066db4b`, "p", parentElement,
-                        { classes: [{ type: 'static', value: "eyebrow" }] },
+                this.html(`Bworkspace11`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "se4890c80" }] },
+                    (parentElement: any) => [
+                    this.html(`Bworkspace111`, "p", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "eyebrow" }] },
                         (parentElement: any) => [
-                        this.html(`6cf41081`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bworkspace1111`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "se4890c80" }] },
+                            (parentElement: any) => [
                             this.text('04')
-                        ]),
+                            ]),
                         this.text(' Stress harness')
                         ]),
-                    this.html(`0ddacfc5`, "h1", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bworkspace112`, "h1", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }] },
+                        (parentElement: any) => [
                         this.text('Reactive · Hydration · Loop · Cleanup')
-                    ])
-                ]),
-                this.html(`8d6a301b`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "completion-ring" }] },
+                        ])
+                    ]),
+                this.html(`Bworkspace12`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "completion-ring" }] },
                     (parentElement: any) => [
-                    this.html(`07fe4995`, "strong", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bworkspace121`, "strong", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }] },
+                        (parentElement: any) => [
                         this.text(String(activeCount ?? '')),
                         this.text('/'),
-                        this.output(`54916756`, parentElement, true, ["users"], (parentElement: any) => App.Helper.count(users))
-                    ]),
-                    this.html(`55822db1`, "span", parentElement, {}, (parentElement: any) => [
+                        this.output(`Bworkspace121o1`, parentElement, true, ["users"], (parentElement: any) => App.Helper.count(users))
+                        ]),
+                    this.html(`Bworkspace122`, "span", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }] },
+                        (parentElement: any) => [
                         this.text('active')
-                    ])
+                        ])
                     ])
                 ]),
-            this.html(`2532706c`, "section", parentElement,
-                { classes: [{ type: 'static', value: "stress" }] },
+            this.html(`Bworkspace2`, "section", parentElement,
+                { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress" }] },
                 (parentElement: any) => [
-                this.html(`9a7a2c94`, "form", parentElement,
-                    { classes: [{ type: 'static', value: "stress__bar" }], events: { submit: [{"handler":"applyQuery","params":[]}] }, eventModifiers: { submit: ["prevent"] } },
+                this.html(`Bworkspace21`, "form", parentElement,
+                    { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__bar" }], events: { submit: [{"handler":"applyQuery","params":[]}] }, eventModifiers: { submit: ["prevent"] } },
                     (parentElement: any) => [
-                    this.html(`f9037cca`, "input", parentElement, { attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Lọc theo tên…" } }, bind: { key: 'query' } }),
-                    this.html(`14a49981`, "button", parentElement,
-                        { attrs: { "type": { type: 'static', value: "submit" } } },
+                    this.html(`Bworkspace211`, "input", parentElement, { classes: [{ type: 'static', value: "se4890c80" }], attrs: { "type": { type: 'static', value: "text" }, "placeholder": { type: 'static', value: "Lọc theo tên…" } }, bind: { key: 'query' } }),
+                    this.html(`Bworkspace212`, "button", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }], attrs: { "type": { type: 'static', value: "submit" } } },
                         (parentElement: any) => [
                         this.text('Lọc')
                         ]),
-                    this.html(`c0852b38`, "button", parentElement,
-                        { attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"refreshFromServer","params":[]}] } },
+                    this.html(`Bworkspace213`, "button", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"refreshFromServer","params":[]}] } },
                         (parentElement: any) => [
                         this.text('Refresh từ server '),
-                        this.html(`06cc3708`, "span", parentElement, {}, (parentElement: any) => [
+                        this.html(`Bworkspace2131`, "span", parentElement,
+                            { classes: [{ type: 'static', value: "se4890c80" }] },
+                            (parentElement: any) => [
                             this.text('('),
-                            this.output(`a147163d`, parentElement, true, ["refreshCount"], (parentElement: any) => refreshCount),
+                            this.output(`Bworkspace2131o1`, parentElement, true, ["refreshCount"], (parentElement: any) => refreshCount),
                             this.text(')')
-                        ])
+                            ])
                         ]),
-                    this.html(`c58ff588`, "button", parentElement,
-                        { attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"showBannerOnce","params":[]}] }, eventModifiers: { click: ["once"] } },
+                    this.html(`Bworkspace214`, "button", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"showBannerOnce","params":[]}] }, eventModifiers: { click: ["once"] } },
                         (parentElement: any) => [
                         this.text('Chỉ chạy 1 lần')
                         ])
                     ]),
-                this.reactive(`51d5eb06`, "if", parentReactive, parentElement, ["banner"], (parentReactive: any, parentElement: any) => {
+                this.reactive(`Bworkspace2r1`, "if", parentReactive, parentElement, ["banner"], (parentReactive: any, parentElement: any) => {
                     const reactiveContents = [];
                     if (banner !== '') {
                         reactiveContents.push(
-                        this.html(`8392c73c`, "p", parentElement,
-                            { classes: [{ type: 'static', value: "stress__banner" }] },
+                        this.html(`Bworkspace2r1k11`, "p", parentElement,
+                            { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__banner" }] },
                             (parentElement: any) => [
-                            this.output(`736b3ca4`, parentElement, true, ["banner"], (parentElement: any) => banner)
+                            this.output(`Bworkspace2r1k11o1`, parentElement, true, ["banner"], (parentElement: any) => banner)
                             ])
                         );
                     }
                     return reactiveContents;
                 }),
-                this.html(`aa5f781d`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "stress__list" }] },
+                this.html(`Bworkspace22`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__list" }] },
                     (parentElement: any) => [
-                    this.reactive(`15e184f6`, "foreach", parentReactive, parentElement, ["users"], (parentReactive: any, parentElement: any) => {
+                    this.reactive(`Bworkspace22l1`, "foreach", parentReactive, parentElement, ["users"], (parentReactive: any, parentElement: any) => {
                         return this.__foreach(users, (user: any, __loopKey: any, __loopIndex: any, __loop: any) => [
-                            this.html(`c32f6f5f-${user['id']}`, "article", parentElement,
-                                { classes: [{ type: 'static', value: "stress__row" }], events: { click: [{"handler":"selectUser","params":[user['id']]}] }, transition: { name: 'row' } },
+                            this.html(`Bworkspace22l11-${user['id']}`, "article", parentElement,
+                                { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__row" }], events: { click: [{"handler":"selectUser","params":[user['id']]}] }, transition: { name: 'row' } },
                                 (parentElement: any) => [
-                                this.include(`b74c6015-${user['id']}`, 'web.modules.stress.usercard', parentElement, ["selectedId"], (parentElement: any) => ({"user": user, "highlight": selectedId === user['id']})),
-                                this.reactive(`8d968fa6-${user['id']}`, "if", parentReactive, parentElement, [], (parentReactive: any, parentElement: any) => {
+                                this.include(`Bworkspace22l11c1-${user['id']}`, 'web.modules.stress.usercard', parentElement, ["selectedId"], (parentElement: any) => ({"user": user, "highlight": selectedId === user['id']})),
+                                this.reactive(`Bworkspace22l11r1-${user['id']}`, "if", parentReactive, parentElement, [], (parentReactive: any, parentElement: any) => {
                                     const reactiveContents = [];
                                     if (App.Helper.count(user['roles']) > 0) {
                                         reactiveContents.push(
-                                        this.html(`e9f93fe3-${user['id']}`, "div", parentElement,
-                                            { classes: [{ type: 'static', value: "stress__roles" }] },
+                                        this.html(`Bworkspace22l11r1k11-${user['id']}`, "div", parentElement,
+                                            { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__roles" }] },
                                             (parentElement: any) => [
                                             ...this.__foreach(user['roles'], (role: any, __loopKey: any, __loopIndex: any, __loop: any) => [
-                                                    this.html(`673116ff-${user['id']}-${__loopIndex}`, "span", parentElement,
-                                                        { classes: [{ type: 'static', value: "chip" }] },
+                                                    this.html(`Bworkspace22l11r1k11l11-${user['id']}-${__loopIndex}`, "span", parentElement,
+                                                        { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "chip" }] },
                                                         (parentElement: any) => [
-                                                        this.output(`9c9f7633-${user['id']}-${__loopIndex}`, parentElement, true, [], (parentElement: any) => role['name'])
+                                                        this.output(`Bworkspace22l11r1k11l11o1-${user['id']}-${__loopIndex}`, parentElement, true, [], (parentElement: any) => role['name'])
                                                         ])
                                             ])
                                             ])
@@ -359,8 +371,8 @@ class IndexView extends View {
                                     }
                                     else {
                                         reactiveContents.push(
-                                        this.html(`0e517e1d-${user['id']}`, "div", parentElement,
-                                            { classes: [{ type: 'static', value: "stress__roles" }, { type: 'static', value: "stress__roles--empty" }] },
+                                        this.html(`Bworkspace22l11r1k21-${user['id']}`, "div", parentElement,
+                                            { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__roles" }, { type: 'static', value: "stress__roles--empty" }] },
                                             (parentElement: any) => [
                                             this.text('chưa có vai trò')
                                             ])
@@ -368,8 +380,8 @@ class IndexView extends View {
                                     }
                                     return reactiveContents;
                                 }),
-                                this.html(`d5531dfa-${user['id']}`, "button", parentElement,
-                                    { classes: [{ type: 'static', value: "stress__del" }], events: { click: [{"handler":"removeUser","params":[user['id']]}] }, eventModifiers: { click: ["stop"] } },
+                                this.html(`Bworkspace22l111-${user['id']}`, "button", parentElement,
+                                    { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__del" }], events: { click: [{"handler":"removeUser","params":[user['id']]}] }, eventModifiers: { click: ["stop"] } },
                                     (parentElement: any) => [
                                     this.text('×')
                                     ])
@@ -377,51 +389,57 @@ class IndexView extends View {
                         ], (user: any) => user['id'])
                     })
                     ]),
-                this.html(`a734d4f3`, "div", parentElement,
-                    { classes: [{ type: 'static', value: "stress__tags" }] },
+                this.html(`Bworkspace23`, "div", parentElement,
+                    { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__tags" }] },
                     (parentElement: any) => [
-                    this.reactive(`a01b0e23`, "foreach", parentReactive, parentElement, ["tags"], (parentReactive: any, parentElement: any) => {
+                    this.reactive(`Bworkspace23l1`, "foreach", parentReactive, parentElement, ["tags"], (parentReactive: any, parentElement: any) => {
                         return this.__foreach(tags, (tag: any, __loopKey: any, __loopIndex: any, __loop: any) => [
-                            this.html(`f57689da-${__loopIndex}`, "span", parentElement,
-                                { classes: [{ type: 'static', value: "chip" }, { type: 'static', value: "chip--tag" }] },
+                            this.html(`Bworkspace23l11-${__loopIndex}`, "span", parentElement,
+                                { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "chip" }, { type: 'static', value: "chip--tag" }] },
                                 (parentElement: any) => [
-                                this.output(`0fa7832f-${__loopIndex}`, parentElement, true, [], (parentElement: any) => tag)
+                                this.output(`Bworkspace23l11o1-${__loopIndex}`, parentElement, true, [], (parentElement: any) => tag)
                                 ])
                         ])
                     })
                     ]),
-                this.html(`f34c97bb`, "footer", parentElement,
-                    { classes: [{ type: 'static', value: "stress__foot" }] },
+                this.html(`Bworkspace24`, "footer", parentElement,
+                    { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__foot" }] },
                     (parentElement: any) => [
-                    this.html(`3c60daf7`, "span", parentElement, {}, (parentElement: any) => [
+                    this.html(`Bworkspace241`, "span", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }] },
+                        (parentElement: any) => [
                         this.text(String(totalRoles ?? '')),
                         this.text(' vai trò')
-                    ]),
-                    this.html(`2ff70b01`, "button", parentElement,
-                        { attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"openModal","params":[]}] } },
+                        ]),
+                    this.html(`Bworkspace242`, "button", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"openModal","params":[]}] } },
                         (parentElement: any) => [
                         this.text('Mở modal')
                         ])
                     ])
                 ]),
-            this.reactive(`db01f7b0`, "if", parentReactive, parentElement, ["modalOpen"], (parentReactive: any, parentElement: any) => {
+            this.reactive(`Bworkspacer1`, "if", parentReactive, parentElement, ["modalOpen"], (parentReactive: any, parentElement: any) => {
                 const reactiveContents = [];
                 if (modalOpen) {
                     reactiveContents.push(
-                    this.html(`ad12d7d5`, "div", parentElement,
-                        { classes: [{ type: 'static', value: "stress__backdrop" }], events: { click: [{"handler":"closeModal","params":[]}] }, eventModifiers: { click: ["self"] }, transition: { name: 'fade' } },
+                    this.html(`Bworkspacer1k11`, "div", parentElement,
+                        { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__backdrop" }], events: { click: [{"handler":"closeModal","params":[]}] }, eventModifiers: { click: ["self"] }, transition: { name: 'fade' } },
                         (parentElement: any) => [
-                        this.html(`642d2222`, "div", parentElement,
-                            { classes: [{ type: 'static', value: "stress__modal" }] },
+                        this.html(`Bworkspacer1k111`, "div", parentElement,
+                            { classes: [{ type: 'static', value: "se4890c80" }, { type: 'static', value: "stress__modal" }] },
                             (parentElement: any) => [
-                            this.html(`794917d8`, "h2", parentElement, {}, (parentElement: any) => [
+                            this.html(`Bworkspacer1k1111`, "h2", parentElement,
+                                { classes: [{ type: 'static', value: "se4890c80" }] },
+                                (parentElement: any) => [
                                 this.text('Modal')
-                            ]),
-                            this.html(`7c01517b`, "p", parentElement, {}, (parentElement: any) => [
+                                ]),
+                            this.html(`Bworkspacer1k1112`, "p", parentElement,
+                                { classes: [{ type: 'static', value: "se4890c80" }] },
+                                (parentElement: any) => [
                                 this.text('Bấm ra nền để đóng. Bấm trong hộp thì không.')
-                            ]),
-                            this.html(`d97a0d93`, "button", parentElement,
-                                { attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"closeModal","params":[]}] } },
+                                ]),
+                            this.html(`Bworkspacer1k1113`, "button", parentElement,
+                                { classes: [{ type: 'static', value: "se4890c80" }], attrs: { "type": { type: 'static', value: "button" } }, events: { click: [{"handler":"closeModal","params":[]}] } },
                                 (parentElement: any) => [
                                 this.text('Đóng')
                                 ])
@@ -441,7 +459,7 @@ class IndexView extends View {
 }
 
 // Export factory function
-export function WebModulesStressIndex(__data__: IndexProps = {}, systemData: any = {}): IndexView {
+export function WebModulesStressIndex(__data__ = {}, systemData = {}): IndexView {
     return new IndexView(__data__, systemData);
 }
 export default WebModulesStressIndex;

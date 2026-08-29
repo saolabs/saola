@@ -10,9 +10,9 @@
         </section>
         <section class="legal-layout">
             <aside>
-                <button @class(['active': activeSection === 'collection']) @click(setActiveSection('collection'))>01 Information</button>
-                <button @class(['active': activeSection === 'use']) @click(setActiveSection('use'))>02 How we use it</button>
-                <button @class(['active': activeSection === 'control']) @click(setActiveSection('control'))>03 Your control</button>
+                <button @class({'active': activeSection === 'collection'}) @click(setActiveSection('collection'))>01 Information</button>
+                <button @class({'active': activeSection === 'use'}) @click(setActiveSection('use'))>02 How we use it</button>
+                <button @class({'active': activeSection === 'control'}) @click(setActiveSection('control'))>03 Your control</button>
             </aside>
             <div class="legal-copy">
                 @if(activeSection === 'collection')

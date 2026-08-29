@@ -115,371 +115,371 @@ class ReactivityView extends View {
             let parentElement = this.parentElement;
             let parentReactive = null;
             this.block('block-doc', 'doc', (parentElement) => [
-            this.html(`ff96f7a7`, "header", parentElement,
+            this.html(`Bdoc1`, "header", parentElement,
                 { classes: [{ type: 'static', value: "page-hero" }] },
                 (parentElement) => [
-                this.html(`15b892a7`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`ab74559e`, "p", parentElement,
+                this.html(`Bdoc11`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc111`, "p", parentElement,
                         { classes: [{ type: 'static', value: "kicker" }] },
                         (parentElement) => [
-                        this.html(`943e8228`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc1111`, "span", parentElement, {}, (parentElement) => [
                             this.text('05')
                         ]),
                         this.text(' VIẾT VIEW')
                         ]),
-                    this.html(`9abe25a3`, "h1", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc112`, "h1", parentElement, {}, (parentElement) => [
                         this.text('State và element API.')
                     ])
                 ]),
-                this.html(`f750a15d`, "div", parentElement,
+                this.html(`Bdoc12`, "div", parentElement,
                     { classes: [{ type: 'static', value: "page-hero-aside" }] },
                     (parentElement) => [
-                    this.html(`2a968179`, "p", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc121`, "p", parentElement, {}, (parentElement) => [
                         this.text('State sống trong closure chứ không trong proxy, và mọi phụ thuộc do compiler tính sẵn. Output biên dịch chỉ gọi một tập method cố định trên ViewController.')
                     ])
                     ])
                 ]),
-            this.html(`e5195f55`, "div", parentElement,
+            this.html(`Bdoc2`, "div", parentElement,
                 { classes: [{ type: 'static', value: "doc-body" }] },
                 (parentElement) => [
-                this.html(`a805c5cb`, "p", parentElement,
+                this.html(`Bdoc21`, "p", parentElement,
                     { classes: [{ type: 'static', value: "kicker" }] },
                     (parentElement) => [
-                    this.html(`a3f20685`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc211`, "span", parentElement, {}, (parentElement) => [
                         this.text('REACTIVITY')
                     ]),
                     this.text(' State và cập nhật')
                     ]),
-                this.html(`c048d2ef`, "h2", parentElement, {}, (parentElement) => [
+                this.html(`Bdoc22`, "h2", parentElement, {}, (parentElement) => [
                     this.text('State sống trong closure, không trong proxy.')
                 ]),
-                this.html(`1c642396`, "p", parentElement, {}, (parentElement) => [
+                this.html(`Bdoc23`, "p", parentElement, {}, (parentElement) => [
                     this.text('Mỗi state được đăng ký vào StateManager và đồng thời là một biến trong closure của constructor. Render factory nằm cùng scope nên đọc thẳng biến — không có dependency tracking lúc chạy, mọi phụ thuộc do compiler tính sẵn thành '),
-                    this.html(`34be1ee8`, "code", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc231`, "code", parentElement, {}, (parentElement) => [
                         this.text('stateKeys')
                     ]),
                     this.text('.')
                 ]),
-                this.html(`753dcd15`, "div", parentElement,
+                this.html(`Bdoc24`, "div", parentElement,
                     { classes: [{ type: 'static', value: "ov-grid" }] },
                     (parentElement) => [
-                    this.html(`9de53a5a`, "div", parentElement,
+                    this.html(`Bdoc241`, "div", parentElement,
                         { classes: [{ type: 'static', value: "ov-card" }] },
                         (parentElement) => [
-                        this.html(`81bea50b`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2411`, "span", parentElement, {}, (parentElement) => [
                             this.text('Setter')
                         ]),
-                        this.html(`32679b94`, "h3", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2412`, "h3", parentElement, {}, (parentElement) => [
                             this.text('Hai đường ghi')
                         ]),
-                        this.html(`48280560`, "p", parentElement, {}, (parentElement) => [
-                            this.html(`1dc81855`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2413`, "p", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc24131`, "code", parentElement, {}, (parentElement) => [
                                 this.text('setX(v)')
                             ]),
                             this.text(' là API cho người dùng, luôn hoạt động. '),
-                            this.html(`abb2beca`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc24132`, "code", parentElement, {}, (parentElement) => [
                                 this.text('update$x(v)')
                             ]),
                             this.text(' chỉ chạy trước khi khoá, dùng để nạp giá trị khởi tạo mà không kích hoạt render.')
                         ])
                         ]),
-                    this.html(`c8e71cd3`, "div", parentElement,
+                    this.html(`Bdoc242`, "div", parentElement,
                         { classes: [{ type: 'static', value: "ov-card" }] },
                         (parentElement) => [
-                        this.html(`9c312e37`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2421`, "span", parentElement, {}, (parentElement) => [
                             this.text('Batching')
                         ]),
-                        this.html(`cbe9665d`, "h3", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2422`, "h3", parentElement, {}, (parentElement) => [
                             this.text('Gộp theo khung hình')
                         ]),
-                        this.html(`466d0bc6`, "p", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2423`, "p", parentElement, {}, (parentElement) => [
                             this.text('Nhiều lần set trong cùng một tick gộp lại thành một lượt flush theo '),
-                            this.html(`a9e93036`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc24231`, "code", parentElement, {}, (parentElement) => [
                                 this.text('requestAnimationFrame')
                             ]),
                             this.text('. Mỗi vùng marker chỉ render lại một lần.')
                         ])
                         ]),
-                    this.html(`e88f763e`, "div", parentElement,
+                    this.html(`Bdoc243`, "div", parentElement,
                         { classes: [{ type: 'static', value: "ov-card" }] },
                         (parentElement) => [
-                        this.html(`d7f6d064`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2431`, "span", parentElement, {}, (parentElement) => [
                             this.text('Same-ref')
                         ]),
-                        this.html(`20f8c5fb`, "h3", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2432`, "h3", parentElement, {}, (parentElement) => [
                             this.text('Sửa tại chỗ vẫn nhận')
                         ]),
-                        this.html(`a7ba8f53`, "p", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2433`, "p", parentElement, {}, (parentElement) => [
                             this.text('Gọi setter với cùng reference thì StateManager đối chiếu nội dung độ sâu một với bản chụp trước đó. Cách viết '),
-                            this.html(`fc3573c3`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc24331`, "code", parentElement, {}, (parentElement) => [
                                 this.text('list.splice(i,1); setList(list)')
                             ]),
                             this.text(' vẫn cập nhật.')
                         ])
                         ]),
-                    this.html(`094adcdf`, "div", parentElement,
+                    this.html(`Bdoc244`, "div", parentElement,
                         { classes: [{ type: 'static', value: "ov-card" }] },
                         (parentElement) => [
-                        this.html(`12547677`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2441`, "span", parentElement, {}, (parentElement) => [
                             this.text('Computed')
                         ]),
-                        this.html(`c438b827`, "h3", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2442`, "h3", parentElement, {}, (parentElement) => [
                             this.text('Memo và lười')
                         ]),
-                        this.html(`87dac5f0`, "p", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2443`, "p", parentElement, {}, (parentElement) => [
                             this.text('Dep đổi thì đánh dấu bẩn, tính thật lúc đọc. Slot computed nằm chung bảng với state thường nên '),
-                            this.html(`db6edecc`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc24431`, "code", parentElement, {}, (parentElement) => [
                                 this.text('subscribe')
                             ]),
                             this.text(' và '),
-                            this.html(`44746ce1`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc24432`, "code", parentElement, {}, (parentElement) => [
                                 this.text('stateKeys')
                             ]),
                             this.text(' dùng y hệt.')
                         ])
                         ])
                     ]),
-                this.html(`dae15694`, "div", parentElement,
+                this.html(`Bdoc25`, "div", parentElement,
                     { classes: [{ type: 'static', value: "ov-note" }] },
                     (parentElement) => [
-                    this.html(`38d317d8`, "strong", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc251`, "strong", parentElement, {}, (parentElement) => [
                         this.text('Không phải deep reactivity.')
                     ]),
                     this.text(' Đây là lựa chọn có chủ đích: không Proxy, không dep tracking runtime, granularity dừng ở tầng key. Đổi lại là output biên dịch đọc được và chi phí runtime gần như bằng không.')
                     ]),
-                this.html(`928cd295`, "p", parentElement,
+                this.html(`Bdoc26`, "p", parentElement,
                     { classes: [{ type: 'static', value: "kicker" }] },
                     (parentElement) => [
-                    this.html(`3c48ef82`, "span", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc261`, "span", parentElement, {}, (parentElement) => [
                         this.text('RUNTIME')
                     ]),
                     this.text(' Element API')
                     ]),
-                this.html(`6017143f`, "h2", parentElement, {}, (parentElement) => [
+                this.html(`Bdoc27`, "h2", parentElement, {}, (parentElement) => [
                     this.text('Compiler chỉ gọi mười mấy hàm.')
                 ]),
-                this.html(`b2544d33`, "p", parentElement, {}, (parentElement) => [
+                this.html(`Bdoc28`, "p", parentElement, {}, (parentElement) => [
                     this.text('Output biên dịch không sinh chuỗi HTML. Nó gọi một tập method cố định trên ViewController, mỗi method trả về một element có vòng đời riêng.')
                 ]),
-                this.html(`f42070db`, "div", parentElement,
+                this.html(`Bdoc29`, "div", parentElement,
                     { classes: [{ type: 'static', value: "directive-table" }] },
                     (parentElement) => [
-                    this.html(`0fd1ee4f`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`e948b564`, "div", parentElement,
+                    this.html(`Bdoc291`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2911`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`b67ac195`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29111`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.wrapper()')
                             ])
                             ]),
-                        this.html(`adb4b8ab`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2912`, "span", parentElement, {}, (parentElement) => [
                             this.text('Gốc của view, tạo cặp marker biên')
                         ]),
-                        this.html(`3fe72f54`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2913`, "b", parentElement, {}, (parentElement) => [
                             this.text('container')
                         ])
                     ]),
-                    this.html(`a1be91db`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`5e755cdc`, "div", parentElement,
+                    this.html(`Bdoc292`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2921`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`12c519b2`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29211`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.html()')
                             ])
                             ]),
-                        this.html(`58a87d66`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2922`, "span", parentElement, {}, (parentElement) => [
                             this.text('Element DOM kèm config attrs · props · classes · styles · events · bind')
                         ]),
-                        this.html(`fa7f61d0`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2923`, "b", parentElement, {}, (parentElement) => [
                             this.text('dom')
                         ])
                     ]),
-                    this.html(`f837ad24`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`7a13fb2d`, "div", parentElement,
+                    this.html(`Bdoc293`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2931`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`7bba29c3`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29311`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.text()')
                             ])
                             ]),
-                        this.html(`be10aa97`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2932`, "span", parentElement, {}, (parentElement) => [
                             this.text('Text node tĩnh')
                         ]),
-                        this.html(`0afb2c3f`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2933`, "b", parentElement, {}, (parentElement) => [
                             this.text('dom')
                         ])
                     ]),
-                    this.html(`f9e251ca`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`5ca2848e`, "div", parentElement,
+                    this.html(`Bdoc294`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2941`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`fea6b114`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29411`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.output()')
                             ])
                             ]),
-                        this.html(`ceabdeb2`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2942`, "span", parentElement, {}, (parentElement) => [
                             this.text('Vùng giá trị reactive, escape hoặc raw')
                         ]),
-                        this.html(`4a8649a4`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2943`, "b", parentElement, {}, (parentElement) => [
                             this.text('reactive')
                         ])
                     ]),
-                    this.html(`882d9ad8`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`8fe4137a`, "div", parentElement,
+                    this.html(`Bdoc295`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2951`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`64e9a6f6`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29511`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.reactive()')
                             ])
                             ]),
-                        this.html(`8d7c501a`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2952`, "span", parentElement, {}, (parentElement) => [
                             this.text('Vùng điều kiện hoặc lặp, nhận '),
-                            this.html(`539a71ef`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29521`, "code", parentElement, {}, (parentElement) => [
                                 this.text('stateKeys')
                             ]),
                             this.text(' và children factory')
                         ]),
-                        this.html(`a0990722`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2953`, "b", parentElement, {}, (parentElement) => [
                             this.text('reactive')
                         ])
                     ]),
-                    this.html(`a2275c64`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`a4711450`, "div", parentElement,
+                    this.html(`Bdoc296`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2961`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`acf3101f`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29611`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.__foreach()')
                             ])
                             ]),
-                        this.html(`0e68405e`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2962`, "span", parentElement, {}, (parentElement) => [
                             this.text('Lặp có slot cache; nhận '),
-                            this.html(`fe251e00`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29621`, "code", parentElement, {}, (parentElement) => [
                                 this.text('keyFn')
                             ]),
                             this.text(' từ '),
-                            this.html(`7be97823`, "code", parentElement,
+                            this.html(`Bdoc29622`, "code", parentElement,
                                 { classes: [{ type: 'static', value: "directive-token" }] },
                                 (parentElement) => [
                                 this.text('key')
                                 ])
                         ]),
-                        this.html(`822e2660`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2963`, "b", parentElement, {}, (parentElement) => [
                             this.text('loop')
                         ])
                     ]),
-                    this.html(`4171a54e`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`5e77d60c`, "div", parentElement,
+                    this.html(`Bdoc297`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2971`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`1f4ac1b0`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29711`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.include()')
                             ])
                             ]),
-                        this.html(`180c12c2`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2972`, "span", parentElement, {}, (parentElement) => [
                             this.text('Tạo child view; '),
-                            this.html(`d7a68673`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29721`, "code", parentElement, {}, (parentElement) => [
                                 this.text('stateKeys')
                             ]),
                             this.text(' khiến prop được đẩy lại khi state đổi')
                         ]),
-                        this.html(`2e56cb25`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2973`, "b", parentElement, {}, (parentElement) => [
                             this.text('component')
                         ])
                     ]),
-                    this.html(`4ce3a788`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`2822e2f7`, "div", parentElement,
+                    this.html(`Bdoc298`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2981`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`2ab611d4`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29811`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.extendView()')
                             ])
                             ]),
-                        this.html(`fd21a414`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2982`, "span", parentElement, {}, (parentElement) => [
                             this.text('Trả về view cha thay cho element tree')
                         ]),
-                        this.html(`e1c4bb1e`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2983`, "b", parentElement, {}, (parentElement) => [
                             this.text('layout')
                         ])
                     ]),
-                    this.html(`673044c7`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`fe830c99`, "div", parentElement,
+                    this.html(`Bdoc299`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2991`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`834388b6`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29911`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.block()')
                             ]),
                             this.text(' / '),
-                            this.html(`3e01b60c`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29912`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.blockOutlet()')
                             ])
                             ]),
-                        this.html(`71dc0c4e`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2992`, "span", parentElement, {}, (parentElement) => [
                             this.text('Đăng ký nội dung và tạo chỗ trống, nối theo tên')
                         ]),
-                        this.html(`aa806c26`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2993`, "b", parentElement, {}, (parentElement) => [
                             this.text('layout')
                         ])
                     ]),
-                    this.html(`39e967ef`, "div", parentElement, {}, (parentElement) => [
-                        this.html(`5131fffa`, "div", parentElement,
+                    this.html(`Bdoc29e10_`, "div", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc29e10_1`, "div", parentElement,
                             { classes: [{ type: 'static', value: "dt-key" }] },
                             (parentElement) => [
-                            this.html(`acb7d6ba`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29e10_11`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.section()')
                             ]),
                             this.text(' / '),
-                            this.html(`e05407dd`, "code", parentElement, {}, (parentElement) => [
+                            this.html(`Bdoc29e10_12`, "code", parentElement, {}, (parentElement) => [
                                 this.text('this.yield()')
                             ])
                             ]),
-                        this.html(`e23c3d79`, "span", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc29e10_2`, "span", parentElement, {}, (parentElement) => [
                             this.text('Section và điểm xuất section')
                         ]),
-                        this.html(`b1d71575`, "b", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc29e10_3`, "b", parentElement, {}, (parentElement) => [
                             this.text('layout')
                         ])
                     ])
                     ]),
-                this.html(`d6184d28`, "p", parentElement,
+                this.html(`Bdoc2e10_`, "p", parentElement,
                     { classes: [{ type: 'static', value: "ov-sub" }] },
                     (parentElement) => [
                     this.text('Ba quy tắc bắt buộc')
                     ]),
-                this.html(`0f13e7e3`, "ul", parentElement,
+                this.html(`Bdoc2e11_`, "ul", parentElement,
                     { classes: [{ type: 'static', value: "check-list" }] },
                     (parentElement) => [
-                    this.html(`f02a7567`, "li", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc2e11_1`, "li", parentElement, {}, (parentElement) => [
                         this.text('Factory là lười — chỉ chạy trong '),
-                        this.html(`6f1c72ce`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2e11_11`, "code", parentElement, {}, (parentElement) => [
                             this.text('render()')
                         ]),
                         this.text(' hoặc re-render, không chạy trong constructor.')
                     ]),
-                    this.html(`b05748dd`, "li", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc2e11_2`, "li", parentElement, {}, (parentElement) => [
                         this.text('Điểm chèn tường minh — element không tự '),
-                        this.html(`318aa126`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2e11_21`, "code", parentElement, {}, (parentElement) => [
                             this.text('appendChild')
                         ]),
                         this.text('; vị trí do element cha cấp qua anchor.')
                     ]),
-                    this.html(`73d1100f`, "li", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc2e11_3`, "li", parentElement, {}, (parentElement) => [
                         this.text('Vòng đời đầy đủ — mỗi element có '),
-                        this.html(`2a353149`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2e11_31`, "code", parentElement, {}, (parentElement) => [
                             this.text('render · start · pause · resume · destroy')
                         ]),
                         this.text(', và children sinh ra khi re-render phải được '),
-                        this.html(`ad0393ea`, "code", parentElement, {}, (parentElement) => [
+                        this.html(`Bdoc2e11_32`, "code", parentElement, {}, (parentElement) => [
                             this.text('start()')
                         ]),
                         this.text(' ngay nếu vùng cha đang hoạt động.')
                     ])
                     ]),
-                this.html(`d0822472`, "div", parentElement,
+                this.html(`Bdoc2e12_`, "div", parentElement,
                     { classes: [{ type: 'static', value: "ov-note" }, { type: 'static', value: "ov-note--warn" }] },
                     (parentElement) => [
-                    this.html(`40a0e698`, "strong", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc2e12_1`, "strong", parentElement, {}, (parentElement) => [
                         this.text('Ràng buộc của '),
-                        this.html(`822c5433`, "code", parentElement,
+                        this.html(`Bdoc2e12_11`, "code", parentElement,
                             { classes: [{ type: 'static', value: "directive-token" }] },
                             (parentElement) => [
                             this.text('foreach')
@@ -487,24 +487,24 @@ class ReactivityView extends View {
                         this.text(':')
                     ]),
                     this.text(' slot chỉ được tái dùng khi cache key khớp '),
-                    this.html(`9cebeb7e`, "em", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc2e12_2`, "em", parentElement, {}, (parentElement) => [
                         this.text('và')
                     ]),
                     this.text(' reference của item không đổi, vì compiled closure đóng gói item trực tiếp. Refetch trả object mới sẽ dựng lại hàng đó — muốn giữ state của view con qua mỗi lần đồng bộ thì lặp trên danh sách id ổn định rồi truyền dữ liệu qua props.')
                     ])
                 ]),
-            this.html(`ceb15976`, "a", parentElement,
+            this.html(`Bdoc3`, "a", parentElement,
                 { classes: [{ type: 'static', value: "doc-next" }], attrs: { "href": { type: 'static', value: "/docs/runtime" } } },
                 (parentElement) => [
-                this.html(`60f0ac7a`, "div", parentElement, {}, (parentElement) => [
-                    this.html(`b7585c3f`, "span", parentElement, {}, (parentElement) => [
+                this.html(`Bdoc31`, "div", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc311`, "span", parentElement, {}, (parentElement) => [
                         this.text('Tiếp theo')
                     ]),
-                    this.html(`8767f8f3`, "strong", parentElement, {}, (parentElement) => [
+                    this.html(`Bdoc312`, "strong", parentElement, {}, (parentElement) => [
                         this.text('Runtime & hydration')
                     ])
                 ]),
-                this.html(`8287de38`, "span", parentElement,
+                this.html(`Bdoc32`, "span", parentElement,
                     { classes: [{ type: 'static', value: "button" }, { type: 'static', value: "button-primary" }] },
                     (parentElement) => [
                     this.text('Đọc tiếp →')
