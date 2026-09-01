@@ -16,6 +16,10 @@
         {
             "type": "path",
             "url": "../core"
+        },
+        {
+            "type": "path",
+            "url": "../compiler"
         }
     ],
     "require": {
@@ -24,7 +28,8 @@
         "laravel/octane": "^2.12",
         "laravel/sanctum": "^4.1",
         "laravel/tinker": "^3.0",
-        "saola/core": "dev-main"
+        "saola/core": "dev-main",
+        "saola/compiler": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
@@ -40,8 +45,7 @@
         "psr-4": {
             "App\\": "app/"
         },
-        "files": [
-        ]
+        "files": []
     },
     "autoload-dev": {
         "psr-4": {

@@ -19,13 +19,13 @@ sync_npm_dependencies() {
 
 echo "🚀 Preparing Saola development container..."
 
-sync_npm_dependencies /workspace/compiler
+sync_npm_dependencies /workspace/builder
 sync_npm_dependencies /workspace/client
 sync_npm_dependencies /workspace/saola
 
-# Always use the mounted compiler source instead of a stale published package.
-rm -rf /workspace/saola/node_modules/@saolabs/compiler
-ln -s /workspace/compiler /workspace/saola/node_modules/@saolabs/compiler
+# Always use the mounted builder source instead of a stale published package.
+rm -rf /workspace/saola/node_modules/@saolabs/builder
+ln -s /workspace/builder /workspace/saola/node_modules/@saolabs/builder
 
 cd /workspace/saola
 

@@ -8,7 +8,7 @@ use App\Modules\Home\Http\Controllers\Web\HomeController;
 use App\Modules\Home\Services\HomeService;
 use App\Modules\Home\Services\HomeServiceInterface;
 use Saola\Core\Providers\ModuleServiceProvider as CoreModuleServiceProvider;
-use Saola\Core\Routing\System;
+use Saola\Core\System;
 
 class ModuleServiceProvider extends CoreModuleServiceProvider
 {

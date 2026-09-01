@@ -58,10 +58,4 @@
                 </div>
             </aside>
         </div>
-        <script @class([$__VIEW_ID__ . '-Bcontent2']) @attr(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js', 'data-manual' => true])></script>
-        <script @class([$__VIEW_ID__ . '-Bcontent3']) @attr(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js'])></script>
-        <script @class([$__VIEW_ID__ . '-Bcontent4']) @attr(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js'])></script>
-        <script @class([$__VIEW_ID__ . '-Bcontent5']) @attr(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js'])></script>
-        <script @class([$__VIEW_ID__ . '-Bcontent6']) @attr(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js'])></script>
-        <script @class([$__VIEW_ID__ . '-Bcontent7']) @attr(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js'])></script>
     @endblock

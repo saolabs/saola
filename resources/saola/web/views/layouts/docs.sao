@@ -55,24 +55,24 @@
                 </div>
             </aside>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" data-manual></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
     @endblock
 </template>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" data-manual></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
 <script setup lang="ts">
+    import HighlightService from '@web/app/services/HighlightService';
+
     export default {
         name: 'DocsLayout',
 
         // Layout được tái dùng khi điều hướng giữa các trang docs (layout diff),
         // nên started() chỉ chạy một lần — phải tự đánh dấu lại sau mỗi lần chuyển route.
-        // Bám vào chính lúc router thay nội dung .docs-main, đừng đoán một khoảng
-        // chờ sau click: view chunk nạp lazy, mạng chậm là URL đổi sau khoảng đó và
-        // highlight kẹt lại ở trang cũ vĩnh viễn.
         started() {
             this._observer = new MutationObserver(() => {
                 cancelAnimationFrame(this._raf);
@@ -92,112 +92,19 @@
         },
 
         sync() {
-            // Prism rewrites <code> innerHTML bên trong .docs-main — đúng subtree
-            // observer đang theo dõi. Không ngắt observer quanh lần highlight thì
-            // mỗi frame nó lại tự lên lịch sync() → rerender loop ghim cả tab.
             if (this._observer) this._observer.disconnect();
 
             this.markCurrent();
             this.generateTOC();
 
             const main = document.querySelector('.docs-main');
-            if (window.Prism && main) {
-                this.registerSaoLanguage();
-                // Chỉ tô khối chưa tô: sync() gọi lại (đổi route) thành gần như
-                // miễn phí và không còn gì để nuôi vòng lặp observer.
-                main.querySelectorAll('pre code[class*="language-"]:not([data-hl])').forEach((el: Element) => {
-                    el.setAttribute('data-hl', '');
-                    window.Prism.highlightElement(el);
-                });
+            if (main) {
+                HighlightService.highlight(main);
             }
 
             if (this._observer && main) {
                 this._observer.observe(main, { childList: true, subtree: true });
             }
-        },
-
-        // Grammar phải đăng ký NGAY TRƯỚC lần highlight đầu, không phải trong một
-        // <script> inline: prism.min.js tải từ CDN nên `window.Prism` có thể chưa
-        // tồn tại lúc thẻ inline chạy, `if (window.Prism)` im lặng bỏ qua và mọi
-        // khối `language-sao` mất highlight cho tới khi reload trúng thứ tự may mắn.
-        registerSaoLanguage() {
-            const P = (window as any).Prism;
-            if (!P) return;
-
-            const js = P.languages.javascript || P.languages.clike || {};
-
-            const interpolationInside = {
-                'delimiter': {
-                    pattern: /^\{\{|\}\}$|^\{!!|!!\}$|^\{\{\{|\}\}\}$/,
-                    alias: 'punctuation'
-                },
-                'rest': js
-            };
-
-            const directiveInside = {
-                'keyword': /^@[a-zA-Z0-9_]+/,
-                'punctuation': /^\(|\)$/,
-                'rest': js
-            };
-
-            P.languages.sao = {
-                'comment': [
-                    { pattern: /\{\s*--[\s\S]*?--\s*\}/, greedy: true },
-                    { pattern: /<!--[\s\S]*?-->/, greedy: true },
-                    { pattern: /(^|[^\\])\/\/.*/, lookbehind: true, greedy: true }
-                ],
-                'interpolation': {
-                    pattern: /\{\{[\s\S]*?\}\}|\{!![\s\S]*?!!\}|\{\{\{[\s\S]*?\}\}\}/,
-                    greedy: true,
-                    inside: interpolationInside
-                },
-                'directive': {
-                    pattern: /@(?:import|vars|props|states|state|const|let|computed|await|if|elseif|else|endif|unless|endunless|foreach|endforeach|for|endfor|while|endwhile|switch|case|break|default|endswitch|include|extends|block|endblock|useBlock|children|click|bind|attr|class|style|submit|input|change|keyup|keydown|keypress|focus|blur|mouseenter|mouseleave|[a-zA-Z0-9_]+)(?:\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\))?/,
-                    greedy: true,
-                    inside: directiveInside
-                },
-                'tag': {
-                    pattern: /<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/i,
-                    greedy: true,
-                    inside: {
-                        'tag': {
-                            pattern: /^<\/?[^\s>\/]+/i,
-                            inside: {
-                                'punctuation': /^<\/?/,
-                                'namespace': /^[^\s>\/:]+:/
-                            }
-                        },
-                        'attr-value': {
-                            pattern: /=\s*(?:"(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'|[^\s'">=]+)/i,
-                            inside: {
-                                'punctuation': [
-                                    /^=/,
-                                    {
-                                        pattern: /^(\s*)["']|["']$/,
-                                        lookbehind: true
-                                    }
-                                ],
-                                'interpolation': {
-                                    pattern: /\{\{[\s\S]*?\}\}|\{!![\s\S]*?!!\}/,
-                                    inside: interpolationInside
-                                }
-                            }
-                        },
-                        'directive': {
-                            pattern: /@(?:click|bind|attr|class|style|submit|input|change|keyup|keydown|keypress|focus|blur|mouseenter|mouseleave|[a-zA-Z0-9_]+)(?:\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\))?/,
-                            inside: directiveInside
-                        },
-                        'punctuation': /\/?>/,
-                        'attr-name': {
-                            pattern: /[^\s>\/]+/i,
-                            inside: {
-                                'namespace': /^[^\s>\/:]+:/
-                            }
-                        }
-                    }
-                },
-                'entity': /&[a-z]+;|&#\d+;|&#x[a-f\d]+;/i
-            };
         },
 
         markCurrent() {

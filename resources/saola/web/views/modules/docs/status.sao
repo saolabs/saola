@@ -36,7 +36,7 @@
             <div><div class="dt-key"><code class="directive-token">show</code> đụng Blade</div><span>Laravel đã có <code class="directive-token">show</code> nghĩa là kết thúc section rồi yield ngay, nên nó nuốt directive cùng tên của Saola và làm hỏng section stack của cả trang. Dùng <code class="directive-token">class</code> với class ẩn thay thế.</span><b>compiler</b></div>
             <div><div class="dt-key"><code class="directive-token">computed</code> khi SSR</div><span>Directive này chỉ được emit ở đầu ra JavaScript; phía Blade không có khai báo nào nên biến undefined khi render server. Dùng biểu thức dẫn xuất thẳng trong template là qua.</span><b>compiler</b></div>
             <div><div class="dt-key">Modifier ở đầu ra Blade</div><span>Modifier của event chỉ được emit đúng ở phía JavaScript; phía Blade còn sinh thuộc tính thừa.</span><b>compiler</b></div>
-                <div><div class="dt-key">Fragment và Component chưa có id</div><span>Hai loại marker này còn thiếu id ổn định nên chưa hydrate được như các loại khác.</span><b>contract</b></div>
+                <div><div class="dt-key">Fragment chưa có marker</div><span>Compiler chưa emit marker cho fragment ở nhánh Blade, nên loại này chưa hydrate được. Marker component thì đã có id ổn định.</span><b>contract</b></div>
                 <div><div class="dt-key">Prefix đôi của context API</div><span>Prefix mặc định của Laravel cộng với prefix context làm URL thành <code>/api/api/...</code>.</span><b>routing</b></div>
             </div>
             <div class="ov-note ov-note--warn">

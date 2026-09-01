@@ -10,7 +10,7 @@ use App\Modules\User\Repositories\UserRepositoryInterface;
 use App\Modules\User\Services\UserService;
 use App\Modules\User\Services\UserServiceInterface;
 use Saola\Core\Providers\ModuleServiceProvider as CoreModuleServiceProvider;
-use Saola\Core\Routing\System;
+use Saola\Core\System;
 
 class ModuleServiceProvider extends CoreModuleServiceProvider
 {

@@ -58,5 +58,5 @@
 </script>
 
 <style scoped>
-    .contact-aside h1 em { color: var(--cobalt); font-style: normal; }
+    .contact-aside h1 em { color: var(--river); font-style: normal; }
 </style>

@@ -3,7 +3,7 @@
 namespace App\Modules\Test;
 
 use Saola\Core\Providers\ModuleServiceProvider as CoreModuleServiceProvider;
-use Saola\Core\Routing\System;
+use Saola\Core\System;
 use App\Modules\Test\Http\Controllers\Admin\TestController as AdminTestController;
 use App\Modules\Test\Http\Controllers\Api\TestController as ApiTestController;
 use App\Modules\Test\Http\Controllers\Web\TestController as WebTestController;

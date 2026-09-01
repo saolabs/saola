@@ -2,12 +2,12 @@
     posts: [],
     title: null,
 })
-<blade>
-    <h1>{{ $title }}</h1>
+<template>
+    <h1>{{ title }}</h1>
     <ul>
-        @foreach($posts as $post)
-            <li>{{ $post->title }}</li>
+        @foreach(posts as post)
+            <li>{{ post.title }}</li>
         @endforeach
     </ul>
     #test
-</blade>
+</template>

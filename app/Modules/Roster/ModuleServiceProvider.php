@@ -5,7 +5,7 @@ namespace App\Modules\Roster;
 use App\Modules\Roster\Http\Controllers\Api\RosterController as ApiRosterController;
 use App\Modules\Roster\Http\Controllers\Web\RosterController as WebRosterController;
 use Saola\Core\Providers\ModuleServiceProvider as CoreModuleServiceProvider;
-use Saola\Core\Routing\System;
+use Saola\Core\System;
 
 /**
  * Roster — bàn thử nghiệm cho vòng đời dữ liệu phía client.

@@ -4,7 +4,7 @@ namespace App\Modules\Demo;
 
 use App\Modules\Demo\Http\Controllers\Web\DemoController;
 use Saola\Core\Providers\ModuleServiceProvider as CoreModuleServiceProvider;
-use Saola\Core\Routing\System;
+use Saola\Core\System;
 
 class ModuleServiceProvider extends CoreModuleServiceProvider
 {

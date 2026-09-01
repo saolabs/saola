@@ -17,24 +17,29 @@
         </header>
 
         <div @class([$__VIEW_ID__ . '-Bdoc2', 'doc-body'])>
-            <p @class([$__VIEW_ID__ . '-Bdoc21', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc211'])>PACKAGES</span> Ba gói, một hợp đồng</p>
-            <h2 @class([$__VIEW_ID__ . '-Bdoc22'])>Ba mảnh ghép, một contract chung.</h2>
-            <p @class([$__VIEW_ID__ . '-Bdoc23'])>Hệ sinh thái chia làm ba gói phát hành độc lập. Điểm nối giữa chúng không phải là quy ước ngầm mà là một spec viết ra giấy: <code @class([$__VIEW_ID__ . '-Bdoc231'])>RUNTIME_CONTRACT</code> mô tả chính xác compiler được phép emit gì và client phải hiểu gì.</p>
-            <div @class([$__VIEW_ID__ . '-Bdoc24', 'ov-grid', 'ov-grid--3'])>
+            <p @class([$__VIEW_ID__ . '-Bdoc21', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc211'])>PACKAGES</span> Bốn gói, một hợp đồng</p>
+            <h2 @class([$__VIEW_ID__ . '-Bdoc22'])>Bốn mảnh ghép, một contract chung.</h2>
+            <p @class([$__VIEW_ID__ . '-Bdoc23'])>Hệ sinh thái chia làm bốn gói phát hành độc lập — hai qua Composer, hai qua npm. Điểm nối giữa chúng không phải là quy ước ngầm mà là một spec viết ra giấy: <code @class([$__VIEW_ID__ . '-Bdoc231'])>RUNTIME_CONTRACT</code> mô tả chính xác compiler được phép emit gì và client phải hiểu gì.</p>
+            <div @class([$__VIEW_ID__ . '-Bdoc24', 'ov-grid'])>
                 <div @class([$__VIEW_ID__ . '-Bdoc241', 'ov-card'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2411'])>Composer</span>
                     <h3 @class([$__VIEW_ID__ . '-Bdoc2412'])>saola/core</h3>
                     <p @class([$__VIEW_ID__ . '-Bdoc2413'])>Lõi PHP: <code @class([$__VIEW_ID__ . '-Bdoc24131'])>System::context()</code> routing, base controller cho web/admin/api, module service provider, Blade directive và ViewStorageManager — nơi duy nhất sinh marker phía server.</p>
                 </div>
                 <div @class([$__VIEW_ID__ . '-Bdoc242', 'ov-card'])>
-                    <span @class([$__VIEW_ID__ . '-Bdoc2421'])>npm</span>
-                    <h3 @class([$__VIEW_ID__ . '-Bdoc2422'])>&#64;saolabs/compiler</h3>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2423'])>CLI <code @class([$__VIEW_ID__ . '-Bdoc24231'])>sao-compile</code>. Parse <code @class([$__VIEW_ID__ . '-Bdoc24232'])>.sao</code> thành AST rồi emit hai đầu ra từ cùng một cây: Blade cho SSR và TypeScript cho view runtime, kèm registry.</p>
+                    <span @class([$__VIEW_ID__ . '-Bdoc2421'])>Composer</span>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2422'])>saola/compiler</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2423'])>Trình biên dịch <code @class([$__VIEW_ID__ . '-Bdoc24231'])>.sao</code> viết bằng PHP thuần. Một lần parse ra AST, emit song song Blade cho SSR và JavaScript/TypeScript cho CSR. CLI <code @class([$__VIEW_ID__ . '-Bdoc24232'])>saoc</code> chạy được không cần Node.</p>
                 </div>
                 <div @class([$__VIEW_ID__ . '-Bdoc243', 'ov-card'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2431'])>npm</span>
-                    <h3 @class([$__VIEW_ID__ . '-Bdoc2432'])>&#64;saolabs/client</h3>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2433'])>Runtime SPA: Application container, Router, ViewManager, ViewController, hệ element reactive, PageCache và bộ service (Http, Event, Store, Head…).</p>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2432'])>&#64;saolabs/builder</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2433'])>CLI <code @class([$__VIEW_ID__ . '-Bdoc24331'])>sao-compile</code>. Đọc <code @class([$__VIEW_ID__ . '-Bdoc24332'])>sao.config.json</code>, quét view, gọi <code @class([$__VIEW_ID__ . '-Bdoc24333'])>saola/compiler</code> qua <code @class([$__VIEW_ID__ . '-Bdoc24334'])>vendor/bin/saoc</code>, rồi ghi output, sinh registry và cắm vào Vite/Webpack. Builder không tự biên dịch.</p>
+                </div>
+                <div @class([$__VIEW_ID__ . '-Bdoc244', 'ov-card'])>
+                    <span @class([$__VIEW_ID__ . '-Bdoc2441'])>npm</span>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2442'])>&#64;saolabs/client</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2443'])>Runtime SPA: Application container, Router, ViewManager, ViewController, hệ element reactive, PageCache và bộ service (Http, Event, Store, Head…).</p>
                 </div>
             </div>
             <div @class([$__VIEW_ID__ . '-Bdoc25', 'ov-note'])>

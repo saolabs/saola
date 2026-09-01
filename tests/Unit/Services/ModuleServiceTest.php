@@ -8,6 +8,13 @@ use Mockery;
 
 /**
  * Test ModuleService
+ *
+ * Đã bỏ test_module_property / test_context_property: chúng gán
+ * `$service->module = 'test'` từ ngoài trong khi `ModuleService::$module` và
+ * `$context` là `protected` THEO THIẾT KẾ (subclass khai báo, vd
+ * `protected $module = 'docs'`), và class không có accessor public nào. Hai
+ * test đó chỉ khẳng định luật visibility của PHP bị phá — luôn fatal, không
+ * bao giờ xanh được, và không gác một hành vi nào của framework.
  */
 class ModuleServiceTest extends TestCase
 {
@@ -17,30 +24,7 @@ class ModuleServiceTest extends TestCase
     public function test_service_initialization(): void
     {
         $service = Mockery::mock(ModuleService::class)->makePartial();
-        
+
         $this->assertInstanceOf(ModuleService::class, $service);
     }
-
-    /**
-     * Test module property
-     */
-    public function test_module_property(): void
-    {
-        $service = Mockery::mock(ModuleService::class)->makePartial();
-        $service->module = 'test';
-        
-        $this->assertEquals('test', $service->module);
-    }
-
-    /**
-     * Test context property
-     */
-    public function test_context_property(): void
-    {
-        $service = Mockery::mock(ModuleService::class)->makePartial();
-        $service->context = 'web';
-        
-        $this->assertEquals('web', $service->context);
-    }
 }
-

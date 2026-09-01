@@ -106,5 +106,5 @@
 
 <style scoped>
     .todo-row.completed strong { text-decoration: line-through; color: #79808b; }
-    .todo-row.completed .todo-check { background: var(--cobalt); color: white; }
+    .todo-row.completed .todo-check { background: var(--river); border-color: var(--river); color: white; }
 </style>

@@ -6,6 +6,9 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./tests/setup.js'],
+    // E2E cần server chạy + Chromium thật → tách khỏi `npm test` (đang là watch
+    // mode: mỗi lần lưu file sẽ spawn lại browser). Chạy bằng `npm run test:e2e`.
+    exclude: ['**/node_modules/**', '**/dist/**', 'tests/e2e/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
