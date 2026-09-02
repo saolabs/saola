@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Validation\Rules\Password;
 use Saola\Core\Engines\ViewContextManager;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +26,35 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        // Chạy trong booted() chứ không thẳng trong boot(): thứ tự boot phụ
+        // thuộc bootstrap/providers.php, đảo một dòng là core merge đè lên khai
+        // báo của app mà không lỗi gì. booted() luôn chạy sau MỌI provider.
+        $this->app->booted(fn () => $this->configureViews());
+    }
+
+    /**
+     * View context của ỨNG DỤNG — đè lên mặc định hệ thống của core.
+     *
+     * Thứ tự ưu tiên, thấp đến cao:
+     *
+     *   1. core  — ViewContextServiceProvider, base = slug context
+     *   2. app   — chỗ này, cấp worker, đè bằng registerContext() (merge theo khoá)
+     *   3. theme — ThemeService::apply() mỗi request, đè cao nhất
+     *
+     * Khai `base` là đủ: sáu thư mục con suy ra theo nó. Muốn tách riêng thì
+     * thêm khoá — vd `'components' => '_shared.components'` để dùng chung giữa
+     * các bản giao diện; khoá nào không khai vẫn bám theo base.
+     */
+    public function configureViews(): void
+    {
+        app(ViewContextManager::class)->registerContext('web', [
+            'base' => 'web',
+        ]);
+
+        app(ViewContextManager::class)->registerContext('admin', [
+            'base' => 'admin',
+        ]);
     }
 
     protected function configureDefaults(): void
@@ -45,15 +74,4 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
-    public function configureViews(): void
-    {
-        // Example of using ViewContextManager to share data across all views in a context
-        $viewContextManager = app(ViewContextManager::class);
-
-        // register a global view context for the 'web' context
-        $viewContextManager->registerContext('web', [
-            'base' => 'web'
-        ]);
-
-    }
 }

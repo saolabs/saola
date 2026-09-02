@@ -1,0 +1,18 @@
+@states({
+    count: 0,
+    name: 'Aurora'
+})
+<template>
+    {{-- __layout__ là biến của CẢ context nên nó trỏ themes.aurora.layouts.*
+         khi theme đang bật. Vì vậy theme phải mang đủ chuỗi layout của mình —
+         xem ghi chú "giới hạn" trong báo cáo. --}}
+    @extends(__layout__ + "public")
+    @block('content')
+        <section class="ping">
+            <h1>Ping — theme Aurora</h1>
+            <p>Xin chào, {{ name }}. Trang này đến từ themes/aurora.</p>
+            <button @click(setCount(count + 1))>Ping (+1)</button>
+            <span>Count: {{ count }}</span>
+        </section>
+    @endblock
+</template>
