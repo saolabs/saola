@@ -77,12 +77,12 @@
                             <div @class([$__VIEW_ID__ . '-Bdoc211222', 'cmp-body'])>
                                 <div @class([$__VIEW_ID__ . '-Bdoc2112221', 'cmp-preview'])>
                                     <div @class([$__VIEW_ID__ . '-Bdoc21122211', 'cmp-row'])>
-                                        <button @class([$__VIEW_ID__ . '-Bdoc211222111']) @attr(['click.once' => true, 'setOnceLeft' => true])>Chỉ chạy 1 lần</button>
+                                        <button @class([$__VIEW_ID__ . '-Bdoc211222111'])>Chỉ chạy 1 lần</button>
                                         <span @class([$__VIEW_ID__ . '-Bdoc211222112', 'cmp-chip', 'cmp-chip--slate'])>còn lại: @startMarker('output', 'Bdoc211222112o1'){{ $onceLeft }}@endMarker('output', 'Bdoc211222112o1')</span>
                                     </div>
-                                    <div @class([$__VIEW_ID__ . '-Bdoc21122212', 'cmp-box']) @attr(['click.self' => true, 'setSelfHits' => true, 'selfHits' => true])>
+                                    <div @class([$__VIEW_ID__ . '-Bdoc21122212', 'cmp-box'])>
                                         Bấm vào nền này thì đếm tăng — bấm
-                                        <button @class([$__VIEW_ID__ . '-Bdoc211222121']) @attr(['click.stop' => true, 'setClicks' => true, 'clicks' => true])>nút bên trong</button>
+                                        <button @class([$__VIEW_ID__ . '-Bdoc211222121'])>nút bên trong</button>
                                         thì không.
                                     </div>
                                     <p @class([$__VIEW_ID__ . '-Bdoc21122213', 'cmp-note'])>nền: @startMarker('output', 'Bdoc21122213o1'){{ $selfHits }}@endMarker('output', 'Bdoc21122213o1') · nút con: @startMarker('output', 'Bdoc21122213o2'){{ $clicks }}@endMarker('output', 'Bdoc21122213o2')</p>

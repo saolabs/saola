@@ -14,7 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'admin' => \Saola\Core\Http\Middleware\AdminMiddleware::class,
-            'webview' => \Saola\Core\Http\Middleware\WebViewManager::class,
             'next' => \Saola\Core\Http\Middleware\Next::class,
         ]);
     })

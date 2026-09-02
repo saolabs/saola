@@ -28,6 +28,7 @@
         "test": "vitest",
         "test:ui": "vitest --ui",
         "test:coverage": "vitest --coverage",
+        "test:e2e": "vitest run --dir tests/e2e --exclude '[]'",
         "saola:compile": "sao-compile web",
         "saola:compile:all": "sao-compile all",
         "saola:compile:admin": "sao-compile admin",
@@ -44,7 +45,7 @@
         "start": "npm run dev"
     },
     "devDependencies": {
-        "@saolabs/compiler": "^1.0.0",
+        "@saolabs/builder": "file:../builder",
         "@tailwindcss/vite": "^4.0.0",
         "@vitest/coverage-v8": "^3.0.0",
         "@vitest/ui": "^3.0.0",
@@ -53,12 +54,13 @@
         "esbuild": "^0.25.10",
         "jsdom": "^25.0.0",
         "laravel-vite-plugin": "^1.2.0",
+        "playwright": "^1.62.1",
         "tailwindcss": "^4.0.0",
         "vite": "^6.4.0",
         "vitest": "^3.0.0"
     },
     "dependencies": {
-        "@saolabs/client": "^1.0.0"
+        "@saolabs/client": "file:../client"
     },
     "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

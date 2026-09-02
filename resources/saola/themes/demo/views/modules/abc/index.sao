@@ -1,0 +1,11 @@
+@states({ n: 0 })
+<template>
+    @extends(__layout__ + "public")
+    @block('content')
+        <section class="ping">
+            <h1>abc/index — theme <code>demo</code></h1>
+            <p>Route <code>web.abc.index</code> → <code>themes.demo.modules.abc.index</code></p>
+            <button @click(setN(n + 1))>n = {{ n }}</button>
+        </section>
+    @endblock
+</template>

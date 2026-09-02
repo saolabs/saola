@@ -7,7 +7,7 @@ use App\Modules\PWA\Http\Controllers\Web\PWAController;
 use App\Modules\PWA\Services\PWAService;
 use App\Modules\PWA\Services\PWAServiceInterface;
 use Saola\Core\Providers\ModuleServiceProvider as CoreModuleServiceProvider;
-use Saola\Core\Routing\System;
+use Saola\Core\System;
 
 class ModuleServiceProvider extends CoreModuleServiceProvider
 {

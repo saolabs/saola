@@ -1,0 +1,9 @@
+<template>
+    @extends(__layout__ + "public")
+    @block('content')
+        <section class="ping">
+            <h1>abc/sub/index — module lồng</h1>
+            <p>Route <code>web.abc.sub.index</code> → <code>themes.demo.modules.abc.sub.index</code></p>
+        </section>
+    @endblock
+</template>

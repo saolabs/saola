@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Saola\Core\Routing\System;
+use Saola\Core\System;
 
 class ModuleServiceProvider extends ServiceProvider
 {

@@ -1,10 +1,67 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
-import saolaCompiler from '@saolabs/compiler/vite';
+import saolaBuilder from '@saolabs/builder/vite';
 import path from 'path';
+import fs from 'node:fs';
 
 const context = process.env.VITE_CONTEXT || 'web';
+
+/**
+ * Đồng bộ assets tĩnh (ảnh/css/font referenced-by-URL) từ chỗ author
+ * `resources/saola/<ctx>/assets/` → `public/static/saola/<ctx>/assets/`.
+ *
+ * Vì SSR/Blade tham chiếu asset bằng chuỗi URL (`asset('static/saola/…')`),
+ * không phải `import`, nên module graph của Vite không thấy chúng. Plugin này
+ * copy nguyên thư mục:
+ *   - dev  : mirror sang public/ để `php artisan serve` trả về (buildStart + watch)
+ *   - build: copy trong `writeBundle` — CHẠY SAU khi Vite đã emptyOutDir + ghi
+ *            bundle, nên assets không bao giờ bị nuốt.
+ * `resources/js/saola/<ctx>/assets/` không đụng tới; đây là đường thẳng source → output.
+ */
+function saolaAssets({ context, root }) {
+    const src = path.resolve(root, `resources/saola/${context}/assets`);
+    const publicDest = path.resolve(root, `public/static/saola/${context}/assets`);
+    let isBuild = false;
+
+    // Copy đệ quy bằng copyFileSync — KHÔNG dùng fs.cpSync (EACCES trên FUSE của
+    // Docker Desktop) và KHÔNG rmSync cây đích trước (cũng EACCES). Đổi lại: file
+    // xoá khỏi source còn sót ở đích — vô hại với asset tĩnh; `git clean` cây
+    // gitignore nếu cần mirror tuyệt đối. Không bao giờ throw: hỏng copy chỉ warn,
+    // tuyệt đối không làm sập buildStart (kéo sập luôn dev server).
+    const copyDir = (from, to) => {
+        fs.mkdirSync(to, { recursive: true });
+        for (const e of fs.readdirSync(from, { withFileTypes: true })) {
+            const s = path.join(from, e.name);
+            const d = path.join(to, e.name);
+            if (e.isDirectory()) copyDir(s, d);
+            else fs.copyFileSync(s, d);
+        }
+    };
+    const sync = (dest) => {
+        try {
+            if (fs.existsSync(src)) copyDir(src, dest);
+        } catch (e) {
+            console.warn(`[saola-assets] copy ${src} → ${dest} skipped: ${e.message}`);
+        }
+    };
+
+    return {
+        name: 'saola-assets',
+        configResolved(c) { isBuild = c.command === 'build'; },
+        buildStart() { if (!isBuild) sync(publicDest); },
+        writeBundle(out) { sync(path.join(out.dir, 'assets')); },
+        configureServer(server) {
+            server.watcher.add(src);
+            const onEvt = (file) => {
+                if (!file.startsWith(src + path.sep)) return;
+                sync(publicDest);
+                server.ws.send({ type: 'full-reload' });
+            };
+            server.watcher.on('add', onEvt).on('change', onEvt).on('unlink', onEvt);
+        },
+    };
+}
 const useLocalSaolaClient = process.env.SAOLA_LOCAL_CLIENT === 'true';
 const devHost = process.env.VITE_DEV_HOST || '127.0.0.1';
 const hmrHost = process.env.VITE_HMR_HOST || '127.0.0.1';
@@ -13,8 +70,10 @@ const hmrClientPort = Number(process.env.VITE_HMR_CLIENT_PORT || devPort);
 
 export default defineConfig({
     plugins: [
-        // Compiler owns the initial .sao build and its single dev watcher.
-        saolaCompiler({ context, watch: true }),
+        // Builder owns the initial .sao build and its single dev watcher.
+        saolaBuilder({ context, watch: true }),
+        // Static assets co-located with views: resources/saola/<ctx>/assets → public/static/saola/<ctx>/assets
+        saolaAssets({ context, root: __dirname }),
         laravel({
             input: [
                 `resources/js/saola/app.js`,  // Main Saola app entry
@@ -38,10 +97,11 @@ export default defineConfig({
             ...(useLocalSaolaClient ? {
                 '@saolabs/client': path.resolve(__dirname, '../client/dist/index.js'),
             } : {}),
-            // Source directories (for IDE and Vite dev).
-            // Alias gốc theo context → '@web/app', '@web/assets', '@web/views'…
-            // PHẢI khớp "paths" trong tsconfig.json, nếu không IDE báo đỏ còn
-            // Vite vẫn build được (hoặc ngược lại).
+            // Source directories (for IDE and Vite dev) — trỏ CÂY SOURCE, là chỗ
+            // hand-write duy nhất. Alias gốc theo context → '@web/app' (service/helper,
+            // import trong <script setup> của .sao), '@web/assets' (asset import-by-JS
+            // để Vite hash; asset referenced-by-URL đi qua plugin saolaAssets ở trên),
+            // '@web/views'. PHẢI khớp "paths" trong tsconfig.json.
             '@': path.resolve(__dirname, 'resources/js'),
             '@sao': path.resolve(__dirname, 'resources/saola'),
             '@web': path.resolve(__dirname, 'resources/saola/web'),
@@ -71,7 +131,18 @@ export default defineConfig({
         assetsDir: 'js',
         rollupOptions: {
             output: {
-                entryFileNames: 'js/[name].js',
+                // KHÔNG dùng 'js/[name].js': hai entry `app.js` và `app.css`
+                // cùng tên rollup 'app', rollup né trùng bằng hậu tố số nên JS
+                // rơi ra `js/app2.js`. Lấy tên từ chính file nguồn để `app.js`
+                // ổn định qua mọi lần build (manifest vẫn map đúng, nhưng
+                // fallback 'js/app.js' trong assets.blade.php cần tên này).
+                entryFileNames: (chunk) => {
+                    const src = chunk.facadeModuleId;
+                    const name = src
+                        ? path.basename(src).replace(/\.[cm]?[jt]sx?$/, '')
+                        : chunk.name;
+                    return `js/${name}.js`;
+                },
                 chunkFileNames: 'js/[name].js',
                 // CSS (Tailwind app.css) → css/app.css (non-hashed, ổn định để
                 // head.sao tham chiếu asset('static/saola/{ctx}/css/app.css')).

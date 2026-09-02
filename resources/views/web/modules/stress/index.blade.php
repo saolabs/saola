@@ -25,13 +25,13 @@
 
         <section @class([$__VIEW_ID__ . '-Bworkspace2', 'se4890c80', 'stress'])>
             {{-- Event modifiers: .prevent thay cho event.preventDefault() thủ công --}}
-            <form @class([$__VIEW_ID__ . '-Bworkspace21', 'se4890c80', 'stress__bar']) @attr(['submit.prevent' => true, 'applyQuery' => true])>
+            <form @class([$__VIEW_ID__ . '-Bworkspace21', 'se4890c80', 'stress__bar'])>
                 <input @class([$__VIEW_ID__ . '-Bworkspace211', 'se4890c80']) @attr(['type' => 'text', 'placeholder' => 'Lọc theo tên…']) @bind($query)>
                 <button @class([$__VIEW_ID__ . '-Bworkspace212', 'se4890c80']) @attr(['type' => 'submit'])>Lọc</button>
                 <button @class([$__VIEW_ID__ . '-Bworkspace213', 'se4890c80']) @attr(['type' => 'button'])>
                     Refresh từ server <span @class([$__VIEW_ID__ . '-Bworkspace2131', 'se4890c80'])>(@startMarker('output', 'Bworkspace2131o1'){{ $refreshCount }}@endMarker('output', 'Bworkspace2131o1'))</span>
                 </button>
-                <button @class([$__VIEW_ID__ . '-Bworkspace214', 'se4890c80']) @attr(['type' => 'button', 'click.once' => true, 'showBannerOnce' => true])>Chỉ chạy 1 lần</button>
+                <button @class([$__VIEW_ID__ . '-Bworkspace214', 'se4890c80']) @attr(['type' => 'button'])>Chỉ chạy 1 lần</button>
             </form>
 
             @startMarker('reactive', 'Bworkspace2r1', ['stateKey' => ['banner'], 'type' => 'if'])
@@ -45,7 +45,7 @@
             <div @class([$__VIEW_ID__ . '-Bworkspace22', 'se4890c80', 'stress__list'])>
                 @startMarker('reactive', 'Bworkspace22l1', ['stateKey' => ['users'], 'type' => 'foreach'])
                 @foreach($users as $user)
-                    <article @class([$__VIEW_ID__ . "-Bworkspace22l11-{$user['id']}", 'se4890c80', 'stress__row']) @transition('row')>
+                    <article @class([$__VIEW_ID__ . "-Bworkspace22l11-{$user['id']}", 'se4890c80', 'stress__row'])>
                         {{-- Thẻ tuỳ chỉnh nhận biểu thức qua tiền tố ':' — compiler suy stateKeys y như @include --}}
                         @startMarker('component', "Bworkspace22l11c1-{$user['id']}")
                         @include('web.modules.stress.usercard', ['user' => $user, 'highlight' => $selectedId === $user['id']])
@@ -66,7 +66,7 @@
                         @endMarker('reactive', "Bworkspace22l11r1-{$user['id']}")
 
                         {{-- .stop: bấm xoá không được kích hoạt selectUser của hàng --}}
-                        <button @class([$__VIEW_ID__ . "-Bworkspace22l111-{$user['id']}", 'se4890c80', 'stress__del']) @attr(['click.stop' => true, 'removeUser' => true, 'user' => true, 'id' => true])>×</button>
+                        <button @class([$__VIEW_ID__ . "-Bworkspace22l111-{$user['id']}", 'se4890c80', 'stress__del'])>×</button>
                     </article>
                 @endforeach
                 @endMarker('reactive', 'Bworkspace22l1')
@@ -91,7 +91,7 @@
         {{-- .self: chỉ đóng khi bấm ĐÚNG nền, không đóng khi bấm vào hộp bên trong --}}
         @startMarker('reactive', 'Bworkspacer1', ['stateKey' => ['modalOpen'], 'type' => 'if'])
         @if($modalOpen)
-            <div @class([$__VIEW_ID__ . '-Bworkspacer1k11', 'se4890c80', 'stress__backdrop']) @attr(['click.self' => true, 'closeModal' => true]) @transition('fade')>
+            <div @class([$__VIEW_ID__ . '-Bworkspacer1k11', 'se4890c80', 'stress__backdrop'])>
                 <div @class([$__VIEW_ID__ . '-Bworkspacer1k111', 'se4890c80', 'stress__modal'])>
                     <h2 @class([$__VIEW_ID__ . '-Bworkspacer1k1111', 'se4890c80'])>Modal</h2>
                     <p @class([$__VIEW_ID__ . '-Bworkspacer1k1112', 'se4890c80'])>Bấm ra nền để đóng. Bấm trong hộp thì không.</p>

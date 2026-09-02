@@ -4,7 +4,7 @@ namespace App\Modules\Docs;
 
 use App\Modules\Docs\Http\Controllers\Web\DocsController;
 use Saola\Core\Providers\ModuleServiceProvider as CoreModuleServiceProvider;
-use Saola\Core\Routing\System;
+use Saola\Core\System;
 
 class ModuleServiceProvider extends CoreModuleServiceProvider
 {

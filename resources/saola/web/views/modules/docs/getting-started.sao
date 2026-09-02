@@ -4,12 +4,22 @@
     @block('doc')
         <section class="page-hero page-hero-start">
             <div><p class="kicker"><span>04 / GETTING STARTED</span> Từ route đầu tiên</p><h1>Giữ cách Laravel nghĩ.<br><em>Thêm cách SPA chạy.</em></h1></div>
-            <div class="page-hero-aside"><p>Bắt đầu từ module, route và controller quen thuộc; Saola thêm view source và pipeline biên dịch phía trên chúng.</p><dl><div><dt>TIME TO MODEL</dt><dd>4 bước</dd></div><div><dt>REQUIRES</dt><dd>PHP + Node.js</dd></div></dl></div>
+            <div class="page-hero-aside"><p>Bắt đầu từ module, route và controller quen thuộc; Saola thêm view source và pipeline biên dịch phía trên chúng.</p><dl><div><dt>TIME TO MODEL</dt><dd>5 bước</dd></div><div><dt>REQUIRES</dt><dd>PHP 8.3+ và Node.js</dd></div></dl></div>
         </section>
 
         <section class="start-layout">
-            <aside><span>TRÊN TRANG NÀY</span><a href="#module">01 / Module</a><a href="#view">02 / View</a><a href="#compile">03 / Compile</a><a href="#verify">04 / Verify</a></aside>
+            <aside><span>TRÊN TRANG NÀY</span><a href="#install">00 / Cài đặt</a><a href="#module">01 / Module</a><a href="#view">02 / View</a><a href="#compile">03 / Compile</a><a href="#verify">04 / Verify</a></aside>
             <div class="start-steps">
+                <article id="install"><span>00</span><div><p class="kicker"><span>INSTALL</span> Hai trình quản lý gói</p><h2>Compiler qua Composer, builder qua npm.</h2><p>Trình biên dịch là package PHP nên đi bằng Composer; lớp điều phối build là package Node nên đi bằng npm. Composer tạo <code>vendor/bin/saoc</code> và builder tự dò tới đó — không cần cấu hình gì thêm.</p>
+                    <code-block lang="bash">
+@verbatim
+composer require saola/core saola/compiler
+npm install --save-dev @saolabs/builder
+npm install @saolabs/client
+@endverbatim
+                    </code-block>
+                    <p>Muốn trỏ tới bản khác thì đặt <code>SAOLA_PHP_COMPILER</code> (đường dẫn tới <code>saoc</code>) hoặc <code>SAOLA_PHP_BINARY</code> (chọn bản PHP).</p>
+                </div></article>
                 <article id="module"><span>01</span><div><p class="kicker"><span>ROUTE</span> Module first</p><h2>Khai báo route trong context.</h2><p>Module giữ controller, service và route gần nhau. Context quyết định registry và asset bundle nào phục vụ request.</p>
                     <code-block lang="php">
 @verbatim

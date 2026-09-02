@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 <template>
     @extends(__layout__ + "docs")
     @block('doc')
@@ -7,46 +8,125 @@
                 <h1>Cấu trúc file .sao.</h1>
             </div>
             <div class="page-hero-aside">
-                <p>Bốn phần theo đúng thứ tự: khai báo, template, script setup và style. Wrapper của template quyết định bạn viết cú pháp kiểu JavaScript hay kiểu PHP.</p>
+                <p>Một file <code>.sao</code> là Single-File Component (SFC) gồm 4 phần theo đúng thứ tự: Khai báo đầu file, Template giao diện, Script setup xử lý logic và Style.</p>
             </div>
         </header>
 
         <div class="doc-body">
             <p class="kicker"><span>SFC</span> Single-file component</p>
             <h2>Bốn phần, theo đúng thứ tự.</h2>
-            <p>Một file <code>.sao</code> gồm khai báo ở đầu file, template, <code>&lt;script setup&gt;</code> và <code>&lt;style&gt;</code>. Wrapper của template quyết định syntax mode.</p>
+            <p>Một file <code>.sao</code> tổ chức toàn bộ khai báo ở đầu file, template giao diện, logic <code>&lt;script setup&gt;</code> và <code>&lt;style&gt;</code> trong cùng một file duy nhất:</p>
+
             <div class="stack-diagram">
                 <article>
                     <span>01 / DECLARATIONS</span>
                     <strong>Đầu file</strong>
-                    <p><code class="directive-token">import</code>&nbsp; <code class="directive-token">vars</code>&nbsp; <code class="directive-token">props</code>&nbsp; <code class="directive-token">states</code>&nbsp; <code class="directive-token">const</code>&nbsp; <code class="directive-token">let</code>&nbsp; <code class="directive-token">await</code> — giữ nguyên thứ tự khai báo.</p>
+                    <p><code class="directive-token">import</code>&nbsp; <code class="directive-token">vars</code>&nbsp; <code class="directive-token">props</code>&nbsp; <code class="directive-token">states</code>&nbsp; <code class="directive-token">const</code>&nbsp; <code class="directive-token">let</code>&nbsp; <code class="directive-token">await</code> — giữ nguyên thứ tự khai báo chuẩn.</p>
                 </article>
                 <article>
                     <span>02 / TEMPLATE</span>
-                    <strong>HTML + directive</strong>
-                    <p><code>&lt;template&gt;</code> hoặc <code>&lt;sao:blade&gt;</code> bật <em>modern syntax</em> kiểu JS; <code>&lt;blade&gt;</code> là legacy pass-through cú pháp PHP.</p>
+                    <strong>HTML + Directives</strong>
+                    <p><code>&lt;template&gt;</code> hoặc <code>&lt;sao:blade&gt;</code> kích hoạt <em>modern syntax</em> (cú pháp JS hiện đại); <code>&lt;blade&gt;</code> là legacy pass-through cú pháp PHP Blade truyền thống.</p>
                 </article>
                 <article>
                     <span>03 / SCRIPT SETUP</span>
-                    <strong>Logic phía client</strong>
-                    <p>Export default một object method. Method đọc thẳng state và setter trong closure, không cần <code>this.</code>. <code>lang="ts"</code> thì output ra <code>.ts</code>.</p>
+                    <strong>Logic Client Runtime</strong>
+                    <p>Export default một object method. Hàm đọc/ghi trực tiếp reactive state và setter trong closure mà không cần dùng tiền tố <code>this.</code>.</p>
                 </article>
                 <article>
                     <span>04 / STYLE</span>
-                    <strong>CSS của view</strong>
-                    <p><code>&lt;style scoped&gt;</code> gắn theo subtree của view, <code>&lt;style&gt;</code> là global. <code>&lt;link rel="stylesheet"&gt;</code> ở cấp file thành asset có ref-count.</p>
+                    <strong>CSS của View</strong>
+                    <p><code>&lt;style scoped&gt;</code> tự động cô lập CSS theo subtree của view; <code>&lt;style&gt;</code> áp dụng global cho toàn trang.</p>
                 </article>
             </div>
+
             <p class="ov-sub">Modern syntax so với legacy</p>
+            <p>Thẻ bao bọc template quyết định phong cách cú pháp biểu thức:</p>
+
             <div class="directive-table">
-                <div><div class="dt-key"><code>Biến</code></div><span>modern <code>user.name</code> — legacy <code>$user-&gt;name</code></span><b>expression</b></div>
-                <div><div class="dt-key"><code>Vòng lặp</code></div><span>modern <code>items as item</code> — legacy <code>$items as $item</code></span><b>control</b></div>
-                <div><div class="dt-key"><code>Object</code></div><span>modern <code>&#123;key: value&#125;</code> — legacy <code>['key' =&gt; $value]</code></span><b>literal</b></div>
-                <div><div class="dt-key"><code>Nối chuỗi</code></div><span>modern template literal — legacy toán tử <code>.</code></span><b>string</b></div>
+                <div><div class="dt-key"><code>Truy cập biến</code></div><span>Modern: <code>user.name</code> &nbsp;—&nbsp; Legacy: <code>$user-&gt;name</code></span><b>expression</b></div>
+                <div><div class="dt-key"><code>Vòng lặp</code></div><span>Modern: <code>items as item</code> &nbsp;—&nbsp; Legacy: <code>$items as $item</code></span><b>control</b></div>
+                <div><div class="dt-key"><code>Object Literal</code></div><span>Modern: <code>&#123;key: value&#125;</code> &nbsp;—&nbsp; Legacy: <code>['key' =&gt; $value]</code></span><b>literal</b></div>
+                <div><div class="dt-key"><code>Nối chuỗi</code></div><span>Modern: Template literal <code>`Hello ${name}`</code> &nbsp;—&nbsp; Legacy: <code>'Hello ' . $name</code></span><b>string</b></div>
+                <div><div class="dt-key"><code>Toán tử điều kiện</code></div><span>Modern: <code>item.isActive ? 'active' : ''</code> &nbsp;—&nbsp; Legacy: <code>$item-&gt;isActive ? 'active' : ''</code></span><b>operator</b></div>
             </div>
+
             <div class="ov-note">
-                Preprocessor chạy hai lượt: lượt một thu thập bảng ký hiệu, lượt hai biến đổi biểu thức. Nhờ vậy nó biết <code>user</code> là state hay biến vòng lặp trước khi quyết định dịch thành <code>$user</code> hay giữ nguyên.
+                <strong>Cơ chế Preprocessor:</strong> Trình biên dịch Saola phân tích cú pháp theo 2 lượt: Lượt 1 thu thập bảng ký hiệu định danh (bóc tách <code>&#64;vars</code>, <code>&#64;props</code>, <code>&#64;states</code>). Lượt 2 biến đổi biểu thức template. Nhờ vậy, Saola tự động suy luận chính xác biến nào là Server Variable (sinh ra <code>$var</code> ở Blade) và biến nào là Client Reactive State trước khi tạo mã.
             </div>
+
+            <p class="kicker" style="margin-top: 56px;"><span>VÍ DỤ TỔNG HỢP</span> Full Component</p>
+            <h2>Mã nguồn mẫu hoàn chỉnh</h2>
+            <p>Dưới đây là một file <code>.sao</code> thực tế kết hợp hài hòa cả 4 phân vùng đã nêu trên:</p>
+
+            <code-block lang="sao">
+@verbatim
+<!-- 1. KHAI BÁO ĐẦU FILE (Giữ đúng thứ tự) -->
+&#64;import('web.components.user-avatar')
+&#64;vars(currentUser, title = 'Hồ sơ người dùng')
+&#64;props({ theme: 'dark', showBio: true })
+&#64;states({ count: 0, isEditing: false })
+&#64;const(MAX_BIO_LENGTH = 250)
+&#64;let(canEdit = currentUser.id === 1)
+
+<!-- 2. TEMPLATE (Giao diện + Directives) -->
+&lt;template&gt;
+    &#64;extends(__layout__ + "public")
+    &#64;block('content')
+        &lt;div class="profile-card profile-card--{{ theme }}"&gt;
+            &lt;user-avatar user="{{ currentUser }}" size="large" /&gt;
+            &lt;h2&gt;{{ currentUser.name }}&lt;/h2&gt;
+            &lt;p class="title"&gt;{{ title }}&lt;/p&gt;
+
+            &#64;if(showBio)
+                &lt;p class="bio"&gt;{{ currentUser.bio }}&lt;/p&gt;
+            &#64;endif
+
+            &lt;div class="actions"&gt;
+                &lt;button &#64;click(setCount(count + 1))&gt;
+                    👍 Lượt thích: {{ count }}
+                &lt;/button&gt;
+                &#64;if(canEdit)
+                    &lt;button &#64;click(setIsEditing(!isEditing))&gt;
+                        {{ isEditing ? 'Đóng' : 'Chỉnh sửa' }}
+                    &lt;/button&gt;
+                &#64;endif
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &#64;endblock
+&lt;/template&gt;
+
+<!-- 3. SCRIPT SETUP (Logic tương tác Client) -->
+&lt;script setup lang="ts"&gt;
+    export default {
+        started() {
+            console.log('Component mounted for user:', currentUser.name);
+        },
+        customMethod() {
+            setCount(0);
+        }
+    };
+&lt;/script&gt;
+
+<!-- 4. STYLE (CSS Scoped hoặc Global) -->
+&lt;style scoped&gt;
+    .profile-card {
+        padding: 24px;
+        border-radius: 12px;
+        background: #ffffff;
+    }
+    .profile-card--dark {
+        background: #18181b;
+        color: #ffffff;
+    }
+    .actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+    }
+&lt;/style&gt;
+@endverbatim
+            </code-block>
         </div>
 
         <a class="doc-next" href="/docs/directives">

@@ -1,55 +1,389 @@
+@import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
     @block('doc')
-        <section class="page-hero page-hero-architecture">
+        <header class="page-hero">
             <div>
-                <p class="kicker"><span>01 / ARCHITECTURE</span> Tổng quan kiến trúc</p>
-                <h1>Laravel ở tầng lõi.<br><em>SPA ở trải nghiệm.</em></h1>
+                <p class="kicker"><span>01</span> NỀN TẢNG</p>
+                <h1>Kiến trúc hệ thống Saola.</h1>
             </div>
-            <div class="page-hero-aside"><p>Saola định nghĩa một chuỗi contract đồng nhất từ server request đến client DOM — hợp nhất sức mạnh backend Laravel với độ mượt mà của SPA mà không cần tách rời API.</p><dl><div><dt>INPUT</dt><dd>Route, Context & Controller</dd></div><div><dt>OUTPUT</dt><dd>SSR HTML → Hydrate → SPA Runtime</dd></div></dl></div>
-        </section>
-
-        <section class="stack-section">
-            <div class="section-index"><span>01</span><p>Kiến trúc<br>4 tầng lõi</p></div>
-            <div class="stack-diagram">
-                <article><span>APPLICATION</span><strong>Modules & Contexts</strong><p>Phân tách Web, Admin, Mobile thành các module độc lập; quản lý route, controller và view theo đúng ngữ cảnh.</p><i>04</i></article>
-                <article><span>CORE</span><strong>Laravel Integration</strong><p>Tích hợp sâu vào pipeline Laravel: điều phối context theo request, sinh SSR payload và kết nối view response.</p><i>03</i></article>
-                <article><span>COMPILER</span><strong>Dual AST Engine</strong><p>Một file <code>.sao</code> duy nhất biên dịch đồng thời ra Blade template (SSR) và JavaScript module (SPA runtime).</p><i>02</i></article>
-                <article><span>CLIENT</span><strong>Reactive SPA Runtime</strong><p>Tự động hydrate DOM có sẵn, duy trì reactive state, tái sử dụng layout và quản lý client cache thông minh.</p><i>01</i></article>
+            <div class="page-hero-aside">
+                <p>Saola hợp nhất sức mạnh backend Laravel 13 với trải nghiệm mượt mà của SPA hiện đại. Một mã nguồn <code>.sao</code> duy nhất được biên dịch song song cho cả SSR phía máy chủ và reactive runtime phía trình duyệt.</p>
+                <dl>
+                    <div><dt>Backend</dt><dd>Laravel 13 &amp; saola/core</dd></div>
+                    <div><dt>Compiler</dt><dd>saola/compiler (PHP AST)</dd></div>
+                    <div><dt>Frontend</dt><dd>@saolabs/client (Reactive SPA)</dd></div>
+                </dl>
             </div>
-        </section>
+        </header>
 
-        <section class="request-section">
-            <div class="section-head compact"><p class="kicker"><span>REQUEST FLOW</span> Vòng đời từ URL đến tương tác</p><h2>Một mã nguồn,<br>hai giai đoạn vận hành.</h2></div>
-            <ol class="flowlane">
-                <li class="fl-phase"><span>SERVER-SIDE (SSR)</span></li>
-                <li class="fl"><b>01</b><strong>Định tuyến & Phân giải Context</strong><p>Request đi vào đúng Context (Web/Admin/Mobile), nạp route module tương ứng mà không tải dư thừa các registry khác.</p><code>GET /projects/42</code></li>
-                <li class="fl"><b>02</b><strong>Controller xử lý & tạo View Response</strong><p>Controller xử lý logic nghiệp vụ, gắn kết view component và đóng gói SSR boot payload chuẩn xác.</p><code>context: web</code></li>
-                <li class="fl"><b>03</b><strong>Blade kết xuất HTML hoàn chỉnh</strong><p>Toàn bộ layout, slot, component con và dữ liệu server được render thành HTML chuẩn SEO trước khi gửi về client.</p><code>SSR / READY</code></li>
-                <li class="fl-cross"><span>Truyền tải HTML trọn vẹn kèm Boot Payload qua HTTP</span></li>
-                <li class="fl-phase"><span>CLIENT-SIDE (SPA)</span></li>
-                <li class="fl"><b>04</b><strong>Hydration & Gắn kết Reactivity</strong><p>Client runtime tiếp quản DOM hiện hữu thông qua các marker định danh, kích hoạt event listener mà không render lại DOM có sẵn.</p><code>HYDRATE / CLAIM</code></li>
-                <li class="fl"><b>05</b><strong>Client Router chuyển sang chế độ SPA</strong><p>Các lượt chuyển trang sau đó chỉ nạp delta dữ liệu, tái sử dụng layout chung và chỉ cập nhật đúng vùng view thay đổi.</p><code>SPA / ACTIVE</code></li>
-                <li class="fl-loop"><span>Từ thời điểm này, ứng dụng hoạt động thuần SPA — trải nghiệm mượt mà tức thì, không tải lại trang.</span></li>
-            </ol>
-        </section>
+        <div class="doc-body">
+            <p class="kicker"><span>01. TỔNG QUAN</span> Bốn tầng hệ sinh thái</p>
+            <h2>Kiến trúc 4 tầng từ Server đến Client DOM.</h2>
+            <p>Hệ sinh thái Saola được thiết kế theo các tầng ranh giới rõ ràng, kết nối với nhau bằng các contract chặt chẽ được định nghĩa bằng spec:</p>
 
-        <section class="context-panel">
-            <div>
-                <p class="kicker"><span>OCTANE SAFE</span> Context Isolate</p>
-                <h2>State sạch hoàn toàn<br>trên từng request.</h2>
-            </div>
-            <div>
-                <p>Trong các runtime sống lâu (Laravel Octane, FrankenPHP, Swoole), việc rò rỉ state giữa các request là rủi ro nghiêm trọng. Saola bảo vệ kiến trúc bằng cơ chế cô lập request-scoped: mỗi request nạp đúng context độc lập và tự động giải phóng bộ nhớ ngay sau khi hoàn tất chu kỳ render.</p>
-                <div class="context-cells">
-                    <span>WEB<small>public registry</small></span>
-                    <span>ADMIN<small>admin registry</small></span>
-                    <span>MOBILE<small>mobile registry</small></span>
+            <div class="ov-grid">
+                <div class="ov-card">
+                    <span>Composer</span>
+                    <h3>saola/core</h3>
+                    <p>Thư viện lõi PHP trên nền Laravel: <code>System::context()</code> routing, bộ ba base controller (Web, Admin, Api), auto-discovery module, Blade directives và <code>ViewStorageManager</code> sinh marker SSR.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Composer</span>
+                    <h3>saola/compiler</h3>
+                    <p>Trình biên dịch file <code>.sao</code> viết bằng PHP thuần. Phân tích cú pháp thành một cây AST duy nhất, sau đó emit đồng thời Blade template (SSR) và TypeScript/JavaScript component (CSR).</p>
+                </div>
+                <div class="ov-card">
+                    <span>npm</span>
+                    <h3>@saolabs/builder</h3>
+                    <p>Công cụ CLI <code>sao-compile</code>. Đọc cấu hình context từ <code>sao.config.json</code>, quét thư mục view, gọi <code>saoc</code>, sinh <code>registry.ts</code> và tích hợp mượt mà vào Vite/Webpack.</p>
+                </div>
+                <div class="ov-card">
+                    <span>npm</span>
+                    <h3>@saolabs/client</h3>
+                    <p>SPA runtime phía browser: Application container, Router, ViewManager, ViewController, hệ thống Reactive State, PageCache và bộ client services (Http, Event, Store, Head…).</p>
                 </div>
             </div>
-        </section>
+
+            <p class="kicker"><span>02. CẤU TRÚC THƯ MỤC</span> Tổ chức toàn bộ dự án</p>
+            <h2>Cấu trúc thư mục chuẩn của ứng dụng Saola.</h2>
+            <p>Dự án Saola tổ chức mã nguồn theo hướng tách biệt rõ ràng giữa <strong>Backend Modules</strong>, <strong>Mã nguồn View gốc (.sao)</strong>, <strong>Mã nguồn View đã biên dịch</strong> và <strong>Tệp tĩnh phục vụ client</strong>:</p>
+
+            <code-window label="DIRECTORY" title="Cấu trúc thư mục dự án Saola" lang="none">
+@verbatim
+saola-project/
+├── app/
+│   ├── Http/Controllers/          # Base controllers (WebController, AdminController, ApiController)
+│   ├── Modules/                   # Các Module nghiệp vụ (Auto-discovered đệ quy)
+│   │   ├── Home/                  # Module trang chủ
+│   │   ├── Docs/                  # Module tài liệu
+│   │   ├── User/                  # Module người dùng
+│   │   └── Posts/                 # Module bài viết
+│   ├── Models/                    # Shared Eloquent models
+│   └── Providers/
+│       ├── AppServiceProvider.php
+│       └── ModuleServiceProvider.php # Khai báo Contexts & discovery modules
+│
+├── resources/
+│   ├── saola/                     # MÃ NGUỒN GỐC: Chứa các file .sao theo từng context
+│   │   ├── web/                   # Context Web (Public SPA)
+│   │   │   ├── views/             # Layouts, pages, components dạng .sao
+│   │   │   └── app/               # Logic TS phía client (services, state, handlers)
+│   │   ├── admin/                 # Context Admin (Quản trị)
+│   │   │   ├── views/
+│   │   │   └── app/
+│   │   ├── mobile/                # Context Mobile (Webview / PWA)
+│   │   │   └── views/
+│   │   └── _shared/               # View và logic dùng chung đa context
+│   │
+│   ├── js/
+│   │   └── saola/                 # MÃ BIÊN DỊCH: TypeScript/JS sinh ra từ .sao
+│   │       ├── app.ts             # Entry point client SPA
+│   │       ├── views.ts           # Combined view registry
+│   │       ├── web/               # Registry & compiled views của Web context
+│   │       └── admin/             # Registry & compiled views của Admin context
+│   │
+│   ├── views/                     # BLADE OUTPUT: Sinh ra từ .sao cho SSR
+│   │   ├── web/                   # Blade templates của Web context
+│   │   ├── admin/                 # Blade templates của Admin context
+│   │   └── _system/               # System partials (boot payload, marker helpers)
+│   │
+│   └── css/                       # CSS toàn cục & Tailwind
+│
+├── public/static/saola/           # BUILD OUTPUT: Bundle JavaScript/CSS cho client
+│   ├── web/js/app.js              # Bundle sản phẩm cho Web SPA
+│   ├── admin/js/app.js            # Bundle sản phẩm cho Admin SPA
+│   └── manifest.json              # Vite build manifest
+│
+├── config/
+│   ├── sao.php                    # Cấu hình compiler & options phía PHP
+│   └── spa.php                    # Cấu hình runtime SPA (mode, router, debug)
+│
+├── sao.config.json                # Cấu hình context & đường dẫn cho compiler CLI
+└── vite.config.js                 # Cấu hình đóng gói Vite
+@endverbatim
+            </code-window>
+
+            <p class="kicker"><span>03. KIẾN TRÚC BACKEND</span> Module tự chứa &amp; Controller theo Context</p>
+            <h2>Kiến trúc Backend: Module hóa đệ quy và Context-Aware.</h2>
+            <p>Mỗi module trong Saola là một đơn vị kinh doanh tự chứa (Self-contained Business Domain). Trong tầng HTTP, các controller được <strong>phân tách tường minh theo từng Context</strong> (Admin, Api, Web) với namespace và base controller chuyên biệt:</p>
+
+            <code-window label="DIRECTORY" title="app/Modules/{ModuleName}/" lang="none">
+@verbatim
+app/Modules/Posts/
+├── ModuleServiceProvider.php        # Khai báo bindings, dependencies & routes đa context
+├── Http/
+│   ├── Controllers/                 # CONTROLLER PHÂN ĐỊNH RÕ RÀNG THEO CONTEXT
+│   │   ├── Admin/                   # Context 'admin' (Trang quản trị, CRUD, phân quyền)
+│   │   │   └── PostController.php   # -> extends App\Http\Controllers\AdminController
+│   │   ├── Api/                     # Context 'api' (RESTful JSON API chuẩn)
+│   │   │   └── PostController.php   # -> extends App\Http\Controllers\ApiController
+│   │   └── Web/                     # Context 'web' (Public Website, SSR + SPA)
+│   │       └── PostController.php   # -> extends App\Http\Controllers\WebController
+│   │
+│   └── Requests/                    # Form Requests validate dữ liệu
+│       ├── CreatePostRequest.php
+│       └── UpdatePostRequest.php
+├── Models/                          # THỰC THỂ DỮ LIỆU CƠ SỞ
+│   └── Post.php                     # Eloquent Model (Cột, bảng, quan hệ database)
+├── Masks/                           # MẶT NẠ DỮ LIỆU ĐẦU RA (Data Transformer)
+│   ├── PostMask.php                 # Transform & bảo vệ các trường của Model khi ra ngoài
+│   └── PostCollection.php           # Collection mask cho danh sách
+├── Repositories/                    # TẦNG TRUY VẤN DỮ LIỆU
+│   ├── PostRepositoryInterface.php  # Contract truy vấn dữ liệu
+│   └── PostRepository.php           # Triển khai Repository pattern với Filter, Scope, OwnerAction
+└── Services/                        # TẦNG XỬ LÝ NGHIỆP VỤ
+    ├── PostServiceInterface.php     # Contract logic nghiệp vụ
+    └── PostService.php              # Xử lý nghiệp vụ, giao dịch, dispatch event
+@endverbatim
+            </code-window>
+
+            <div class="ov-note">
+                <strong>Model &amp; Mask:</strong> Model quản lý cấu trúc bảng và quan hệ cơ sở dữ liệu, trong khi Mask đóng vai trò là "mặt nạ" lọc — chỉ cho phép các trường được chỉ định đi ra Controller/View/API, ngăn ngừa lộ lọt dữ liệu nhạy cảm (Xem chi tiết tại <a href="/docs/mask">Tài liệu Mask &amp; Model</a>).
+            </div>
+
+            <p class="ov-sub">Phân định Context rõ ràng trong Controller</p>
+            <p>Sự phân chia thư mục <code>Http/Controllers/{Admin, Api, Web}</code> đảm bảo tính tách biệt ranh giới (Separation of Concerns), mỗi controller kế thừa đúng Base Controller của context đó:</p>
+
+            <div class="directive-table">
+                <div><div class="dt-key"><code>Controllers/Web</code></div><span>Kế thừa <code>WebController</code> (từ <code>BaseWebController</code>). Trả về view qua <code>$this->response()</code> hoặc <code>$this->responseModule()</code>, tự động nhận diện header <code>X-Sao-Response</code> để render Blade SSR hoặc trả JSON boot payload cho client SPA.</span><b>context: web</b></div>
+                <div><div class="dt-key"><code>Controllers/Admin</code></div><span>Kế thừa <code>AdminController</code> (từ <code>BaseWebController</code>). Tích hợp sẵn workflow hoàn chỉnh cho CRUD (index, list, detail, create, edit, trash, restore), middleware <code>auth</code>, kiểm tra quyền <code>permission:admin</code> và form validation.</span><b>context: admin</b></div>
+                <div><div class="dt-key"><code>Controllers/Api</code></div><span>Kế thừa <code>ApiController</code> (từ <code>BaseApiController</code>). Phục vụ RESTful JSON với chuẩn <code>ApiResponse</code> qua các helper: <code>jsonSuccess()</code>, <code>jsonError()</code>, <code>jsonCreated()</code>, <code>jsonNotFound()</code>, <code>jsonValidationError()</code>.</span><b>context: api</b></div>
+            </div>
+
+            <p class="ov-sub">Cơ chế Auto-Discovery đệ quy</p>
+            <p>Hệ thống tự động quét toàn bộ thư mục bên trong <code>app/Modules/</code>. Bất kỳ thư mục nào chứa class <code>ModuleServiceProvider</code> đều được nạp tự động vào chu kỳ khởi động của Laravel. Cơ chế này hỗ trợ <strong>Nested Sub-modules</strong> lồng nhau không giới hạn:</p>
+
+            <code-window label="PHP" title="Nested Modules Example" lang="php">
+@verbatim
+app/Modules/
+├── Store/
+│   ├── ModuleServiceProvider.php        # App\Modules\Store\ModuleServiceProvider
+│   ├── Http/Controllers/{Admin,Api,Web}
+│   └── Cart/                            # Sub-module lồng bên trong Store
+│       ├── ModuleServiceProvider.php    # App\Modules\Store\Cart\ModuleServiceProvider
+│       └── Http/Controllers/{Admin,Api,Web}
+@endverbatim
+            </code-window>
+
+            <p class="ov-sub">Đăng ký Route đa ngữ cảnh (Context-Aware Routing)</p>
+            <p>Routes không bị dồn vào một file <code>routes/web.php</code> khổng lồ. Thay vào đó, mỗi module tự quản lý routes của mình qua Fluent API của <code>System::context()</code> trong method <code>routes()</code>:</p>
+
+            <code-window label="PHP" title="app/Modules/Posts/ModuleServiceProvider.php" lang="php">
+@verbatim
+namespace App\Modules\Posts;
+
+use Saola\Core\Providers\ModuleServiceProvider as CoreServiceProvider;
+use Saola\Core\System;
+use App\Modules\Posts\Http\Controllers\Web\PostController as WebPostController;
+use App\Modules\Posts\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Modules\Posts\Http\Controllers\Api\PostController as ApiPostController;
+
+class ModuleServiceProvider extends CoreServiceProvider
+{
+    public function routes(): void
+    {
+        // 1. Web Context (Public Website)
+        System::context('web')
+            ->module(['slug' => 'posts', 'prefix' => '/posts', 'priority' => 10])
+            ->controller(WebPostController::class)
+            ->as('posts')
+            ->group(function ($module) {
+                $module->get('/', 'index')->name('index');
+                $module->get('/{slug}', 'detail')->name('detail');
+            });
+
+        // 2. Admin Context (Quản trị CRUD)
+        System::context('admin')
+            ->module('posts')
+            ->controller(AdminPostController::class)
+            ->group(function ($module) {
+                $module->get('/', 'viewIndexPage')->name('index');
+                $module->get('/create', 'viewCreatePage')->name('create');
+                $module->get('/{id}/edit', 'viewEditPage')->name('edit');
+                $module->post('/create', 'create')->name('store');
+                $module->post('/{id}/edit', 'update')->name('update');
+                $module->delete('/{id}', 'destroy')->name('destroy');
+            });
+
+        // 3. API Context (RESTful JSON)
+        System::context('api')
+            ->module(['slug' => 'posts', 'prefix' => '/posts'])
+            ->controller(ApiPostController::class)
+            ->as('posts')
+            ->group(function ($module) {
+                $module->get('/', 'index')->name('index');
+                $module->get('/{id}', 'show')->name('show');
+                $module->post('/', 'store')->name('store');
+            });
+    }
+}
+@endverbatim
+            </code-window>
+
+            <p class="kicker"><span>04. KIẾN TRÚC SAOLA VIEW</span> Context View &amp; Layout Composition</p>
+            <h2>Tổ chức View theo Context: Rõ ràng, mô-đun và tái sử dụng.</h2>
+            <p>Mã nguồn giao diện được đặt tại <code>resources/saola/</code> và phân chia theo từng <strong>Context View</strong>. Điều này giúp các giao diện độc lập về layout, asset và logic mà không bị lẫn lộn:</p>
+
+            <code-window label="DIRECTORY" title="resources/saola/{context}/views/" lang="none">
+@verbatim
+resources/saola/
+├── web/
+│   ├── views/
+│   │   ├── layouts/               # Các khung layout của Web: base.sao, docs.sao, public.sao, workspace.sao
+│   │   ├── modules/               # Page views phân theo module nghiệp vụ tương ứng:
+│   │   │   ├── home/              # index.sao, about.sao, contact.sao, todo.sao
+│   │   │   ├── docs/              # architecture.sao, contexts.sao, repository.sao...
+│   │   │   └── posts/             # list.sao, detail.sao
+│   │   ├── components/            # UI components tái sử dụng: code-window.sao, statcard.sao, modal.sao
+│   │   └── partials/              # Layout snippets nhỏ: head.sao, nav.sao, footer.sao
+│   └── app/                       # Mã nguồn Client Services, Stores, Handlers riêng cho Web
+│
+├── admin/
+│   ├── views/
+│   │   ├── layouts/               # Layout quản trị: master.sao, auth.sao
+│   │   ├── modules/               # Views theo từng module admin: dashboard/, users/, posts/
+│   │   └── components/            # Data-table, form-builder, filter-bar
+│   └── app/                       # Client logic của Admin
+│
+├── mobile/
+│   ├── views/                     # Views tối ưu cho Mobile PWA / Webview (giao diện vuốt chạm, bottom bar)
+│   └── app/                       # Service PWA, offline cache
+│
+└── _shared/                       # Views, layouts và component dùng chung giữa nhiều context
+@endverbatim
+            </code-window>
+
+            <p class="ov-sub">Cơ chế phân giải đường dẫn View (View Path Resolution)</p>
+            <p>Saola sử dụng quy ước đường dẫn phân cấp dạng chấm (Dotted Path) và biến hệ thống <code>__layout__</code> để đảm bảo tính linh hoạt tối đa:</p>
+
+            <div class="directive-table">
+                <div><div class="dt-key"><code>__layout__ + 'base'</code></div><span>Tự động phân giải thành <code>web.layouts.base</code> khi ở context <code>web</code>, hoặc <code>admin.layouts.base</code> khi ở context <code>admin</code>.</span><b>layout</b></div>
+                <div><div class="dt-key"><code>@import('web.components.code-window')</code></div><span>Nhúng một component `.sao` con vào template hiện tại, hỗ trợ truyền props và slots <code>@children</code>.</span><b>component</b></div>
+                <div><div class="dt-key"><code>@include('web.partials.head')</code></div><span>Nạp một partial template tĩnh hoặc snippet dùng chung vào view.</span><b>include</b></div>
+                <div><div class="dt-key"><code>$this->responseModule('posts.list', $data)</code></div><span>Controller tự động trỏ đến file view <code>resources/saola/{context}/views/modules/posts/list.sao</code>.</span><b>controller</b></div>
+            </div>
+
+            <p class="ov-sub">Layout Composition: Block, Extend và Yield</p>
+            <p>Hệ thống kế thừa layout trong Saola mô phỏng cơ chế mạnh mẽ của Blade nhưng kết nối trực tiếp với Client SPA ViewManager:</p>
+
+            <code-window label="SAOLA" title="resources/saola/web/views/modules/posts/list.sao" lang="html">
+@verbatim
+&#64;props({
+    title: 'Danh sách bài viết',
+    posts: []
+})
+&#64;states({
+    search: '',
+    page: 1
+})
+
+&lt;template&gt;
+    &#64;extends(__layout__ + "public")
+
+    &#64;block('content')
+        &lt;main class="posts-page"&gt;
+            &lt;header&gt;
+                &lt;h1&gt;&#123;&#123; title &#125;&#125;&lt;/h1&gt;
+                &lt;input type="text" placeholder="Tìm kiếm..." &#64;bind(search)&gt;
+            &lt;/header&gt;
+
+            &lt;section class="posts-grid"&gt;
+                &#64;foreach(posts as post)
+                    &#64;key(post['id'])
+                    &lt;article class="post-card"&gt;
+                        &lt;h2&gt;&#123;&#123; post['title'] &#125;&#125;&lt;/h2&gt;
+                        &lt;p&gt;&#123;&#123; post['summary'] &#125;&#125;&lt;/p&gt;
+                    &lt;/article&gt;
+                &#64;endforeach
+            &lt;/section&gt;
+        &lt;/main&gt;
+    &#64;endblock
+&lt;/template&gt;
+
+&lt;script setup lang="ts"&gt;
+    export default {
+        mounted() {
+            console.log('Posts list view is active in SPA mode');
+        }
+    };
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+    .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .post-card { padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: white; }
+&lt;/style&gt;
+@endverbatim
+            </code-window>
+
+            <p class="kicker"><span>05. PIPELINE &amp; HYDRATION</span> Chu trình biên dịch &amp; Thực thi</p>
+            <h2>Pipeline biên dịch 2 giai đoạn (Dual-Target Pipeline).</h2>
+            <p>Trình biên dịch Saola xử lý file <code>.sao</code> qua hai giai đoạn rõ ràng:</p>
+
+            <div class="ov-grid">
+                <div class="ov-card">
+                    <span>Giai đoạn 1</span>
+                    <h3>sao-compile (PHP CLI)</h3>
+                    <p>Đọc file <code>.sao</code>, phân tích AST, sinh song song file <strong>Blade template</strong> cho server (tại <code>resources/views/{ctx}/</code>) và <strong>TypeScript view</strong> cho client (tại <code>resources/js/saola/{ctx}/</code>), đồng thời tạo <code>registry.ts</code>.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Giai đoạn 2</span>
+                    <h3>Vite Bundler</h3>
+                    <p>Biên dịch TypeScript, nạp registry và đóng gói thành tệp bundle JavaScript tối ưu cho từng context tại <code>public/static/saola/{ctx}/js/app.js</code>.</p>
+                </div>
+            </div>
+
+            <p class="ov-sub">Vòng đời Request: Từ URL đến Tương tác Reactive</p>
+            <ol class="flow-timeline">
+                <li>
+                    <span>01</span>
+                    <div>
+                        <strong>Định tuyến &amp; Phân giải Context (Server)</strong>
+                        <p>Request đến, middleware context chạy trước. <code>System::context()</code> khớp đúng route trong module đã đăng ký mà không tải dư thừa các registry khác.</p>
+                    </div>
+                    <code>GET /posts/12</code>
+                </li>
+                <li>
+                    <span>02</span>
+                    <div>
+                        <strong>Controller xử lý &amp; Gắn kết View (Server)</strong>
+                        <p>Controller thực hiện logic, nạp dữ liệu từ Service/Repository và tạo view response đóng gói kèm SSR boot payload.</p>
+                    </div>
+                    <code>context: web</code>
+                </li>
+                <li>
+                    <span>03</span>
+                    <div>
+                        <strong>Blade Render HTML hoàn chỉnh (Server)</strong>
+                        <p>Mọi layout, slot, block và component con được render thành HTML hoàn chỉnh kèm các comment marker động định danh chuẩn xác.</p>
+                    </div>
+                    <code>SSR / READY</code>
+                </li>
+                <li>
+                    <span>04</span>
+                    <div>
+                        <strong>Client Hydration &amp; Claim DOM (Browser)</strong>
+                        <p>Runtime <code>@saolabs/client</code> tiếp quản DOM hiện hữu qua các marker, kích hoạt event listener và reactive bindings mà <em>không hề render lại DOM có sẵn</em>.</p>
+                    </div>
+                    <code>HYDRATE / CLAIM</code>
+                </li>
+                <li>
+                    <span>05</span>
+                    <div>
+                        <strong>Chuyển sang chế độ SPA hoàn toàn (Browser)</strong>
+                        <p>Các lần chuyển trang tiếp theo chỉ gọi API lấy delta data JSON, tái sử dụng layout chung (Layout Reuse) và chỉ cập nhật đúng vùng view con thay đổi.</p>
+                    </div>
+                    <code>SPA / ACTIVE</code>
+                </li>
+            </ol>
+
+            <div class="ov-note">
+                <strong>Octane Safe &amp; Request Scoped:</strong> Trong các môi trường worker sống lâu (Laravel Octane, FrankenPHP, Swoole), Saola đảm bảo state được cô lập tuyệt đối theo từng request thông qua <code>ViewContextService</code>, không làm rò rỉ dữ liệu giữa các người dùng.
+            </div>
+        </div>
+
         <a class="doc-next" href="/docs/contexts">
-            <div><span>Tiếp theo</span><strong>Context, module & controller</strong></div>
+            <div><span>Tiếp theo</span><strong>Context, module &amp; controller</strong></div>
             <span class="button button-primary">Đọc tiếp →</span>
         </a>
     @endblock

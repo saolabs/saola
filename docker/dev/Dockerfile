@@ -15,7 +15,6 @@ RUN apt-get update \
         libpq-dev \
         libxml2-dev \
         libzip-dev \
-        python3 \
         unzip \
     && docker-php-ext-install dom mbstring pdo_pgsql pcntl xml xmlwriter zip \
     && pecl install redis \

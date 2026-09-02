@@ -38,7 +38,7 @@ services:
       - saola_vendor:/workspace/saola/vendor
       - saola_node_modules:/workspace/saola/node_modules
       - client_node_modules:/workspace/client/node_modules
-      - compiler_node_modules:/workspace/compiler/node_modules
+      - builder_node_modules:/workspace/builder/node_modules
     depends_on:
       postgres:
         condition: service_healthy
@@ -141,7 +141,7 @@ volumes:
     driver: local
   client_node_modules:
     driver: local
-  compiler_node_modules:
+  builder_node_modules:
     driver: local
   redis_data:
     driver: local

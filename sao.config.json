@@ -21,12 +21,18 @@
     "contexts": {
         "web": {
             "name": "Web",
-            "app": ["web/app"],
+            "app": [
+                "web/app"
+            ],
             "views": {
-                "web": "web/views"
+                "web": "web/views",
+                "themes.aurora": "themes/aurora/views",
+                "themes.demo": "themes/demo/views"
             },
             "blade": {
-                "web": "web"
+                "web": "web",
+                "themes.aurora": "themes/aurora",
+                "themes.demo": "themes/demo"
             },
             "compiled": {
                 "views": "web/views",
@@ -39,7 +45,9 @@
         },
         "admin": {
             "name": "Admin Panel",
-            "app": ["admin/app"],
+            "app": [
+                "admin/app"
+            ],
             "views": {
                 "admin": "admin/views"
             },
@@ -54,7 +62,9 @@
         },
         "mobile": {
             "name": "Mobile",
-            "app": ["mobile/app"],
+            "app": [
+                "mobile/app"
+            ],
             "views": {
                 "mobile": "mobile/views"
             },

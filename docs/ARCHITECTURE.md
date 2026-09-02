@@ -5,7 +5,7 @@
 Saola là một Laravel SPA framework sử dụng kiến trúc modular multi-context. Hệ thống xây dựng trên Laravel 13 với:
 
 - **`saola/core`** (Composer) — Thư viện lõi PHP: routing, controllers, services, module system
-- **`@saolabs/compiler`** (npm) — Biên dịch `.sao` single-file components → Blade + TypeScript
+- **`@saolabs/builder`** (npm) — Điều phối build `.sao`, gọi `saola/compiler`, sinh registry và bundle
 - **`@saolabs/client`** (npm) — SPA runtime: Application, ViewController, reactive system
 
 ```
@@ -259,7 +259,7 @@ resources/saola/{ctx}/views/*.sao        resources/js/saola/app.js
               resources/js/saola/{ctx}/registry.ts
 ```
 
-### Stage 1: Compiler (`@saolabs/compiler`)
+### Stage 1: Builder (`@saolabs/builder`)
 
 Biên dịch `.sao` single-file components thành cả Blade template (server) và TypeScript (client):
 
@@ -357,7 +357,7 @@ export default {
 |---------|----------|---------|
 | `saola/core` | Composer (Packagist) | PHP core: routing, controllers, services, module system |
 | `@saolabs/client` | npm | SPA runtime: Application, ViewController, reactive system |
-| `@saolabs/compiler` | npm | CLI compiler: `.sao` → Blade + TypeScript |
+| `@saolabs/builder` | npm | CLI/build plugins; dùng `saola/compiler` để emit Blade + JS/TS |
 
 ## Infrastructure
 

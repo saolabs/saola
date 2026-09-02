@@ -16,19 +16,24 @@
         </header>
 
         <div class="doc-body">
-            <p class="kicker"><span>PACKAGES</span> Ba gói, một hợp đồng</p>
-            <h2>Ba mảnh ghép, một contract chung.</h2>
-            <p>Hệ sinh thái chia làm ba gói phát hành độc lập. Điểm nối giữa chúng không phải là quy ước ngầm mà là một spec viết ra giấy: <code>RUNTIME_CONTRACT</code> mô tả chính xác compiler được phép emit gì và client phải hiểu gì.</p>
-            <div class="ov-grid ov-grid--3">
+            <p class="kicker"><span>PACKAGES</span> Bốn gói, một hợp đồng</p>
+            <h2>Bốn mảnh ghép, một contract chung.</h2>
+            <p>Hệ sinh thái chia làm bốn gói phát hành độc lập — hai qua Composer, hai qua npm. Điểm nối giữa chúng không phải là quy ước ngầm mà là một spec viết ra giấy: <code>RUNTIME_CONTRACT</code> mô tả chính xác compiler được phép emit gì và client phải hiểu gì.</p>
+            <div class="ov-grid">
                 <div class="ov-card">
                     <span>Composer</span>
                     <h3>saola/core</h3>
                     <p>Lõi PHP: <code>System::context()</code> routing, base controller cho web/admin/api, module service provider, Blade directive và ViewStorageManager — nơi duy nhất sinh marker phía server.</p>
                 </div>
                 <div class="ov-card">
+                    <span>Composer</span>
+                    <h3>saola/compiler</h3>
+                    <p>Trình biên dịch <code>.sao</code> viết bằng PHP thuần. Một lần parse ra AST, emit song song Blade cho SSR và JavaScript/TypeScript cho CSR. CLI <code>saoc</code> chạy được không cần Node.</p>
+                </div>
+                <div class="ov-card">
                     <span>npm</span>
-                    <h3>&#64;saolabs/compiler</h3>
-                    <p>CLI <code>sao-compile</code>. Parse <code>.sao</code> thành AST rồi emit hai đầu ra từ cùng một cây: Blade cho SSR và TypeScript cho view runtime, kèm registry.</p>
+                    <h3>&#64;saolabs/builder</h3>
+                    <p>CLI <code>sao-compile</code>. Đọc <code>sao.config.json</code>, quét view, gọi <code>saola/compiler</code> qua <code>vendor/bin/saoc</code>, rồi ghi output, sinh registry và cắm vào Vite/Webpack. Builder không tự biên dịch.</p>
                 </div>
                 <div class="ov-card">
                     <span>npm</span>

@@ -1,0 +1,12 @@
+@states({ n: 0 })
+<template>
+    @extends(__layout__ + "public")
+    @block('content')
+        <section class="ping">
+            <h1>abc/index — base mặc định <code>web</code></h1>
+            <p>Route <code>web.abc.index</code> → <code>web.modules.abc.index</code>.
+               Đổi base của context web thì trang này đổi theo mà controller không sửa gì.</p>
+            <button @click(setN(n + 1))>n = {{ n }}</button>
+        </section>
+    @endblock
+</template>

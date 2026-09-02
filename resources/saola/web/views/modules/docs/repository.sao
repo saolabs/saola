@@ -5,67 +5,245 @@
         <header class="page-hero">
             <div>
                 <p class="kicker"><span>07</span> BACKEND</p>
-                <h1>Repository và truy vấn.</h1>
+                <h1>Repository và Quản lý Dữ liệu.</h1>
             </div>
             <div class="page-hero-aside">
-                <p>Repository là nơi duy nhất trong ứng dụng biết tới model. Khai báo một dòng <code>$model</code> là có sẵn CRUD, filter, cache, soft delete và chủ sở hữu bản ghi.</p>
+                <p>Repository là lớp trừu tượng trung gian duy nhất làm việc trực tiếp với Model. Đóng gói trọn vẹn CRUD, truy vấn nâng cao, tự động lọc theo HTTP Request, phân trang, caching, quản lý phân quyền chủ sở hữu và vòng đời dữ liệu.</p>
             </div>
         </header>
 
         <div class="doc-body">
-            <p class="kicker"><span>KHAI BÁO</span> Một dòng là đủ</p>
-            <h2>Kế thừa <code>BaseRepository</code>, trỏ vào model.</h2>
-            <code-window label="PHP" title="app/Modules/User/Repositories/UserRepository.php" lang="php">
+            <p class="kicker"><span>KHỞI TẠO</span> Một dòng khai báo</p>
+            <h2>Kế thừa <code>BaseRepository</code>, liên kết Model.</h2>
+            <p>Không cần tự viết lại các câu lệnh SQL cơ bản hay query lặp đi lặp lại. Bạn chỉ cần kế thừa <code>BaseRepository</code> và chỉ định class Model tương ứng:</p>
+            <code-window label="PHP" title="app/Modules/Post/Repositories/PostRepository.php" lang="php">
 @verbatim
-class UserRepository extends BaseRepository
+namespace App\Modules\Post\Repositories;
+
+use Saola\Core\Repositories\BaseRepository;
+use App\Modules\Post\Models\Post;
+
+class PostRepository extends BaseRepository
 {
-    protected $model = User::class;
+    /**
+     * Khai báo Model liên kết
+     * &#64;var string
+     */
+    protected $model = Post::class;
 }
 @endverbatim
             </code-window>
-            <p>Không cần viết <code>all()</code>, <code>find()</code>, <code>create()</code>, <code>update()</code>, <code>delete()</code> — chúng đến từ các trait mà <code>BaseRepository</code> gộp sẵn.</p>
 
-            <p class="kicker"><span>THÀNH PHẦN</span> Repository là tổ hợp trait</p>
-            <h2>Mỗi nhóm hành vi là một trait riêng.</h2>
-            <p>Nhờ tách như vậy, một repository chỉ cần ghi đè đúng nhóm nó muốn đổi thay vì kế thừa một lớp khổng lồ.</p>
+            <p class="kicker"><span>KIẾN TRÚC</span> Tổ hợp Trait module hóa</p>
+            <h2>Mỗi nhóm hành vi được đóng gói trong một Trait riêng biệt.</h2>
+            <p><code>BaseRepository</code> được thiết kế theo mô hình composition (tổ hợp traits), giúp code rõ ràng, dễ bảo trì và cho phép ghi đè (override) từng phần mà không ảnh hưởng tới toàn bộ hệ thống:</p>
             <div class="directive-table">
-                <div><div class="dt-key"><code>BaseQuery</code></div><span>Dựng query gốc, join, select, sắp xếp</span><b>truy vấn</b></div>
-                <div><div class="dt-key"><code>BaseSearchQuery</code></div><span>Tìm kiếm theo từ khoá trên nhiều cột</span><b>truy vấn</b></div>
-                <div><div class="dt-key"><code>GettingAction</code></div><span><code>getAll</code>, <code>find</code>, <code>findBy</code>, <code>getBy</code>, hook <code>beforeGetData</code></span><b>đọc</b></div>
-                <div><div class="dt-key"><code>CRUDAction</code></div><span><code>create</code>, <code>createMany</code>, <code>save</code>, hook <code>beforeCreate</code>/<code>beforeUpdate</code></span><b>ghi</b></div>
-                <div><div class="dt-key"><code>FilterAction</code></div><span><code>getResults</code>, <code>countResults</code>, <code>trashed</code>, <code>buildFilter</code></span><b>lọc</b></div>
-                <div><div class="dt-key"><code>CacheAction</code></div><span><code>cache()</code> và đăng ký method nào được cache</span><b>cache</b></div>
-                <div><div class="dt-key"><code>OwnerAction</code></div><span>Ràng buộc bản ghi theo chủ sở hữu đang đăng nhập</span><b>quyền</b></div>
-                <div><div class="dt-key"><code>DataAction</code> · <code>FileAction</code></div><span>Chuẩn hoá dữ liệu vào và xử lý field kiểu file</span><b>phụ trợ</b></div>
+                <div><div class="dt-key"><code>GettingAction</code></div><span><code>getAll</code>, <code>find</code>, <code>findBy</code>, <code>getBy</code>, <code>first</code>, <code>count</code>, <code>pluck</code></span><b>đọc dữ liệu</b></div>
+                <div><div class="dt-key"><code>CRUDAction</code></div><span><code>create</code>, <code>update</code>, <code>save</code>, <code>delete</code>, <code>createMany</code>, <code>restore</code>, <code>forceDelete</code></span><b>thao tác ghi</b></div>
+                <div><div class="dt-key"><code>FilterAction</code></div><span><code>getResults($request)</code>, <code>countResults</code>, cấu hình <code>$searchable</code>, <code>$whereable</code>, <code>$sortable</code></span><b>lọc request</b></div>
+                <div><div class="dt-key"><code>BaseQuery</code></div><span>Query builder: <code>where</code>, <code>join</code>, <code>select</code>, <code>groupBy</code>, <code>orderBy</code>, <code>with</code></span><b>truy vấn sql</b></div>
+                <div><div class="dt-key"><code>BaseSearchQuery</code></div><span>Tìm kiếm full-text và từ khóa trên nhiều cột</span><b>tìm kiếm</b></div>
+                <div><div class="dt-key"><code>OwnerAction</code></div><span>Ràng buộc bản ghi tự động theo Actor/Chủ sở hữu (User ID)</span><b>phân quyền</b></div>
+                <div><div class="dt-key"><code>CacheAction</code></div><span>Cache truy vấn thông minh với <code>cache($seconds)</code> và tự xóa cache khi ghi</span><b>hiệu năng</b></div>
+                <div><div class="dt-key"><code>DataAction</code> · <code>FileAction</code></div><span>Chuẩn hoá kiểu dữ liệu, upload và quản lý file đính kèm</span><b>tiện ích</b></div>
             </div>
 
-            <p class="kicker"><span>HOOK</span> Chèn vào giữa vòng đời</p>
-            <h2>Ghi đè hook thay vì viết lại cả method.</h2>
-            <code-window label="PHP" title="Repositories/UserRepository.php" lang="php">
-@verbatim
-class UserRepository extends BaseRepository
-{
-    protected $model = User::class;
+            <p class="kicker"><span>1. ĐỌC DỮ LIỆU</span> GettingAction</p>
+            <h2>Các phương thức truy vấn và tìm kiếm bản ghi.</h2>
+            <p>Cung cấp các hàm tiện ích lấy dữ liệu nhanh chóng và an toàn:</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>find($id)</code></div><span>Tìm 1 bản ghi theo Primary Key (trả về Model hoặc null)</span><b>Tìm theo ID</b></div>
+                <div><div class="dt-key"><code>findBy($prop, $val)</code></div><span>Lấy bản ghi đầu tiên thỏa mãn <code>$prop = $val</code> (VD: <code>findBy('slug', 'bai-viet-1')</code>)</span><b>Tìm 1 bản ghi</b></div>
+                <div><div class="dt-key"><code>getBy($prop, $val)</code></div><span>Lấy danh sách các bản ghi khớp giá trị cột</span><b>Lấy danh sách</b></div>
+                <div><div class="dt-key"><code>getAll()</code></div><span>Lấy toàn bộ bản ghi trong bảng (hỗ trợ đa ngôn ngữ nếu có multilang)</span><b>Tất cả</b></div>
+                <div><div class="dt-key"><code>first($conditions)</code></div><span>Lấy bản ghi đầu tiên theo mảng điều kiện</span><b>Bản ghi đầu</b></div>
+                <div><div class="dt-key"><code>count($conditions)</code></div><span>Đếm tổng số lượng bản ghi khớp điều kiện</span><b>Đếm số lượng</b></div>
+            </div>
 
-    public function beforeCreate($data)
+            <p class="kicker"><span>2. TRUY VẤN THÔNG MINH</span> Smart Get & Directives</p>
+            <h2>Truy vấn đa điều kiện cực mạnh chỉ với mảng tham số.</h2>
+            <p>Thay vì phải viết chuỗi lệnh <code>->where()->whereIn()->whereLike()->with()->paginate()</code> dài dòng, phương thức <code>get($params)</code> và <code>first($params)</code> của Saola Repository cho phép bạn mô tả toàn bộ câu truy vấn phức tạp ngay trong một mảng:</p>
+            <code-window label="PHP" title="Ví dụ truy vấn Smart Get" lang="php">
+@verbatim
+// Truy vấn danh sách bài viết với bộ tham số thông minh
+$posts = $postRepo->get([
+    // 1. Toán tử trực tiếp trong key: >, >=, <, <=, !=, <>, like, startwith, endwith
+    'status'         => 'published',           // tương đương where('status', '=', 'published')
+    'views >='       => 100,                   // tương đương where('views', '>=', 100)
+    'category_id'    => [1, 2, 5],             // mảng tự động chuyển thành whereIn('category_id', [1, 2, 5])
+    'title like'     => '%laravel%',           // tương đương where('title', 'like', '%laravel%')
+    
+    // 2. Các chỉ thị đặc biệt bắt đầu bằng dấu '&#64;'
+    '&#64;search'        => 'hệ sinh thái Saola',   // Tự động tìm kiếm full-text hoặc like đa cột
+    '&#64;select'        => ['id', 'title', 'slug', 'category_id', 'views', 'created_at'],
+    '&#64;with'          => ['category', 'author'],// Eager load quan hệ Eloquent
+    '&#64;withCount'     => ['comments', 'likes'], // Đếm số quan hệ kèm theo
+    '&#64;sortby'        => ['created_at' => 'desc', 'views' => 'desc'], // Sắp xếp nhiều cột
+    '&#64;paginate'      => 10                     // Tự động phân trang 10 bài/trang (hoặc dùng '&#64;limit' => [0, 10])
+]);
+@endverbatim
+            </code-window>
+
+            <h3>Danh sách các chỉ thị <code>&#64;</code> thông dụng trong <code>get($params)</code>:</h3>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>&#64;search</code></div><span>Tìm kiếm từ khoá trên các cột searchable: <code>'&#64;search' => 'keyword'</code></span><b>tìm kiếm</b></div>
+                <div><div class="dt-key"><code>&#64;with</code> / <code>&#64;load</code></div><span>Eager load quan hệ: <code>'&#64;with' => ['category', 'tags']</code></span><b>quan hệ</b></div>
+                <div><div class="dt-key"><code>&#64;withCount</code></div><span>Đếm quan hệ: <code>'&#64;withCount' => ['comments']</code> tạo thêm thuộc tính <code>comments_count</code></span><b>đếm quan hệ</b></div>
+                <div><div class="dt-key"><code>&#64;sortby</code> / <code>&#64;order_by</code></div><span>Sắp xếp: <code>'&#64;sortby' => ['views' => 'desc', 'id' => 'asc']</code></span><b>sắp xếp</b></div>
+                <div><div class="dt-key"><code>&#64;paginate</code></div><span>Bật phân trang: <code>'&#64;paginate' => 15</code> (trả về LengthAwarePaginator)</span><b>phân trang</b></div>
+                <div><div class="dt-key"><code>&#64;limit</code></div><span>Giới hạn số lượng hoặc offset: <code>'&#64;limit' => 5</code> hoặc <code>'&#64;limit' => [10, 5]</code> (skip 10, take 5)</span><b>giới hạn</b></div>
+                <div><div class="dt-key"><code>&#64;select</code></div><span>Chọn các cột cụ thể: <code>'&#64;select' => ['id', 'name', 'avatar']</code></span><b>chọn cột</b></div>
+                <div><div class="dt-key"><code>&#64;softdelete</code> / <code>&#64;trashed</code></div><span>Lấy cả bản ghi đã xoá mềm: <code>'&#64;trashed' => true</code></span><b>xoá mềm</b></div>
+            </div>
+
+            <p class="kicker"><span>3. MAGIC METHODS</span> Truy vấn theo tên hàm</p>
+            <h2>Gọi nhanh phương thức tìm kiếm động không cần khai báo.</h2>
+            <p>Hỗ trợ Magic Methods tự động ánh xạ tên cột thành câu lệnh tìm kiếm tương ứng:</p>
+            <code-window label="PHP" title="Ví dụ Magic Methods" lang="php">
+@verbatim
+// Tìm 1 bản ghi đầu tiên khớp thuộc tính
+$post = $postRepo->findBySlug('gioi-thieu-saola');
+$user = $userRepo->findByEmail('admin&#64;saola.dev');
+
+// Lấy danh sách bản ghi theo thuộc tính
+$activePosts = $postRepo->getByStatus('active');
+$categoryPosts = $postRepo->getByCategoryId(5);
+
+// Đếm số lượng bản ghi theo thuộc tính
+$totalActive = $postRepo->countByStatus('active');
+@endverbatim
+            </code-window>
+
+            <p class="kicker"><span>4. GHI DỮ LIỆU</span> CRUDAction</p>
+            <h2>Thêm, sửa, xoá và kiểm soát lỗi an toàn.</h2>
+            <p>Xử lý toàn bộ thao tác thay đổi dữ liệu kèm theo cơ chế bắt lỗi linh hoạt:</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>create($data)</code></div><span>Tạo mới 1 bản ghi. Tự động gọi qua <code>beforeCreate</code>, gán owner và kích hoạt <code>afterCreate</code></span><b>Tạo mới</b></div>
+                <div><div class="dt-key"><code>update($id, $data)</code></div><span>Cập nhật bản ghi theo ID kèm lifecycle hooks</span><b>Cập nhật</b></div>
+                <div><div class="dt-key"><code>save($data, $id = null)</code></div><span>Cơ chế Upsert thông minh: Nếu có ID thì update, không có ID thì tạo mới</span><b>Lưu đa năng</b></div>
+                <div><div class="dt-key"><code>createMany($list)</code></div><span>Tạo hàng loạt nhiều bản ghi trong cùng một thao tác</span><b>Tạo hàng loạt</b></div>
+                <div><div class="dt-key"><code>delete($id)</code></div><span>Xoá bản ghi (tự động dùng Soft Delete nếu model có khai báo)</span><b>Xoá</b></div>
+                <div><div class="dt-key"><code>restore($id)</code> · <code>forceDelete($id)</code></div><span>Khôi phục bản ghi đã xoá mềm hoặc xoá vĩnh viễn khỏi Database</span><b>Xoá mềm/Khôi phục</b></div>
+            </div>
+
+            <div class="ov-note">
+                <strong>Xử lý lỗi không ném Exception:</strong> Mặc định khi có lỗi, Repository sẽ ném exception. Bạn có thể gọi <code>$repo->disableThrowException()</code> để gom lỗi qua <code>$repo->getCrudErrorMessage()</code> hoặc <code>$repo->getCrudException()</code> — cực kỳ hữu ích khi xử lý import dữ liệu hàng loạt.
+            </div>
+
+            <p class="kicker"><span>5. BỘ LỌC REQUEST TỰ ĐỘNG</span> FilterAction</p>
+            <h2>Tự động chuyển HTTP Request thành SQL Query chuẩn.</h2>
+            <p>Chỉ cần cấu hình các thuộc tính bộ lọc trong Repository, hàm <code>getResults($request)</code> sẽ tự động xử lý tìm kiếm, lọc điều kiện, sắp xếp và phân trang từ Query Parameters của URL:</p>
+            <code-window label="PHP" title="Repositories/PostRepository.php" lang="php">
+@verbatim
+class PostRepository extends BaseRepository
+{
+    protected $model = Post::class;
+
+    // Các cột cho phép tìm kiếm qua ?search= hoặc ?keyword=
+    protected $searchable = ['title', 'slug', 'description'];
+
+    // Các cột tự động lọc chính xác qua ?status=active&category_id=5
+    protected $whereable = ['status', 'category_id', 'author_id'];
+
+    // Các cột cho phép sắp xếp qua ?sort=created_at&sort_type=desc
+    protected $sortable = ['id', 'title', 'view_count', 'created_at'];
+
+    // Các quan hệ Eloquent cho phép client eager load qua ?with=category,tags
+    protected $withable = ['category', 'tags', 'author'];
+}
+@endverbatim
+            </code-window>
+            <p>Trong Controller, bạn chỉ cần gọi <code>$this->response()</code> để phục vụ cả SSR HTML lẫn Client SPA JSON:</p>
+            <code-window label="PHP" title="Controllers/PostController.php" lang="php">
+@verbatim
+class PostController extends WebController
+{
+    protected $module = 'posts';
+
+    public function index(Request $request, PostRepository $postRepo)
     {
-        $data['password'] = bcrypt($data['password']);
+        // Tự động tìm kiếm, lọc theo whereable, sắp xếp và phân trang ?paginate=15
+        $posts = $postRepo->getResults($request);
+
+        // Trả dữ liệu qua $this->response (tự động thương lượng HTML cho SSR và JSON cho SPA)
+        return $this->response(['posts' => $posts]);
+    }
+}
+@endverbatim
+            </code-window>
+
+            <p class="kicker"><span>6. VÒNG ĐỜI & HOOKS</span> Lifecycle Hooks</p>
+            <h2>Can thiệp và biến đổi dữ liệu trước/sau khi ghi.</h2>
+            <p>Thay vì viết logic rải rác trong Controller, hãy ghi đè các hàm hook ngay trong Repository để tập trung xử lý dữ liệu:</p>
+            <code-window label="PHP" title="Repositories/PostRepository.php" lang="php">
+@verbatim
+class PostRepository extends BaseRepository
+{
+    protected $model = Post::class;
+
+    /**
+     * Hook chạy trước khi tạo mới bản ghi
+     */
+    public function beforeCreate(array $data)
+    {
+        if (empty($data['slug'])) {
+            $data['slug'] = \Illuminate\Support\Str::slug($data['title']);
+        }
+        $data['author_id'] = auth()->id();
+        return $data;
+    }
+
+    /**
+     * Hook chạy sau khi tạo mới thành công
+     */
+    public function afterCreate($post)
+    {
+        // Gửi thông báo, xóa cache danh mục hoặc ghi log hoạt động
+        event(new PostCreatedEvent($post));
+    }
+
+    /**
+     * Hook chạy trước khi cập nhật bản ghi
+     */
+    public function beforeUpdate(array $data, $id)
+    {
+        if (isset($data['title']) && empty($data['slug'])) {
+            $data['slug'] = \Illuminate\Support\Str::slug($data['title']);
+        }
         return $data;
     }
 }
 @endverbatim
             </code-window>
+
+            <p class="kicker"><span>7. PHÂN QUYỀN CHỦ SỞ HỮU</span> OwnerAction</p>
+            <h2>Giới hạn phạm vi dữ liệu theo Actor và User ID.</h2>
+            <p><code>OwnerAction</code> tự động gán điều kiện <code>WHERE user_id = ?</code> vào tất cả các câu truy vấn Select, Update, Delete để ngăn chặn truy cập trái phép giữa các người dùng:</p>
+            <code-window label="PHP" title="Sử dụng OwnerAction" lang="php">
+@verbatim
+// Chỉ xem hoặc chỉnh sửa bài viết của chính người dùng hiện tại
+$userPosts = $postRepo->setActor('client')
+                      ->setOwnerID(auth()->id())
+                      ->getResults($request);
+
+// Bỏ qua lọc owner khi chạy tác vụ của quản trị viên (Admin)
+$allPosts = $postRepo->unOwnerQuery()->getResults($request);
+@endverbatim
+            </code-window>
+
+            <p class="kicker"><span>8. CACHING TỰ ĐỘNG</span> CacheAction</p>
+            <h2>Tăng tốc độ truy vấn với bộ nhớ đệm thông minh.</h2>
+            <p>Bật cache cho các truy vấn dữ liệu ít thay đổi chỉ với method <code>cache()</code>. Repository sẽ tự động xoá cache liên quan khi có thao tác tạo, sửa, hoặc xoá bản ghi:</p>
+            <code-window label="PHP" title="Sử dụng CacheAction" lang="php">
+@verbatim
+// Cache kết quả truy vấn trong 3600 giây (1 giờ)
+$featuredPosts = $postRepo->cache(3600)->getBy('is_featured', true);
+@endverbatim
+            </code-window>
+
             <div class="ov-note">
-                <code>CRUDAction</code> có công tắc ném lỗi: <code>disableThrowException()</code> để lấy lỗi qua <code>getCrudErrorMessage()</code> thay vì để exception bay lên. Hữu ích khi ghi hàng loạt và muốn gom lỗi.
+                <strong>Quy tắc bảo mật đầu ra:</strong> Repository trả về Model hoặc Collection. Hãy bọc dữ liệu qua <a href="/docs/mask">Mask</a> trước khi gửi về Client để kiểm soát danh sách các trường được phép hiển thị ra ngoài giao diện.
             </div>
-
-            <p class="kicker"><span>QUYỀN</span> Bản ghi của ai</p>
-            <h2><code>OwnerAction</code> ràng buộc theo actor.</h2>
-            <p><code>setActor()</code> cho biết ai đang thao tác; <code>setOwnerID()</code> giới hạn query trong phạm vi bản ghi của người đó. Dùng <code>unOwnerQuery()</code> khi cần cố tình vượt phạm vi, ví dụ trong màn hình quản trị.</p>
-
-            <p class="ov-note">
-                Repository trả model. Đừng đẩy thẳng model đó ra response — bọc bằng <a href="/docs/mask">Mask</a> để kiểm soát field nào lộ ra ngoài.
-            </p>
         </div>
     @endblock
 </template>
