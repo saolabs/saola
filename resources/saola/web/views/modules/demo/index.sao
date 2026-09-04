@@ -18,216 +18,169 @@
 })
 
 @const(MAX_COUNT = 10)
-@const(DEMO_SCRIPT = '<scr' + 'ipt type="module" src="/static/saola/demo-module.js"></scr' + 'ipt>')
-@let(featureTotal = 32)
 
 <template>
-    @extends(__layout__ + 'base')
-    @block('shell')
-        <main class="demo-page">
-            <div class="paper-noise"></div>
+    @extends(__layout__ + 'lab')
 
-            <nav class="demo-nav" aria-label="Điều hướng trang demo">
-                <a href="/">SAOLABS</a>
-                <div>
-                    <a href="#playground">Playground</a>
-                    <a href="#coverage">Phạm vi hỗ trợ</a>
-                    <a href="/docs/getting-started">Tài liệu</a>
+    @block('main')
+        <p class="kicker"><span>DEMO · TỔNG QUAN</span></p>
+        <h1>Cú pháp đang chạy thật.</h1>
+        <p class="lab-lead">
+            Trang này là fixture trực tiếp của compiler: cùng một file <code>index.sao</code>
+            sinh Blade cho lần tải đầu và TypeScript cho mọi tương tác sau hydration.
+        </p>
+
+        <div class="lab-index">
+            <a href="/demo/await">
+                <span>Dữ liệu</span>
+                <strong>Nạp bất đồng bộ</strong>
+                <p>Cùng một URL trả HTML cho trình duyệt và JSON cho fetch. So sánh đường SSR với đường CSR.</p>
+            </a>
+            <a href="/demo/foreach">
+                <span>Runtime</span>
+                <strong>Danh sách &amp; reconciliation</strong>
+                <p>Thêm, xoá, đảo thứ tự, refetch — xem chỗ nào giữ được DOM và chỗ nào bị dựng lại.</p>
+            </a>
+            <a href="/demo/lifecycle">
+                <span>Runtime</span>
+                <strong>Vòng đời &amp; PageCache</strong>
+                <p>Bảy chuyển trạng thái, và state sống sót qua back/forward nhờ PageCache.</p>
+            </a>
+            <a href="/roster">
+                <span>Ứng dụng thật</span>
+                <strong>Roster — CRUD qua API</strong>
+                <p>Danh sách sửa được, gọi API thật, view con báo ngược lên cha bằng <code>App.Event</code>. Chạy trong shell <code>workspace</code>.</p>
+            </a>
+        </div>
+
+        <h2>Playground</h2>
+        <div class="tab-tape" role="tablist" aria-label="Nhóm tính năng">
+            <button data-demo-tab="state" @class({'is-active': selectedPanel === 'state'}) @click(setSelectedPanel('state'))>State &amp; event</button>
+            <button data-demo-tab="binding" @class({'is-active': selectedPanel === 'binding'}) @click(setSelectedPanel('binding'))>Binding</button>
+            <button data-demo-tab="flow" @class({'is-active': selectedPanel === 'flow'}) @click(setSelectedPanel('flow'))>Control flow</button>
+        </div>
+
+        <div data-demo-panel="state" @class({'card-grid', 'is-hidden': selectedPanel !== 'state'})>
+            <featurecard number="01" title="Reactive state" source="&#64;states({ count: 3 })" tone="pink">
+                <div class="counter-row">
+                    <button data-demo-count="decrease" aria-label="Giảm count" @click(setCount(count - 1)) @disabled(count === 0)>Giảm</button>
+                    <strong data-demo-count-output>{{ count }}</strong>
+                    <button data-demo-count="increase" aria-label="Tăng count" @click(setCount(count + 1)) @disabled(count === MAX_COUNT)>Tăng</button>
                 </div>
-            </nav>
+                <div class="progress-track"><i @style({width: `${count * 10}%`})></i></div>
+                <small>Giới hạn mẫu: 0–{{ MAX_COUNT }}</small>
+            </featurecard>
 
-            <header class="demo-hero">
-                <div class="hero-stamp">
-                    <span>LIVE</span>
-                    <small>/demo</small>
+            <featurecard number="02" title="Events &amp; setup" source="&#64;click(setCount(3))" tone="cyan">
+                <p>Event inline cập nhật state; khối <code>&lt;script setup&gt;</code> khai báo method tái sử dụng.</p>
+                <button @click(setCount(3))>Đặt lại count</button>
+                <button @dblclick(setCount(MAX_COUNT))>Nhấp đúp để đạt tối đa</button>
+            </featurecard>
+
+            <featurecard number="09" title="Props, import &amp; children" source="&#64;props · &#64;import · &#64;children" tone="yellow">
+                <p>Chính khung này là component <code>featurecard</code> được import. Tiêu đề và số là props; đoạn văn này đi qua slot <code>&#64;children</code>.</p>
+            </featurecard>
+        </div>
+
+        <div data-demo-panel="binding" @class({'card-grid', 'is-hidden': selectedPanel !== 'binding'})>
+            <featurecard number="03" title="Two-way binding" source="&#64;bind(name)" tone="cyan">
+                <label class="field-label" for="demo-name">Tên mẫu</label>
+                <input id="demo-name" data-demo-name type="text" placeholder="Nhập một tên" @bind(name) @required(true)>
+                <p class="live-output">Xin chào, <strong data-demo-name-output>{{ name }}</strong>.</p>
+            </featurecard>
+
+            <featurecard number="04" title="Boolean attributes" source="&#64;checked · &#64;disabled · &#64;readonly" tone="yellow">
+                <label class="check-row"><input data-demo-accept type="checkbox" @bind(accepted) @checked(accepted)> Đã đọc tài liệu cú pháp</label>
+                <label class="check-row"><input type="checkbox" @bind(isLocked) @checked(isLocked)> Khoá trường ghi chú</label>
+                <input type="text" placeholder="Ghi chú mẫu" @bind(note) @readonly(isLocked)>
+                <button data-demo-continue @disabled(!accepted)>Tiếp tục</button>
+            </featurecard>
+
+            <featurecard number="05" title="Visibility &amp; attributes" source="&#64;class · &#64;attr · &#64;style" tone="pink">
+                <button data-demo-visibility @click(setIsVisible(!isVisible))>Bật / tắt hai vùng</button>
+                <p data-demo-visible="true" @class({'visibility-sample', 'is-hidden': !isVisible})>Vùng này hiện khi state là true.</p>
+                <p data-demo-visible="false" @class({'visibility-sample', 'is-hidden': isVisible})>Vùng này hiện khi state là false.</p>
+                <a @attr({href: '/docs/compiler', title: `Compiler cho ${name}`})>Mở trang compiler</a>
+            </featurecard>
+        </div>
+
+        <div data-demo-panel="flow" @class({'card-grid', 'is-hidden': selectedPanel !== 'flow'})>
+            <featurecard number="06" title="If / elseif / else" source="&#64;if(status === 'ready')" tone="yellow">
+                <div class="status-buttons">
+                    <button data-demo-status="ready" @click(setStatus('ready'))>Ready</button>
+                    <button data-demo-status="building" @click(setStatus('building'))>Building</button>
+                    <button data-demo-status="error" @click(setStatus('error'))>Error</button>
                 </div>
-                <div>
-                    <p class="overline">Saola single-file component</p>
-                    <h1>MỘT FILE.<br><em>HAI RUNTIME.</em><br>MỌI THỨ<br>ĐANG CHẠY.</h1>
-                    <p class="hero-copy">Trang này là fixture trực tiếp của compiler: source <code>index.sao</code> tạo Blade cho lần tải đầu và TypeScript cho các tương tác sau hydration.</p>
+                @if(status === 'ready')
+                    <p data-demo-status-output class="status-card status-ready">Sẵn sàng biên dịch.</p>
+                @elseif(status === 'building')
+                    <p data-demo-status-output class="status-card status-building">Đang biên dịch fixture.</p>
+                @else
+                    <p data-demo-status-output class="status-card status-error">Trạng thái lỗi mẫu.</p>
+                @endif
+            </featurecard>
+
+            <featurecard number="07" title="For &amp; foreach" source="&#64;for · &#64;foreach · &#64;key" tone="pink">
+                <div class="number-run">
+                    @for(i = 0; i < count; i++)
+                        <span>{{ i + 1 }}</span>
+                    @endfor
                 </div>
-                <aside class="hero-note">
-                    <strong>{{ featureTotal }}</strong>
-                    <span>nhóm cú pháp được tài liệu hóa</span>
-                    <p>Không dùng dữ liệu API giả. Các giá trị bên dưới là dữ liệu mẫu được ghi nhãn rõ.</p>
-                </aside>
-            </header>
+                <ul class="sample-list">
+                    @foreach(sampleItems as item)
+                        @key(item['id'])
+                        <li @class({'is-enabled': item['enabled']})>{{ item['label'] }}</li>
+                    @endforeach
+                </ul>
+            </featurecard>
 
-            <section class="proof-strip" aria-label="Đầu ra của compiler">
-                <span>INPUT</span><strong>.sao</strong>
-                <span>SERVER</span><strong>.blade.php</strong>
-                <span>CLIENT</span><strong>.ts</strong>
-                <span>STYLE</span><strong>scoped CSS</strong>
-            </section>
+            <featurecard number="08" title="Switch" source="&#64;switch(selectedRuntime)" tone="cyan">
+                <select data-demo-runtime @bind(selectedRuntime)>
+                    <option value="blade">Blade</option>
+                    <option value="typescript">TypeScript</option>
+                    <option value="css">Scoped CSS</option>
+                </select>
+                @switch(selectedRuntime)
+                    @case('typescript')
+                        <p data-demo-runtime-output class="runtime-result">Client output giữ state, event và lifecycle.</p>
+                        @break
+                    @case('css')
+                        <p data-demo-runtime-output class="runtime-result">Selector được gắn scope theo view.</p>
+                        @break
+                    @default
+                        <p data-demo-runtime-output class="runtime-result">Server output trả HTML hoàn chỉnh.</p>
+                @endswitch
+            </featurecard>
+        </div>
+    @endblock
 
-            <section class="playground" id="playground">
-                <div class="section-title">
-                    <p>01 / Playground</p>
-                    <h2>Chạm vào cú pháp.<br>Nhìn state đổi ngay.</h2>
-                </div>
+    @block('aside')
+        <h2>Phạm vi cú pháp.</h2>
+        <div class="directive-table">
+            <div><div class="dt-key">Khai báo</div><span><code>&#64;states</code> <code>&#64;props</code> <code>&#64;const</code> <code>&#64;let</code> <code>&#64;vars</code> <code>&#64;import</code> <code>&#64;await</code></span><b>declaration</b></div>
+            <div><div class="dt-key">Template</div><span><code>&#64;extends</code> <code>&#64;block</code> <code>&#64;section</code> <code>&#64;yield</code> <code>&#64;include</code> <code>&#64;children</code> <code>&#64;exec</code></span><b>template</b></div>
+            <div><div class="dt-key">Điều khiển</div><span><code>&#64;if</code> <code>&#64;foreach</code> <code>&#64;for</code> <code>&#64;while</code> <code>&#64;switch</code> <code>&#64;break</code> <code>&#64;continue</code> <code>&#64;ssr</code></span><b>control flow</b></div>
+            <div><div class="dt-key">Ràng buộc</div><span><code>&#64;attr</code> <code>&#64;class</code> <code>&#64;style</code> <code>&#64;bind</code> <code>&#64;val</code> và các thuộc tính boolean</span><b>binding</b></div>
+            <div><div class="dt-key">Form &amp; quyền</div><span><code>&#64;csrf</code> <code>&#64;method</code> <code>&#64;auth</code> <code>&#64;guest</code> <code>&#64;can</code> <code>&#64;error</code> — cần request, session hoặc policy thật</span><b>form</b></div>
+            <div><div class="dt-key">Khối component</div><span><code>&lt;script setup lang="ts"&gt;</code>, <code>&lt;style scoped&gt;</code>, biến hệ thống, wrapper</span><b>block</b></div>
+        </div>
 
-                <div class="tab-tape" role="tablist" aria-label="Nhóm tính năng">
-                    <button data-demo-tab="state" @class({'is-active': selectedPanel === 'state'}) @click(setSelectedPanel('state'))>State & event</button>
-                    <button data-demo-tab="binding" @class({'is-active': selectedPanel === 'binding'}) @click(setSelectedPanel('binding'))>Binding</button>
-                    <button data-demo-tab="flow" @class({'is-active': selectedPanel === 'flow'}) @click(setSelectedPanel('flow'))>Control flow</button>
-                </div>
+        @ssr
+            <p class="lab-note"><strong>Chỉ có trong HTML từ server:</strong> khối này nằm trong <code>&#64;ssr</code> nên compiler không đưa sang JavaScript view — điều hướng SPA vào lại trang sẽ không còn thấy nó.</p>
+        @endssr
 
-                <div data-demo-panel="binding" @class({'card-grid', 'is-hidden': selectedPanel !== 'binding'})>
-                        <featurecard number="03" title="Two-way binding" source="&#64;bind(name)" tone="cyan">
-                            <label class="field-label" for="demo-name">Tên mẫu</label>
-                            <input id="demo-name" data-demo-name type="text" placeholder="Nhập một tên" @bind(name) @required(true)>
-                            <p class="live-output">Xin chào, <strong data-demo-name-output>{{ name }}</strong>.</p>
-                        </featurecard>
-
-                        <featurecard number="04" title="Boolean attributes" source="&#64;checked · &#64;disabled · &#64;readonly" tone="yellow">
-                            <label class="check-row"><input data-demo-accept type="checkbox" @bind(accepted) @checked(accepted)> Đã đọc tài liệu cú pháp</label>
-                            <label class="check-row"><input type="checkbox" @bind(isLocked) @checked(isLocked)> Khóa trường ghi chú</label>
-                            <input type="text" placeholder="Ghi chú mẫu" @bind(note) @readonly(isLocked)>
-                            <button data-demo-continue @disabled(!accepted)>Tiếp tục</button>
-                        </featurecard>
-
-                        <featurecard number="05" title="Visibility & attributes" source="&#64;class · &#64;attr · &#64;style" tone="pink">
-                            <button data-demo-visibility @click(setIsVisible(!isVisible))>Bật / tắt hai vùng</button>
-                            <p data-demo-visible="true" @class({'visibility-sample', 'is-hidden': !isVisible})>Vùng này hiện khi state là true.</p>
-                            <p data-demo-visible="false" @class({'visibility-sample', 'is-hidden': isVisible})>Vùng này hiện khi state là false.</p>
-                            <a @attr({href: '/compiler', title: `Compiler cho ${name}`})>Mở trang compiler</a>
-                        </featurecard>
-                </div>
-                <div data-demo-panel="flow" @class({'card-grid', 'is-hidden': selectedPanel !== 'flow'})>
-                        <featurecard number="06" title="If / elseif / else" source="&#64;if(status === 'ready')" tone="yellow">
-                            <div class="status-buttons">
-                                <button data-demo-status="ready" @click(setStatus('ready'))>Ready</button>
-                                <button data-demo-status="building" @click(setStatus('building'))>Building</button>
-                                <button data-demo-status="error" @click(setStatus('error'))>Error</button>
-                            </div>
-                            @if(status === 'ready')
-                                <p data-demo-status-output class="status-card status-ready">Sẵn sàng biên dịch.</p>
-                            @elseif(status === 'building')
-                                <p data-demo-status-output class="status-card status-building">Đang biên dịch fixture.</p>
-                            @else
-                                <p data-demo-status-output class="status-card status-error">Trạng thái lỗi mẫu.</p>
-                            @endif
-                        </featurecard>
-
-                        <featurecard number="07" title="For & foreach" source="&#64;for · &#64;foreach · &#64;key" tone="pink">
-                            <div class="number-run">
-                                @for(i = 0; i < count; i++)
-                                    <span>{{ i + 1 }}</span>
-                                @endfor
-                            </div>
-                            <ul class="sample-list">
-                                @foreach(sampleItems as item)
-                                    @key(item['id'])
-                                    <li @class({'is-enabled': item['enabled']})>{{ item['label'] }}</li>
-                                @endforeach
-                            </ul>
-                        </featurecard>
-
-                        <featurecard number="08" title="Switch" source="&#64;switch(selectedRuntime)" tone="cyan">
-                            <select data-demo-runtime @bind(selectedRuntime)>
-                                <option value="blade">Blade</option>
-                                <option value="typescript">TypeScript</option>
-                                <option value="css">Scoped CSS</option>
-                            </select>
-                            @switch(selectedRuntime)
-                                @case('typescript')
-                                    <p data-demo-runtime-output class="runtime-result">Client output giữ state, event và lifecycle.</p>
-                                    @break
-                                @case('css')
-                                    <p data-demo-runtime-output class="runtime-result">Selector được gắn scope theo view.</p>
-                                    @break
-                                @default
-                                    <p data-demo-runtime-output class="runtime-result">Server output trả HTML hoàn chỉnh.</p>
-                            @endswitch
-                        </featurecard>
-                </div>
-                <div data-demo-panel="state" @class({'card-grid', 'is-hidden': selectedPanel !== 'state'})>
-                        <featurecard number="01" title="Reactive state" source="&#64;states({ count: 3 })" tone="pink">
-                            <div class="counter-row">
-                                <button data-demo-count="decrease" aria-label="Giảm count" @click(setCount(count - 1)) @disabled(count === 0)>Giảm</button>
-                                <strong data-demo-count-output>{{ count }}</strong>
-                                <button data-demo-count="increase" aria-label="Tăng count" @click(setCount(count + 1)) @disabled(count === MAX_COUNT)>Tăng</button>
-                            </div>
-                            <div class="progress-track"><i @style({width: `${count * 10}%`})></i></div>
-                            <small>Giới hạn mẫu: 0–{{ MAX_COUNT }}</small>
-                        </featurecard>
-
-                        <featurecard number="02" title="Events & setup" source="&#64;click(setCount(3)) · &lt;script setup&gt;" tone="cyan">
-                            <p>Event inline cập nhật state; khối setup bên dưới cũng khai báo method tái sử dụng.</p>
-                            <button @click(setCount(3))>Đặt lại count</button>
-                            <button @dblclick(setCount(MAX_COUNT))>Nhấp đúp để đạt tối đa</button>
-                        </featurecard>
-
-                        <featurecard number="09" title="Props, import & children" source="&#64;props · &#64;import · &#64;children" tone="yellow">
-                            <p>Chính khung này là component <code>featurecard</code> được import. Tiêu đề và số là props; nội dung đoạn này đi qua slot <code>&#64;children</code>.</p>
-                        </featurecard>
-                </div>
-            </section>
-
-            <section class="coverage" id="coverage">
-                <div class="section-title section-title--small">
-                    <p>02 / Phạm vi hỗ trợ</p>
-                    <h2>Một bản đồ cú pháp,<br>không phải danh sách trang trí.</h2>
-                </div>
-
-                <div class="coverage-grid">
-                    <article>
-                        <h3>Declarations</h3>
-                        <p><code>&#64;states</code>, <code>&#64;state</code>, <code>&#64;props</code>, <code>&#64;const</code>, <code>&#64;let</code>, <code>&#64;vars</code>, <code>&#64;import</code>, <code>&#64;await</code></p>
-                        <span>Được minh họa trực tiếp hoặc dùng trong source của module.</span>
-                    </article>
-                    <article>
-                        <h3>Template</h3>
-                        <p><code>&#64;extends</code>, <code>&#64;block</code>, <code>&#64;section</code>, <code>&#64;yield</code>, <code>&#64;include</code>, <code>&#64;children</code>, <code>&#64;exec</code></p>
-                        <span>Trang dùng layout, block và component slot thực.</span>
-                    </article>
-                    <article>
-                        <h3>Control flow</h3>
-                        <p><code>&#64;if</code>, <code>&#64;foreach</code>, <code>&#64;for</code>, <code>&#64;while</code>, <code>&#64;switch</code>, <code>&#64;break</code>, <code>&#64;continue</code>, <code>&#64;ssr</code></p>
-                        <span>If, foreach, for và switch chạy trong tab Control flow.</span>
-                    </article>
-                    <article>
-                        <h3>Bindings</h3>
-                        <p><code>&#64;attr</code>, <code>&#64;class</code>, <code>&#64;style</code>, <code>&#64;bind</code>, <code>&#64;val</code>, <code>&#64;show</code>, <code>&#64;hide</code>, boolean attributes</p>
-                        <span>Tab Binding cho phép kiểm tra trực tiếp.</span>
-                    </article>
-                    <article>
-                        <h3>Forms & access</h3>
-                        <p><code>&#64;csrf</code>, <code>&#64;method</code>, <code>&#64;auth</code>, <code>&#64;guest</code>, <code>&#64;can</code>, <code>&#64;cannot</code>, <code>&#64;error</code></p>
-                        <span>Nhóm này cần request, session hoặc policy thật nên được kiểm chứng theo context ứng dụng.</span>
-                    </article>
-                    <article>
-                        <h3>Component blocks</h3>
-                        <p><code>&lt;script setup lang="ts"&gt;</code>, <code>&lt;style scoped&gt;</code>, magic variables và wrapper modern / legacy</p>
-                        <span>Module này dùng wrapper modern, TypeScript setup và scoped CSS.</span>
-                    </article>
-                </div>
-
-                @ssr
-                    <p class="ssr-ticket">Khối này chỉ xuất hiện trong HTML từ server: <code>&#64;ssr</code> không được đưa vào JavaScript view.</p>
-                @endssr
-            </section>
-
-            <footer class="demo-footer">
-                <p>Fixture: <code>web.modules.demo.index</code></p>
-                <a href="/">Về trang chủ</a>
-            </footer>
-            {!! DEMO_SCRIPT !!}
-        </main>
+        <p class="lab-note">Fixture: <code>web.modules.demo.index</code> · chữ ký đầy đủ ở <a href="/docs/directives">tham chiếu directive</a>.</p>
     @endblock
 </template>
 
-<link rel="stylesheet" href="/static/saola/demo-site.css?v=3">
-
 <script setup lang="ts">
+    // state và setter là biến closure của view — gọi trần, không qua `this`.
     export default {
         name: 'DemoIndexPage',
-        increment() {
-            if (count < MAX_COUNT) setCount(count + 1);
-        },
-        decrement() {
-            if (count > 0) setCount(count - 1);
-        },
+
+        increment() { if (count < MAX_COUNT) setCount(count + 1); },
+        decrement() { if (count > 0) setCount(count - 1); },
+
         reset() {
             setCount(3);
             setName('Saola');
@@ -240,202 +193,3 @@
         }
     };
 </script>
-
-<style scoped>
-    .demo-page {
-        --ink: #1f1b16;
-        --paper: #e8e0c0;
-        --pink: #ff71ce;
-        --cyan: #00ffcc;
-        --acid: #dfff00;
-        position: relative;
-        min-height: 100vh;
-        overflow: hidden;
-        background: var(--paper);
-        color: var(--ink);
-        font-family: Times New Roman, Times, serif;
-    }
-
-    .paper-noise {
-        position: fixed;
-        inset: 0;
-        z-index: 20;
-        pointer-events: none;
-        opacity: .22;
-        background-image: radial-gradient(rgba(31, 27, 22, .34) .7px, transparent .7px);
-        background-size: 5px 5px;
-        mix-blend-mode: multiply;
-    }
-
-    .demo-nav {
-        position: relative;
-        z-index: 2;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px clamp(18px, 4vw, 64px);
-        border-bottom: 3px solid var(--ink);
-        font: 700 13px/1 Helvetica, Arial, sans-serif;
-        letter-spacing: .08em;
-    }
-
-    .demo-nav a { color: inherit; text-decoration: none; }
-    .demo-nav > a { font-size: 18px; text-shadow: 2px 0 var(--pink), -2px 0 var(--cyan); }
-    .demo-nav div { display: flex; gap: 28px; }
-    .demo-nav div a { border-bottom: 2px solid transparent; }
-    .demo-nav div a:hover { border-color: var(--ink); }
-
-    .demo-hero {
-        position: relative;
-        display: grid;
-        grid-template-columns: 120px minmax(0, 1fr) 250px;
-        gap: clamp(24px, 5vw, 80px);
-        align-items: end;
-        min-height: 640px;
-        padding: 70px clamp(18px, 4vw, 64px) 90px;
-        background-image: radial-gradient(var(--pink) 1.4px, transparent 1.4px);
-        background-size: 16px 16px;
-    }
-
-    .demo-hero::before {
-        content: '';
-        position: absolute;
-        width: 420px;
-        height: 120px;
-        right: 8%;
-        top: 25%;
-        background: var(--acid);
-        transform: rotate(-7deg);
-        z-index: 0;
-    }
-
-    .demo-hero > * { position: relative; z-index: 1; }
-    .overline { margin: 0 0 18px; font: 700 15px/1 Courier, monospace; }
-
-    .demo-hero h1 {
-        margin: 0;
-        max-width: 900px;
-        font: 900 clamp(64px, 10vw, 150px)/.78 Helvetica, Arial, sans-serif;
-        letter-spacing: -.075em;
-        text-shadow: 4px 0 var(--pink), -4px 0 var(--cyan);
-    }
-
-    .demo-hero h1 em { font-family: Times New Roman, Times, serif; font-weight: 400; }
-    .hero-copy { max-width: 720px; margin: 42px 0 0; font-size: 21px; line-height: 1.45; }
-    .hero-copy code { font-family: Courier, monospace; font-size: .86em; }
-
-    .hero-stamp {
-        align-self: start;
-        display: grid;
-        place-items: center;
-        aspect-ratio: 1;
-        border: 3px solid var(--ink);
-        border-radius: 50%;
-        background: var(--cyan);
-        transform: rotate(-9deg);
-        font-family: Helvetica, Arial, sans-serif;
-    }
-
-    .hero-stamp span { font-size: 28px; font-weight: 900; }
-    .hero-stamp small { font: 13px/1 Courier, monospace; }
-
-    .hero-note {
-        padding: 24px;
-        border: 3px solid var(--ink);
-        background: var(--pink);
-        box-shadow: 8px 8px 0 var(--cyan);
-        transform: rotate(4deg);
-    }
-
-    .hero-note strong { display: block; font: 900 86px/.8 Helvetica, Arial, sans-serif; }
-    .hero-note span { display: block; margin-top: 12px; font: 700 17px/1.1 Helvetica, Arial, sans-serif; }
-    .hero-note p { margin: 26px 0 0; font: 13px/1.4 Courier, monospace; }
-
-    .proof-strip {
-        display: grid;
-        grid-template-columns: repeat(4, auto 1fr);
-        border-block: 3px solid var(--ink);
-        background: var(--ink);
-        color: var(--paper);
-        font-family: Courier, monospace;
-    }
-
-    .proof-strip span, .proof-strip strong { padding: 15px 18px; border-right: 1px dashed var(--paper); }
-    .proof-strip span { color: var(--cyan); font-size: 11px; }
-    .proof-strip strong { font-size: 13px; }
-
-    .playground, .coverage { padding: 110px clamp(18px, 5vw, 80px); }
-    .section-title { display: grid; grid-template-columns: 220px minmax(0, 820px); gap: 40px; align-items: start; margin-bottom: 70px; }
-    .section-title p { margin: 8px 0 0; font: 700 14px/1 Courier, monospace; }
-    .section-title h2 { margin: 0; font: 900 clamp(48px, 7vw, 104px)/.9 Helvetica, Arial, sans-serif; letter-spacing: -.055em; }
-
-    .tab-tape { display: flex; width: max-content; max-width: 100%; margin: 0 auto 54px; padding: 10px; background: rgba(255, 113, 206, .72); transform: rotate(-1.3deg); }
-    button, select, input { color: var(--ink); font: 700 14px/1 Helvetica, Arial, sans-serif; }
-    button { padding: 12px 16px; border: 2px solid var(--ink); background: var(--paper); box-shadow: 3px 3px 0 var(--ink); cursor: pointer; }
-    button:hover, button.is-active { background: var(--acid); transform: translate(-1px, -1px); }
-    button:disabled { cursor: not-allowed; opacity: .45; transform: none; }
-    .tab-tape button { box-shadow: none; border-right: 0; }
-    .tab-tape button:last-child { border-right: 2px solid var(--ink); }
-
-    .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 42px; max-width: 1380px; margin: 0 auto; }
-    .field-label { display: block; margin-bottom: 8px; font: 700 13px/1 Courier, monospace; }
-    input, select { width: 100%; box-sizing: border-box; padding: 13px; border: 2px solid var(--ink); background: rgba(255, 255, 255, .28); }
-    .live-output { padding: 16px; background: var(--cyan); font-size: 20px; }
-    .check-row { display: block; margin-bottom: 14px; font-family: Helvetica, Arial, sans-serif; }
-    .check-row input { width: auto; margin-right: 8px; }
-    .visibility-sample { padding: 13px; border: 2px dashed var(--ink); }
-    .counter-row { display: grid; grid-template-columns: 1fr 80px 1fr; align-items: center; gap: 12px; }
-    .counter-row strong { text-align: center; font: 900 56px/1 Helvetica, Arial, sans-serif; }
-    .progress-track { height: 18px; margin: 22px 0 10px; border: 2px solid var(--ink); background: var(--paper); }
-    .progress-track i { display: block; height: 100%; max-width: 100%; background: var(--pink); }
-    .number-run { display: flex; flex-wrap: wrap; gap: 7px; }
-    .number-run span { display: grid; place-items: center; width: 34px; height: 34px; border: 2px solid var(--ink); background: var(--acid); font: 700 15px/1 Courier, monospace; }
-    .sample-list { padding: 0; list-style: none; font-family: Courier, monospace; }
-    .sample-list li { padding: 8px 0; text-decoration: line-through; opacity: .55; }
-    .sample-list li.is-enabled { text-decoration: none; opacity: 1; }
-    .status-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
-    .status-card, .runtime-result { padding: 16px; border: 2px solid var(--ink); }
-    .status-ready { background: var(--cyan); }
-    .status-building { background: var(--acid); }
-    .status-error { background: var(--pink); }
-
-    .coverage { position: relative; background: var(--ink); color: var(--paper); }
-    .coverage::before { content: ''; position: absolute; inset: 0; opacity: .16; background-image: repeating-linear-gradient(135deg, transparent 0 16px, var(--pink) 16px 18px); }
-    .coverage > * { position: relative; }
-    .section-title--small { margin-bottom: 60px; }
-    .section-title--small h2 { max-width: 970px; }
-    .coverage-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--paper); }
-    .coverage-grid article { min-height: 230px; padding: 26px; border: 1px solid var(--paper); }
-    .coverage-grid article:nth-child(2n) { background: var(--pink); color: var(--ink); }
-    .coverage-grid h3 { margin: 0 0 24px; font: 900 26px/1 Helvetica, Arial, sans-serif; }
-    .coverage-grid p { line-height: 1.8; }
-    .coverage-grid code { color: inherit; font: 14px/1.5 Courier, monospace; }
-    .coverage-grid span { display: block; margin-top: 20px; font: 13px/1.45 Helvetica, Arial, sans-serif; }
-    .ssr-ticket { width: fit-content; max-width: 720px; margin: 58px auto 0; padding: 18px 24px; border: 2px dashed var(--paper); background: var(--cyan); color: var(--ink); transform: rotate(-1deg); font-family: Courier, monospace; }
-
-    .demo-footer { display: flex; justify-content: space-between; padding: 28px clamp(18px, 4vw, 64px); border-top: 3px solid var(--ink); font: 700 13px/1 Courier, monospace; }
-    .demo-footer a { color: inherit; }
-
-    @media (max-width: 980px) {
-        .demo-hero { grid-template-columns: 90px 1fr; }
-        .hero-note { grid-column: 2; width: 230px; }
-        .card-grid, .coverage-grid { grid-template-columns: 1fr 1fr; }
-        .section-title { grid-template-columns: 1fr; }
-        .proof-strip { grid-template-columns: auto 1fr auto 1fr; }
-    }
-
-    @media (max-width: 680px) {
-        .demo-nav div { display: none; }
-        .demo-hero { display: block; min-height: 0; padding-top: 44px; }
-        .hero-stamp { width: 80px; margin-bottom: 42px; }
-        .demo-hero h1 { font-size: 54px; }
-        .hero-note { width: auto; margin-top: 46px; transform: rotate(2deg); }
-        .proof-strip { grid-template-columns: auto 1fr; }
-        .card-grid, .coverage-grid { grid-template-columns: 1fr; }
-        .playground, .coverage { padding-block: 72px; }
-        .section-title h2 { font-size: 46px; }
-        .tab-tape { width: 100%; overflow-x: auto; }
-        .tab-tape button { white-space: nowrap; }
-        .demo-footer { gap: 20px; flex-direction: column; }
-    }
-</style>

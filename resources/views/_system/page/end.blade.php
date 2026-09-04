@@ -13,6 +13,15 @@
 
          json_encode một phát, không PRETTY_PRINT: đây là payload, không phải
          code để đọc. --}}
+    @php
+        // Bundle nạp rời: server là chỗ DUY NHẤT biết theme nào đang bật, nên
+        // client không đoán đường dẫn. Thứ tự mảng = thứ tự merge (sau đè trước).
+        $__themeService = app(\Saola\Core\Services\ThemeService::class);
+        $__activeTheme = $__themeService->active($__context__);
+        $__bundleUrls = array_values(array_filter([
+            $__activeTheme ? $__themeService->assets($__activeTheme, $__context__)['js'] : null,
+        ]));
+    @endphp
     {!! '<script>window.APP_CONFIGS=' 
     .json_encode([
         'container' => '#app-root',
@@ -21,13 +30,14 @@
             'base' => '/',
             'routes' => $__helper->exportSpaRoutes($__context__),
         ],
+        'bundles' => $__bundleUrls,
         'view' => [
             'contextViews' => viewContextManager()->getContextViews($__context__),
             'revision' => viewContextManager()->getContextViewRevision($__context__),
             'systemData' => viewContextManager()->exportContextState($__context__)['systemData'],
             'ssrData' => $__helper->exportApplicationViewData(),
         ],
-    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) 
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG)
     .'</script>' !!}
 
     {{-- SSR hydrate boot — client (App.start → readSSRBoot) đọc để hydrate route đầu.

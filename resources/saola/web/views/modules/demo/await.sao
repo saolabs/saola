@@ -1,0 +1,37 @@
+@vars(generatedAt = '', renderedBy = '', stats = [])
+@await
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    {{-- PHỤ THUỘC dữ liệu await → nằm trong render().
+         SSR: Blade điền sẵn. CSR: chờ App.Http.get() xong mới có. --}}
+    @block('main')
+        <p class="kicker"><span>DỮ LIỆU · NẠP BẤT ĐỒNG BỘ</span></p>
+        <h1>Trang <code>&#64;await</code>.</h1>
+        <p class="await-demo-meta">
+            Dữ liệu sinh lúc <strong>{{ generatedAt }}</strong> · đường đi:
+            <strong>{{ renderedBy }}</strong>
+        </p>
+        <ul class="await-demo-stats">
+            @foreach(stats as row)
+                <li><span>{{ row.label }}</span><b>{{ row.value }}</b></li>
+            @endforeach
+        </ul>
+    @endblock
+
+    {{-- TĨNH, không đụng biến await → compiler dồn cả hai vào prerender():
+         một @block (outlet thứ hai của layout) và một @section ngắn.
+         Chính chỗ này từng bị đánh rơi khỏi đầu ra JS: SSR hiện, CSR mất. --}}
+    @block('aside')
+        <h2>Trang này kiểm chứng cái gì.</h2>
+        <ul class="check-list">
+            <li>Tải thẳng URL: Laravel render Blade với dữ liệu sẵn, <code>&#64;await</code> là no-op phía SSR.</li>
+            <li>Điều hướng SPA vào: runtime dựng prerender trước, rồi <code>App.Http.get()</code> gọi lại chính URL này và nhận JSON.</li>
+            <li>Khối này nằm ở outlet THỨ HAI của layout và được khai báo trong <code>prerender()</code> chứ không phải <code>render()</code> — phải có mặt ở cả hai đường.</li>
+        </ul>
+        <p class="await-demo-note">
+            Cùng một controller phục vụ cả hai: <code>$this-&gt;response($data)</code> trả HTML cho trình duyệt và JSON cho <code>fetch</code>, phân biệt bằng header <code>X-Sao-Response</code>.
+        </p>
+    @endblock
+</template>

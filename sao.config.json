@@ -7,7 +7,8 @@
         "saoView": "resources/saola",
         "bladeView": "resources/views",
         "compiled": "resources/js/saola",
-        "public": "public/static/saola"
+        "public": "public/static/saola",
+        "sharedApp": "_app"
     },
     "output": {
         "default": "app/js",
@@ -25,14 +26,10 @@
                 "web/app"
             ],
             "views": {
-                "web": "web/views",
-                "themes.aurora": "themes/aurora/views",
-                "themes.demo": "themes/demo/views"
+                "web": "web/views"
             },
             "blade": {
-                "web": "web",
-                "themes.aurora": "themes/aurora",
-                "themes.demo": "themes/demo"
+                "web": "web"
             },
             "compiled": {
                 "views": "web/views",
@@ -100,5 +97,8 @@
                 "registry": "app/registry.js"
             }
         }
+    },
+    "compiler": {
+        "idMode": "terse"
     }
 }

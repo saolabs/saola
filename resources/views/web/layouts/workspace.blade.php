@@ -1,9 +1,7 @@
+@addCssLink('/static/saola/demo-site.css')
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "base")
-@once('saola-css-1vuyy6c')
-<link rel="stylesheet" href="/static/saola/demo-site.css">
-@endonce
     @block('shell')
         <div @class([$__VIEW_ID__ . '-Bshell1', 'workspace-frame'])>
             <aside @class([$__VIEW_ID__ . '-Bshell11', 'workspace-sidebar'])>
@@ -24,9 +22,9 @@
                 <p @class([$__VIEW_ID__ . '-Bshell114', 'workspace-note'])>State stays local to the page. The layout remains stable while the route changes.</p>
             </aside>
             <main @class([$__VIEW_ID__ . '-Bshell12', 'workspace-main'])>
-                @startMarker('blockoutlet', 'Bshell12b')
+                @startMarker('blockoutlet', 'Bshell12b1')
                 @useBlock('workspace')
-                @endMarker('blockoutlet', 'Bshell12b')
+                @endMarker('blockoutlet', 'Bshell12b1')
             </main>
         </div>
     @endblock

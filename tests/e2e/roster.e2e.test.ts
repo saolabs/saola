@@ -96,6 +96,53 @@ describe.skipIf(!serverUp).concurrent(`@foreach @key + state view con @ ${BASE}$
         await page.close();
     });
 
+    it('lưu form sửa KHÔNG nạp lại trang (PUT bằng fetch, không submit gốc)', async () => {
+        // Hai đường làm hỏng việc này: `@submit` không preventDefault, và dev
+        // server bắn full-reload khi API ghi vào storage/ (xem vite.config.js
+        // server.watch.ignored). Cả hai đều hiện ra ở đây: trang nạp lại giữa
+        // lúc đang sửa, bản nháp bay sạch.
+        const { page, errors } = await openHydrated(browser, PAGE);
+        await waitRows(page);
+
+        let navigations = 0;
+        page.on('framenavigated', (f) => { if (f === page.mainFrame()) navigations++; });
+
+        const row = page.locator('.rs-row').first();
+        await row.getByRole('button', { name: 'Sửa' }).click();
+        const nameInput = page.locator('.rs-row--edit input[type="text"]').first();
+        await nameInput.waitFor();
+        const original = await nameInput.inputValue();
+        const edited = `${original} E2E`;
+        await nameInput.fill(edited);
+
+        await Promise.all([
+            page.waitForResponse((r) => r.url().includes('/api/api/roster/') && r.request().method() === 'PUT'),
+            page.getByRole('button', { name: 'Lưu thay đổi' }).first().click(),
+        ]);
+        await page.waitForSelector('.rs-row--edit', { state: 'detached' });
+        // Full-reload của dev server tới SAU response vài trăm ms — assert ngay
+        // lúc form đóng thì bắt hụt, test xanh vì lý do sai.
+        await page.waitForTimeout(1500);
+
+        const navigationsAfterSave = navigations;
+        const textAfterSave = await page.locator('.rs-row').first().innerText();
+
+        // Trả tên về như cũ TRƯỚC khi assert — suite chạy trên dữ liệu thật của
+        // dev server, assert hỏng giữa chừng thì tên rác nằm lại trong users.json.
+        await row.getByRole('button', { name: 'Sửa' }).click();
+        await nameInput.waitFor();
+        await nameInput.fill(original);
+        await Promise.all([
+            page.waitForResponse((r) => r.url().includes('/api/api/roster/') && r.request().method() === 'PUT'),
+            page.getByRole('button', { name: 'Lưu thay đổi' }).first().click(),
+        ]);
+        await page.close();
+
+        expect(navigationsAfterSave).toBe(0);
+        expect(textAfterSave).toContain(edited);
+        expect(errors).toEqual([]);
+    });
+
     it('refetch KHÔNG tạo lại node DOM của hàng (slot cache hit)', async () => {
         const { page, errors } = await openHydrated(browser, PAGE);
         await waitRows(page);

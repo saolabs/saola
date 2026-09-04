@@ -1,0 +1,90 @@
+@states({
+    counter: 0,
+    note: '',
+    events: []
+})
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    @block('main')
+        <p class="kicker"><span>RUNTIME · VÒNG ĐỜI</span></p>
+        <h1>Vòng đời và PageCache.</h1>
+        <p class="lab-lead">
+            <code>ViewController</code> là một state machine: <code>created → active ⇄ paused → destroyed</code>.
+            Trang này ghi lại từng hook khi nó bắn ra, và giữ state qua điều hướng
+            back/forward để bạn thấy PageCache làm gì.
+        </p>
+
+        <div class="lab-counter">
+            <button class="button" @click(setCounter(counter - 1))>−</button>
+            <strong>{{ counter }}</strong>
+            <button class="button" @click(setCounter(counter + 1))>+</button>
+        </div>
+
+        <label class="lab-field">
+            <span>Ghi chú (giữ qua pause/resume)</span>
+            <input type="text" @bind(note) placeholder="Gõ gì đó rồi bấm Rời trang">
+        </label>
+
+        <div class="lab-toolbar">
+            <a class="button button-primary" href="/demo/foreach">Rời trang (sang Danh sách)</a>
+            <button class="button" @click(goBack())>Quay lại bằng history.back()</button>
+        </div>
+
+        <p class="lab-note">
+            Đổi bộ đếm và gõ ghi chú, rời trang, rồi bấm <em>Back</em> của trình duyệt.
+            Điều hướng <code>pop</code> mà PageCache còn entry thì view được
+            <code>resume</code> — DOM gắn lại, state còn nguyên, không render lại và
+            không gọi API.
+        </p>
+
+        <h2>Hook đã bắn</h2>
+        {{-- @forelse chưa được compiler cài (xem /docs/status) — dùng @foreach. --}}
+        <ol class="lab-log">
+            @foreach(events as entry)
+                <li>{{ entry }}</li>
+            @endforeach
+            <li @class({'is-muted', 'is-hidden': events.length !== 0})>Chưa có hook nào được ghi.</li>
+        </ol>
+    @endblock
+
+    @block('aside')
+        <h2>Bảy chuyển trạng thái.</h2>
+        <div class="directive-table">
+            <div><div class="dt-key"><code>mounting · mounted</code></div><span>DOM gắn vào tài liệu thật</span><b>mount</b></div>
+            <div><div class="dt-key"><code>starting · started</code></div><span>Subscribe reactive và gắn event</span><b>start</b></div>
+            <div><div class="dt-key"><code>pausing · paused</code></div><span>Rời DOM vào PageCache; state ghi dirty</span><b>pause</b></div>
+            <div><div class="dt-key"><code>resuming · resumed</code></div><span>Quay lại từ PageCache; flush dirty</span><b>resume</b></div>
+            <div><div class="dt-key"><code>stopping · stopped</code></div><span>Huỷ subscribe, DOM vẫn còn</span><b>stop</b></div>
+            <div><div class="dt-key"><code>unmounting · unmounted</code></div><span>Gỡ DOM, release asset theo ref-count</span><b>unmount</b></div>
+            <div><div class="dt-key"><code>destroying · destroyed</code></div><span>Dọn hết, destroy con theo thứ tự ngược</span><b>destroy</b></div>
+        </div>
+        <p class="lab-note">
+            Nhật ký ở trên chỉ giữ được các hook xảy ra <em>trong khi view còn sống</em>.
+            <code>destroyed</code> không bao giờ hiện ra vì lúc nó chạy thì DOM đã đi rồi —
+            muốn thấy nó thì mở console.
+        </p>
+    @endblock
+</template>
+
+<script setup lang="ts">
+    // state/setter gọi trần (biến closure); method của mình thì qua `this`.
+    export default {
+        name: 'LifecycleDemo',
+
+        record(hook) {
+            const stamp = new Date().toLocaleTimeString('vi-VN');
+            setEvents([`${stamp} — ${hook}`, ...(events || [])].slice(0, 12));
+        },
+
+        mounted() { this.record('mounted'); },
+        started() { this.record('started — event và subscription đã gắn'); },
+        paused() { this.record('paused — DOM đã vào PageCache'); },
+        resumed() { this.record('resumed — quay lại từ PageCache, state còn nguyên'); },
+        stopped() { console.info('[LifecycleDemo] stopped'); },
+        destroyed() { console.info('[LifecycleDemo] destroyed'); },
+
+        goBack() { window.history.back(); }
+    };
+</script>

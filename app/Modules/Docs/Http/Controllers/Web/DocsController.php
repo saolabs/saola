@@ -16,7 +16,7 @@ class DocsController extends WebController
     public const PAGES = [
         'getting-started', 'architecture', 'contexts', 'compiler',
         'services', 'repository', 'mask', 'validator', 'response', 'core-kit',
-        'sao-file', 'directives', 'reactivity', 'system-vars',
+        'sao-file', 'directives', 'reactivity', 'system-vars', 'helpers',
         'runtime', 'lifecycle', 'router', 'client-services',
         'build', 'status',
     ];

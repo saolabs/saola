@@ -1,0 +1,98 @@
+@import('web.components.code-window')
+<template>
+    @extends(__layout__ + "docs")
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>14</span> VIẾT VIEW</p>
+                <h1>Hàm dùng được trong <code>&#123;&#123; &#125;&#125;</code>.</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Một biểu thức trong template chạy hai lần bằng hai bản cài đặt khác nhau: PHP lúc SSR, JavaScript lúc CSR. Trang này là bảng tra xem tên hàm nào thật sự có ở cả hai bên.</p>
+                <dl><div><dt>CHẠY CẢ HAI</dt><dd>51</dd></div><div><dt>LỆCH</dt><dd>41</dd></div></dl>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>CƠ CHẾ</span> Vì sao lại lệch được</p>
+            <h2>Hai bản cài đặt, một cái tên.</h2>
+            <p>Compiler không kiểm tra hàm có tồn tại hay không. Gặp một lời gọi trong biểu thức, nó chỉ quyết định gắn tiền tố nào: tên nằm trong danh sách view thì thành <code>App.View.x()</code>, còn lại thành <code>App.Helper.x()</code>. Nhánh Blade thì để nguyên — PHP tự phân giải lúc render.</p>
+            <div class="code-window code-window-dark">
+                <div class="window-bar"><span>MỘT BIỂU THỨC</span><b>hai đầu ra</b></div>
+                <pre><code><span class="code-line">&lt;p&gt;&#123;&#123; number_format(total) &#125;&#125;&lt;/p&gt;</span><span class="code-line code-gap"></span><span class="code-line code-indent-1">├─ blade  →  &#123;&#123; number_format($total) &#125;&#125;        (hàm builtin của PHP)</span><span class="code-line code-indent-1">└─ js     →  App.Helper.number_format(total)   (method của HelperService)</span></code></pre>
+            </div>
+            <div class="ov-note ov-note--warn">
+                Hệ quả: một cái tên chỉ có ở một bên sẽ <strong>compile sạch, SSR ra HTML đúng, rồi nổ lúc hydrate</strong> — hoặc ngược lại. Không có cảnh báo nào ở khâu build. Bảng dưới là danh sách đã đối chiếu bằng cách quét <code>KnownFunctions::KNOWN</code> phía compiler với <code>HelperService</code> phía client, và với hàm builtin PHP cộng helper của Laravel và của core.
+            </div>
+
+            <p class="kicker"><span>AN TOÀN</span> Dùng thoải mái</p>
+            <h2>51 tên có mặt ở cả hai phía.</h2>
+            <p>Đây là vùng dùng được mà không phải nghĩ. Phần lớn là hàm builtin của PHP đã được cài lại bằng JavaScript trong <code>HelperService</code>, giữ nguyên tên và thứ tự tham số.</p>
+            <div class="ov-tags">
+                <span class="ov-tag">count</span><span class="ov-tag">strlen</span><span class="ov-tag">substr</span><span class="ov-tag">trim</span><span class="ov-tag">ltrim</span><span class="ov-tag">rtrim</span><span class="ov-tag">strtolower</span><span class="ov-tag">strtoupper</span><span class="ov-tag">ucfirst</span><span class="ov-tag">lcfirst</span><span class="ov-tag">str_replace</span><span class="ov-tag">explode</span><span class="ov-tag">implode</span><span class="ov-tag">number_format</span>
+                <span class="ov-tag">abs</span><span class="ov-tag">min</span><span class="ov-tag">max</span><span class="ov-tag">ceil</span><span class="ov-tag">floor</span><span class="ov-tag">round</span><span class="ov-tag">sqrt</span>
+                <span class="ov-tag">is_array</span><span class="ov-tag">is_null</span><span class="ov-tag">is_numeric</span><span class="ov-tag">is_string</span><span class="ov-tag">isset</span><span class="ov-tag">empty</span>
+                <span class="ov-tag">in_array</span><span class="ov-tag">array_key_exists</span><span class="ov-tag">array_merge</span><span class="ov-tag">array_push</span><span class="ov-tag">array_pop</span><span class="ov-tag">array_unique</span>
+                <span class="ov-tag">json_encode</span><span class="ov-tag">json_decode</span><span class="ov-tag">md5</span><span class="ov-tag">sha1</span><span class="ov-tag">base64_encode</span><span class="ov-tag">base64_decode</span>
+                <span class="ov-tag">date</span><span class="ov-tag">time</span><span class="ov-tag">mktime</span><span class="ov-tag">strtotime</span><span class="ov-tag">now</span><span class="ov-tag">today</span>
+                <span class="ov-tag">collect</span><span class="ov-tag">asset</span><span class="ov-tag">url</span><span class="ov-tag">old</span><span class="ov-tag">dd</span><span class="ov-tag">dump</span>
+            </div>
+
+            <p class="kicker"><span>LỆCH</span> Ba nhóm phải tránh</p>
+            <h2>Cái nào hỏng, hỏng ở đâu.</h2>
+
+            <p class="ov-sub">SSR chạy · CSR nổ — 11 tên</p>
+            <p>Đây là hàm của Laravel, chỉ có nghĩa trên server. Compiler vẫn vui vẻ dịch thành <code>App.Helper.config(...)</code>, và <code>HelperService</code> không có method đó — trang render đúng từ server rồi chết ngay khi client hydrate.</p>
+            <div class="ov-tags ov-tags--warn">
+                <span class="ov-tag">config</span><span class="ov-tag">env</span><span class="ov-tag">auth</span><span class="ov-tag">request</span><span class="ov-tag">response</span><span class="ov-tag">session</span><span class="ov-tag">cache</span><span class="ov-tag">logger</span><span class="ov-tag">abort</span><span class="ov-tag">redirect</span><span class="ov-tag">mix</span>
+            </div>
+            <div class="ov-note">
+                Cách đi vòng: đọc chúng trong controller rồi truyền xuống view qua data. Biểu thức trong template nên chỉ đụng tới biến, không đụng tới hạ tầng server.
+            </div>
+
+            <p class="ov-sub">CSR chạy · SSR nổ — 15 tên</p>
+            <p>Nhóm này ngược lại: <code>HelperService</code> có, PHP không. Chúng là method của Carbon (<code>$date-&gt;addDays()</code>) hoặc bản camelCase của helper core vốn viết snake_case, nên gọi như hàm toàn cục trong Blade là fatal error.</p>
+            <div class="directive-table">
+                <div><div class="dt-key"><code>addDays</code> <code>addHours</code> <code>addMinutes</code><br><code>subDays</code> <code>subHours</code> <code>subMinutes</code></div><span>Phía PHP là method của Carbon, không phải hàm toàn cục</span><b>ngày giờ</b></div>
+                <div><div class="dt-key"><code>diffInDays</code> <code>diffInHours</code><br><code>diffInMinutes</code> <code>diffInSeconds</code></div><span>Cũng là method của Carbon</span><b>ngày giờ</b></div>
+                <div><div class="dt-key"><code>formatDate</code> <code>formatNumber</code> <code>formatCurrency</code></div><span>Core có bản snake_case: <code>format_date</code>, <code>format_number</code>, <code>format_currency</code></span><b>định dạng</b></div>
+                <div><div class="dt-key"><code>slug</code></div><span>Core có <code>generate_slug</code></span><b>chuỗi</b></div>
+                <div><div class="dt-key"><code>truncate</code></div><span>Phía PHP dùng <code>Str::limit</code></span><b>chuỗi</b></div>
+            </div>
+
+            <p class="ov-sub">Nổ cả hai phía — 15 tên</p>
+            <p>Những tên này nằm trong danh sách <code>KNOWN</code> của compiler nhưng chưa từng được cài ở đâu cả. Chúng compile ra lời gọi hợp lệ rồi nổ ở bất kỳ phía nào chạy trước.</p>
+            <div class="ov-tags ov-tags--warn">
+                <span class="ov-tag">isMobile</span><span class="ov-tag">isTablet</span><span class="ov-tag">isDesktop</span><span class="ov-tag">getDeviceType</span><span class="ov-tag">scrollTo</span><span class="ov-tag">copyToClipboard</span><span class="ov-tag">isInViewport</span><span class="ov-tag">getUrlParams</span><span class="ov-tag">buildUrl</span><span class="ov-tag">updateTitle</span><span class="ov-tag">updateDescription</span><span class="ov-tag">updateKeywords</span><span class="ov-tag">format</span><span class="ov-tag">parse</span><span class="ov-tag">createFromFormat</span>
+            </div>
+            <div class="ov-note">
+                Thay thế: <code>isMobile()</code> dùng <code>is_mobile()</code> của core rồi truyền xuống qua data; nhóm <code>updateTitle</code> / <code>updateDescription</code> / <code>updateKeywords</code> dùng <code>App.Head</code>; <code>scrollTo</code> và <code>copyToClipboard</code> gọi thẳng API trình duyệt trong <code>&lt;script setup&gt;</code>.
+            </div>
+
+            <p class="kicker"><span>COLLECTION</span> Chuỗi method</p>
+            <h2><code>collect()</code> có ở cả hai phía.</h2>
+            <p>Đây là cách gọn nhất để làm việc với danh sách mà không phải lo parity: <code>collect()</code> trả về một proxy có 45 method trùng tên với Collection của Laravel, nên cùng một chuỗi method chạy được ở cả Blade lẫn JavaScript.</p>
+            <code-window label="SAO" title="modules/report/index.sao" lang="html">
+@verbatim
+<p>{{ collect(orders).where('status', 'paid').sum('total') }}</p>
+@endverbatim
+            </code-window>
+            <div class="ov-tags">
+                <span class="ov-tag">map</span><span class="ov-tag">filter</span><span class="ov-tag">reject</span><span class="ov-tag">reduce</span><span class="ov-tag">each</span><span class="ov-tag">pluck</span><span class="ov-tag">where</span><span class="ov-tag">whereIn</span><span class="ov-tag">whereNotIn</span><span class="ov-tag">first</span><span class="ov-tag">last</span><span class="ov-tag">sum</span><span class="ov-tag">avg</span><span class="ov-tag">min</span><span class="ov-tag">max</span><span class="ov-tag">count</span><span class="ov-tag">sortBy</span><span class="ov-tag">sortByDesc</span><span class="ov-tag">groupBy</span><span class="ov-tag">keyBy</span><span class="ov-tag">unique</span><span class="ov-tag">flatten</span><span class="ov-tag">chunk</span><span class="ov-tag">take</span><span class="ov-tag">skip</span><span class="ov-tag">merge</span><span class="ov-tag">reverse</span><span class="ov-tag">values</span><span class="ov-tag">keys</span><span class="ov-tag">contains</span><span class="ov-tag">isEmpty</span><span class="ov-tag">isNotEmpty</span><span class="ov-tag">toArray</span><span class="ov-tag">join</span><span class="ov-tag">tap</span><span class="ov-tag">pipe</span>
+            </div>
+
+            <p class="kicker"><span>QUY TẮC</span> Giữ cho khỏi lệch</p>
+            <h2>Ba câu để không phải tra lại.</h2>
+            <ul class="check-list">
+                <li>Biểu thức trong template chỉ đụng <em>biến</em> và danh sách 51 tên ở trên. Mọi thứ khác tính sẵn trong controller hoặc trong <code>&lt;script setup&gt;</code>.</li>
+                <li>Cần một hàm mới dùng được cả hai phía thì phải thêm ở <strong>hai</strong> chỗ: helper PHP trong core và method cùng tên trong <code>HelperService</code>. Thêm một bên là tạo ra một mục mới cho bảng lệch.</li>
+                <li>Nghi ngờ một tên thì thử tải thẳng URL (đường SSR) rồi điều hướng nội bộ tới đúng trang đó (đường CSR). Lệch chỉ lộ ra khi chạy đủ hai đường.</li>
+            </ul>
+        </div>
+
+        <a class="doc-next" href="/docs/runtime">
+            <div><span>Tiếp theo</span><strong>Runtime & hydration</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

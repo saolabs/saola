@@ -1,0 +1,15 @@
+{
+    "nextId": 6,
+    "todos": [
+        {
+            "id": 1,
+            "text": "Good morning",
+            "completed": true
+        },
+        {
+            "id": 2,
+            "text": "Create a image about UFO",
+            "completed": false
+        }
+    ]
+}

@@ -36,7 +36,7 @@
                 <article @class([$__VIEW_ID__ . '-Bdoc244'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2441'])>04 / STYLE</span>
                     <strong @class([$__VIEW_ID__ . '-Bdoc2442'])>CSS của View</strong>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2443'])><code @class([$__VIEW_ID__ . '-Bdoc24431'])>&lt;style scoped&gt;</code> tự động cô lập CSS theo subtree của view; <code @class([$__VIEW_ID__ . '-Bdoc24432'])>&lt;style&gt;</code> áp dụng global cho toàn trang.</p>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2443'])><code @class([$__VIEW_ID__ . '-Bdoc24431'])>&lt;style scoped&gt;</code> tự động cô lập CSS theo subtree của view; <code @class([$__VIEW_ID__ . '-Bdoc24432'])>&lt;style&gt;</code> áp dụng global cho toàn trang. Cùng chỗ này khai báo được asset ngoài: <code @class([$__VIEW_ID__ . '-Bdoc24433'])>&lt;link rel="stylesheet"&gt;</code> và <code @class([$__VIEW_ID__ . '-Bdoc24434'])>&lt;script src&gt;</code> — compiler dịch sang <code @class([$__VIEW_ID__ . '-Bdoc24435'])>&#64;addCssLink</code>/<code @class([$__VIEW_ID__ . '-Bdoc24436'])>&#64;addScriptSrc</code> để thẻ ra đúng <code @class([$__VIEW_ID__ . '-Bdoc24437'])>&lt;head&gt;</code>, không trùng, và CSS được gỡ khi rời trang.</p>
                 </article>
             </div>
 

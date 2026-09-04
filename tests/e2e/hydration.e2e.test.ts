@@ -51,6 +51,30 @@ describe.skipIf(!serverUp).concurrent(`SSR → hydrate → SPA nav @ ${BASE}`, {
         expect(html.length).toBeGreaterThan(2000);
     });
 
+    it('asset của view nằm trong <head>/<body>, doctype vẫn đứng đầu, hydrate không nhân đôi thẻ', async () => {
+        // `<link>`/`<script src>` khai báo trong .sao từng được in NGAY tại chỗ
+        // khai báo. Với trang `@extends`, phần đó echo trước khi layout in
+        // `<!DOCTYPE html>` → doctype bị bỏ, cả trang chạy quirks mode. Giờ
+        // chúng đi qua `@addCssLink`/`@addScriptSrc` và được in ở <head> /
+        // cuối <body>.
+        const html = await (await fetch(`${BASE}${PAGE_B}`)).text();
+        expect(html.trimStart().startsWith('<!DOCTYPE html>')).toBe(true);
+
+        const { page, errors } = await openHydrated(browser, PAGE_B);
+        const assets = await page.evaluate(() => ({
+            compat: document.compatMode,
+            css: [...document.querySelectorAll('link[rel~="stylesheet"]')].map(l => l.getAttribute('href')),
+            scripts: [...document.querySelectorAll('script[src]')].map(s => s.getAttribute('src')),
+        }));
+
+        expect(assets.compat).toBe('CSS1Compat');
+        // Client adopt node SSR thay vì chèn bản thứ hai — trùng href/src là hỏng.
+        expect(new Set(assets.css).size).toBe(assets.css.length);
+        expect(new Set(assets.scripts).size).toBe(assets.scripts.length);
+        expect(errors).toEqual([]);
+        await page.close();
+    });
+
     it('hydrate KHÔNG nhân đôi DOM và KHÔNG ném lỗi', async () => {
         // Mốc so sánh: text do server render. Context riêng tắt hẳn JS —
         // sạch hơn chặn request (abort làm chính console sinh ERR_FAILED giả).

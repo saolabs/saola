@@ -19,6 +19,11 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
             ->controller(DemoController::class)
             ->group(function ($module) {
                 $module->get('/', 'index')->name('index');
+                $module->get('/await', 'await')->name('await');
+
+                foreach (DemoController::PAGES as $slug) {
+                    $module->get('/'.$slug, 'page')->name($slug);
+                }
             });
     }
 }

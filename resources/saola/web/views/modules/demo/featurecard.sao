@@ -23,53 +23,33 @@
 </script>
 
 <style scoped>
+    /* Cùng bảng màu với khu docs/lab — biến lấy từ demo-site.css. */
     .feature-card {
-        position: relative;
-        border: 3px solid #1f1b16;
-        background: #e8e0c0;
-        box-shadow: 7px 7px 0 #1f1b16;
-        color: #1f1b16;
-        transform: rotate(-1deg);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
     }
-
-    .feature-card:nth-child(even) { transform: rotate(1.4deg); }
-    .feature-card--cyan { box-shadow: 7px 7px 0 #00ffcc; }
-    .feature-card--yellow { box-shadow: 7px 7px 0 #dfff00; }
-
-    .feature-card > header {
-        display: grid;
-        grid-template-columns: 64px 1fr;
-        align-items: stretch;
-        border-bottom: 3px solid #1f1b16;
+    .feature-card header { display: flex; align-items: baseline; gap: 8px; }
+    .feature-card header span {
+        font-size: 11px; font-weight: 700; letter-spacing: .06em;
+        color: var(--muted); font-variant-numeric: tabular-nums;
     }
-
-    .feature-card > header span {
-        display: grid;
-        place-items: center;
-        border-right: 3px solid #1f1b16;
-        background: #ff71ce;
-        font: 700 22px/1 Helvetica, Arial, sans-serif;
-    }
-
-    .feature-card > header h3 {
-        margin: 0;
-        padding: 14px 16px;
-        font: 700 26px/1 Helvetica, Arial, sans-serif;
-    }
-
+    .feature-card h3 { margin: 0; font-size: 15px; font-weight: 700; }
     .feature-card > code {
-        display: block;
-        padding: 9px 14px;
-        overflow-wrap: anywhere;
-        border-bottom: 2px dashed #1f1b16;
-        background: rgba(255, 255, 255, .24);
-        font: 13px/1.45 Courier, monospace;
+        align-self: flex-start;
+        padding: 3px 8px; border-radius: 5px;
+        background: var(--mist); color: var(--muted);
+        font-size: 12px;
     }
+    .feature-card__body { display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+    .feature-card__body p { margin: 0; line-height: 1.6; }
 
-    .feature-card__body { padding: 18px; }
-
-    @media (max-width: 680px) {
-        .feature-card,
-        .feature-card:nth-child(even) { transform: none; }
-    }
+    /* Tông chỉ còn là một vạch màu mảnh, không đổi cả khung. */
+    .feature-card--pink { border-top: 3px solid #d93a11; }
+    .feature-card--cyan { border-top: 3px solid #0e7c86; }
+    .feature-card--yellow { border-top: 3px solid #b8860b; }
 </style>

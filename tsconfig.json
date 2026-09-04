@@ -14,6 +14,7 @@
     "paths": {
       "@/*": ["resources/js/*"],
       "@sao/*": ["resources/saola/*"],
+      "@app/*": ["resources/saola/_app/*"],
       "@web/*": ["resources/saola/web/*"],
       "@admin/*": ["resources/saola/admin/*"],
       "@mobile/*": ["resources/saola/mobile/*"]

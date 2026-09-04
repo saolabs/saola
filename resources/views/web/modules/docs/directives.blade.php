@@ -20,8 +20,9 @@
                 <a @class([$__VIEW_ID__ . '-Bdoc214']) @attr(['href' => '#thuoc-tinh', 'data-nav' => 'disabled'])>Thuộc tính &amp; binding</a>
                 <a @class([$__VIEW_ID__ . '-Bdoc215']) @attr(['href' => '#su-kien', 'data-nav' => 'disabled'])>Sự kiện</a>
                 <a @class([$__VIEW_ID__ . '-Bdoc216']) @attr(['href' => '#layout', 'data-nav' => 'disabled'])>Layout &amp; component</a>
-                <a @class([$__VIEW_ID__ . '-Bdoc217']) @attr(['href' => '#tien-ich', 'data-nav' => 'disabled'])>Quyền, form &amp; tiện ích</a>
-                <a @class([$__VIEW_ID__ . '-Bdoc218']) @attr(['href' => '#magic', 'data-nav' => 'disabled'])>Biến ma thuật</a>
+                <a @class([$__VIEW_ID__ . '-Bdoc217']) @attr(['href' => '#asset', 'data-nav' => 'disabled'])>Asset của trang</a>
+                <a @class([$__VIEW_ID__ . '-Bdoc218']) @attr(['href' => '#tien-ich', 'data-nav' => 'disabled'])>Quyền, form &amp; tiện ích</a>
+                <a @class([$__VIEW_ID__ . '-Bdoc219']) @attr(['href' => '#magic', 'data-nav' => 'disabled'])>Biến ma thuật</a>
             </nav>
 
             <section @class([$__VIEW_ID__ . '-Bdoc22', 'dir-group']) @attr(['id' => 'khai-bao'])>
@@ -601,66 +602,118 @@
                 </div>
             </section>
 
-            <section @class([$__VIEW_ID__ . '-Bdoc28', 'dir-group']) @attr(['id' => 'tien-ich'])>
-                <h2 @class([$__VIEW_ID__ . '-Bdoc281'])>Quyền, form &amp; tiện ích</h2>
-                <p @class([$__VIEW_ID__ . '-Bdoc282'])>Nhóm này giữ nguyên ngữ nghĩa Blade quen thuộc, nên nếu bạn đã viết Laravel thì không phải học lại.</p>
-                <div @class([$__VIEW_ID__ . '-Bdoc283', 'dir-list'])>
+            <section @class([$__VIEW_ID__ . '-Bdoc28', 'dir-group']) @attr(['id' => 'asset'])>
+                <h2 @class([$__VIEW_ID__ . '-Bdoc281'])>Asset của trang</h2>
+                <p @class([$__VIEW_ID__ . '-Bdoc282'])>Trong <code @class([$__VIEW_ID__ . '-Bdoc2821'])>.sao</code> bạn <strong @class([$__VIEW_ID__ . '-Bdoc2822'])>không gọi hai directive này</strong> — cứ khai báo <code @class([$__VIEW_ID__ . '-Bdoc2823'])>&lt;link rel="stylesheet"&gt;</code> hoặc <code @class([$__VIEW_ID__ . '-Bdoc2824'])>&lt;script src&gt;</code> ở cuối file, ngoài <code @class([$__VIEW_ID__ . '-Bdoc2825'])>&lt;template&gt;</code>, compiler tự dịch sang chúng cho nhánh Blade và sang <code @class([$__VIEW_ID__ . '-Bdoc2826'])>styles</code>/<code @class([$__VIEW_ID__ . '-Bdoc2827'])>scripts</code> cho nhánh JavaScript. Chúng là API cho Blade viết tay: layout của bạn, partial hệ thống, hay gói mở rộng.</p>
+                <p @class([$__VIEW_ID__ . '-Bdoc283'])>Điểm mấu chốt: hai directive này <em @class([$__VIEW_ID__ . '-Bdoc2831'])>đăng ký</em> chứ không in thẻ tại chỗ. In tại chỗ là cách cũ và nó hỏng thật — với trang <code @class([$__VIEW_ID__ . '-Bdoc2832'])>&#64;extends</code>, phần nằm ngoài block được in TRƯỚC khi layout in <code @class([$__VIEW_ID__ . '-Bdoc2833'])>&lt;!DOCTYPE html&gt;</code>, mà doctype đứng sau nội dung thì trình duyệt bỏ luôn, cả trang rơi vào quirks mode.</p>
+                <div @class([$__VIEW_ID__ . '-Bdoc284', 'dir-list'])>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2831', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28311', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc283111', 'dir-name'])>&#64;csrf <em @class([$__VIEW_ID__ . '-Bdoc2831111'])>· &#64;method</em></span><span @class([$__VIEW_ID__ . '-Bdoc283112', 'dir-kind'])>Form</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28312', 'dir-sig'])>&#64;csrf
-&#64;method('PUT')</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28313'])>Chèn ô ẩn chứa token CSRF, và giả lập HTTP method cho form vốn chỉ gửi được GET với POST.</p>
+                    <article @class([$__VIEW_ID__ . '-Bdoc2841', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28411', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284111', 'dir-name'])>&#64;addCssLink</span><span @class([$__VIEW_ID__ . '-Bdoc284112', 'dir-kind'])>Asset</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28412', 'dir-sig'])>&#64;addCssLink($href, $attributes = [])</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28413'])>Đăng ký một stylesheet. Thẻ được in trong <code @class([$__VIEW_ID__ . '-Bdoc284131'])>&lt;head&gt;</code>. Trùng thì chỉ ra một thẻ — khoá so trùng là <code @class([$__VIEW_ID__ . '-Bdoc284132'])>id</code> nếu bạn đưa vào, không thì chính <code @class([$__VIEW_ID__ . '-Bdoc284133'])>href</code>; nhờ vậy layout, trang và component cùng khai báo một file cũng chỉ tốn một <code @class([$__VIEW_ID__ . '-Bdoc284134'])>&lt;link&gt;</code>.</p>
+                        @startMarker('component', 'Bdoc2841c1')
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_21'))
+@verbatim
+&#64;addCssLink('/static/saola/roster.css')
+&#64;addCssLink(asset('css/theme.css'), ['id' =&gt; 'theme', 'media' =&gt; 'print'])
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__21_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_21'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__21_content])
+@endMarker('component', 'Bdoc2841c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc28414', 'dir-note'])>Đăng ký sau khi <code @class([$__VIEW_ID__ . '-Bdoc284141'])>&lt;head&gt;</code> đã render thì thẻ ra cuối <code @class([$__VIEW_ID__ . '-Bdoc284142'])>&lt;body&gt;</code> — vẫn hợp lệ và vẫn áp dụng, chỉ muộn hơn một nhịp. Đó là đường của chính layout, vì layout render sau trang con.</p>
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2832', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28321', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc283211', 'dir-name'])>&#64;auth <em @class([$__VIEW_ID__ . '-Bdoc2832111'])>· &#64;guest</em></span><span @class([$__VIEW_ID__ . '-Bdoc283212', 'dir-kind'])>Quyền</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28322', 'dir-sig'])>&#64;auth … &#64;endauth
-&#64;guest … &#64;endguest</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28323'])>Khối hiển thị theo trạng thái đăng nhập, xét ở phía server lúc render.</p>
+                    <article @class([$__VIEW_ID__ . '-Bdoc2842', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28421', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284211', 'dir-name'])>&#64;addScriptSrc</span><span @class([$__VIEW_ID__ . '-Bdoc284212', 'dir-kind'])>Asset</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28422', 'dir-sig'])>&#64;addScriptSrc($src, $attributes = [])</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28423'])>Đăng ký một script ngoài. Thẻ được in ở cuối <code @class([$__VIEW_ID__ . '-Bdoc284231'])>&lt;body&gt;</code>, theo đúng thứ tự đăng ký, cùng cách so trùng như trên. Attribute cờ viết <code @class([$__VIEW_ID__ . '-Bdoc284232'])>true</code>.</p>
+                        @startMarker('component', 'Bdoc2842c1')
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_22'))
+@verbatim
+&#64;addScriptSrc('https://cdn.example.com/prism.min.js', ['data-manual' =&gt; true])
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__22_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_22'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__22_content])
+@endMarker('component', 'Bdoc2842c1')
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2833', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28331', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc283311', 'dir-name'])>&#64;can <em @class([$__VIEW_ID__ . '-Bdoc2833111'])>· &#64;cannot</em></span><span @class([$__VIEW_ID__ . '-Bdoc283312', 'dir-kind'])>Quyền</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28332', 'dir-sig'])>&#64;can('quyền', $model) … &#64;endcan</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28333'])>Khối theo policy của Laravel. Cùng cách viết, cùng cách phân giải quyền.</p>
-                    </article>
-
-                    <article @class([$__VIEW_ID__ . '-Bdoc2834', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28341', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc283411', 'dir-name'])>&#64;error</span><span @class([$__VIEW_ID__ . '-Bdoc283412', 'dir-kind'])>Form</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28342', 'dir-sig'])>&#64;error('trường') … &#64;enderror</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28343'])>Hiện lỗi validation của một trường, với biến <code @class([$__VIEW_ID__ . '-Bdoc283431'])>$message</code> sẵn trong khối.</p>
-                    </article>
-
-                    <article @class([$__VIEW_ID__ . '-Bdoc2835', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28351', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc283511', 'dir-name'])>&#64;hasSection</span><span @class([$__VIEW_ID__ . '-Bdoc283512', 'dir-kind'])>Layout</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28352', 'dir-sig'])>&#64;hasSection('tên') … &#64;endhassection</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28353'])>Kiểm tra một section đã được trang con định nghĩa chưa, để layout quyết định có dựng khung bao quanh hay không.</p>
-                    </article>
-
-                    <article @class([$__VIEW_ID__ . '-Bdoc2836', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28361', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc283611', 'dir-name'])>&#64;verbatim</span><span @class([$__VIEW_ID__ . '-Bdoc283612', 'dir-kind'])>Tiện ích</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28362', 'dir-sig'])>&#64;verbatim … &#64;endverbatim</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28363'])>Xuất nguyên văn, không biên dịch gì bên trong. Cần khi bạn muốn in ra cú pháp của chính Saola hoặc của một template engine khác.</p>
+                    <article @class([$__VIEW_ID__ . '-Bdoc2843', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28431', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284311', 'dir-name'])>Vòng đời</span><span @class([$__VIEW_ID__ . '-Bdoc284312', 'dir-kind'])>SSR · hydrate · SPA</span></div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28432'])>Thẻ do server in ra được runtime <strong @class([$__VIEW_ID__ . '-Bdoc284321'])>nhận nuôi</strong> (adopt) lúc hydrate chứ không chèn bản thứ hai. Sau đó nó đi theo vòng đời view, đếm tham chiếu:</p>
+                        <table @class([$__VIEW_ID__ . '-Bdoc28433', 'dir-mini'])>
+                            <tr @class([$__VIEW_ID__ . '-Bdoc284331'])><td @class([$__VIEW_ID__ . '-Bdoc2843311'])>mount / resume</td><td @class([$__VIEW_ID__ . '-Bdoc2843312'])>chèn khi tham chiếu 0 → 1</td></tr>
+                            <tr @class([$__VIEW_ID__ . '-Bdoc284332'])><td @class([$__VIEW_ID__ . '-Bdoc2843321'])>unmount / pause / destroy</td><td @class([$__VIEW_ID__ . '-Bdoc2843322'])>gỡ khi tham chiếu 1 → 0</td></tr>
+                        </table>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28434'])>Nên rời trang là CSS của trang đó biến khỏi <code @class([$__VIEW_ID__ . '-Bdoc284341'])>&lt;head&gt;</code>: hai trang dùng chung selector với CSS khác nhau không đè lên nhau. CSS mà nhiều view cùng khai báo chỉ đi khi view cuối rời đi.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28435', 'dir-note'])><code @class([$__VIEW_ID__ . '-Bdoc284351'])>&lt;script&gt;</code> thì <strong @class([$__VIEW_ID__ . '-Bdoc284352'])>giữ lại</strong>. Gỡ thẻ script không hoàn tác side effect của nó, còn chèn lại là chạy lần hai — nạp lại một thư viện là xoá sạch những gì đã đăng ký vào nó giữa hai lần.</p>
                     </article>
 
                 </div>
             </section>
 
-            <section @class([$__VIEW_ID__ . '-Bdoc29', 'dir-group']) @attr(['id' => 'magic'])>
-                <h2 @class([$__VIEW_ID__ . '-Bdoc291'])>Biến ma thuật</h2>
-                <p @class([$__VIEW_ID__ . '-Bdoc292'])>Có sẵn trong mọi view, do render context cấp. Dùng chúng thay vì viết cứng đường dẫn để view còn chuyển được giữa các context.</p>
+            <section @class([$__VIEW_ID__ . '-Bdoc29', 'dir-group']) @attr(['id' => 'tien-ich'])>
+                <h2 @class([$__VIEW_ID__ . '-Bdoc291'])>Quyền, form &amp; tiện ích</h2>
+                <p @class([$__VIEW_ID__ . '-Bdoc292'])>Nhóm này giữ nguyên ngữ nghĩa Blade quen thuộc, nên nếu bạn đã viết Laravel thì không phải học lại.</p>
                 <div @class([$__VIEW_ID__ . '-Bdoc293', 'dir-list'])>
+
                     <article @class([$__VIEW_ID__ . '-Bdoc2931', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc29311', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc293111', 'dir-name'])>Danh sách</span><span @class([$__VIEW_ID__ . '-Bdoc293112', 'dir-kind'])>Toàn cục trong view</span></div>
-                        <table @class([$__VIEW_ID__ . '-Bdoc29312', 'dir-mini'])>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc293121'])><td @class([$__VIEW_ID__ . '-Bdoc2931211'])>__layout__</td><td @class([$__VIEW_ID__ . '-Bdoc2931212'])>đường dẫn gốc tới thư mục layout của context hiện tại</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc293122'])><td @class([$__VIEW_ID__ . '-Bdoc2931221'])>__template__</td><td @class([$__VIEW_ID__ . '-Bdoc2931222'])>đường dẫn gốc tới component dùng chung</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc293123'])><td @class([$__VIEW_ID__ . '-Bdoc2931231'])>__VIEW_PATH__</td><td @class([$__VIEW_ID__ . '-Bdoc2931232'])>đường dẫn dạng chấm của chính view này, ví dụ <code @class([$__VIEW_ID__ . '-Bdoc29312321'])>web.modules.docs.index</code></td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc293124'])><td @class([$__VIEW_ID__ . '-Bdoc2931241'])>__VIEW_ID__</td><td @class([$__VIEW_ID__ . '-Bdoc2931242'])>định danh instance, là tiền tố của mọi class và marker dùng để hydrate</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc293125'])><td @class([$__VIEW_ID__ . '-Bdoc2931251'])>__context__</td><td @class([$__VIEW_ID__ . '-Bdoc2931252'])>context đang phục vụ request: web, admin, api hay mobile</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc293126'])><td @class([$__VIEW_ID__ . '-Bdoc2931261'])>__base__ · __page__<br @class([$__VIEW_ID__ . '-Bdoc29312611'])>__component__ · __partial__</td><td @class([$__VIEW_ID__ . '-Bdoc2931262'])>đường dẫn gốc theo từng loại view</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc293127'])><td @class([$__VIEW_ID__ . '-Bdoc2931271'])>__system__</td><td @class([$__VIEW_ID__ . '-Bdoc2931272'])>khối system data do render context truyền xuống</td></tr>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29311', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc293111', 'dir-name'])>&#64;csrf <em @class([$__VIEW_ID__ . '-Bdoc2931111'])>· &#64;method</em></span><span @class([$__VIEW_ID__ . '-Bdoc293112', 'dir-kind'])>Form</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29312', 'dir-sig'])>&#64;csrf
+&#64;method('PUT')</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc29313'])>Chèn ô ẩn chứa token CSRF, và giả lập HTTP method cho form vốn chỉ gửi được GET với POST.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2932', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29321', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc293211', 'dir-name'])>&#64;auth <em @class([$__VIEW_ID__ . '-Bdoc2932111'])>· &#64;guest</em></span><span @class([$__VIEW_ID__ . '-Bdoc293212', 'dir-kind'])>Quyền</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29322', 'dir-sig'])>&#64;auth … &#64;endauth
+&#64;guest … &#64;endguest</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc29323'])>Khối hiển thị theo trạng thái đăng nhập, xét ở phía server lúc render.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2933', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29331', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc293311', 'dir-name'])>&#64;can <em @class([$__VIEW_ID__ . '-Bdoc2933111'])>· &#64;cannot</em></span><span @class([$__VIEW_ID__ . '-Bdoc293312', 'dir-kind'])>Quyền</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29332', 'dir-sig'])>&#64;can('quyền', $model) … &#64;endcan</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc29333'])>Khối theo policy của Laravel. Cùng cách viết, cùng cách phân giải quyền.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2934', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29341', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc293411', 'dir-name'])>&#64;error</span><span @class([$__VIEW_ID__ . '-Bdoc293412', 'dir-kind'])>Form</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29342', 'dir-sig'])>&#64;error('trường') … &#64;enderror</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc29343'])>Hiện lỗi validation của một trường, với biến <code @class([$__VIEW_ID__ . '-Bdoc293431'])>$message</code> sẵn trong khối.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2935', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29351', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc293511', 'dir-name'])>&#64;hasSection</span><span @class([$__VIEW_ID__ . '-Bdoc293512', 'dir-kind'])>Layout</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29352', 'dir-sig'])>&#64;hasSection('tên') … &#64;endhassection</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc29353'])>Kiểm tra một section đã được trang con định nghĩa chưa, để layout quyết định có dựng khung bao quanh hay không.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2936', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29361', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc293611', 'dir-name'])>&#64;verbatim</span><span @class([$__VIEW_ID__ . '-Bdoc293612', 'dir-kind'])>Tiện ích</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc29362', 'dir-sig'])>&#64;verbatim … &#64;endverbatim</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc29363'])>Xuất nguyên văn, không biên dịch gì bên trong. Cần khi bạn muốn in ra cú pháp của chính Saola hoặc của một template engine khác.</p>
+                    </article>
+
+                </div>
+            </section>
+
+            <section @class([$__VIEW_ID__ . '-Bdoc2e10_', 'dir-group']) @attr(['id' => 'magic'])>
+                <h2 @class([$__VIEW_ID__ . '-Bdoc2e10_1'])>Biến ma thuật</h2>
+                <p @class([$__VIEW_ID__ . '-Bdoc2e10_2'])>Có sẵn trong mọi view, do render context cấp. Dùng chúng thay vì viết cứng đường dẫn để view còn chuyển được giữa các context.</p>
+                <div @class([$__VIEW_ID__ . '-Bdoc2e10_3', 'dir-list'])>
+                    <article @class([$__VIEW_ID__ . '-Bdoc2e10_31', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc2e10_311', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc2e10_3111', 'dir-name'])>Danh sách</span><span @class([$__VIEW_ID__ . '-Bdoc2e10_3112', 'dir-kind'])>Toàn cục trong view</span></div>
+                        <table @class([$__VIEW_ID__ . '-Bdoc2e10_312', 'dir-mini'])>
+                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3121'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31211'])>__layout__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31212'])>đường dẫn gốc tới thư mục layout của context hiện tại</td></tr>
+                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3122'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31221'])>__template__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31222'])>đường dẫn gốc tới component dùng chung</td></tr>
+                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3123'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31231'])>__VIEW_PATH__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31232'])>đường dẫn dạng chấm của chính view này, ví dụ <code @class([$__VIEW_ID__ . '-Bdoc2e10_312321'])>web.modules.docs.index</code></td></tr>
+                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3124'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31241'])>__VIEW_ID__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31242'])>định danh instance, là tiền tố của mọi class và marker dùng để hydrate</td></tr>
+                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3125'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31251'])>__context__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31252'])>context đang phục vụ request: web, admin, api hay mobile</td></tr>
+                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3126'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31261'])>__base__ · __page__<br @class([$__VIEW_ID__ . '-Bdoc2e10_312611'])>__component__ · __partial__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31262'])>đường dẫn gốc theo từng loại view</td></tr>
+                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3127'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31271'])>__system__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31272'])>khối system data do render context truyền xuống</td></tr>
                         </table>
                     </article>
                 </div>

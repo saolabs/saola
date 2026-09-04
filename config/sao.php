@@ -3,6 +3,23 @@
 return [
     /*
     |--------------------------------------------------------------------------
+    | Theme
+    |--------------------------------------------------------------------------
+    |
+    | `directory` là namespace Blade gốc của theme (`themes.{slug}`).
+    | `path` là nơi gói theme được cài — NGOÀI mọi outDir của Vite, vì
+    | `emptyOutDir` xoá sạch outDir mỗi lần build và sẽ cuốn theo theme của
+    | khách hàng. Xem docs/EXTENSION_ARCHITECTURE.md §10.1.
+    |
+    */
+    'themes' => [
+        'directory' => 'themes',
+        'path' => base_path('themes'),
+        'public_path' => public_path('static/saola/themes'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Compiler Configuration
     |--------------------------------------------------------------------------
     |

@@ -1,0 +1,132 @@
+@states({
+    rows: [
+        { id: 1, name: 'Blade output', hits: 0 },
+        { id: 2, name: 'JavaScript view', hits: 0 },
+        { id: 3, name: 'Scoped CSS', hits: 0 }
+    ],
+    nextId: 4,
+    log: []
+})
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    @block('main')
+        <p class="kicker"><span>RUNTIME · DANH SÁCH</span></p>
+        <h1>Danh sách và reconciliation.</h1>
+        <p class="lab-lead">
+            Vùng <code>&#64;foreach</code> render lại giữa cặp marker của chính nó. Slot chỉ
+            được tái dùng khi khoá <code>&#64;key</code> khớp <em>và</em> reference của item
+            không đổi — bấm thử từng nút để thấy chỗ nào giữ được DOM, chỗ nào dựng lại.
+        </p>
+
+        <div class="lab-toolbar">
+            <button class="button button-primary" @click(addRow())>Thêm dòng</button>
+            <button class="button" @click(shuffleRows())>Đảo thứ tự</button>
+            <button class="button" @click(renameFirst())>Đổi tên dòng đầu</button>
+            <button class="button" @click(refetch())>Refetch (object mới)</button>
+            <button class="button" @click(clearLog())>Xoá nhật ký</button>
+        </div>
+
+        {{-- Đọc bằng NGOẶC VUÔNG, không phải dấu chấm: `row.id` biên dịch thành
+             `$row->id` phía Blade, mà state khai báo trong @states là MẢNG PHP
+             nên SSR nổ trong khi CSR vẫn chạy. `row['id']` ra `$row['id']` /
+             `row['id']` — đúng ở cả hai phía. --}}
+        <ul class="lab-rows">
+            @foreach(rows as row)
+                @key(row['id'])
+                <li>
+                    <span class="lab-row-id">#{{ row['id'] }}</span>
+                    <span class="lab-row-name">{{ row['name'] }}</span>
+                    <span class="lab-row-hits">{{ row['hits'] }} lượt</span>
+                    <button class="button button-small" @click(bump(row['id']))>+1</button>
+                    <button class="button button-small" @click(removeRow(row['id']))>Xoá</button>
+                </li>
+            @endforeach
+        </ul>
+
+        {{-- KHÔNG dùng @show: Laravel đã có directive cùng tên (kết thúc section
+             rồi yield ngay) và nó nuốt mất bản của Saola. Xem /docs/status. --}}
+        <p @class({'lab-empty', 'is-hidden': rows.length !== 0})>Danh sách rỗng — bấm “Thêm dòng”.</p>
+
+        <h2>Nhật ký thao tác</h2>
+        {{-- @forelse có trong tài liệu nhưng compiler CHƯA cài: nó bị để nguyên
+             thành text, và nhánh Blade sinh ra PHP không hợp lệ → 500.
+             Dùng @foreach + một dòng rỗng có điều kiện. Xem /docs/status. --}}
+        <ol class="lab-log">
+            @foreach(log as entry)
+                <li>{{ entry }}</li>
+            @endforeach
+            <li @class({'is-muted', 'is-hidden': log.length !== 0})>Chưa có thao tác nào.</li>
+        </ol>
+    @endblock
+
+    @block('aside')
+        <h2>Điều đang được chứng minh.</h2>
+        <ul class="check-list">
+            <li><strong>Thêm / xoá</strong> chỉ đụng đúng dòng bị đổi; các dòng còn lại giữ nguyên node DOM.</li>
+            <li><strong>Đảo thứ tự</strong> với <code>&#64;key</code> thì slot được di chuyển chứ không dựng lại.</li>
+            <li><strong>Refetch</strong> trả object MỚI cho cùng một id — khoá vẫn khớp nhưng reference đổi, nên hàng đó bị dựng lại. Đây là ràng buộc có thật, không phải lỗi: closure biên dịch đóng gói thẳng object item.</li>
+        </ul>
+        <p class="lab-note">
+            Muốn state của view con sống sót qua mỗi lần đồng bộ thì lặp trên danh sách <em>id ổn định</em> rồi truyền dữ liệu xuống bằng props, đừng lặp thẳng trên mảng vừa fetch về.
+        </p>
+    @endblock
+</template>
+
+<script setup lang="ts">
+    // Quy ước .sao: state và setter của nó là BIẾN trong closure của view —
+    // gọi trần (`rows`, `setRows(...)`), không qua `this`. Chỉ method do mình
+    // khai báo mới nằm trên `this`.
+    export default {
+        name: 'ForeachDemo',
+
+        note(text) {
+            const stamp = new Date().toLocaleTimeString('vi-VN');
+            setLog([`${stamp} — ${text}`, ...log].slice(0, 8));
+        },
+
+        addRow() {
+            const id = nextId;
+            setNextId(id + 1);
+            setRows([...rows, { id, name: `Dòng mới ${id}`, hits: 0 }]);
+            this.note(`thêm #${id}`);
+        },
+
+        removeRow(id) {
+            setRows(rows.filter(r => r.id !== id));
+            this.note(`xoá #${id}`);
+        },
+
+        bump(id) {
+            // Sửa TẠI CHỖ rồi set lại cùng reference: StateManager đối chiếu nội
+            // dung độ sâu một nên vẫn nhận, và slot các dòng khác không đổi.
+            const row = rows.find(r => r.id === id);
+            if (!row) return;
+            row.hits += 1;
+            setRows(rows);
+            this.note(`+1 cho #${id} (sửa tại chỗ, giữ reference)`);
+        },
+
+        renameFirst() {
+            const first = rows[0];
+            if (!first) return;
+            first.name = first.name.endsWith('*') ? first.name.slice(0, -1) : first.name + '*';
+            setRows(rows);
+            this.note('đổi tên dòng đầu (giữ reference)');
+        },
+
+        shuffleRows() {
+            setRows([...rows].reverse());
+            this.note('đảo thứ tự — key khớp nên slot được di chuyển');
+        },
+
+        refetch() {
+            // Mô phỏng dữ liệu vừa về từ server: CÙNG id, object mới hoàn toàn.
+            setRows(rows.map(r => ({ id: r.id, name: r.name, hits: r.hits })));
+            this.note('refetch — reference đổi, mỗi hàng bị dựng lại');
+        },
+
+        clearLog() { setLog([]); }
+    };
+</script>

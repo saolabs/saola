@@ -15,6 +15,12 @@
     {{-- Saola assets (CSS + JS), dev-aware: Vite HMR khi `npm run dev`, static khi build --}}
     @include($__system__.'partials.assets')
 
+    {{-- CSS do view khai báo (`<link rel=stylesheet>` trong .sao → `@addCssLink`).
+         View con của `@extends` chạy TRƯỚC layout nên tới đây đã đăng ký xong;
+         phần đăng ký muộn hơn (chính layout, block render sau <head>) được
+         `_system.partials.scripts` in nốt ở cuối <body>. --}}
+    {!! $__helper->renderHeadAssets('css') !!}
+
     @yield('styles')
 </head>
 <body>

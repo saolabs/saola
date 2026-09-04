@@ -54,3 +54,6 @@ pnpm-debug.log*
 /public/static/saola/admin/
 /public/static/saola/mobile/
 /public/static/saola/app/
+
+
+themes/

@@ -785,6 +785,85 @@ code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospac
 .ov-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
 .ov-tag { padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--mist); color: var(--text); font-size: 12.5px; font-weight: 600; }
 .ov-tag--brand { border-color: rgba(217,58,17,.25); background: var(--sky-soft); color: #b3300a; }
+.ov-tags--warn .ov-tag { border-color: rgba(217,58,17,.3); background: rgba(217,58,17,.06); color: #b3300a; }
+
+/* ── Khu /demo/* — shell hai cột, dùng lại nav của docs ─────────────────── */
+.lab-shell { padding: 40px var(--pad-shell) 80px; display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 48px; align-items: start; }
+.lab-main { min-width: 0; }
+.lab-main h1 { font-size: clamp(28px, 3vw, 38px); font-weight: 800; letter-spacing: -.02em; margin: 8px 0 16px; }
+.lab-main h2 { font-size: 20px; margin: 40px 0 12px; }
+.lab-lead { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 760px; margin: 0 0 28px; }
+.lab-note { color: var(--muted); font-size: 13.5px; line-height: 1.7; max-width: 760px; }
+.lab-rule { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+.lab-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+.button-small { padding: 4px 10px; font-size: 12px; }
+
+.lab-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.lab-rows li { display: flex; align-items: center; gap: 12px; padding: 10px 2px; border-bottom: 1px solid var(--line); }
+.lab-row-id { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; min-width: 40px; }
+.lab-row-name { flex: 1; font-weight: 600; }
+.lab-row-hits { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; }
+.lab-empty { color: var(--muted); font-style: italic; }
+.is-hidden { display: none !important; }
+
+.lab-log { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13.5px; line-height: 1.9; font-variant-numeric: tabular-nums; }
+.lab-log .is-muted { font-style: italic; }
+
+.lab-counter { display: flex; align-items: center; gap: 16px; margin: 24px 0; }
+.lab-counter strong { font-size: 32px; font-variant-numeric: tabular-nums; min-width: 60px; text-align: center; }
+.lab-field { display: flex; flex-direction: column; gap: 6px; max-width: 420px; margin: 24px 0; }
+.lab-field span { font-size: 13px; font-weight: 600; color: var(--muted); }
+.lab-field input { padding: 9px 12px; border: 1px solid var(--line); border-radius: 6px; font: inherit; }
+
+/* Playground của /demo — style global chứ không <style scoped>: scoped chỉ được
+   inject lúc client hydrate nên phần trên màn hình đầu sẽ nhấp nháy một nhịp. */
+.lab-index { display: grid; gap: 12px; margin: 28px 0 8px; }
+.lab-index a { display: block; padding: 16px 18px; border: 1px solid var(--line); border-radius: 10px; background: #fff; transition: border-color .2s ease, transform .2s ease; }
+.lab-index a:hover { border-color: var(--river); transform: translateY(-1px); }
+.lab-index span { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.lab-index strong { display: block; margin: 4px 0 6px; font-size: 17px; color: var(--ink); }
+.lab-index p { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+.tab-tape { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 20px; }
+.tab-tape button { padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font: inherit; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; }
+.tab-tape button.is-active { border-color: var(--river); background: var(--sky-soft); color: var(--river); }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.card-grid input[type="text"], .card-grid select { padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; font: inherit; font-size: 13px; }
+.card-grid button { padding: 6px 12px; border: 1px solid var(--line); border-radius: 6px; background: #fff; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.card-grid button:disabled { opacity: .45; cursor: not-allowed; }
+.field-label { font-size: 12px; font-weight: 600; color: var(--muted); }
+.live-output { font-size: 14px; }
+.check-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.visibility-sample { padding: 8px 10px; border-radius: 6px; background: var(--mist); font-size: 13px; }
+.counter-row { display: flex; align-items: center; gap: 12px; }
+.counter-row strong { font-size: 24px; font-variant-numeric: tabular-nums; min-width: 38px; text-align: center; }
+.progress-track { height: 6px; border-radius: 999px; background: var(--mist); overflow: hidden; }
+.progress-track i { display: block; height: 100%; background: var(--river); transition: width .25s ease; }
+.status-buttons { display: flex; gap: 6px; }
+.status-card { padding: 8px 10px; border-radius: 6px; font-size: 13px; }
+.status-ready { background: rgba(14,124,134,.09); color: #0e7c86; }
+.status-building { background: rgba(184,134,11,.12); color: #8a6508; }
+.status-error { background: rgba(217,58,17,.09); color: #b3300a; }
+.number-run { display: flex; flex-wrap: wrap; gap: 5px; }
+.number-run span { min-width: 24px; padding: 3px 0; border: 1px solid var(--line); border-radius: 5px; text-align: center; font-size: 12px; font-variant-numeric: tabular-nums; }
+.sample-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.sample-list li { padding: 5px 9px; border-radius: 5px; background: var(--mist); font-size: 13px; color: var(--muted); }
+.sample-list li.is-enabled { background: var(--sky-soft); color: var(--river); font-weight: 600; }
+.runtime-result { padding: 8px 10px; border-radius: 6px; background: var(--mist); font-size: 13px; }
+
+/* /demo/await */
+.await-demo-meta { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+.await-demo-meta strong { color: var(--text); }
+.await-demo-stats { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.await-demo-stats li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 12px 2px; border-bottom: 1px solid var(--line); }
+.await-demo-stats b { font-variant-numeric: tabular-nums; font-size: 18px; }
+.await-demo-note { color: var(--muted); font-size: 13.5px; }
+
+@media (max-width: 900px) {
+    .lab-shell { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .lab-shell .docs-nav { position: static; max-height: none; }
+}
 
 /* ---- Request flow (trang kiến trúc) ----
    Một cột, chia pha bằng nhãn SERVER/BROWSER và băng vượt biên ở giữa. Bản

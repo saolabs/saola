@@ -1,0 +1,79 @@
+<template>
+    @extends(__layout__ + "public")
+    @block('content')
+        <div class="lab-shell">
+            <aside class="docs-nav" aria-label="Điều hướng trang demo">
+                <div class="docs-nav-inner">
+                    <p class="docs-nav-group">Bắt đầu</p>
+                    <a href="/demo">Tổng quan &amp; playground</a>
+
+                    <p class="docs-nav-group">Dữ liệu</p>
+                    <a href="/demo/await">Nạp dữ liệu bất đồng bộ</a>
+
+                    <p class="docs-nav-group">Runtime</p>
+                    <a href="/demo/foreach">Danh sách &amp; reconciliation</a>
+                    <a href="/demo/lifecycle">Vòng đời &amp; PageCache</a>
+
+                    <p class="docs-nav-group">Ứng dụng thật</p>
+                    {{-- Hai trang này ở shell `workspace` (sidebar tối, khung
+                         kiểu app) chứ không ở shell lab — giữ nguyên vì đó là
+                         một bề mặt demo có chủ đích, chỉ nối đường vào. --}}
+                    <a href="/roster">Roster — CRUD qua API</a>
+                    <a href="/todo-list">Todo — state cục bộ</a>
+
+                    <p class="docs-nav-group">Tài liệu</p>
+                    <a href="/docs/directives">Tham chiếu directive</a>
+                    <a href="/docs/status">Giới hạn đã biết</a>
+                </div>
+            </aside>
+
+            <main class="docs-main lab-main">
+                {{-- Tên block KHÔNG được chứa dấu gạch ngang: nhánh Blade nhận
+                     đúng còn nhánh JS bỏ qua, biến @useBlock thành text thô —
+                     outlet biến mất khi CSR.
+
+                     Ở đây KHÔNG dùng @yield: khi layout được tái dùng qua điều
+                     hướng SPA, Yield bị dựng lại thành một cặp marker THỨ HAI
+                     cùng id thay vì claim cặp có sẵn, nên nội dung section của
+                     trang cũ nằm lại bên cạnh trang mới. Xem /docs/status. --}}
+                @useBlock('main')
+                <hr class="lab-rule">
+                @useBlock('aside')
+            </main>
+        </div>
+    @endblock
+</template>
+
+<script setup lang="ts">
+    export default {
+        name: 'LabLayout',
+
+        // Layout được TÁI DÙNG khi điều hướng giữa các trang demo (layout diff),
+        // nên started() chỉ chạy đúng một lần. Nội dung trong outlet đổi mà
+        // layout không có hook nào bắn ra, nên phải nghe router.
+        //
+        // KHÔNG dùng MutationObserver như layouts/docs.sao: ở đó callback lên
+        // lịch bằng requestAnimationFrame, mà rAF bị treo khi tab/pane ẩn — nav
+        // và mục lục kẹt ở trang cũ. afterEach là tín hiệu tất định của router.
+        started() {
+            this._navHook = () => this.markCurrent();
+            App.Router.afterEach(this._navHook);
+            this.markCurrent();
+        },
+
+        resumed() { this.markCurrent(); },
+
+        // afterEach chỉ có MỘT slot: bỏ hook lại khi layout chết thì lần điều
+        // hướng sau vẫn gọi vào view đã destroy.
+        destroyed() {
+            if (this._navHook) { App.Router.afterEach(() => {}); this._navHook = null; }
+        },
+
+        markCurrent() {
+            const here = window.location.pathname.replace(/\/+$/, '') || '/';
+            document.querySelectorAll('.docs-nav a').forEach(a => {
+                a.classList.toggle('is-current', a.getAttribute('href') === here);
+            });
+        }
+    };
+</script>

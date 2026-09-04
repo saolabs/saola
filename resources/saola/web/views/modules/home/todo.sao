@@ -1,14 +1,13 @@
+@vars(initialTodos = [], initialActiveCount = 0, initialCompletedCount = 0)
+@await
 @states({
-    todos: [
-        { id: 1, text: 'Review hydration lifecycle', completed: true },
-        { id: 2, text: 'Test shared layout transition', completed: false },
-        { id: 3, text: 'Inspect runtime asset cleanup', completed: false }
-    ],
+    todos: initialTodos,
     newTodo: '',
     filter: 'all',
-    nextId: 4,
-    activeCount: 2,
-    completedCount: 1
+    activeCount: initialActiveCount,
+    completedCount: initialCompletedCount,
+    busy: false,
+    syncError: ''
 })
 
 <template>
@@ -25,11 +24,14 @@
         </header>
 
         <section class="todo-board">
+            @if(syncError !== '')
+                <p role="alert">{{ syncError }}</p>
+            @endif
             <form class="todo-entry" @submit(addTodo(event))>
                 <label for="new-task">Add one clear next step</label>
                 <div>
-                    <input id="new-task" type="text" placeholder="What needs your attention?" @bind(newTodo)>
-                    <button type="submit">Add task <span>+</span></button>
+                    <input id="new-task" type="text" maxlength="500" placeholder="What needs your attention?" @bind(newTodo)>
+                    <button type="submit" @disabled(busy)>Add task <span>+</span></button>
                 </div>
             </form>
             <div class="todo-toolbar">
@@ -38,7 +40,8 @@
                     <button @class({'active': filter === 'active'}) @click(setFilter('active'))>Active <span>{{ activeCount }}</span></button>
                     <button @class({'active': filter === 'done'}) @click(setFilter('done'))>Done <span>{{ completedCount }}</span></button>
                 </div>
-                <button class="clear-button" @disabled(completedCount === 0) @click(clearCompleted())>Clear completed</button>
+                <button class="clear-button" @disabled(busy) @click(load())>Refresh list</button>
+                <button class="clear-button" @disabled(busy || completedCount === 0) @click(clearCompleted())>Clear completed</button>
             </div>
             <div class="todo-list">
                 @if(todos.length === 0)
@@ -52,13 +55,13 @@
                         @key(todo['id'])
                         @if(filter === 'all' || (filter === 'active' && !todo['completed']) || (filter === 'done' && todo['completed']))
                             <article @class({'todo-row', 'completed': todo['completed']})>
-                                <button class="todo-check" @click(toggleTodo(todo['id'])) aria-label="Toggle task">
+                                <button class="todo-check" @disabled(busy) @click(toggleTodo(todo['id'])) aria-label="Toggle task">
                                     @if(todo['completed'])
                                         ✓
                                     @endif
                                 </button>
                                 <div><strong>{{ todo['text'] }}</strong><small>SAOLA DEMO · TASK {{ todo['id'] }}</small></div>
-                                <button class="todo-delete" @click(deleteTodo(todo['id'])) aria-label="Delete task">×</button>
+                                <button class="todo-delete" @disabled(busy) @click(deleteTodo(todo['id'])) aria-label="Delete task">×</button>
                             </article>
                         @endif
                     @endforeach
@@ -70,36 +73,67 @@
 </template>
 
 <script setup lang="ts">
+    const URL = '/todo-list';
+
     export default {
         name: 'TodoPage',
-        addTodo(event) {
+
+        // @await handles first load; a cached page refreshes when resumed.
+        resumed() { this.load(); },
+
+        requestOptions() {
+            return {
+                headers: {
+                    Accept: 'application/json',
+                    'X-Sao-Response': 'json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                }
+            };
+        },
+
+        async sync(request) {
+            if (busy) return false;
+            setBusy(true);
+            setSyncError('');
+            try {
+                const response = await request();
+                const data = response.data.data;
+                setTodos(data.initialTodos);
+                setActiveCount(data.initialActiveCount);
+                setCompletedCount(data.initialCompletedCount);
+                return true;
+            } catch (error) {
+                setSyncError('Could not sync tasks: ' + (error.message || error));
+                return false;
+            } finally {
+                setBusy(false);
+            }
+        },
+
+        async load() {
+            return this.sync(() => App.Http.get(URL, null, this.requestOptions()));
+        },
+
+        async addTodo(event) {
             event.preventDefault();
             const text = newTodo.trim();
             if (!text) return;
-            const nextTodos = [...todos, { id: nextId, text, completed: false }];
-            setTodos(nextTodos);
-            this.updateCounts(nextTodos);
-            setNextId(nextId + 1);
-            setNewTodo('');
+            const saved = await this.sync(() => App.Http.post(URL, { text }, this.requestOptions()));
+            if (saved && newTodo.trim() === text) setNewTodo('');
         },
-        toggleTodo(id) {
-            const nextTodos = todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo);
-            setTodos(nextTodos);
-            this.updateCounts(nextTodos);
+
+        async toggleTodo(id) {
+            const todo = todos.find(item => item.id === id);
+            if (!todo) return;
+            return this.sync(() => App.Http.put(URL + '/' + id, { completed: !todo.completed }, this.requestOptions()));
         },
-        deleteTodo(id) {
-            const nextTodos = todos.filter(todo => todo.id !== id);
-            setTodos(nextTodos);
-            this.updateCounts(nextTodos);
+
+        async deleteTodo(id) {
+            return this.sync(() => App.Http.delete(URL + '/' + id, this.requestOptions()));
         },
-        clearCompleted() {
-            const nextTodos = todos.filter(todo => !todo.completed);
-            setTodos(nextTodos);
-            this.updateCounts(nextTodos);
-        },
-        updateCounts(list) {
-            setActiveCount(list.filter(todo => !todo.completed).length);
-            setCompletedCount(list.filter(todo => todo.completed).length);
+
+        async clearCompleted() {
+            return this.sync(() => App.Http.delete(URL + '/completed', this.requestOptions()));
         }
     };
 </script>

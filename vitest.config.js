@@ -26,6 +26,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './resources/js'),
       '@sao': path.resolve(__dirname, './resources/saola'),
+      '@app': path.resolve(__dirname, './resources/saola/_app'),
       '@web': path.resolve(__dirname, './resources/saola/web'),
       '@admin': path.resolve(__dirname, './resources/saola/admin'),
       '@mobile': path.resolve(__dirname, './resources/saola/mobile'),

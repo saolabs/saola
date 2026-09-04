@@ -76,7 +76,7 @@ export default defineConfig({
         saolaAssets({ context, root: __dirname }),
         laravel({
             input: [
-                `resources/js/saola/app.js`,  // Main Saola app entry
+                `resources/js/saola/app.${context}.js`,  // Entry SINH RA bởi builder
                 `resources/css/app.css`,      // Tailwind v4 entry → static/saola/{ctx}/css/app.css
             ],
             // Full-reload the browser on PHP changes. `refresh: true` only covers
@@ -104,6 +104,7 @@ export default defineConfig({
             // '@web/views'. PHẢI khớp "paths" trong tsconfig.json.
             '@': path.resolve(__dirname, 'resources/js'),
             '@sao': path.resolve(__dirname, 'resources/saola'),
+            '@app': path.resolve(__dirname, 'resources/saola/_app'),
             '@web': path.resolve(__dirname, 'resources/saola/web'),
             '@admin': path.resolve(__dirname, 'resources/saola/admin'),
             '@mobile': path.resolve(__dirname, 'resources/saola/mobile'),
@@ -130,6 +131,12 @@ export default defineConfig({
         outDir: `public/static/saola/${context}`,
         assetsDir: 'js',
         rollupOptions: {
+            // Entry phải GIỮ export: import map của theme trỏ `@saolabs/client`
+            // về chính file này, nên `export * from '@saolabs/client'` trong
+            // entry phải sống sót tree-shaking. Vite mặc định DROP export của
+            // entry chunk — thiếu dòng này thì theme nhận một module rỗng và
+            // hỏng câm. Đã đo: docs/EXTENSION_ARCHITECTURE.md §7.2a.
+            preserveEntrySignatures: 'exports-only',
             output: {
                 // KHÔNG dùng 'js/[name].js': hai entry `app.js` và `app.css`
                 // cùng tên rollup 'app', rollup né trùng bằng hậu tố số nên JS
@@ -165,6 +172,14 @@ export default defineConfig({
             host: hmrHost,
             port: devPort,
             clientPort: hmrClientPort,
+        },
+        watch: {
+            // Laravel ghi vào storage/ trong lúc chạy: log, session, cache view,
+            // và cả dữ liệu demo (storage/data/users.json của /roster). Nằm trong
+            // root nên Vite coi mỗi lần ghi là một thay đổi và bắn full-reload —
+            // mỗi POST/PUT lại nạp lại cả trang GIỮA lúc người dùng đang thao tác,
+            // trông y như form submit không bị preventDefault.
+            ignored: ['**/storage/**'],
         },
         // The local client lives outside this project root (../client/dist).
         // Allow Vite to read+watch it so tsc --watch rebuilds hot-reload.

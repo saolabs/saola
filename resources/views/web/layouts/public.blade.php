@@ -1,9 +1,7 @@
+@addCssLink('/static/saola/demo-site.css')
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "base")
-@once('saola-css-1vuyy6c')
-<link rel="stylesheet" href="/static/saola/demo-site.css">
-@endonce
     @block('shell')
         <div @class([$__VIEW_ID__ . '-Bshell1', 'site-frame'])>
             <header @class([$__VIEW_ID__ . '-Bshell11', 'site-header'])>
@@ -41,9 +39,9 @@
             </header>
 
             <main @class([$__VIEW_ID__ . '-Bshell12', 'site-main'])>
-                @startMarker('blockoutlet', 'Bshell12b')
+                @startMarker('blockoutlet', 'Bshell12b1')
                 @useBlock('content')
-                @endMarker('blockoutlet', 'Bshell12b')
+                @endMarker('blockoutlet', 'Bshell12b1')
             </main>
 
             <footer @class([$__VIEW_ID__ . '-Bshell13', 'site-footer'])>

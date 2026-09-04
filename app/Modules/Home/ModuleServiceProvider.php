@@ -28,6 +28,10 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
                 $module->get('/terms', 'terms')->name('terms');
                 $module->get('/contact', 'contact')->name('contact');
                 $module->get('/todo-list', 'todo')->name('todo');
+                $module->post('/todo-list', 'storeTodo')->name('todo.store');
+                $module->delete('/todo-list/completed', 'clearCompletedTodos')->name('todo.clear');
+                $module->put('/todo-list/{id}', 'updateTodo')->name('todo.update');
+                $module->delete('/todo-list/{id}', 'deleteTodo')->name('todo.destroy');
             });
 
     }

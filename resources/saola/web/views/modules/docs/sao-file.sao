@@ -36,7 +36,7 @@
                 <article>
                     <span>04 / STYLE</span>
                     <strong>CSS của View</strong>
-                    <p><code>&lt;style scoped&gt;</code> tự động cô lập CSS theo subtree của view; <code>&lt;style&gt;</code> áp dụng global cho toàn trang.</p>
+                    <p><code>&lt;style scoped&gt;</code> tự động cô lập CSS theo subtree của view; <code>&lt;style&gt;</code> áp dụng global cho toàn trang. Cùng chỗ này khai báo được asset ngoài: <code>&lt;link rel="stylesheet"&gt;</code> và <code>&lt;script src&gt;</code> — compiler dịch sang <code>&#64;addCssLink</code>/<code>&#64;addScriptSrc</code> để thẻ ra đúng <code>&lt;head&gt;</code>, không trùng, và CSS được gỡ khi rời trang.</p>
                 </article>
             </div>
 

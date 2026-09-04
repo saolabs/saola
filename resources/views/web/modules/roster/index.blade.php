@@ -1,3 +1,4 @@
+@addCssLink('/static/saola/roster.css')
 @exec($__ONE_COMPONENT_REGISTRY__ = ['rosteritem' => 'web.modules.roster.item']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @useState($ids, [])
@@ -11,9 +12,6 @@
 @useState($fGender, 'other')
 @useState($fBirthdate, '')
 @extends($__layout__ . "workspace")
-@once('saola-css-1yz0dmk')
-<link rel="stylesheet" href="/static/saola/roster.css">
-@endonce
     @block('workspace')
         <div @class([$__VIEW_ID__ . '-Bworkspace1', 'rs-page'])>
             <header @class([$__VIEW_ID__ . '-Bworkspace11', 'workspace-topbar'])>

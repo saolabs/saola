@@ -20,6 +20,7 @@
                 <a href="#thuoc-tinh" data-nav="disabled">Thuộc tính &amp; binding</a>
                 <a href="#su-kien" data-nav="disabled">Sự kiện</a>
                 <a href="#layout" data-nav="disabled">Layout &amp; component</a>
+                <a href="#asset" data-nav="disabled">Asset của trang</a>
                 <a href="#tien-ich" data-nav="disabled">Quyền, form &amp; tiện ích</a>
                 <a href="#magic" data-nav="disabled">Biến ma thuật</a>
             </nav>
@@ -512,6 +513,50 @@
                         <div class="dir-head"><span class="dir-name">&#64;exec</span><span class="dir-kind">Tiện ích</span></div>
                         <div class="dir-sig">&#64;exec(biểu_thức)</div>
                         <p>Chạy một biểu thức mà không in ra gì. Dùng để gán biến trung gian hoặc gọi hàm phụ ngay trong template.</p>
+                    </article>
+
+                </div>
+            </section>
+
+            <section class="dir-group" id="asset">
+                <h2>Asset của trang</h2>
+                <p>Trong <code>.sao</code> bạn <strong>không gọi hai directive này</strong> — cứ khai báo <code>&lt;link rel="stylesheet"&gt;</code> hoặc <code>&lt;script src&gt;</code> ở cuối file, ngoài <code>&lt;template&gt;</code>, compiler tự dịch sang chúng cho nhánh Blade và sang <code>styles</code>/<code>scripts</code> cho nhánh JavaScript. Chúng là API cho Blade viết tay: layout của bạn, partial hệ thống, hay gói mở rộng.</p>
+                <p>Điểm mấu chốt: hai directive này <em>đăng ký</em> chứ không in thẻ tại chỗ. In tại chỗ là cách cũ và nó hỏng thật — với trang <code>&#64;extends</code>, phần nằm ngoài block được in TRƯỚC khi layout in <code>&lt;!DOCTYPE html&gt;</code>, mà doctype đứng sau nội dung thì trình duyệt bỏ luôn, cả trang rơi vào quirks mode.</p>
+                <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;addCssLink</span><span class="dir-kind">Asset</span></div>
+                        <div class="dir-sig">&#64;addCssLink($href, $attributes = [])</div>
+                        <p>Đăng ký một stylesheet. Thẻ được in trong <code>&lt;head&gt;</code>. Trùng thì chỉ ra một thẻ — khoá so trùng là <code>id</code> nếu bạn đưa vào, không thì chính <code>href</code>; nhờ vậy layout, trang và component cùng khai báo một file cũng chỉ tốn một <code>&lt;link&gt;</code>.</p>
+                        <code-block lang="sao">
+@verbatim
+&#64;addCssLink('/static/saola/roster.css')
+&#64;addCssLink(asset('css/theme.css'), ['id' =&gt; 'theme', 'media' =&gt; 'print'])
+@endverbatim
+                        </code-block>
+                        <p class="dir-note">Đăng ký sau khi <code>&lt;head&gt;</code> đã render thì thẻ ra cuối <code>&lt;body&gt;</code> — vẫn hợp lệ và vẫn áp dụng, chỉ muộn hơn một nhịp. Đó là đường của chính layout, vì layout render sau trang con.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;addScriptSrc</span><span class="dir-kind">Asset</span></div>
+                        <div class="dir-sig">&#64;addScriptSrc($src, $attributes = [])</div>
+                        <p>Đăng ký một script ngoài. Thẻ được in ở cuối <code>&lt;body&gt;</code>, theo đúng thứ tự đăng ký, cùng cách so trùng như trên. Attribute cờ viết <code>true</code>.</p>
+                        <code-block lang="sao">
+@verbatim
+&#64;addScriptSrc('https://cdn.example.com/prism.min.js', ['data-manual' =&gt; true])
+@endverbatim
+                        </code-block>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">Vòng đời</span><span class="dir-kind">SSR · hydrate · SPA</span></div>
+                        <p>Thẻ do server in ra được runtime <strong>nhận nuôi</strong> (adopt) lúc hydrate chứ không chèn bản thứ hai. Sau đó nó đi theo vòng đời view, đếm tham chiếu:</p>
+                        <table class="dir-mini">
+                            <tr><td>mount / resume</td><td>chèn khi tham chiếu 0 → 1</td></tr>
+                            <tr><td>unmount / pause / destroy</td><td>gỡ khi tham chiếu 1 → 0</td></tr>
+                        </table>
+                        <p>Nên rời trang là CSS của trang đó biến khỏi <code>&lt;head&gt;</code>: hai trang dùng chung selector với CSS khác nhau không đè lên nhau. CSS mà nhiều view cùng khai báo chỉ đi khi view cuối rời đi.</p>
+                        <p class="dir-note"><code>&lt;script&gt;</code> thì <strong>giữ lại</strong>. Gỡ thẻ script không hoàn tác side effect của nó, còn chèn lại là chạy lần hai — nạp lại một thư viện là xoá sạch những gì đã đăng ký vào nó giữa hai lần.</p>
                     </article>
 
                 </div>

@@ -26,6 +26,7 @@
                     <a href="/docs/directives">Tham chiếu directive</a>
                     <a href="/docs/reactivity">State &amp; reactivity</a>
                     <a href="/docs/system-vars">Biến hệ thống</a>
+                    <a href="/docs/helpers">Hàm dùng trong biểu thức</a>
 
                     <p class="docs-nav-group">Runtime</p>
                     <a href="/docs/runtime">Runtime &amp; hydration</a>
