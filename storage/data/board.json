@@ -1,0 +1,45 @@
+{
+    "nextId": 9,
+    "cards": [
+        {
+            "id": 2,
+            "title": "Sửa marker s:b: phía CSR",
+            "column": "done"
+        },
+        {
+            "id": 8,
+            "title": "Dọn 8 cổng parity đỏ sẵn",
+            "column": "done"
+        },
+        {
+            "id": 5,
+            "title": "Bảng dữ liệu lọc\/sắp\/phân trang",
+            "column": "todo"
+        },
+        {
+            "id": 6,
+            "title": "Luồng sự kiện SSE",
+            "column": "doing"
+        },
+        {
+            "id": 4,
+            "title": "Biểu đồ giá realtime",
+            "column": "doing"
+        },
+        {
+            "id": 7,
+            "title": "Chốt RUNTIME_CONTRACT lên v1",
+            "column": "doing"
+        },
+        {
+            "id": 3,
+            "title": "Giữ whitespace khi sinh JS",
+            "column": "doing"
+        },
+        {
+            "id": 1,
+            "title": "Cổng parity SSR↔CSR",
+            "column": "doing"
+        }
+    ]
+}
