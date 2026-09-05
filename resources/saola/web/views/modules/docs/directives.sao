@@ -335,11 +335,13 @@
 &#64;required(…)  &#64;readonly(…)</div>
                         <p>Gán thẳng vào <em>property</em> của element chứ không phải thuộc tính HTML — đúng cách trình duyệt đọc trạng thái các thẻ form.</p>
                         <table class="dir-mini">
-                            <tr><td>&#64;disabled</td><td>khoá nút hoặc ô nhập</td></tr>
-                            <tr><td>&#64;checked</td><td>trạng thái checkbox và radio</td></tr>
-                            <tr><td>&#64;selected</td><td>option đang được chọn</td></tr>
-                            <tr><td>&#64;required</td><td>bắt buộc nhập</td></tr>
-                            <tr><td>&#64;readonly</td><td>chỉ đọc, vẫn gửi kèm form</td></tr>
+                            <tbody>
+                                <tr><td>&#64;disabled</td><td>khoá nút hoặc ô nhập</td></tr>
+                                <tr><td>&#64;checked</td><td>trạng thái checkbox và radio</td></tr>
+                                <tr><td>&#64;selected</td><td>option đang được chọn</td></tr>
+                                <tr><td>&#64;required</td><td>bắt buộc nhập</td></tr>
+                                <tr><td>&#64;readonly</td><td>chỉ đọc, vẫn gửi kèm form</td></tr>
+                            </tbody>
                         </table>
                     </article>
 
@@ -389,10 +391,12 @@
 @endverbatim
                         </code-block>
                         <table class="dir-mini">
-                            <tr><td>chuột</td><td>&#64;click · &#64;dblclick · &#64;contextmenu · &#64;mouseenter</td></tr>
-                            <tr><td>form</td><td>&#64;submit · &#64;change · &#64;input · &#64;focus · &#64;blur</td></tr>
-                            <tr><td>bàn phím</td><td>&#64;keydown và các sự kiện bàn phím chuẩn</td></tr>
-                            <tr><td>khác</td><td>&#64;wheel · &#64;scroll · &#64;resize · &#64;load</td></tr>
+                            <tbody>
+                                <tr><td>chuột</td><td>&#64;click · &#64;dblclick · &#64;contextmenu · &#64;mouseenter</td></tr>
+                                <tr><td>form</td><td>&#64;submit · &#64;change · &#64;input · &#64;focus · &#64;blur</td></tr>
+                                <tr><td>bàn phím</td><td>&#64;keydown và các sự kiện bàn phím chuẩn</td></tr>
+                                <tr><td>khác</td><td>&#64;wheel · &#64;scroll · &#64;resize · &#64;load</td></tr>
+                            </tbody>
                         </table>
                     </article>
 
@@ -402,10 +406,12 @@
 &#64;click.stop.once(remove(id))</div>
                         <p>Nối sau tên sự kiện, ghép được nhiều cái. Runtime xử lý chúng trước khi gọi handler của bạn.</p>
                         <table class="dir-mini">
-                            <tr><td>.prevent</td><td>gọi <code>event.preventDefault()</code></td></tr>
-                            <tr><td>.stop</td><td>gọi <code>event.stopPropagation()</code></td></tr>
-                            <tr><td>.self</td><td>chỉ chạy khi <code>event.target === event.currentTarget</code> — kiểm <em>trước</em> <code>.prevent</code> và <code>.stop</code></td></tr>
-                            <tr><td>.once</td><td>chạy đúng một lần rồi tự gỡ</td></tr>
+                            <tbody>
+                                <tr><td>.prevent</td><td>gọi <code>event.preventDefault()</code></td></tr>
+                                <tr><td>.stop</td><td>gọi <code>event.stopPropagation()</code></td></tr>
+                                <tr><td>.self</td><td>chỉ chạy khi <code>event.target === event.currentTarget</code> — kiểm <em>trước</em> <code>.prevent</code> và <code>.stop</code></td></tr>
+                                <tr><td>.once</td><td>chạy đúng một lần rồi tự gỡ</td></tr>
+                            </tbody>
                         </table>
                         <p class="dir-note dir-note--warn">Modifier hiện chỉ được emit đúng ở phía JavaScript; đầu ra Blade còn sinh thuộc tính thừa. Trang cần SSR sạch thì dùng <code>&#64;submit(save(event))</code> rồi tự gọi <code>event.preventDefault()</code> trong method.</p>
                     </article>
@@ -552,8 +558,10 @@
                         <div class="dir-head"><span class="dir-name">Vòng đời</span><span class="dir-kind">SSR · hydrate · SPA</span></div>
                         <p>Thẻ do server in ra được runtime <strong>nhận nuôi</strong> (adopt) lúc hydrate chứ không chèn bản thứ hai. Sau đó nó đi theo vòng đời view, đếm tham chiếu:</p>
                         <table class="dir-mini">
-                            <tr><td>mount / resume</td><td>chèn khi tham chiếu 0 → 1</td></tr>
-                            <tr><td>unmount / pause / destroy</td><td>gỡ khi tham chiếu 1 → 0</td></tr>
+                            <tbody>
+                                <tr><td>mount / resume</td><td>chèn khi tham chiếu 0 → 1</td></tr>
+                                <tr><td>unmount / pause / destroy</td><td>gỡ khi tham chiếu 1 → 0</td></tr>
+                            </tbody>
                         </table>
                         <p>Nên rời trang là CSS của trang đó biến khỏi <code>&lt;head&gt;</code>: hai trang dùng chung selector với CSS khác nhau không đè lên nhau. CSS mà nhiều view cùng khai báo chỉ đi khi view cuối rời đi.</p>
                         <p class="dir-note"><code>&lt;script&gt;</code> thì <strong>giữ lại</strong>. Gỡ thẻ script không hoàn tác side effect của nó, còn chèn lại là chạy lần hai — nạp lại một thư viện là xoá sạch những gì đã đăng ký vào nó giữa hai lần.</p>
@@ -615,13 +623,15 @@
                     <article class="dir">
                         <div class="dir-head"><span class="dir-name">Danh sách</span><span class="dir-kind">Toàn cục trong view</span></div>
                         <table class="dir-mini">
-                            <tr><td>__layout__</td><td>đường dẫn gốc tới thư mục layout của context hiện tại</td></tr>
-                            <tr><td>__template__</td><td>đường dẫn gốc tới component dùng chung</td></tr>
-                            <tr><td>__VIEW_PATH__</td><td>đường dẫn dạng chấm của chính view này, ví dụ <code>web.modules.docs.index</code></td></tr>
-                            <tr><td>__VIEW_ID__</td><td>định danh instance, là tiền tố của mọi class và marker dùng để hydrate</td></tr>
-                            <tr><td>__context__</td><td>context đang phục vụ request: web, admin, api hay mobile</td></tr>
-                            <tr><td>__base__ · __page__<br>__component__ · __partial__</td><td>đường dẫn gốc theo từng loại view</td></tr>
-                            <tr><td>__system__</td><td>khối system data do render context truyền xuống</td></tr>
+                            <tbody>
+                                <tr><td>__layout__</td><td>đường dẫn gốc tới thư mục layout của context hiện tại</td></tr>
+                                <tr><td>__template__</td><td>đường dẫn gốc tới component dùng chung</td></tr>
+                                <tr><td>__VIEW_PATH__</td><td>đường dẫn dạng chấm của chính view này, ví dụ <code>web.modules.docs.index</code></td></tr>
+                                <tr><td>__VIEW_ID__</td><td>định danh instance, là tiền tố của mọi class và marker dùng để hydrate</td></tr>
+                                <tr><td>__context__</td><td>context đang phục vụ request: web, admin, api hay mobile</td></tr>
+                                <tr><td>__base__ · __page__<br>__component__ · __partial__</td><td>đường dẫn gốc theo từng loại view</td></tr>
+                                <tr><td>__system__</td><td>khối system data do render context truyền xuống</td></tr>
+                            </tbody>
                         </table>
                     </article>
                 </div>

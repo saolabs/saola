@@ -1,0 +1,182 @@
+@vars(
+    rows = [], total = 0, totalText = '0', page = 1, pages = 1, from = 0, to = 0,
+    search = '', status = '', sort = 'downloads', dir = 'desc', statuses = []
+)
+
+{{-- Dữ liệu tới từ controller. Không có @await thì điều hướng SPA dựng view
+     KHI CHƯA có dữ liệu: mọi @foreach ra rỗng, chỉ tải thẳng URL mới đúng.
+     Cổng parity SSR↔CSR bắt được đúng lỗi này. --}}
+@await
+
+@states({
+    items: rows,
+    query: search,
+    activeStatus: status,
+    sortKey: sort,
+    sortDir: dir,
+    pageNo: page,
+    pageCount: pages,
+    rangeFrom: from,
+    rangeTo: to,
+    countText: totalText,
+    busy: false,
+    failed: ''
+})
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    @block('main')
+        <p class="kicker"><span>ỨNG DỤNG THẬT · BẢNG DỮ LIỆU</span></p>
+        <h1>3.800 gói, lọc ở phía server.</h1>
+        <p class="gr-lead">
+            Trang đầu do Blade render nên đọc được khi tắt JS. Mọi thao tác sau đó
+            gọi JSON trên <strong>chính URL này</strong> và chỉ thay phần thân bảng.
+        </p>
+
+        <div class="gr-controls">
+            <input type="search" class="gr-search" placeholder="Tìm theo tên gói…"
+                   aria-label="Tìm gói" @bind(query) @input(onSearch(event.target.value))>
+
+            <div class="gr-filters" role="group" aria-label="Lọc theo trạng thái">
+                <button type="button" @class({'gr-chip', 'is-on': activeStatus === ''})
+                        @click(applyStatus(''))>Tất cả</button>
+                @foreach(statuses as item)
+                    @key(item['key'])
+                    <button type="button" @class({'gr-chip', 'is-on': activeStatus === item['key']})
+                            @click(applyStatus(item['key']))>{{ item['label'] }}</button>
+                @endforeach
+            </div>
+        </div>
+
+        @if(failed !== '')
+            <p class="gr-error" role="alert">{{ failed }}</p>
+        @endif
+
+        <div @class({'gr-wrap', 'is-busy': busy})>
+            <table class="gr-table">
+                <thead>
+                    <tr>
+                        <th><button type="button" class="gr-sort" @click(applySort('name'))>Gói {{ sortKey === 'name' ? (sortDir === 'asc' ? '▲' : '▼') : '' }}</button></th>
+                        <th><button type="button" class="gr-sort" @click(applySort('downloads'))>Lượt tải {{ sortKey === 'downloads' ? (sortDir === 'asc' ? '▲' : '▼') : '' }}</button></th>
+                        <th><button type="button" class="gr-sort" @click(applySort('updated'))>Cập nhật {{ sortKey === 'updated' ? (sortDir === 'asc' ? '▲' : '▼') : '' }}</button></th>
+                        <th><button type="button" class="gr-sort" @click(applySort('status'))>Trạng thái {{ sortKey === 'status' ? (sortDir === 'asc' ? '▲' : '▼') : '' }}</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(items as row)
+                        @key(row['id'])
+                        <tr>
+                            <td class="gr-name">{{ row['name'] }}</td>
+                            <td class="gr-num">{{ row['downloadsText'] }}</td>
+                            <td class="gr-num">{{ row['updated'] }}</td>
+                            <td><span @class({'gr-tag', 'is-stable': row['status'] === 'stable', 'is-beta': row['status'] === 'beta', 'is-old': row['status'] === 'deprecated'})>{{ row['statusText'] }}</span></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            @if(items.length === 0)
+                <p class="gr-empty">Không có gói nào khớp bộ lọc hiện tại.</p>
+            @endif
+        </div>
+
+        <div class="gr-foot">
+            <p class="gr-range">{{ rangeFrom }}–{{ rangeTo }} trên {{ countText }} gói</p>
+            <div class="gr-pager">
+                <button type="button" class="gr-chip" @disabled(busy || pageNo <= 1) @click(goTo(pageNo - 1))>‹ Trước</button>
+                <span class="gr-page">Trang {{ pageNo }} / {{ pageCount }}</span>
+                <button type="button" class="gr-chip" @disabled(busy || pageNo >= pageCount) @click(goTo(pageNo + 1))>Sau ›</button>
+            </div>
+        </div>
+    @endblock
+
+    @block('aside')
+        <h2>Trang này kiểm chứng cái gì.</h2>
+        <ul class="check-list">
+            <li>Lọc, sắp và phân trang chạy ở <strong>server</strong>. Gửi cả 3.800 dòng xuống rồi để client tự lo là biến bảng thành bài kiểm tra bộ nhớ, và trang đầu mất khả năng render phía server.</li>
+            <li>Cùng một URL phục vụ hai đường: Blade cho lần tải đầu, JSON cho mọi thao tác sau. Tham số đi qua query string chứ không qua route tham số.</li>
+            <li>Ô tìm kiếm <strong>hoãn 250ms</strong> và bỏ kết quả về trễ. Không có bước này thì gõ nhanh sẽ để một phản hồi cũ đè lên phản hồi mới.</li>
+            <li>Dữ liệu sinh bằng bộ đếm có seed cố định, và mốc ngày KHÔNG lấy từ đồng hồ — nhờ vậy SSR và CSR cho ra đúng một bảng.</li>
+        </ul>
+    @endblock
+</template>
+
+<link rel="stylesheet" href="/static/saola/grid.css">
+
+<script setup lang="ts">
+    export default {
+        name: 'GridPage',
+
+        destroyed() {
+            if (this._timer) clearTimeout(this._timer);
+        },
+
+        // Mũi tên sắp xếp viết THẲNG trong template bằng biểu thức ba ngôi, không
+        // gọi method. `{{ arrow('name') }}` chạy phía JS (method nằm trong scope)
+        // nhưng Blade không có hàm đó → "Call to undefined function arrow()".
+        // Đúng lớp lệch SSR/CSR: CSR xanh, SSR nổ.
+
+        /** Hoãn rồi mới gọi: mỗi phím một request là tự tạo ra tranh chấp phản hồi. */
+        onSearch(value) {
+            if (this._timer) clearTimeout(this._timer);
+            this._timer = setTimeout(() => this.fetch({ q: value, page: 1 }), 250);
+        },
+
+        applyStatus(key) {
+            this.fetch({ status: key, page: 1 });
+        },
+
+        applySort(key) {
+            const dir = sortKey === key && sortDir === 'desc' ? 'asc' : 'desc';
+            this.fetch({ sort: key, dir, page: 1 });
+        },
+
+        goTo(target) {
+            if (target < 1 || target > pageCount) return;
+            this.fetch({ page: target });
+        },
+
+        async fetch(changes) {
+            const params = {
+                q: changes.q !== undefined ? changes.q : query,
+                status: changes.status !== undefined ? changes.status : activeStatus,
+                sort: changes.sort !== undefined ? changes.sort : sortKey,
+                dir: changes.dir !== undefined ? changes.dir : sortDir,
+                page: changes.page !== undefined ? changes.page : pageNo,
+            };
+
+            // Đánh số từng lượt gọi và chỉ nhận lượt MỚI NHẤT. Thiếu chốt này thì
+            // một phản hồi về trễ sẽ ghi đè lên phản hồi của thao tác sau nó.
+            const ticket = (this._ticket = (this._ticket || 0) + 1);
+            setBusy(true);
+            setFailed('');
+
+            try {
+                const url = '/demo/grid?q=' + encodeURIComponent(params.q)
+                    + '&status=' + encodeURIComponent(params.status)
+                    + '&sort=' + params.sort + '&dir=' + params.dir + '&page=' + params.page;
+
+                const response = await App.Http.get(url, null, {
+                    headers: { Accept: 'application/json', 'X-Sao-Response': 'json' },
+                });
+                if (ticket !== this._ticket) return;
+
+                const data = response.data.data;
+                setItems(data.rows);
+                setActiveStatus(params.status);
+                setSortKey(data.sort);
+                setSortDir(data.dir);
+                setPageNo(data.page);
+                setPageCount(data.pages);
+                setRangeFrom(data.from);
+                setRangeTo(data.to);
+                setCountText(data.totalText);
+            } catch (error) {
+                if (ticket === this._ticket) setFailed('Không tải được dữ liệu: ' + (error.message || error));
+            } finally {
+                if (ticket === this._ticket) setBusy(false);
+            }
+        },
+    };
+</script>

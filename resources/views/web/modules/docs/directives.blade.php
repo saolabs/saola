@@ -391,11 +391,13 @@
 &#64;required(…)  &#64;readonly(…)</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc25353'])>Gán thẳng vào <em @class([$__VIEW_ID__ . '-Bdoc253531'])>property</em> của element chứ không phải thuộc tính HTML — đúng cách trình duyệt đọc trạng thái các thẻ form.</p>
                         <table @class([$__VIEW_ID__ . '-Bdoc25354', 'dir-mini'])>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc253541'])><td @class([$__VIEW_ID__ . '-Bdoc2535411'])>&#64;disabled</td><td @class([$__VIEW_ID__ . '-Bdoc2535412'])>khoá nút hoặc ô nhập</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc253542'])><td @class([$__VIEW_ID__ . '-Bdoc2535421'])>&#64;checked</td><td @class([$__VIEW_ID__ . '-Bdoc2535422'])>trạng thái checkbox và radio</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc253543'])><td @class([$__VIEW_ID__ . '-Bdoc2535431'])>&#64;selected</td><td @class([$__VIEW_ID__ . '-Bdoc2535432'])>option đang được chọn</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc253544'])><td @class([$__VIEW_ID__ . '-Bdoc2535441'])>&#64;required</td><td @class([$__VIEW_ID__ . '-Bdoc2535442'])>bắt buộc nhập</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc253545'])><td @class([$__VIEW_ID__ . '-Bdoc2535451'])>&#64;readonly</td><td @class([$__VIEW_ID__ . '-Bdoc2535452'])>chỉ đọc, vẫn gửi kèm form</td></tr>
+                            <tbody @class([$__VIEW_ID__ . '-Bdoc253541'])>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2535411'])><td @class([$__VIEW_ID__ . '-Bdoc25354111'])>&#64;disabled</td><td @class([$__VIEW_ID__ . '-Bdoc25354112'])>khoá nút hoặc ô nhập</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2535412'])><td @class([$__VIEW_ID__ . '-Bdoc25354121'])>&#64;checked</td><td @class([$__VIEW_ID__ . '-Bdoc25354122'])>trạng thái checkbox và radio</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2535413'])><td @class([$__VIEW_ID__ . '-Bdoc25354131'])>&#64;selected</td><td @class([$__VIEW_ID__ . '-Bdoc25354132'])>option đang được chọn</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2535414'])><td @class([$__VIEW_ID__ . '-Bdoc25354141'])>&#64;required</td><td @class([$__VIEW_ID__ . '-Bdoc25354142'])>bắt buộc nhập</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2535415'])><td @class([$__VIEW_ID__ . '-Bdoc25354151'])>&#64;readonly</td><td @class([$__VIEW_ID__ . '-Bdoc25354152'])>chỉ đọc, vẫn gửi kèm form</td></tr>
+                            </tbody>
                         </table>
                     </article>
 
@@ -453,10 +455,12 @@
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__15_content])
 @endMarker('component', 'Bdoc2631c1')
                         <table @class([$__VIEW_ID__ . '-Bdoc26315', 'dir-mini'])>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc263151'])><td @class([$__VIEW_ID__ . '-Bdoc2631511'])>chuột</td><td @class([$__VIEW_ID__ . '-Bdoc2631512'])>&#64;click · &#64;dblclick · &#64;contextmenu · &#64;mouseenter</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc263152'])><td @class([$__VIEW_ID__ . '-Bdoc2631521'])>form</td><td @class([$__VIEW_ID__ . '-Bdoc2631522'])>&#64;submit · &#64;change · &#64;input · &#64;focus · &#64;blur</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc263153'])><td @class([$__VIEW_ID__ . '-Bdoc2631531'])>bàn phím</td><td @class([$__VIEW_ID__ . '-Bdoc2631532'])>&#64;keydown và các sự kiện bàn phím chuẩn</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc263154'])><td @class([$__VIEW_ID__ . '-Bdoc2631541'])>khác</td><td @class([$__VIEW_ID__ . '-Bdoc2631542'])>&#64;wheel · &#64;scroll · &#64;resize · &#64;load</td></tr>
+                            <tbody @class([$__VIEW_ID__ . '-Bdoc263151'])>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2631511'])><td @class([$__VIEW_ID__ . '-Bdoc26315111'])>chuột</td><td @class([$__VIEW_ID__ . '-Bdoc26315112'])>&#64;click · &#64;dblclick · &#64;contextmenu · &#64;mouseenter</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2631512'])><td @class([$__VIEW_ID__ . '-Bdoc26315121'])>form</td><td @class([$__VIEW_ID__ . '-Bdoc26315122'])>&#64;submit · &#64;change · &#64;input · &#64;focus · &#64;blur</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2631513'])><td @class([$__VIEW_ID__ . '-Bdoc26315131'])>bàn phím</td><td @class([$__VIEW_ID__ . '-Bdoc26315132'])>&#64;keydown và các sự kiện bàn phím chuẩn</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2631514'])><td @class([$__VIEW_ID__ . '-Bdoc26315141'])>khác</td><td @class([$__VIEW_ID__ . '-Bdoc26315142'])>&#64;wheel · &#64;scroll · &#64;resize · &#64;load</td></tr>
+                            </tbody>
                         </table>
                     </article>
 
@@ -466,10 +470,12 @@
 &#64;click.stop.once(remove(id))</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc26323'])>Nối sau tên sự kiện, ghép được nhiều cái. Runtime xử lý chúng trước khi gọi handler của bạn.</p>
                         <table @class([$__VIEW_ID__ . '-Bdoc26324', 'dir-mini'])>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc263241'])><td @class([$__VIEW_ID__ . '-Bdoc2632411'])>.prevent</td><td @class([$__VIEW_ID__ . '-Bdoc2632412'])>gọi <code @class([$__VIEW_ID__ . '-Bdoc26324121'])>event.preventDefault()</code></td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc263242'])><td @class([$__VIEW_ID__ . '-Bdoc2632421'])>.stop</td><td @class([$__VIEW_ID__ . '-Bdoc2632422'])>gọi <code @class([$__VIEW_ID__ . '-Bdoc26324221'])>event.stopPropagation()</code></td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc263243'])><td @class([$__VIEW_ID__ . '-Bdoc2632431'])>.self</td><td @class([$__VIEW_ID__ . '-Bdoc2632432'])>chỉ chạy khi <code @class([$__VIEW_ID__ . '-Bdoc26324321'])>event.target === event.currentTarget</code> — kiểm <em @class([$__VIEW_ID__ . '-Bdoc26324322'])>trước</em> <code @class([$__VIEW_ID__ . '-Bdoc26324323'])>.prevent</code> và <code @class([$__VIEW_ID__ . '-Bdoc26324324'])>.stop</code></td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc263244'])><td @class([$__VIEW_ID__ . '-Bdoc2632441'])>.once</td><td @class([$__VIEW_ID__ . '-Bdoc2632442'])>chạy đúng một lần rồi tự gỡ</td></tr>
+                            <tbody @class([$__VIEW_ID__ . '-Bdoc263241'])>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2632411'])><td @class([$__VIEW_ID__ . '-Bdoc26324111'])>.prevent</td><td @class([$__VIEW_ID__ . '-Bdoc26324112'])>gọi <code @class([$__VIEW_ID__ . '-Bdoc263241121'])>event.preventDefault()</code></td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2632412'])><td @class([$__VIEW_ID__ . '-Bdoc26324121'])>.stop</td><td @class([$__VIEW_ID__ . '-Bdoc26324122'])>gọi <code @class([$__VIEW_ID__ . '-Bdoc263241221'])>event.stopPropagation()</code></td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2632413'])><td @class([$__VIEW_ID__ . '-Bdoc26324131'])>.self</td><td @class([$__VIEW_ID__ . '-Bdoc26324132'])>chỉ chạy khi <code @class([$__VIEW_ID__ . '-Bdoc263241321'])>event.target === event.currentTarget</code> — kiểm <em @class([$__VIEW_ID__ . '-Bdoc263241322'])>trước</em> <code @class([$__VIEW_ID__ . '-Bdoc263241323'])>.prevent</code> và <code @class([$__VIEW_ID__ . '-Bdoc263241324'])>.stop</code></td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2632414'])><td @class([$__VIEW_ID__ . '-Bdoc26324141'])>.once</td><td @class([$__VIEW_ID__ . '-Bdoc26324142'])>chạy đúng một lần rồi tự gỡ</td></tr>
+                            </tbody>
                         </table>
                         <p @class([$__VIEW_ID__ . '-Bdoc26325', 'dir-note', 'dir-note--warn'])>Modifier hiện chỉ được emit đúng ở phía JavaScript; đầu ra Blade còn sinh thuộc tính thừa. Trang cần SSR sạch thì dùng <code @class([$__VIEW_ID__ . '-Bdoc263251'])>&#64;submit(save(event))</code> rồi tự gọi <code @class([$__VIEW_ID__ . '-Bdoc263252'])>event.preventDefault()</code> trong method.</p>
                     </article>
@@ -644,8 +650,10 @@
                         <div @class([$__VIEW_ID__ . '-Bdoc28431', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284311', 'dir-name'])>Vòng đời</span><span @class([$__VIEW_ID__ . '-Bdoc284312', 'dir-kind'])>SSR · hydrate · SPA</span></div>
                         <p @class([$__VIEW_ID__ . '-Bdoc28432'])>Thẻ do server in ra được runtime <strong @class([$__VIEW_ID__ . '-Bdoc284321'])>nhận nuôi</strong> (adopt) lúc hydrate chứ không chèn bản thứ hai. Sau đó nó đi theo vòng đời view, đếm tham chiếu:</p>
                         <table @class([$__VIEW_ID__ . '-Bdoc28433', 'dir-mini'])>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc284331'])><td @class([$__VIEW_ID__ . '-Bdoc2843311'])>mount / resume</td><td @class([$__VIEW_ID__ . '-Bdoc2843312'])>chèn khi tham chiếu 0 → 1</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc284332'])><td @class([$__VIEW_ID__ . '-Bdoc2843321'])>unmount / pause / destroy</td><td @class([$__VIEW_ID__ . '-Bdoc2843322'])>gỡ khi tham chiếu 1 → 0</td></tr>
+                            <tbody @class([$__VIEW_ID__ . '-Bdoc284331'])>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2843311'])><td @class([$__VIEW_ID__ . '-Bdoc28433111'])>mount / resume</td><td @class([$__VIEW_ID__ . '-Bdoc28433112'])>chèn khi tham chiếu 0 → 1</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2843312'])><td @class([$__VIEW_ID__ . '-Bdoc28433121'])>unmount / pause / destroy</td><td @class([$__VIEW_ID__ . '-Bdoc28433122'])>gỡ khi tham chiếu 1 → 0</td></tr>
+                            </tbody>
                         </table>
                         <p @class([$__VIEW_ID__ . '-Bdoc28434'])>Nên rời trang là CSS của trang đó biến khỏi <code @class([$__VIEW_ID__ . '-Bdoc284341'])>&lt;head&gt;</code>: hai trang dùng chung selector với CSS khác nhau không đè lên nhau. CSS mà nhiều view cùng khai báo chỉ đi khi view cuối rời đi.</p>
                         <p @class([$__VIEW_ID__ . '-Bdoc28435', 'dir-note'])><code @class([$__VIEW_ID__ . '-Bdoc284351'])>&lt;script&gt;</code> thì <strong @class([$__VIEW_ID__ . '-Bdoc284352'])>giữ lại</strong>. Gỡ thẻ script không hoàn tác side effect của nó, còn chèn lại là chạy lần hai — nạp lại một thư viện là xoá sạch những gì đã đăng ký vào nó giữa hai lần.</p>
@@ -707,13 +715,15 @@
                     <article @class([$__VIEW_ID__ . '-Bdoc2e10_31', 'dir'])>
                         <div @class([$__VIEW_ID__ . '-Bdoc2e10_311', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc2e10_3111', 'dir-name'])>Danh sách</span><span @class([$__VIEW_ID__ . '-Bdoc2e10_3112', 'dir-kind'])>Toàn cục trong view</span></div>
                         <table @class([$__VIEW_ID__ . '-Bdoc2e10_312', 'dir-mini'])>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3121'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31211'])>__layout__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31212'])>đường dẫn gốc tới thư mục layout của context hiện tại</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3122'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31221'])>__template__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31222'])>đường dẫn gốc tới component dùng chung</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3123'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31231'])>__VIEW_PATH__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31232'])>đường dẫn dạng chấm của chính view này, ví dụ <code @class([$__VIEW_ID__ . '-Bdoc2e10_312321'])>web.modules.docs.index</code></td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3124'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31241'])>__VIEW_ID__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31242'])>định danh instance, là tiền tố của mọi class và marker dùng để hydrate</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3125'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31251'])>__context__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31252'])>context đang phục vụ request: web, admin, api hay mobile</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3126'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31261'])>__base__ · __page__<br @class([$__VIEW_ID__ . '-Bdoc2e10_312611'])>__component__ · __partial__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31262'])>đường dẫn gốc theo từng loại view</td></tr>
-                            <tr @class([$__VIEW_ID__ . '-Bdoc2e10_3127'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_31271'])>__system__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_31272'])>khối system data do render context truyền xuống</td></tr>
+                            <tbody @class([$__VIEW_ID__ . '-Bdoc2e10_3121'])>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2e10_31211'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_312111'])>__layout__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_312112'])>đường dẫn gốc tới thư mục layout của context hiện tại</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2e10_31212'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_312121'])>__template__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_312122'])>đường dẫn gốc tới component dùng chung</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2e10_31213'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_312131'])>__VIEW_PATH__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_312132'])>đường dẫn dạng chấm của chính view này, ví dụ <code @class([$__VIEW_ID__ . '-Bdoc2e10_3121321'])>web.modules.docs.index</code></td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2e10_31214'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_312141'])>__VIEW_ID__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_312142'])>định danh instance, là tiền tố của mọi class và marker dùng để hydrate</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2e10_31215'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_312151'])>__context__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_312152'])>context đang phục vụ request: web, admin, api hay mobile</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2e10_31216'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_312161'])>__base__ · __page__<br @class([$__VIEW_ID__ . '-Bdoc2e10_3121611'])>__component__ · __partial__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_312162'])>đường dẫn gốc theo từng loại view</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2e10_31217'])><td @class([$__VIEW_ID__ . '-Bdoc2e10_312171'])>__system__</td><td @class([$__VIEW_ID__ . '-Bdoc2e10_312172'])>khối system data do render context truyền xuống</td></tr>
+                            </tbody>
                         </table>
                     </article>
                 </div>

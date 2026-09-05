@@ -72,13 +72,17 @@
     export default {
         name: 'DocsLayout',
 
-        // Layout được tái dùng khi điều hướng giữa các trang docs (layout diff),
-        // nên started() chỉ chạy một lần — phải tự đánh dấu lại sau mỗi lần chuyển route.
+        // Layout được TÁI DÙNG khi điều hướng giữa các trang docs (layout diff),
+        // nên started() chỉ chạy một lần — phải nghe router để đồng bộ lại.
+        //
+        // Trước đây chỗ này dùng MutationObserver + requestAnimationFrame và sai
+        // hai đường: rAF bị treo khi tab/pane ẩn (nav kẹt ở trang cũ), và khi vào
+        // docs từ layout KHÁC thì sync() chạy lúc `location.pathname` VẪN LÀ TRANG
+        // CŨ — router mount DOM trước, pushState sau — nên markCurrent() không
+        // khớp link nào và thanh nav mất highlight. afterEach chạy sau khi URL đã
+        // cập nhật, là tín hiệu tất định. Giống layouts/lab.sao.
         started() {
-            this._observer = new MutationObserver(() => {
-                cancelAnimationFrame(this._raf);
-                this._raf = requestAnimationFrame(() => this.sync());
-            });
+            this._offNav = App.Router.afterEach(() => this.sync());
             this.sync();
         },
 
@@ -88,23 +92,16 @@
         destroyed() { this.teardown(); },
 
         teardown() {
-            if (this._observer) { this._observer.disconnect(); this._observer = null; }
-            cancelAnimationFrame(this._raf);
+            if (this._offNav) { this._offNav(); this._offNav = null; }
         },
 
         sync() {
-            if (this._observer) this._observer.disconnect();
-
             this.markCurrent();
             this.generateTOC();
 
             const main = document.querySelector('.docs-main');
             if (main) {
                 HighlightService.highlight(main);
-            }
-
-            if (this._observer && main) {
-                this._observer.observe(main, { childList: true, subtree: true });
             }
         },
 

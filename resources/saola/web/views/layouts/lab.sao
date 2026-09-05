@@ -15,6 +15,10 @@
                     <a href="/demo/lifecycle">Vòng đời &amp; PageCache</a>
 
                     <p class="docs-nav-group">Ứng dụng thật</p>
+                    <a href="/demo/market">Biểu đồ giá realtime</a>
+                    <a href="/demo/board">Kanban — kéo thả</a>
+                    <a href="/demo/grid">Bảng dữ liệu 3.800 dòng</a>
+                    <a href="/demo/stream">Luồng sự kiện SSE</a>
                     {{-- Hai trang này ở shell `workspace` (sidebar tối, khung
                          kiểu app) chứ không ở shell lab — giữ nguyên vì đó là
                          một bề mặt demo có chủ đích, chỉ nối đường vào. --}}
@@ -52,21 +56,18 @@
         // nên started() chỉ chạy đúng một lần. Nội dung trong outlet đổi mà
         // layout không có hook nào bắn ra, nên phải nghe router.
         //
-        // KHÔNG dùng MutationObserver như layouts/docs.sao: ở đó callback lên
-        // lịch bằng requestAnimationFrame, mà rAF bị treo khi tab/pane ẩn — nav
-        // và mục lục kẹt ở trang cũ. afterEach là tín hiệu tất định của router.
+        // KHÔNG dùng MutationObserver: callback lên lịch bằng requestAnimationFrame,
+        // mà rAF bị treo khi tab/pane ẩn — nav và mục lục kẹt ở trang cũ.
+        // afterEach là tín hiệu tất định của router, và nay nhận nhiều hook.
         started() {
-            this._navHook = () => this.markCurrent();
-            App.Router.afterEach(this._navHook);
+            this._offNav = App.Router.afterEach(() => this.markCurrent());
             this.markCurrent();
         },
 
         resumed() { this.markCurrent(); },
 
-        // afterEach chỉ có MỘT slot: bỏ hook lại khi layout chết thì lần điều
-        // hướng sau vẫn gọi vào view đã destroy.
         destroyed() {
-            if (this._navHook) { App.Router.afterEach(() => {}); this._navHook = null; }
+            if (this._offNav) { this._offNav(); this._offNav = null; }
         },
 
         markCurrent() {

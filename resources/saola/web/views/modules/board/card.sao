@@ -1,0 +1,66 @@
+@props({
+    card: null,
+    column: '',
+    busy: false,
+    editing: false,
+    draftSeed: ''
+})
+
+@states({
+    draft: ''
+})
+
+<template>
+    <article class="kb-card"
+             draggable="true"
+             @dragstart(App.Event.emit('board:drag', card['id']))>
+        @if(editing)
+            <form class="kb-edit" @submit(save(event))>
+                <input type="text" maxlength="120" aria-label="Tiêu đề thẻ"
+                       @bind(draft)
+                       @input(App.Event.emit('board:draft', event.target.value))>
+                <div class="kb-edit-actions">
+                    <button type="submit" class="kb-mini" @disabled(busy)>Lưu</button>
+                    <button type="button" class="kb-mini kb-ghost"
+                            @click(App.Event.emit('board:cancel', card['id']))>Huỷ</button>
+                </div>
+            </form>
+        @else
+            <p class="kb-title">{{ card['title'] }}</p>
+            <div class="kb-card-actions">
+                <button type="button" class="kb-mini kb-ghost"
+                        @click(App.Event.emit('board:edit', card['id']))>Sửa</button>
+                <button type="button" class="kb-mini kb-ghost" @disabled(busy)
+                        @click(App.Event.emit('board:delete', card['id']))>Xoá</button>
+            </div>
+        @endif
+    </article>
+</template>
+
+<script setup lang="ts">
+    export default {
+        name: 'BoardCard',
+
+        /**
+         * Nạp lại bản nháp từ prop mỗi lần instance được DỰNG.
+         *
+         * Kéo thẻ sang cột khác là chuyển khoá sang một vùng @foreach KHÁC, nên
+         * runtime huỷ instance này và dựng một instance mới — React và Vue cũng
+         * xử sự y hệt, đây không phải giới hạn của Saola. Vì thế state nào cần
+         * sống qua nước kéo thì phải do CHA giữ; con chỉ soi lại từ prop.
+         */
+        started() {
+            if (editing) setDraft(draftSeed);
+        },
+
+        save(event) {
+            event.preventDefault();
+            const title = draft.trim();
+            if (!title) return;
+
+            // Con KHÔNG tự gọi API. App.Event là kênh con→cha duy nhất; chỉ cha
+            // mới giữ đủ trạng thái để quay lui khi request hỏng.
+            App.Event.emit('board:rename', { id: card['id'], title });
+        },
+    };
+</script>

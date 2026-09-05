@@ -1,0 +1,92 @@
+/* /demo/market — biểu đồ giá realtime.
+   Dùng lại token của demo-site.css; chỉ khai báo thêm hai màu tăng/giảm vì
+   bảng màu chung là một accent cam đỏ duy nhất, không có cặp xanh/đỏ. */
+
+.mk-up { color: #1a7f37; }
+.mk-down { color: var(--river); }
+
+.mk-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 20px 0 8px;
+}
+
+.mk-switch { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.mk-chip {
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color .15s, color .15s;
+}
+.mk-chip:hover:not(:disabled) { border-color: var(--river); color: var(--river); }
+.mk-chip.is-on { border-color: var(--river); background: var(--river); color: var(--white); }
+.mk-chip:disabled { opacity: .5; cursor: progress; }
+
+.mk-price { display: flex; align-items: baseline; gap: 12px; }
+.mk-last { font-size: clamp(26px, 3vw, 34px); font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.mk-delta { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mk-last.up, .mk-delta.up { color: #1a7f37; }
+.mk-last.down, .mk-delta.down { color: var(--river); }
+
+.mk-source { font-size: 13px; color: var(--muted); margin: 0 0 20px; }
+.mk-source strong { color: var(--text); font-weight: 600; }
+.mk-source em { color: var(--muted); }
+
+/* Node của thư viện biểu đồ. Chiều cao phải CỐ ĐỊNH ở CSS: lightweight-charts
+   đọc clientHeight lúc khởi tạo, container cao 0 thì nó vẽ ra hư không. */
+.mk-chart-wrap { position: relative; border: 1px solid var(--line); border-radius: 12px; background: var(--forest); overflow: hidden; }
+.mk-chart { height: 340px; width: 100%; }
+
+.mk-spark {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 24px;
+    color: var(--moss);
+}
+.mk-spark svg { width: 100%; height: 120px; display: block; }
+.mk-spark figcaption { font-size: 12px; color: rgba(255,255,255,.55); text-align: center; }
+
+.mk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.mk-panel { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; background: var(--paper); min-width: 0; }
+.mk-panel h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 12px; }
+
+.mk-table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.mk-table td { padding: 3px 0; }
+.mk-table td:not(:first-child) { text-align: right; }
+.mk-table .ask td:first-child { color: var(--river); }
+.mk-table .bid td:first-child { color: #1a7f37; }
+.mk-table .buy td:nth-child(2) { color: #1a7f37; }
+.mk-table .sell td:nth-child(2) { color: var(--river); }
+.mk-spread td { padding: 8px 0; font-weight: 800; font-size: 15px; border-block: 1px solid var(--line); text-align: center !important; }
+
+.mk-empty { font-size: 13px; color: var(--muted); margin: 0; }
+
+.mk-stats { margin: 0; display: grid; gap: 8px; }
+.mk-stats div { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.mk-stats dt { color: var(--muted); }
+.mk-stats dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 720px) {
+    .mk-chart { height: 260px; }
+}

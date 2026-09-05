@@ -1,0 +1,55 @@
+/* /demo/grid — bảng dữ liệu. Dùng token của demo-site.css. */
+
+.gr-lead { color: var(--muted); margin: 0 0 20px; max-width: 62ch; }
+
+.gr-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 16px; }
+.gr-search {
+    flex: 1; min-width: 220px; font: inherit; font-size: 14px;
+    padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper);
+}
+.gr-search:focus-visible { outline: 2px solid var(--river); outline-offset: 1px; }
+
+.gr-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.gr-chip {
+    font: inherit; font-size: 13px; font-weight: 600; padding: 7px 13px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--paper); color: var(--text); cursor: pointer;
+}
+.gr-chip:hover:not(:disabled) { border-color: var(--river); color: var(--river); }
+.gr-chip.is-on { border-color: var(--river); background: var(--river); color: var(--white); }
+.gr-chip:disabled { opacity: .45; cursor: not-allowed; }
+
+.gr-error { font-size: 13px; color: var(--river); margin: 0 0 12px; }
+
+/* Mờ đi khi đang tải thay vì thay bảng bằng spinner: giữ chiều cao nên trang
+   không giật, và người dùng vẫn đọc được dữ liệu cũ trong lúc chờ. */
+.gr-wrap { border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; background: var(--paper); transition: opacity .12s; }
+.gr-wrap.is-busy { opacity: .55; }
+
+.gr-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.gr-table th { text-align: left; padding: 0; border-bottom: 1px solid var(--line); background: var(--fog); }
+.gr-table td { padding: 9px 14px; border-bottom: 1px solid var(--line); }
+.gr-table tbody tr:last-child td { border-bottom: 0; }
+.gr-table tbody tr:hover { background: var(--mist); }
+
+.gr-sort {
+    width: 100%; text-align: left; font: inherit; font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--muted);
+    padding: 10px 14px; background: none; border: 0; cursor: pointer;
+}
+.gr-sort:hover { color: var(--river); }
+
+.gr-name { font-weight: 600; }
+.gr-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.gr-tag { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.gr-tag.is-stable { background: #dcfce7; color: #14532d; }
+.gr-tag.is-beta { background: #fef3c7; color: #78350f; }
+.gr-tag.is-old { background: #fee2e2; color: #7f1d1d; }
+
+.gr-empty { margin: 0; padding: 28px; text-align: center; font-size: 13px; color: var(--muted); }
+
+.gr-foot { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-top: 14px; }
+.gr-range { margin: 0; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.gr-pager { display: flex; gap: 8px; align-items: center; }
+.gr-page { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }

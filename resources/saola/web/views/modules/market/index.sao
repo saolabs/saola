@@ -1,0 +1,291 @@
+@vars(
+    symbol = '', label = '', base = '', source = '', generatedAt = '',
+    candles = [], ticker = [], book = [], symbols = [], sparkline = '',
+    lastText = '', changeText = '', highText = '', lowText = '', volumeText = '',
+    risingSeed = true
+)
+
+{{-- Dữ liệu tới từ controller. Không có @await thì điều hướng SPA dựng view
+     KHI CHƯA có dữ liệu: mọi @foreach ra rỗng, chỉ tải thẳng URL mới đúng.
+     Cổng parity SSR↔CSR bắt được đúng lỗi này. --}}
+@await
+
+@states({
+    activeSymbol: symbol,
+    activeLabel: label,
+    priceText: lastText,
+    deltaText: changeText,
+    rising: risingSeed,
+    deltaUp: risingSeed,
+    feedSource: source,
+    chartReady: false,
+    busy: false,
+    trades: [],
+    bids: book['bids'],
+    asks: book['asks']
+})
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    @block('main')
+        <p class="kicker"><span>ỨNG DỤNG THẬT · BIỂU ĐỒ REALTIME</span></p>
+        <h1>Giá {{ base }} theo thời gian thực.</h1>
+
+        <div class="mk-head">
+            <div class="mk-switch" role="group" aria-label="Chọn cặp giao dịch">
+                @foreach(symbols as item)
+                    @key(item['code'])
+                    <button type="button"
+                            @class({'mk-chip', 'is-on': activeSymbol === item['code']})
+                            @disabled(busy)
+                            @click(switchSymbol(item['code']))>{{ item['label'] }}</button>
+                @endforeach
+            </div>
+
+            <div class="mk-price">
+                <strong @class({'mk-last', 'up': rising, 'down': !rising})>{{ priceText }}</strong>
+                <span @class({'mk-delta', 'up': deltaUp, 'down': !deltaUp})>{{ deltaText }}%</span>
+            </div>
+        </div>
+
+        <p class="mk-source">
+            Nguồn: <strong>{{ feedSource }}</strong> · ảnh chụp lúc {{ generatedAt }}
+            @if(!chartReady)
+                <em> · đang tải thư viện biểu đồ…</em>
+            @endif
+        </p>
+
+        <div class="mk-chart-wrap">
+            {{-- Node của THƯ VIỆN: template để rỗng và không bao giờ đặt vùng
+                 reactive vào trong. Framework tạo nó rồi thôi, nên hydrate và CSR
+                 cùng một điểm bắt đầu; lightweight-charts tiếp quản sau mount. --}}
+            <div class="mk-chart" data-chart-host></div>
+
+            {{-- Dự phòng SSR nằm ở node ANH EM chứ không nằm trong node trên —
+                 hai bên cùng một parent là giành nhau. Xem được cả khi tắt JS. --}}
+            @if(!chartReady)
+                <figure class="mk-spark" aria-label="Đường giá do server dựng">
+                    <svg viewBox="0 0 640 120" preserveAspectRatio="none" role="img">
+                        <polyline points="{{ sparkline }}" fill="none" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                    <figcaption>SVG do Blade render — thay bằng biểu đồ đầy đủ khi thư viện tải xong.</figcaption>
+                </figure>
+            @endif
+        </div>
+
+        <div class="mk-grid">
+            <section class="mk-panel">
+                <h2>Sổ lệnh</h2>
+                <table class="mk-table">
+                    <tbody>
+                        @foreach(asks as row)
+                            @key(row['priceText'])
+                            <tr class="ask"><td>{{ row['priceText'] }}</td><td>{{ row['amountText'] }}</td></tr>
+                        @endforeach
+                        <tr class="mk-spread"><td colspan="2">{{ priceText }}</td></tr>
+                        @foreach(bids as row)
+                            @key(row['priceText'])
+                            <tr class="bid"><td>{{ row['priceText'] }}</td><td>{{ row['amountText'] }}</td></tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="mk-panel">
+                <h2>Khớp gần nhất</h2>
+                @if(trades.length === 0)
+                    <p class="mk-empty">Chờ tick đầu tiên từ nguồn realtime…</p>
+                @else
+                    <table class="mk-table">
+                        <tbody>
+                            @foreach(trades as row)
+                                @key(row['id'])
+                                <tr @class({'buy': row['buy'], 'sell': !row['buy']})>
+                                    <td>{{ row['at'] }}</td>
+                                    <td>{{ row['priceText'] }}</td>
+                                    <td>{{ row['amountText'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+            </section>
+
+            <section class="mk-panel">
+                <h2>24 giờ</h2>
+                <dl class="mk-stats">
+                    <div><dt>Cao nhất</dt><dd>{{ highText }}</dd></div>
+                    <div><dt>Thấp nhất</dt><dd>{{ lowText }}</dd></div>
+                    <div><dt>Khối lượng</dt><dd>{{ volumeText }}</dd></div>
+                    <div><dt>Số nến nạp sẵn</dt><dd>{{ candles.length }}</dd></div>
+                </dl>
+            </section>
+        </div>
+    @endblock
+
+    @block('aside')
+        <h2>Trang này kiểm chứng cái gì.</h2>
+        <ul class="check-list">
+            <li>Thư viện JS tự quản DOM (<code>lightweight-charts</code>) sống chung được với hydration — miễn là nó có node riêng mà template để rỗng.</li>
+            <li>Nội dung dự phòng cho SSR nằm ở node <strong>anh em</strong>, không nằm trong node của thư viện: cùng một parent là hai bên giành nhau.</li>
+            <li>Kết nối sống phải đóng trong <code>destroyed()</code>. Layout được tái dùng qua điều hướng SPA nên không đóng là mỗi lượt vào lại chồng thêm một socket.</li>
+            <li>Chuỗi hiển thị sinh ở server (<code>number_format</code>), phía JS dùng đúng quy tắc đó — format trong template thì Blade và JS dễ ra hai kết quả khác nhau.</li>
+            <li>Đổi cặp giao dịch gọi JSON trên <strong>chính URL này</strong> chứ không điều hướng: router phía client cần bản đồ path → component cố định.</li>
+        </ul>
+        <p class="await-demo-note">
+            Mất mạng hay bị chặn WebSocket thì feed tự chuyển sang bộ phát mô phỏng và nói rõ ở dòng “Nguồn”. Một trang demo hỏng khi wifi chập là trang demo vô dụng.
+        </p>
+    @endblock
+</template>
+
+<link rel="stylesheet" href="/static/saola/market.css">
+
+<script setup lang="ts">
+    import ChartController from '@web/app/services/ChartService';
+    import { MarketStream } from '@web/app/services/MarketStream';
+
+    const MAX_TRADES = 14;
+
+    export default {
+        name: 'MarketPage',
+
+        started() { this.boot(); },
+
+        // Trang được PageCache giữ lại: quay lại bằng back/forward thì started()
+        // không chạy nữa, phải nối lại luồng ở đây.
+        resumed() {
+            if (!this._stream) this.boot();
+        },
+
+        stopped() { this.teardown(); },
+        destroyed() { this.teardown(); },
+
+        /**
+         * Trên trang `@await`, `started()` và `mounted()` đều chạy TRƯỚC khi dữ
+         * liệu về — đo được: cả hai thấy `candles.length === 0` trong khi template
+         * sau đó hiện đủ 120 nến. Runtime không bắn hook nào lúc dữ liệu tới, nên
+         * view tự nạp phần nó cần, đúng khuôn `resumed() { this.load() }` của
+         * modules/home/todo.sao.
+         *
+         * Tải thẳng URL thì Blade đã điền sẵn `candles`, không tốn request nào.
+         */
+        async boot() {
+            let initial = candles;
+
+            if (!initial || initial.length === 0) {
+                try {
+                    const response = await App.Http.get('/demo/market?symbol=' + activeSymbol, null, this.requestOptions());
+                    const data = response.data.data;
+                    initial = data.candles;
+                    setBids(data.book.bids);
+                    setAsks(data.book.asks);
+                    setPriceText(data.lastText);
+                    setDeltaText(data.changeText);
+                } catch (error) {
+                    setFeedSource('không nạp được nến: ' + (error.message || error));
+                    return;
+                }
+            }
+
+            if (!initial || initial.length === 0) return;
+
+            this.openStream(initial);
+            this._chart = await ChartController.mount(document.querySelector('[data-chart-host]'), initial);
+            if (this._chart) setChartReady(true);
+        },
+
+        requestOptions() {
+            return { headers: { Accept: 'application/json', 'X-Sao-Response': 'json' } };
+        },
+
+        openStream(initialCandles) {
+            const seed = initialCandles[initialCandles.length - 1];
+            this._stream = new MarketStream(activeSymbol, seed, {
+                onCandle: (candle) => this.onCandle(candle),
+                onTrade: (trade) => this.onTrade(trade),
+                onSource: (name) => setFeedSource(name),
+            });
+            this._stream.start();
+        },
+
+        teardown() {
+            if (this._stream) { this._stream.stop(); this._stream = null; }
+            if (this._chart) { this._chart.destroy(); this._chart = null; }
+            setChartReady(false);
+        },
+
+        onCandle(candle) {
+            // Biểu đồ đi thẳng vào thư viện, KHÔNG qua state: mỗi tick mà chạm
+            // state là một lượt re-render vùng reactive, trong khi thư viện tự vẽ.
+            if (this._chart) this._chart.update(candle);
+
+            const previous = this._lastClose ?? candle.open;
+            this._lastClose = candle.close;
+            setRising(candle.close >= previous);
+            setPriceText(this.money(candle.close));
+
+            // Màu GIÁ theo chiều tick, màu DELTA theo dấu của chính delta. Dùng
+            // chung một cờ thì tick tăng trong một cây nến đang giảm sẽ tô xanh
+            // cho con số âm — thấy ngay trên ảnh chụp đầu tiên.
+            const open = candle.open || 1;
+            const delta = ((candle.close - open) / open) * 100;
+            setDeltaUp(delta >= 0);
+            setDeltaText((delta >= 0 ? '+' : '') + delta.toFixed(2));
+        },
+
+        onTrade(trade) {
+            // Danh sách CHỈ THÊM VÀO ĐẦU và cắt đuôi: id ổn định nên @key khớp
+            // được hàng cũ, runtime chỉ chèn một node thay vì dựng lại cả bảng.
+            const rows = [{
+                id: trade.id,
+                buy: trade.buy,
+                at: trade.at,
+                priceText: this.money(trade.price),
+                amountText: trade.amount.toFixed(3),
+            }, ...trades];
+
+            setTrades(rows.slice(0, MAX_TRADES));
+        },
+
+        /** Cùng quy tắc với number_format($v, 2) phía PHP. */
+        money(value) {
+            return Number(value).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            });
+        },
+
+        async switchSymbol(code) {
+            if (busy || code === activeSymbol) return;
+            setBusy(true);
+            this.teardown();
+
+            try {
+                const response = await App.Http.get('/demo/market?symbol=' + code, null, this.requestOptions());
+                const data = response.data.data;
+
+                setActiveSymbol(data.symbol);
+                setActiveLabel(data.label);
+                setPriceText(data.lastText);
+                setDeltaText(data.changeText);
+                setFeedSource(data.source);
+                setBids(data.book.bids);
+                setAsks(data.book.asks);
+                setTrades([]);
+                this._lastClose = null;
+
+                this.openStream(data.candles);
+                if (this._chart) this._chart.replace(data.candles);
+                else {
+                    this._chart = await ChartController.mount(document.querySelector('[data-chart-host]'), data.candles);
+                    if (this._chart) setChartReady(true);
+                }
+            } catch (error) {
+                setFeedSource('không tải được cặp mới: ' + (error.message || error));
+            } finally {
+                setBusy(false);
+            }
+        },
+    };
+</script>

@@ -24,12 +24,17 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
             ->title('PWA Configuration')
             ->description('Progressive Web App Configuration')
             ->displayName('PWA Config')
+            // Chỉ ba endpoint DỮ LIỆU ở context web. Sửa cấu hình nằm ở context
+            // admin bên dưới, nơi có middleware auth.
+            //
+            // `GET /config` và `POST /config` đã bị gỡ khỏi đây: view `pwa::config`
+            // chưa từng được viết nên GET trả 500, còn POST thì cho BẤT KỲ AI đổi
+            // tên app, màu và cache_version — những giá trị nuôi thẳng manifest.json
+            // và service worker — mà không cần đăng nhập.
             ->group(function ($module) {
                 $module->get('/manifest.json', 'manifest')->name('manifest');
                 $module->get('/service-worker.js', 'serviceWorker')->name('service-worker');
                 $module->get('/sw.js', 'sw')->name('sw');
-                $module->get('/config', 'config')->name('config');
-                $module->post('/config', 'updateConfig')->name('update-config');
             });
 
         System::context('admin')

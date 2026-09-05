@@ -1,0 +1,58 @@
+/* /demo/board — Kanban kéo thả. Dùng token của demo-site.css. */
+
+.kb-lead { color: var(--muted); margin: 0 0 20px; max-width: 62ch; }
+
+.kb-new { display: flex; gap: 8px; margin-bottom: 16px; }
+.kb-new input {
+    flex: 1; min-width: 0; font: inherit; font-size: 14px;
+    padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper);
+}
+.kb-new input:focus-visible { outline: 2px solid var(--river); outline-offset: 1px; }
+
+.kb-mini {
+    font: inherit; font-size: 13px; font-weight: 600; padding: 8px 14px;
+    border: 1px solid var(--river); border-radius: 8px;
+    background: var(--river); color: var(--white); cursor: pointer;
+}
+.kb-mini:disabled { opacity: .5; cursor: not-allowed; }
+.kb-ghost { background: transparent; color: var(--text); border-color: var(--line); }
+.kb-ghost:hover:not(:disabled) { border-color: var(--river); color: var(--river); }
+
+.kb-error { font-size: 13px; color: var(--river); margin: 0 0 12px; }
+
+.kb-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: start; }
+
+.kb-col {
+    border: 1px solid var(--line); border-radius: 12px; background: var(--fog);
+    padding: 12px; min-height: 160px; transition: border-color .12s, background .12s;
+}
+/* Cột đang được rê qua: viền đổi màu để biết thả vào đâu. Không dùng transform
+   vì nó tạo containing block mới, làm lệch toạ độ khi tính vị trí thả. */
+.kb-col.is-over { border-color: var(--river); background: var(--paper); }
+
+.kb-col-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.kb-col-head h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0; }
+.kb-count { font-size: 12px; font-weight: 700; color: var(--muted); }
+
+.kb-col-body { display: grid; gap: 8px; min-height: 60px; }
+
+.kb-card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 12px; cursor: grab; box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+.kb-card:active { cursor: grabbing; }
+.kb-title { margin: 0; font-size: 14px; line-height: 1.45; }
+
+.kb-card-actions, .kb-edit-actions { display: flex; gap: 6px; margin-top: 8px; }
+.kb-card-actions .kb-mini, .kb-edit-actions .kb-mini { padding: 4px 10px; font-size: 12px; }
+
+.kb-edit input {
+    width: 100%; font: inherit; font-size: 14px; padding: 6px 8px;
+    border: 1px solid var(--river); border-radius: 6px;
+}
+
+.kb-empty {
+    margin: 0; padding: 16px 8px; text-align: center;
+    font-size: 12px; color: var(--muted);
+    border: 1px dashed var(--line); border-radius: 8px;
+}

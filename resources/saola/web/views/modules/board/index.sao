@@ -1,0 +1,252 @@
+@import('web.modules.board.card' as boardcard)
+
+@vars(columns = [])
+
+{{-- Dữ liệu tới từ controller. Không có @await thì điều hướng SPA dựng view
+     KHI CHƯA có dữ liệu: mọi @foreach ra rỗng, chỉ tải thẳng URL mới đúng.
+     Cổng parity SSR↔CSR bắt được đúng lỗi này. --}}
+@await
+
+@states({
+    board: columns,
+    dragId: 0,
+    overColumn: '',
+    busy: false,
+    note: '',
+    error: '',
+    editingId: 0,
+    draftText: ''
+})
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    @block('main')
+        <p class="kicker"><span>ỨNG DỤNG THẬT · KÉO THẢ</span></p>
+        <h1>Bảng Kanban.</h1>
+        <p class="kb-lead">
+            Kéo một thẻ sang cột khác. Khoá của thẻ <strong>di chuyển giữa hai vùng
+            <code>&#64;foreach</code> khác nhau</strong> — ca khó nhất của danh sách có khoá.
+        </p>
+
+        <form class="kb-new" @submit(addCard(event))>
+            <input type="text" maxlength="120" placeholder="Thêm thẻ vào cột Cần làm" @bind(note) aria-label="Tiêu đề thẻ mới">
+            <button type="submit" class="kb-mini" @disabled(busy || note.trim() === '')>Thêm</button>
+        </form>
+
+        @if(error !== '')
+            <p class="kb-error" role="alert">{{ error }}</p>
+        @endif
+
+        <div class="kb-board">
+            @foreach(board as col)
+                @key(col['key'])
+                <section @class({'kb-col', 'is-over': overColumn === col['key']})
+                         :data-col="col['key']"
+                         @dragover(allowDrop(event, col['key']))
+                         @dragleave(setOverColumn(''))
+                         @drop(onDrop(event, col['key']))>
+                    <header class="kb-col-head">
+                        <h2>{{ col['label'] }}</h2>
+                        <span class="kb-count">{{ col['cards'].length }}</span>
+                    </header>
+
+                    <div class="kb-col-body">
+                        @foreach(col['cards'] as card)
+                            @key(card['id'])
+                            <boardcard :card="card" :column="col['key']" :busy="busy"
+                                       :editing="editingId === card['id']" :draftSeed="draftText" />
+                        @endforeach
+
+                        @if(col['cards'].length === 0)
+                            <p class="kb-empty">Thả thẻ vào đây</p>
+                        @endif
+                    </div>
+                </section>
+            @endforeach
+        </div>
+    @endblock
+
+    @block('aside')
+        <h2>Trang này kiểm chứng cái gì.</h2>
+        <ul class="check-list">
+            <li>Khoá <code>&#64;key(card['id'])</code> rời vùng <code>&#64;foreach</code> này sang vùng khác. Runtime phải nhận ra vẫn là một thẻ, không dựng lại node mới.</li>
+            <li>Instance con <strong>bị dựng lại</strong> khi thẻ đổi cột — React và Vue cũng vậy, đây không phải giới hạn của Saola. Nên bản nháp phải do <strong>cha</strong> giữ; con soi lại từ prop trong <code>started()</code>. Mở ô <strong>Sửa</strong>, gõ dở, rồi kéo thẻ sang cột khác: nội dung đang gõ vẫn còn.</li>
+            <li><code>&#64;foreach</code> lồng nhau: cột lặp ngoài, thẻ lặp trong — từng có bug thiếu spread khi lồng.</li>
+            <li>Cập nhật lạc quan: bảng đổi ngay khi thả, server trả về trạng thái sau cùng; hỏng thì quay lui về ảnh chụp trước đó.</li>
+            <li>Con không tự gọi API. <code>App.Event</code> là kênh con→cha duy nhất, vì chỉ cha mới giữ đủ trạng thái để quay lui.</li>
+        </ul>
+    @endblock
+</template>
+
+<link rel="stylesheet" href="/static/saola/board.css">
+
+<script setup lang="ts">
+    export default {
+        name: 'BoardPage',
+
+        started() {
+            // Đăng ký ở started(), gỡ ở destroyed(). Layout được tái dùng qua
+            // điều hướng SPA nên không gỡ là mỗi lượt vào lại chồng thêm listener.
+            this._off = [
+                App.Event.on('board:drag', (id) => setDragId(id)),
+                App.Event.on('board:edit', (id) => this.openEditor(id)),
+                App.Event.on('board:draft', (value) => setDraftText(value)),
+                App.Event.on('board:cancel', () => this.closeEditor()),
+                App.Event.on('board:rename', (payload) => this.rename(payload)),
+                App.Event.on('board:delete', (id) => this.remove(id)),
+            ];
+        },
+
+        destroyed() {
+            (this._off || []).forEach((off) => typeof off === 'function' && off());
+            this._off = null;
+        },
+
+        /**
+         * Trạng thái đang-sửa nằm ở CHA, không nằm trong thẻ.
+         *
+         * Kéo thẻ sang cột khác là chuyển khoá sang vùng @foreach khác nên
+         * instance con bị dựng lại — bản nháp giữ trong con sẽ bay mất. Giữ ở
+         * cha thì con chỉ việc soi lại từ prop trong started().
+         */
+        openEditor(id) {
+            const card = this.findCard(id);
+            setDraftText(card ? card['title'] : '');
+            setEditingId(id);
+        },
+
+        closeEditor() {
+            setEditingId(0);
+            setDraftText('');
+        },
+
+        findCard(id) {
+            for (const col of board) {
+                const found = col['cards'].find((card) => card['id'] === id);
+                if (found) return found;
+            }
+            return null;
+        },
+
+        allowDrop(event, column) {
+            // Không preventDefault thì trình duyệt từ chối thả — mặc định của
+            // HTML5 drag-and-drop là "không cho".
+            event.preventDefault();
+            if (overColumn !== column) setOverColumn(column);
+        },
+
+        async onDrop(event, column) {
+            event.preventDefault();
+            setOverColumn('');
+            if (!dragId || busy) return;
+
+            const index = this.indexIn(column, event.clientY);
+            const snapshot = board;
+            setBoard(this.moveLocally(board, dragId, column, index));
+
+            await this.commit(
+                () => App.Http.post('/demo/board/move', { id: dragId, column, index }, this.options()),
+                snapshot,
+            );
+            setDragId(0);
+        },
+
+        /** Vị trí thả suy từ toạ độ chuột so với tâm từng thẻ đang hiển thị. */
+        indexIn(column, clientY) {
+            const body = document.querySelector('[data-col="' + column + '"] .kb-col-body');
+            if (!body) return 0;
+
+            const cards = [...body.querySelectorAll('.kb-card')];
+            for (let i = 0; i < cards.length; i++) {
+                const box = cards[i].getBoundingClientRect();
+                if (clientY < box.top + box.height / 2) return i;
+            }
+            return cards.length;
+        },
+
+        /** Dựng lại bảng ngay phía client để giao diện phản hồi tức thì. */
+        moveLocally(columns, id, target, index) {
+            let moving = null;
+            const stripped = columns.map((col) => ({
+                key: col['key'],
+                label: col['label'],
+                cards: col['cards'].filter((card) => {
+                    if (card['id'] !== id) return true;
+                    moving = card;
+                    return false;
+                }),
+            }));
+
+            if (!moving) return columns;
+
+            return stripped.map((col) => {
+                if (col['key'] !== target) return col;
+                const cards = [...col['cards']];
+                cards.splice(Math.max(0, Math.min(index, cards.length)), 0, moving);
+                return { key: col['key'], label: col['label'], cards };
+            });
+        },
+
+        async addCard(event) {
+            event.preventDefault();
+            const title = note.trim();
+            if (!title || busy) return;
+
+            setNote('');
+            await this.commit(() => App.Http.post('/demo/board/card', { title }, this.options()), board);
+        },
+
+        async rename(payload) {
+            const snapshot = board;
+            setBoard(board.map((col) => ({
+                key: col['key'],
+                label: col['label'],
+                cards: col['cards'].map((card) =>
+                    card['id'] === payload.id ? { ...card, title: payload.title } : card),
+            })));
+
+            this.closeEditor();
+            await this.commit(
+                () => App.Http.put('/demo/board/card/' + payload.id, { title: payload.title }, this.options()),
+                snapshot,
+            );
+        },
+
+        async remove(id) {
+            const snapshot = board;
+            setBoard(board.map((col) => ({
+                key: col['key'],
+                label: col['label'],
+                cards: col['cards'].filter((card) => card['id'] !== id),
+            })));
+
+            await this.commit(() => App.Http.delete('/demo/board/card/' + id, null, this.options()), snapshot);
+        },
+
+        /** Gửi mutation; hỏng thì trả bảng về đúng ảnh chụp trước khi đổi. */
+        async commit(request, snapshot) {
+            setBusy(true);
+            setError('');
+            try {
+                const response = await request();
+                setBoard(response.data.data.columns);
+            } catch (failure) {
+                setBoard(snapshot);
+                setError('Không lưu được, đã hoàn tác: ' + (failure.message || failure));
+            } finally {
+                setBusy(false);
+            }
+        },
+
+        options() {
+            return {
+                headers: {
+                    Accept: 'application/json',
+                    'X-Sao-Response': 'json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                },
+            };
+        },
+    };
+</script>

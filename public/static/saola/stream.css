@@ -1,0 +1,58 @@
+/* /demo/stream — feed sự kiện SSE. Dùng token của demo-site.css. */
+
+.sv-lead { color: var(--muted); margin: 0 0 20px; max-width: 62ch; }
+
+.sv-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+
+.sv-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line); flex: none; }
+.sv-dot.is-live { background: #1a7f37; box-shadow: 0 0 0 3px rgba(26,127,55,.16); }
+
+.sv-state { font-size: 13px; font-weight: 600; }
+.sv-count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; margin-left: auto; }
+
+.sv-btn {
+    font: inherit; font-size: 13px; font-weight: 600; padding: 7px 14px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--paper); color: var(--text); cursor: pointer;
+}
+.sv-btn:hover { border-color: var(--river); color: var(--river); }
+
+/* Nút "N sự kiện mới" dính trên đầu vùng cuộn — feed tự nhảy khi người ta đang
+   đọc là lỗi khó chịu nhất của giao diện loại này. */
+.sv-new {
+    position: sticky; top: 12px; z-index: 2;
+    display: block; margin: 0 auto 12px;
+    font: inherit; font-size: 13px; font-weight: 700; padding: 7px 16px;
+    border: 0; border-radius: 999px; cursor: pointer;
+    background: var(--river); color: var(--white);
+    box-shadow: 0 4px 12px rgba(0,0,0,.14);
+}
+
+.sv-feed { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+
+.sv-item {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: baseline;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-left-width: 3px;
+    border-radius: 8px;
+    background: var(--paper);
+    font-size: 13.5px;
+}
+.sv-item.k-deploy { border-left-color: #1a7f37; }
+.sv-item.k-commit { border-left-color: #57606a; }
+.sv-item.k-test   { border-left-color: #0969da; }
+.sv-item.k-alert  { border-left-color: var(--river); }
+.sv-item.k-build  { border-left-color: #9a6700; }
+
+.sv-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.sv-text { min-width: 0; }
+.sv-time { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 620px) {
+    .sv-item { grid-template-columns: minmax(0, 1fr) auto; }
+    .sv-tag { grid-column: 1 / -1; }
+}

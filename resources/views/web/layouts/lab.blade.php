@@ -16,15 +16,19 @@
                     <a @class([$__VIEW_ID__ . '-Bcontent1117']) @attr(['href' => '/demo/lifecycle'])>Vòng đời &amp; PageCache</a>
 
                     <p @class([$__VIEW_ID__ . '-Bcontent1118', 'docs-nav-group'])>Ứng dụng thật</p>
+                    <a @class([$__VIEW_ID__ . '-Bcontent1119']) @attr(['href' => '/demo/market'])>Biểu đồ giá realtime</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e10_']) @attr(['href' => '/demo/board'])>Kanban — kéo thả</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e11_']) @attr(['href' => '/demo/grid'])>Bảng dữ liệu 3.800 dòng</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e12_']) @attr(['href' => '/demo/stream'])>Luồng sự kiện SSE</a>
                     {{-- Hai trang này ở shell `workspace` (sidebar tối, khung
                          kiểu app) chứ không ở shell lab — giữ nguyên vì đó là
                          một bề mặt demo có chủ đích, chỉ nối đường vào. --}}
-                    <a @class([$__VIEW_ID__ . '-Bcontent1119']) @attr(['href' => '/roster'])>Roster — CRUD qua API</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e10_']) @attr(['href' => '/todo-list'])>Todo — state cục bộ</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e13_']) @attr(['href' => '/roster'])>Roster — CRUD qua API</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e14_']) @attr(['href' => '/todo-list'])>Todo — state cục bộ</a>
 
-                    <p @class([$__VIEW_ID__ . '-Bcontent111e11_', 'docs-nav-group'])>Tài liệu</p>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e12_']) @attr(['href' => '/docs/directives'])>Tham chiếu directive</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e13_']) @attr(['href' => '/docs/status'])>Giới hạn đã biết</a>
+                    <p @class([$__VIEW_ID__ . '-Bcontent111e15_', 'docs-nav-group'])>Tài liệu</p>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e16_']) @attr(['href' => '/docs/directives'])>Tham chiếu directive</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e17_']) @attr(['href' => '/docs/status'])>Giới hạn đã biết</a>
                 </div>
             </aside>
 

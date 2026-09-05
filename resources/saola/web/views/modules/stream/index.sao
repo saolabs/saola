@@ -1,0 +1,139 @@
+@vars(backlog = [], perConnection = 30)
+
+{{-- Dữ liệu tới từ controller. Không có @await thì điều hướng SPA dựng view
+     KHI CHƯA có dữ liệu: mọi @foreach ra rỗng, chỉ tải thẳng URL mới đúng.
+     Cổng parity SSR↔CSR bắt được đúng lỗi này. --}}
+@await
+
+@states({
+    events: backlog,
+    connection: 'chưa nối',
+    live: true,
+    received: 0,
+    pending: 0
+})
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    @block('main')
+        <p class="kicker"><span>ỨNG DỤNG THẬT · LUỒNG SỰ KIỆN</span></p>
+        <h1>Feed realtime qua SSE.</h1>
+        <p class="sv-lead">
+            Server đẩy sự kiện bằng <code>text/event-stream</code>. Backlog dưới đây do
+            Blade render nên trang có nội dung ngay cả khi tắt JS.
+        </p>
+
+        <div class="sv-bar">
+            <span @class({'sv-dot', 'is-live': connection === 'đang nhận'})></span>
+            <span class="sv-state">{{ connection }}</span>
+            <span class="sv-count">{{ received }} sự kiện đã nhận</span>
+            <button type="button" class="sv-btn" @click(toggle())>
+                {{ live ? 'Tạm dừng' : 'Nối lại' }}
+            </button>
+        </div>
+
+        @if(pending > 0)
+            <button type="button" class="sv-new" @click(scrollTop())>
+                {{ pending }} sự kiện mới ↑
+            </button>
+        @endif
+
+        <ul class="sv-feed" data-feed>
+            @foreach(events as row)
+                @key(row['id'])
+                <li @class({'sv-item', 'k-deploy': row['kind'] === 'deploy', 'k-commit': row['kind'] === 'commit', 'k-test': row['kind'] === 'test', 'k-alert': row['kind'] === 'alert', 'k-build': row['kind'] === 'build'})>
+                    <span class="sv-tag">{{ row['label'] }}</span>
+                    <span class="sv-text"><strong>{{ row['actor'] }}</strong> {{ row['text'] }}</span>
+                    <span class="sv-time">{{ row['at'] }}</span>
+                </li>
+            @endforeach
+        </ul>
+    @endblock
+
+    @block('aside')
+        <h2>Trang này kiểm chứng cái gì.</h2>
+        <ul class="check-list">
+            <li>Danh sách <strong>chỉ thêm vào đầu</strong> và cắt đuôi. Khoá là <code>id</code> tăng dần nên runtime chèn đúng một node thay vì dựng lại cả danh sách.</li>
+            <li>Kết nối sống phải đóng trong <code>destroyed()</code>. Không đóng thì mỗi lượt điều hướng SPA vào lại trang là thêm một EventSource nữa.</li>
+            <li>Stream <strong>có giới hạn {{ perConnection }} sự kiện</strong> rồi tự đóng, để <code>EventSource</code> nối lại. Server dev chạy <code>php -S</code> với 4 worker, nên một kết nối giữ mãi ăn đứt 25% năng lực.</li>
+            <li><code>Last-Event-ID</code> gửi kèm khi nối lại, nên dải sự kiện liền mạch chứ không nhảy số.</li>
+            <li>Đang cuộn xuống dưới thì sự kiện mới KHÔNG kéo trang — chỉ hiện nút “N sự kiện mới”. Feed tự nhảy khi đang đọc là lỗi khó chịu nhất của loại giao diện này.</li>
+        </ul>
+    @endblock
+</template>
+
+<link rel="stylesheet" href="/static/saola/stream.css">
+
+<script setup lang="ts">
+    const MAX_ITEMS = 60;
+
+    export default {
+        name: 'StreamPage',
+
+        started() { this.connect(); },
+        resumed() { if (!this._source && live) this.connect(); },
+        stopped() { this.disconnect(); },
+        destroyed() { this.disconnect(); },
+
+        connect() {
+            if (this._source) return;
+
+            // Nối tiếp từ id lớn nhất đang có: backlog do server render cũng là
+            // sự kiện thật, không phải dữ liệu giả tách rời.
+            const last = events.length > 0 ? events[0]['id'] : 1000;
+            setConnection('đang nối…');
+
+            const source = new EventSource('/demo/stream/events?from=' + last);
+            this._source = source;
+
+            source.addEventListener('open', () => setConnection('đang nhận'));
+
+            source.addEventListener('message', (event) => {
+                try {
+                    this.push(JSON.parse(event.data));
+                } catch {
+                    // Gói hỏng thì bỏ gói đó, không hạ cả kết nối.
+                }
+            });
+
+            // Stream đóng theo thiết kế sau N sự kiện; EventSource tự nối lại.
+            // Chỉ báo trạng thái, KHÔNG tự gọi connect() ở đây — làm vậy là có
+            // hai kết nối cùng chạy.
+            source.addEventListener('error', () => {
+                setConnection(live ? 'đang nối lại…' : 'đã dừng');
+            });
+        },
+
+        disconnect() {
+            if (this._source) { this._source.close(); this._source = null; }
+            setConnection('đã dừng');
+        },
+
+        push(event) {
+            // Khử trùng lặp: EventSource nối lại có thể phát lại sự kiện cuối.
+            if (events.some((row) => row['id'] === event.id)) return;
+
+            setEvents([event, ...events].slice(0, MAX_ITEMS));
+            setReceived(received + 1);
+
+            // Đang đọc ở dưới thì không kéo trang; đếm vào nút "N sự kiện mới".
+            if (window.scrollY > 220) setPending(pending + 1);
+        },
+
+        scrollTop() {
+            setPending(0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+
+        toggle() {
+            if (live) {
+                setLive(false);
+                this.disconnect();
+            } else {
+                setLive(true);
+                this.connect();
+            }
+        },
+    };
+</script>
