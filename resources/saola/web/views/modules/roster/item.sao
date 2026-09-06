@@ -141,6 +141,7 @@
 </template>
 
 <script setup lang="ts">
+    import { errorMessage, httpStatus } from '@web/app/services/Errors';
     const API = '/api/api/roster';
 
     export default {
@@ -178,7 +179,7 @@
             setNote('Sẽ ghi đè bản của người kia khi bạn bấm Lưu.');
         },
 
-        async save(event) {
+        async save(event: Event) {
             event.preventDefault();
             if (busy) return;
             setBusy(true);
@@ -202,7 +203,7 @@
             } catch (e) {
                 // 409/404: server đã đi trước ta. Kéo bản mới về, khối so sánh
                 // phía trên tự bật lên vì record.updated_at lệch base.
-                const code = e.response ? e.response.statusCode : 0;
+                const code = httpStatus(e);
                 if (code === 409) {
                     setNote('Có người khác vừa sửa trước bạn — đối chiếu rồi lưu lại.');
                     App.Event.emit('roster:refresh');
@@ -210,7 +211,7 @@
                     setNote('User đã bị xoá khỏi server.');
                     App.Event.emit('roster:refresh');
                 } else {
-                    setNote('Lưu thất bại: ' + (e.message || e));
+                    setNote('Lưu thất bại: ' + errorMessage(e));
                 }
             } finally {
                 setBusy(false);
@@ -221,7 +222,7 @@
             try {
                 await App.Http.delete(API + '/' + uid);
             } catch (e) {
-                setNote('Xoá thất bại: ' + (e.message || e));
+                setNote('Xoá thất bại: ' + errorMessage(e));
             }
             App.Event.emit('roster:refresh');
         },
@@ -243,7 +244,7 @@
                 App.Event.emit('roster:record', res.data.data);
                 App.Event.emit('roster:refresh');
             } catch (e) {
-                setNote('Tạo lại thất bại: ' + (e.message || e));
+                setNote('Tạo lại thất bại: ' + errorMessage(e));
             } finally {
                 setBusy(false);
             }

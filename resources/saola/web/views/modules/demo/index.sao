@@ -31,6 +31,11 @@
         </p>
 
         <div class="lab-index">
+            <a href="/demo/setup">
+                <span>Compiler</span>
+                <strong>Setup typesafe</strong>
+                <p>Đặt props, state, computed và import view cạnh TypeScript trong <code>&lt;script setup&gt;</code>.</p>
+            </a>
             <a href="/demo/await">
                 <span>Dữ liệu</span>
                 <strong>Nạp bất đồng bộ</strong>

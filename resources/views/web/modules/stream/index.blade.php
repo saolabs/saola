@@ -1,7 +1,7 @@
 @addCssLink('/static/saola/stream.css')
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
-@vars($backlog = [], $perConnection = 30)
+@vars($backlog =  [], $perConnection = 30)
 @useState($events, $backlog)
 @useState($connection, 'chưa nối')
 @useState($live, true)

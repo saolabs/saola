@@ -11,6 +11,8 @@
 @useState($refreshCount, 0)
 @useState($modalOpen, false)
 @useState($banner, '')
+@php($activeCount = count(array_values(array_filter(array_values($users), fn($u) => data_get($u, 'active'), ARRAY_FILTER_USE_BOTH))))
+@php($totalRoles = array_reduce(array_values($users), fn($n, $u) => $n + count(data_get($u, 'roles')), 0))
 @extends($__layout__ . "workspace")
     @block('workspace')
         <header @class([$__VIEW_ID__ . '-Bworkspace1', 'se4890c80', 'workspace-topbar'])>
@@ -19,7 +21,7 @@
                 <h1 @class([$__VIEW_ID__ . '-Bworkspace112', 'se4890c80'])>Reactive · Hydration · Loop · Cleanup</h1>
             </div>
             <div @class([$__VIEW_ID__ . '-Bworkspace12', 'se4890c80', 'completion-ring'])>
-                <strong @class([$__VIEW_ID__ . '-Bworkspace121', 'se4890c80'])>{{ $activeCount }}/@startMarker('output', 'Bworkspace121o1'){{ count($users) }}@endMarker('output', 'Bworkspace121o1')</strong><span @class([$__VIEW_ID__ . '-Bworkspace122', 'se4890c80'])>active</span>
+                <strong @class([$__VIEW_ID__ . '-Bworkspace121', 'se4890c80'])>@startMarker('output', 'Bworkspace121o1'){{ $activeCount }}@endMarker('output', 'Bworkspace121o1')/@startMarker('output', 'Bworkspace121o2'){{ count($users) }}@endMarker('output', 'Bworkspace121o2')</strong><span @class([$__VIEW_ID__ . '-Bworkspace122', 'se4890c80'])>active</span>
             </div>
         </header>
 
@@ -83,7 +85,7 @@
             </div>
 
             <footer @class([$__VIEW_ID__ . '-Bworkspace24', 'se4890c80', 'stress__foot'])>
-                <span @class([$__VIEW_ID__ . '-Bworkspace241', 'se4890c80'])>{{ $totalRoles }} vai trò</span>
+                <span @class([$__VIEW_ID__ . '-Bworkspace241', 'se4890c80'])>@startMarker('output', 'Bworkspace241o1'){{ $totalRoles }}@endMarker('output', 'Bworkspace241o1') vai trò</span>
                 <button @class([$__VIEW_ID__ . '-Bworkspace242', 'se4890c80']) @attr(['type' => 'button'])>Mở modal</button>
             </footer>
         </section>

@@ -142,6 +142,8 @@
 <link rel="stylesheet" href="/static/saola/market.css">
 
 <script setup lang="ts">
+    import type { Tick, Trade } from '@web/app/services/MarketStream';
+    import { errorMessage } from '@web/app/services/Errors';
     import ChartController from '@web/app/services/ChartService';
     import { MarketStream } from '@web/app/services/MarketStream';
 
@@ -149,6 +151,9 @@
 
     export default {
         name: 'MarketPage',
+        _stream: null as MarketStream | null,
+        _chart: null as ChartController | null,
+        _lastClose: null as number | null,
 
         started() { this.boot(); },
 
@@ -183,7 +188,7 @@
                     setPriceText(data.lastText);
                     setDeltaText(data.changeText);
                 } catch (error) {
-                    setFeedSource('không nạp được nến: ' + (error.message || error));
+                    setFeedSource('không nạp được nến: ' + errorMessage(error));
                     return;
                 }
             }
@@ -191,7 +196,7 @@
             if (!initial || initial.length === 0) return;
 
             this.openStream(initial);
-            this._chart = await ChartController.mount(document.querySelector('[data-chart-host]'), initial);
+            this._chart = await ChartController.mount(document.querySelector<HTMLElement>('[data-chart-host]'), initial);
             if (this._chart) setChartReady(true);
         },
 
@@ -199,7 +204,7 @@
             return { headers: { Accept: 'application/json', 'X-Sao-Response': 'json' } };
         },
 
-        openStream(initialCandles) {
+        openStream(initialCandles: Tick[]) {
             const seed = initialCandles[initialCandles.length - 1];
             this._stream = new MarketStream(activeSymbol, seed, {
                 onCandle: (candle) => this.onCandle(candle),
@@ -215,7 +220,7 @@
             setChartReady(false);
         },
 
-        onCandle(candle) {
+        onCandle(candle: Tick) {
             // Biểu đồ đi thẳng vào thư viện, KHÔNG qua state: mỗi tick mà chạm
             // state là một lượt re-render vùng reactive, trong khi thư viện tự vẽ.
             if (this._chart) this._chart.update(candle);
@@ -234,7 +239,7 @@
             setDeltaText((delta >= 0 ? '+' : '') + delta.toFixed(2));
         },
 
-        onTrade(trade) {
+        onTrade(trade: Trade) {
             // Danh sách CHỈ THÊM VÀO ĐẦU và cắt đuôi: id ổn định nên @key khớp
             // được hàng cũ, runtime chỉ chèn một node thay vì dựng lại cả bảng.
             const rows = [{
@@ -249,14 +254,14 @@
         },
 
         /** Cùng quy tắc với number_format($v, 2) phía PHP. */
-        money(value) {
+        money(value: number) {
             return Number(value).toLocaleString('en-US', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
             });
         },
 
-        async switchSymbol(code) {
+        async switchSymbol(code: string) {
             if (busy || code === activeSymbol) return;
             setBusy(true);
             this.teardown();
@@ -278,11 +283,11 @@
                 this.openStream(data.candles);
                 if (this._chart) this._chart.replace(data.candles);
                 else {
-                    this._chart = await ChartController.mount(document.querySelector('[data-chart-host]'), data.candles);
+                    this._chart = await ChartController.mount(document.querySelector<HTMLElement>('[data-chart-host]'), data.candles);
                     if (this._chart) setChartReady(true);
                 }
             } catch (error) {
-                setFeedSource('không tải được cặp mới: ' + (error.message || error));
+                setFeedSource('không tải được cặp mới: ' + errorMessage(error));
             } finally {
                 setBusy(false);
             }

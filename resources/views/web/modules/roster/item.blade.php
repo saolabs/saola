@@ -1,6 +1,6 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
-<?php if(!isset($uid) || (!$uid && $uid !== false)) $uid = ''; if(!isset($record) || (!$record && $record !== false)) $record = null; ?>
+<?php if(!array_key_exists('uid', get_defined_vars())) $uid = ''; if(!array_key_exists('record', get_defined_vars())) $record = null; ?>
 @useState($editing, false)
 @useState($base, null)
 @useState($busy, false)

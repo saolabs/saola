@@ -11,7 +11,7 @@
     refreshCount: 0,
     modalOpen: false,
     banner: ''
-})
+}: {users: StressUser[]; tags: string[]; query: string; selectedId: number; refreshCount: number; modalOpen: boolean; banner: string})
 
 @computed(activeCount = users.filter(u => u.active).length)
 @computed(totalRoles = users.reduce((n, u) => n + u.roles.length, 0))
@@ -99,6 +99,7 @@
 </template>
 
 <script setup lang="ts">
+    import type { StressUser } from '@web/app/services/DemoTypes';
     export default {
         name: 'StressPage',
 
@@ -108,7 +109,7 @@
          * Đây là đường từng làm view con của @include biến mất khỏi DOM.
          */
         refreshFromServer() {
-            const next = JSON.parse(JSON.stringify(users)).map(u => ({ ...u, rev: u.rev + 1 }));
+            const next = (JSON.parse(JSON.stringify(users)) as StressUser[]).map(u => ({ ...u, rev: u.rev + 1 }));
             setUsers(next);
             setRefreshCount(refreshCount + 1);
         },
@@ -119,11 +120,11 @@
             setUsers(users.filter(u => u.name.toLowerCase().includes(q)));
         },
 
-        selectUser(id) {
+        selectUser(id: number) {
             setSelectedId(selectedId === id ? 0 : id);
         },
 
-        removeUser(id) {
+        removeUser(id: number) {
             setUsers(users.filter(u => u.id !== id));
         },
 

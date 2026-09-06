@@ -1,10 +1,7 @@
 @addCssLink('/static/saola/grid.css')
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
-@vars(
-    $rows = [], $total = 0, $totalText = '0', $page = 1, $pages = 1, $from = 0, $to = 0,
-    $search = '', $status = '', $sort = 'downloads', $dir = 'desc', $statuses = []
-)
+@vars($rows =  [], $total =  0, $totalText =  '0', $page =  1, $pages =  1, $from =  0, $to =  0, $search =  '', $status =  '', $sort =  'downloads', $dir =  'desc', $statuses =  [])
 @useState($items, $rows)
 @useState($query, $search)
 @useState($activeStatus, $status)
@@ -17,6 +14,8 @@
 @useState($countText, $totalText)
 @useState($busy, false)
 @useState($failed, '')
+@php($canPrevious = !$busy && $pageNo > 1)
+@php($canNext = !$busy && $pageNo < $pageCount)
 @await
 @extends($__layout__ . 'lab')
 
@@ -81,9 +80,9 @@
         <div @class([$__VIEW_ID__ . '-Bmain6', 'gr-foot'])>
             <p @class([$__VIEW_ID__ . '-Bmain61', 'gr-range'])>@startMarker('output', 'Bmain61o1'){{ $rangeFrom }}@endMarker('output', 'Bmain61o1')–@startMarker('output', 'Bmain61o2'){{ $rangeTo }}@endMarker('output', 'Bmain61o2') trên @startMarker('output', 'Bmain61o3'){{ $countText }}@endMarker('output', 'Bmain61o3') gói</p>
             <div @class([$__VIEW_ID__ . '-Bmain62', 'gr-pager'])>
-                <button @class([$__VIEW_ID__ . '-Bmain621', 'gr-chip']) @attr(['type' => 'button']) @disabled($busy || $pageNo <= 1)>‹ Trước</button>
+                <button @class([$__VIEW_ID__ . '-Bmain621', 'gr-chip']) @attr(['type' => 'button']) @disabled(!$canPrevious)>‹ Trước</button>
                 <span @class([$__VIEW_ID__ . '-Bmain622', 'gr-page'])>Trang @startMarker('output', 'Bmain622o1'){{ $pageNo }}@endMarker('output', 'Bmain622o1') / @startMarker('output', 'Bmain622o2'){{ $pageCount }}@endMarker('output', 'Bmain622o2')</span>
-                <button @class([$__VIEW_ID__ . '-Bmain623', 'gr-chip']) @attr(['type' => 'button']) @disabled($busy || $pageNo >= $pageCount)>Sau ›</button>
+                <button @class([$__VIEW_ID__ . '-Bmain623', 'gr-chip']) @attr(['type' => 'button']) @disabled(!$canNext)>Sau ›</button>
             </div>
         </div>
     @endblock

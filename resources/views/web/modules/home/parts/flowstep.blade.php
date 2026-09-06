@@ -1,7 +1,7 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @vars($__ONE_CHILDREN_CONTENT__ = '')
-<?php if(!isset($step) || (!$step && $step !== false)) $step = ''; if(!isset($cmd) || (!$cmd && $cmd !== false)) $cmd = ''; ?>
+<?php if(!array_key_exists('step', get_defined_vars())) $step = ''; if(!array_key_exists('cmd', get_defined_vars())) $cmd = ''; ?>
 @wrapper
 <li @class([$__VIEW_ID__ . '-e1'])>
         <span @class([$__VIEW_ID__ . '-e11'])>@startMarker('output', 'e11o1'){{ $step }}@endMarker('output', 'e11o1')</span>

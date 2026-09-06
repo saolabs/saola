@@ -11,6 +11,7 @@
                     <a href="/demo/await">Nạp dữ liệu bất đồng bộ</a>
 
                     <p class="docs-nav-group">Runtime</p>
+                    <a href="/demo/setup">Setup typesafe</a>
                     <a href="/demo/foreach">Danh sách &amp; reconciliation</a>
                     <a href="/demo/lifecycle">Vòng đời &amp; PageCache</a>
 
@@ -48,9 +49,14 @@
     @endblock
 </template>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" data-manual></script>
+
 <script setup lang="ts">
+    import HighlightService from '@web/app/services/HighlightService';
+
     export default {
         name: 'LabLayout',
+        _offNav: null as (() => void) | null,
 
         // Layout được TÁI DÙNG khi điều hướng giữa các trang demo (layout diff),
         // nên started() chỉ chạy đúng một lần. Nội dung trong outlet đổi mà
@@ -60,14 +66,20 @@
         // mà rAF bị treo khi tab/pane ẩn — nav và mục lục kẹt ở trang cũ.
         // afterEach là tín hiệu tất định của router, và nay nhận nhiều hook.
         started() {
-            this._offNav = App.Router.afterEach(() => this.markCurrent());
-            this.markCurrent();
+            this._offNav = App.Router.afterEach(() => this.sync());
+            this.sync();
         },
 
-        resumed() { this.markCurrent(); },
+        resumed() { this.sync(); },
 
         destroyed() {
             if (this._offNav) { this._offNav(); this._offNav = null; }
+        },
+
+        sync() {
+            this.markCurrent();
+            const main = document.querySelector('.lab-main');
+            if (main) HighlightService.highlight(main);
         },
 
         markCurrent() {

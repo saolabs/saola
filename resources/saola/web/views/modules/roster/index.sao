@@ -10,7 +10,7 @@
     fEmail: '',
     fGender: 'other',
     fBirthdate: ''
-})
+}: {ids: string[]; records: Record<string, RosterRecord | null>; editing: Record<string, boolean>; lastSync: string; syncError: string; creating: boolean; fName: string; fEmail: string; fGender: string; fBirthdate: string})
 
 <template>
     @extends(__layout__ + "workspace")
@@ -110,10 +110,14 @@
 </template>
 
 <script setup lang="ts">
+    import type { RosterRecord } from '@web/app/services/DemoTypes';
+    import { errorMessage } from '@web/app/services/Errors';
     const API = '/api/api/roster';
 
     export default {
         name: 'RosterPage',
+        _timer: undefined as ReturnType<typeof setInterval> | undefined,
+        _off: [] as (() => void)[],
 
         // ─── Lifecycle ──────────────────────────────────────────
         // started/stopped: kích hoạt & huỷ kích hoạt bình thường.
@@ -130,14 +134,14 @@
             this._off = [
                 // Hàng con báo lên "tôi đang mở form" — parent cần biết để KHÔNG
                 // gỡ hàng khi server đã xoá bản ghi đó.
-                App.Event.on('roster:editing', (uid, on) => {
+                App.Event.on('roster:editing', (uid: string, on: boolean) => {
                     const next = { ...editing };
                     if (on) next[uid] = true; else delete next[uid];
                     setEditing(next);
                 }),
                 // Bản ghi vừa lưu do chính hàng con đẩy lên — gộp ngay để hàng
                 // không hiện dữ liệu cũ trong lúc chờ lượt fetch kế tiếp.
-                App.Event.on('roster:record', (rec) => {
+                App.Event.on('roster:record', (rec: RosterRecord) => {
                     if (!rec || !rec.uuid) return;
                     setRecords({ ...records, [rec.uuid]: rec });
                     if (!ids.includes(rec.uuid)) setIds([...ids, rec.uuid]);
@@ -149,7 +153,7 @@
 
         deactivate() {
             clearInterval(this._timer);
-            this._timer = null;
+            this._timer = undefined;
             (this._off || []).forEach(off => off());
             this._off = [];
         },
@@ -161,7 +165,7 @@
                 setSyncError('');
                 this.applyServer(res.data.data || []);
             } catch (e) {
-                setSyncError('Không tải được danh sách: ' + (e.message || e));
+                setSyncError('Không tải được danh sách: ' + errorMessage(e));
             }
         },
 
@@ -175,8 +179,8 @@
          *      danh sách và đặt record = null. null chính là tín hiệu "bia mộ"
          *      để item view hiện khối "người khác vừa xoá".
          */
-        applyServer(list) {
-            const byId = {};
+        applyServer(list: RosterRecord[]) {
+            const byId: Record<string, RosterRecord> = {};
             for (const u of list) byId[u.uuid] = u;
 
             const nextIds = [];
@@ -187,7 +191,7 @@
                 if (!ids.includes(u.uuid)) nextIds.push(u.uuid);
             }
 
-            const nextRecords = {};
+            const nextRecords: Record<string, RosterRecord | null> = {};
             let changed = nextIds.length !== ids.length;
             for (let i = 0; i < nextIds.length; i++) {
                 const id = nextIds[i];
@@ -208,7 +212,7 @@
         },
 
         // ─── Create ─────────────────────────────────────────────
-        async createUser(event) {
+        async createUser(event: Event) {
             event.preventDefault();
             if (creating) return;
             setCreating(true);
@@ -225,7 +229,7 @@
                 setSyncError('');
                 await this.load();
             } catch (e) {
-                setSyncError('Không tạo được user: ' + (e.message || e));
+                setSyncError('Không tạo được user: ' + errorMessage(e));
             } finally {
                 setCreating(false);
             }

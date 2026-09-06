@@ -1,6 +1,6 @@
 @import('web.modules.board.card' as boardcard)
 
-@vars(columns = [])
+@vars(columns: BoardColumn[] = [])
 
 {{-- Dữ liệu tới từ controller. Không có @await thì điều hướng SPA dựng view
      KHI CHƯA có dữ liệu: mọi @foreach ra rỗng, chỉ tải thẳng URL mới đúng.
@@ -16,7 +16,7 @@
     error: '',
     editingId: 0,
     draftText: ''
-})
+}: {board: BoardColumn[]; dragId: number; overColumn: string; busy: boolean; note: string; error: string; editingId: number; draftText: string})
 
 <template>
     @extends(__layout__ + 'lab')
@@ -82,25 +82,29 @@
 <link rel="stylesheet" href="/static/saola/board.css">
 
 <script setup lang="ts">
+    import type { BoardColumn } from '@web/app/services/DemoTypes';
+    import type { HttpResponse } from '@saolabs/client';
+    import { errorMessage } from '@web/app/services/Errors';
     export default {
         name: 'BoardPage',
+        _off: [] as (() => void)[],
 
         started() {
             // Đăng ký ở started(), gỡ ở destroyed(). Layout được tái dùng qua
             // điều hướng SPA nên không gỡ là mỗi lượt vào lại chồng thêm listener.
             this._off = [
-                App.Event.on('board:drag', (id) => setDragId(id)),
-                App.Event.on('board:edit', (id) => this.openEditor(id)),
-                App.Event.on('board:draft', (value) => setDraftText(value)),
+                App.Event.on('board:drag', (id: number) => setDragId(id)),
+                App.Event.on('board:edit', (id: number) => this.openEditor(id)),
+                App.Event.on('board:draft', (value: string) => setDraftText(value)),
                 App.Event.on('board:cancel', () => this.closeEditor()),
-                App.Event.on('board:rename', (payload) => this.rename(payload)),
-                App.Event.on('board:delete', (id) => this.remove(id)),
+                App.Event.on('board:rename', (payload: {id: number; title: string}) => this.rename(payload)),
+                App.Event.on('board:delete', (id: number) => this.remove(id)),
             ];
         },
 
         destroyed() {
             (this._off || []).forEach((off) => typeof off === 'function' && off());
-            this._off = null;
+            this._off = [];
         },
 
         /**
@@ -110,7 +114,7 @@
          * instance con bị dựng lại — bản nháp giữ trong con sẽ bay mất. Giữ ở
          * cha thì con chỉ việc soi lại từ prop trong started().
          */
-        openEditor(id) {
+        openEditor(id: number) {
             const card = this.findCard(id);
             setDraftText(card ? card['title'] : '');
             setEditingId(id);
@@ -121,7 +125,7 @@
             setDraftText('');
         },
 
-        findCard(id) {
+        findCard(id: number) {
             for (const col of board) {
                 const found = col['cards'].find((card) => card['id'] === id);
                 if (found) return found;
@@ -129,14 +133,14 @@
             return null;
         },
 
-        allowDrop(event, column) {
+        allowDrop(event: DragEvent, column: string) {
             // Không preventDefault thì trình duyệt từ chối thả — mặc định của
             // HTML5 drag-and-drop là "không cho".
             event.preventDefault();
             if (overColumn !== column) setOverColumn(column);
         },
 
-        async onDrop(event, column) {
+        async onDrop(event: DragEvent, column: string) {
             event.preventDefault();
             setOverColumn('');
             if (!dragId || busy) return;
@@ -153,7 +157,7 @@
         },
 
         /** Vị trí thả suy từ toạ độ chuột so với tâm từng thẻ đang hiển thị. */
-        indexIn(column, clientY) {
+        indexIn(column: string, clientY: number) {
             const body = document.querySelector('[data-col="' + column + '"] .kb-col-body');
             if (!body) return 0;
 
@@ -166,19 +170,14 @@
         },
 
         /** Dựng lại bảng ngay phía client để giao diện phản hồi tức thì. */
-        moveLocally(columns, id, target, index) {
-            let moving = null;
+        moveLocally(columns: BoardColumn[], id: number, target: string, index: number): BoardColumn[] {
+            const moving = columns.flatMap(col => col.cards).find(card => card.id === id);
+            if (!moving) return columns;
             const stripped = columns.map((col) => ({
                 key: col['key'],
                 label: col['label'],
-                cards: col['cards'].filter((card) => {
-                    if (card['id'] !== id) return true;
-                    moving = card;
-                    return false;
-                }),
+                cards: col['cards'].filter(card => card['id'] !== id),
             }));
-
-            if (!moving) return columns;
 
             return stripped.map((col) => {
                 if (col['key'] !== target) return col;
@@ -188,7 +187,7 @@
             });
         },
 
-        async addCard(event) {
+        async addCard(event: Event) {
             event.preventDefault();
             const title = note.trim();
             if (!title || busy) return;
@@ -197,7 +196,7 @@
             await this.commit(() => App.Http.post('/demo/board/card', { title }, this.options()), board);
         },
 
-        async rename(payload) {
+        async rename(payload: {id: number; title: string}) {
             const snapshot = board;
             setBoard(board.map((col) => ({
                 key: col['key'],
@@ -213,7 +212,7 @@
             );
         },
 
-        async remove(id) {
+        async remove(id: number) {
             const snapshot = board;
             setBoard(board.map((col) => ({
                 key: col['key'],
@@ -221,11 +220,11 @@
                 cards: col['cards'].filter((card) => card['id'] !== id),
             })));
 
-            await this.commit(() => App.Http.delete('/demo/board/card/' + id, null, this.options()), snapshot);
+            await this.commit(() => App.Http.delete('/demo/board/card/' + id, this.options()), snapshot);
         },
 
         /** Gửi mutation; hỏng thì trả bảng về đúng ảnh chụp trước khi đổi. */
-        async commit(request, snapshot) {
+        async commit(request: () => Promise<HttpResponse<{data: {columns: BoardColumn[]}}>>, snapshot: BoardColumn[]) {
             setBusy(true);
             setError('');
             try {
@@ -233,7 +232,7 @@
                 setBoard(response.data.data.columns);
             } catch (failure) {
                 setBoard(snapshot);
-                setError('Không lưu được, đã hoàn tác: ' + (failure.message || failure));
+                setError('Không lưu được, đã hoàn tác: ' + errorMessage(failure));
             } finally {
                 setBusy(false);
             }

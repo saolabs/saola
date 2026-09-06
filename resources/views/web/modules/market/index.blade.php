@@ -1,12 +1,7 @@
 @addCssLink('/static/saola/market.css')
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
-@vars(
-    $symbol = '', $label = '', $base = '', $source = '', $generatedAt = '',
-    $candles = [], $ticker = [], $book = [], $symbols = [], $sparkline = '',
-    $lastText = '', $changeText = '', $highText = '', $lowText = '', $volumeText = '',
-    $risingSeed = true
-)
+@vars($symbol = '', $label = '', $base = '', $source = '', $generatedAt = '', $candles = [], $ticker = [], $book = [], $symbols = [], $sparkline = '', $lastText = '', $changeText = '', $highText = '', $lowText = '', $volumeText = '', $risingSeed = true)
 @useState($activeSymbol, $symbol)
 @useState($activeLabel, $label)
 @useState($priceText, $lastText)

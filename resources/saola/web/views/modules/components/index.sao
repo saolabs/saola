@@ -418,8 +418,8 @@
             setDraft('');
         },
 
-        removeItem(id) {
-            setItems(items.filter(i => i.id !== id));
+        removeItem(id: number) {
+            setItems(items.filter((i: {id: number; label: string}) => i.id !== id));
         }
     };
 </script>

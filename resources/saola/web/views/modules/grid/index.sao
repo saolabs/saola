@@ -1,6 +1,8 @@
 @vars(
-    rows = [], total = 0, totalText = '0', page = 1, pages = 1, from = 0, to = 0,
-    search = '', status = '', sort = 'downloads', dir = 'desc', statuses = []
+    rows: GridRow[] = [], total: number = 0, totalText: string = '0',
+    page: number = 1, pages: number = 1, from: number = 0, to: number = 0,
+    search: string = '', status: GridStatusFilter = '', sort: GridSort = 'downloads',
+    dir: GridDirection = 'desc', statuses: GridStatusOption[] = []
 )
 
 {{-- Dữ liệu tới từ controller. Không có @await thì điều hướng SPA dựng view
@@ -21,7 +23,14 @@
     countText: totalText,
     busy: false,
     failed: ''
+}: {
+    items: GridRow[]; query: string; activeStatus: GridStatusFilter;
+    sortKey: GridSort; sortDir: GridDirection; pageNo: number; pageCount: number;
+    rangeFrom: number; rangeTo: number; countText: string; busy: boolean; failed: string
 })
+
+@computed(canPrevious: boolean = !busy && pageNo > 1)
+@computed(canNext: boolean = !busy && pageNo < pageCount)
 
 <template>
     @extends(__layout__ + 'lab')
@@ -36,7 +45,7 @@
 
         <div class="gr-controls">
             <input type="search" class="gr-search" placeholder="Tìm theo tên gói…"
-                   aria-label="Tìm gói" @bind(query) @input(onSearch(event.target.value))>
+                   aria-label="Tìm gói" @bind(query) @input(onSearch(@event))>
 
             <div class="gr-filters" role="group" aria-label="Lọc theo trạng thái">
                 <button type="button" @class({'gr-chip', 'is-on': activeStatus === ''})
@@ -84,9 +93,9 @@
         <div class="gr-foot">
             <p class="gr-range">{{ rangeFrom }}–{{ rangeTo }} trên {{ countText }} gói</p>
             <div class="gr-pager">
-                <button type="button" class="gr-chip" @disabled(busy || pageNo <= 1) @click(goTo(pageNo - 1))>‹ Trước</button>
+                <button type="button" class="gr-chip" @disabled(!canPrevious) @click(previousPage())>‹ Trước</button>
                 <span class="gr-page">Trang {{ pageNo }} / {{ pageCount }}</span>
-                <button type="button" class="gr-chip" @disabled(busy || pageNo >= pageCount) @click(goTo(pageNo + 1))>Sau ›</button>
+                <button type="button" class="gr-chip" @disabled(!canNext) @click(nextPage())>Sau ›</button>
             </div>
         </div>
     @endblock
@@ -105,11 +114,19 @@
 <link rel="stylesheet" href="/static/saola/grid.css">
 
 <script setup lang="ts">
+    import { parseGridPageData } from '@web/app/services/GridData';
+    import type { GridRow, GridStatusOption, GridStatusFilter, GridSort, GridDirection, GridQuery } from '@web/app/services/GridData';
+
     export default {
         name: 'GridPage',
+        _timer: undefined as ReturnType<typeof setTimeout> | undefined,
+        _ticket: 0,
+        _disposed: false,
 
         destroyed() {
-            if (this._timer) clearTimeout(this._timer);
+            this._disposed = true;
+            this._ticket = this._ticket + 1;
+            if (this._timer !== undefined) clearTimeout(this._timer);
         },
 
         // Mũi tên sắp xếp viết THẲNG trong template bằng biểu thức ba ngôi, không
@@ -118,27 +135,38 @@
         // Đúng lớp lệch SSR/CSR: CSR xanh, SSR nổ.
 
         /** Hoãn rồi mới gọi: mỗi phím một request là tự tạo ra tranh chấp phản hồi. */
-        onSearch(value) {
-            if (this._timer) clearTimeout(this._timer);
+        onSearch(event: Event) {
+            if (!(event.target instanceof HTMLInputElement) || this._disposed) return;
+            const value = event.target.value;
+            if (this._timer !== undefined) clearTimeout(this._timer);
+            // A response for the previous query must not win during the debounce window.
+            this._ticket = this._ticket + 1;
             this._timer = setTimeout(() => this.fetch({ q: value, page: 1 }), 250);
         },
 
-        applyStatus(key) {
+        applyStatus(key: GridStatusFilter) {
             this.fetch({ status: key, page: 1 });
         },
 
-        applySort(key) {
+        applySort(key: GridSort) {
             const dir = sortKey === key && sortDir === 'desc' ? 'asc' : 'desc';
             this.fetch({ sort: key, dir, page: 1 });
         },
 
-        goTo(target) {
-            if (target < 1 || target > pageCount) return;
+        previousPage() { this.goTo(pageNo - 1); },
+        nextPage() { this.goTo(pageNo + 1); },
+
+        goTo(target: number) {
+            if (target < 1 || target > pageCount || this._disposed) return;
+            if (target < pageNo && !get$canPrevious()) return;
+            if (target > pageNo && !get$canNext()) return;
             this.fetch({ page: target });
         },
 
-        async fetch(changes) {
-            const params = {
+        async fetch(changes: Partial<GridQuery>) {
+            if (this._disposed) return;
+            if (this._timer !== undefined) { clearTimeout(this._timer); this._timer = undefined; }
+            const params: GridQuery = {
                 q: changes.q !== undefined ? changes.q : query,
                 status: changes.status !== undefined ? changes.status : activeStatus,
                 sort: changes.sort !== undefined ? changes.sort : sortKey,
@@ -148,7 +176,7 @@
 
             // Đánh số từng lượt gọi và chỉ nhận lượt MỚI NHẤT. Thiếu chốt này thì
             // một phản hồi về trễ sẽ ghi đè lên phản hồi của thao tác sau nó.
-            const ticket = (this._ticket = (this._ticket || 0) + 1);
+            const ticket = (this._ticket = this._ticket + 1);
             setBusy(true);
             setFailed('');
 
@@ -160,9 +188,9 @@
                 const response = await App.Http.get(url, null, {
                     headers: { Accept: 'application/json', 'X-Sao-Response': 'json' },
                 });
-                if (ticket !== this._ticket) return;
+                if (ticket !== this._ticket || this._disposed) return;
 
-                const data = response.data.data;
+                const data = parseGridPageData(response.data.data);
                 setItems(data.rows);
                 setActiveStatus(params.status);
                 setSortKey(data.sort);
@@ -173,9 +201,9 @@
                 setRangeTo(data.to);
                 setCountText(data.totalText);
             } catch (error) {
-                if (ticket === this._ticket) setFailed('Không tải được dữ liệu: ' + (error.message || error));
+                if (ticket === this._ticket && !this._disposed) setFailed('Không tải được dữ liệu: ' + (error instanceof Error ? error.message : String(error)));
             } finally {
-                if (ticket === this._ticket) setBusy(false);
+                if (ticket === this._ticket && !this._disposed) setBusy(false);
             }
         },
     };

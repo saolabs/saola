@@ -53,7 +53,7 @@
             if (editing) setDraft(draftSeed);
         },
 
-        save(event) {
+        save(event: Event) {
             event.preventDefault();
             const title = draft.trim();
             if (!title) return;

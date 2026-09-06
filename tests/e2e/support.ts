@@ -8,9 +8,13 @@ export const BASE = (process.env.E2E_BASE_URL || 'http://localhost:8686').replac
 
 /** Có server không — quyết định skip cả suite (thấy rõ, không im lặng pass). */
 export async function probeServer(path = '/'): Promise<boolean> {
-    return fetch(`${BASE}${path}`, { signal: AbortSignal.timeout(3000) })
+    const ready = await fetch(`${BASE}${path}`, { signal: AbortSignal.timeout(3000) })
         .then((r) => r.ok)
         .catch(() => false);
+    if (!ready && process.env.E2E_REQUIRED === 'true') {
+        throw new Error(`E2E server unavailable: ${BASE}${path}. Start the test server before running the release gate.`);
+    }
+    return ready;
 }
 
 export const launchBrowser = (): Promise<Browser> => chromium.launch();

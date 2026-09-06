@@ -1,6 +1,6 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
-<?php if(!isset($user) || (!$user && $user !== false)) $user = []; if(!isset($highlight) || (!$highlight && $highlight !== false)) $highlight = false; ?>
+<?php if(!array_key_exists('user', get_defined_vars())) $user = []; if(!array_key_exists('highlight', get_defined_vars())) $highlight = false; ?>
 @wrapper
 <div @class([$__VIEW_ID__ . '-e1', 'sf3a5649b', 'ucard', 'ucard--hl'=> $highlight])>
         <div @class([$__VIEW_ID__ . '-e11', 'sf3a5649b', 'ucard__id'])>#@startMarker('output', 'e11o1'){{ $user['id'] }}@endMarker('output', 'e11o1')</div>

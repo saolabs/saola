@@ -1,0 +1,87 @@
+<script setup lang="ts">
+    import type { GridStatusFilter } from '@web/app/services/GridData';
+
+    @props({initial: 0, title: 'Khai báo trong setup'}: {initial: number; title: string})
+    @let(cardPath: string = __base__ + 'modules.components.statcard')
+    @importView(cardPath as StatCard)
+    @importView(__base__ + 'components.code-block' as CodeBlock)
+    @asset(logo = 'images/logo.svg')
+    @state(count: number = initial, status: GridStatusFilter = '')
+    @computed(doubled: number = count * 2)
+
+    export default {
+        increment() { setCount(count + step); },
+        reset() { setCount(initial); setStatus(''); },
+        showStable() { setStatus('stable'); },
+    };
+</script>
+
+{{-- Khai báo bên ngoài vẫn dùng chung phạm vi với setup. --}}
+@const(step: number = 1)
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    @block('main')
+        <p class="kicker"><span>CÚ PHÁP · SETUP</span></p>
+        <h1>{{ title }}</h1>
+        <p class="lab-lead">Props, state, computed, asset và import view nằm trong script setup. Hằng số bước tăng được khai báo bên ngoài.</p>
+
+        <div class="lab-toolbar">
+            <button id="setup-increment" class="button button-primary" @click(increment())>Tăng</button>
+            <button id="setup-reset" class="button" @click(reset())>Đặt lại</button>
+            <button id="setup-stable" class="button" @click(showStable())>Chọn stable</button>
+        </div>
+
+        <p>Số lần bấm: <strong id="setup-count">{{ count }}</strong></p>
+        <p>Nhân đôi: <strong id="setup-doubled">{{ doubled }}</strong></p>
+        <p>Trạng thái: <span id="setup-status">{{ status === '' ? 'Tất cả' : status }}</span></p>
+        <p>Đường dẫn asset được phân giải: <code id="setup-asset">{{ logo }}</code></p>
+        <StatCard label="View được import qua biến hệ thống" value="SSR + client" />
+
+        <h2>Mã nguồn demo</h2>
+        <p>Phần trên đang chạy trực tiếp từ cấu trúc typesafe bên dưới.</p>
+        <CodeBlock lang="sao">
+@verbatim
+&lt;script setup lang="ts"&gt;
+    import type { GridStatusFilter } from '@web/app/services/GridData';
+
+    &#64;props({initial: 0, title: 'Khai báo trong setup'}: {
+        initial: number;
+        title: string;
+    })
+    &#64;let(cardPath: string = __base__ + 'modules.components.statcard')
+    &#64;importView(cardPath as StatCard)
+    &#64;asset(logo = 'images/logo.svg')
+    &#64;state(count: number = initial, status: GridStatusFilter = '')
+    &#64;computed(doubled: number = count * 2)
+
+    export default {
+        increment() { setCount(count + step); },
+        reset() { setCount(initial); setStatus(''); },
+        showStable() { setStatus('stable'); },
+    };
+&lt;/script&gt;
+
+{{-- Khai báo bên ngoài vẫn dùng chung phạm vi với setup. --}}
+&#64;const(step: number = 1)
+
+&lt;template&gt;
+    &#64;extends(__layout__ + 'lab')
+    &#64;block('main')
+        &lt;h1&gt;{{ title }}&lt;/h1&gt;
+        &lt;button &#64;click(increment())&gt;Tăng&lt;/button&gt;
+        &lt;button &#64;click(reset())&gt;Đặt lại&lt;/button&gt;
+        &lt;button &#64;click(showStable())&gt;Chọn stable&lt;/button&gt;
+
+        &lt;p&gt;Số lần bấm: {{ count }}&lt;/p&gt;
+        &lt;p&gt;Nhân đôi: {{ doubled }}&lt;/p&gt;
+        &lt;p&gt;Trạng thái: {{ status === '' ? 'Tất cả' : status }}&lt;/p&gt;
+        &lt;p&gt;Asset: {{ logo }}&lt;/p&gt;
+        &lt;StatCard label="View import qua biến" value="SSR + client" /&gt;
+    &#64;endblock
+&lt;/template&gt;
+@endverbatim
+        </CodeBlock>
+    @endblock
+</template>

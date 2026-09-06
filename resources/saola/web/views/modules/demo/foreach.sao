@@ -6,7 +6,7 @@
     ],
     nextId: 4,
     log: []
-})
+}: {rows: DemoRow[]; nextId: number; log: string[]})
 
 <template>
     @extends(__layout__ + 'lab')
@@ -75,13 +75,14 @@
 </template>
 
 <script setup lang="ts">
+    import type { DemoRow } from '@web/app/services/DemoTypes';
     // Quy ước .sao: state và setter của nó là BIẾN trong closure của view —
     // gọi trần (`rows`, `setRows(...)`), không qua `this`. Chỉ method do mình
     // khai báo mới nằm trên `this`.
     export default {
         name: 'ForeachDemo',
 
-        note(text) {
+        note(text: string) {
             const stamp = new Date().toLocaleTimeString('vi-VN');
             setLog([`${stamp} — ${text}`, ...log].slice(0, 8));
         },
@@ -93,12 +94,12 @@
             this.note(`thêm #${id}`);
         },
 
-        removeRow(id) {
+        removeRow(id: number) {
             setRows(rows.filter(r => r.id !== id));
             this.note(`xoá #${id}`);
         },
 
-        bump(id) {
+        bump(id: number) {
             // Sửa TẠI CHỖ rồi set lại cùng reference: StateManager đối chiếu nội
             // dung độ sâu một nên vẫn nhận, và slot các dòng khác không đổi.
             const row = rows.find(r => r.id === id);

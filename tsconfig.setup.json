@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": ["resources/js/saola/web/views/modules/demo/setup.ts"]
+}

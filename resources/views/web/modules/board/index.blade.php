@@ -1,7 +1,7 @@
 @addCssLink('/static/saola/board.css')
 @exec($__ONE_COMPONENT_REGISTRY__ = ['boardcard' => 'web.modules.board.card']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
-@vars($columns = [])
+@vars($columns =  [])
 @useState($board, $columns)
 @useState($dragId, 0)
 @useState($overColumn, '')

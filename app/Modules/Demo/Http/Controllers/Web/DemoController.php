@@ -13,7 +13,7 @@ class DemoController extends WebController
      * TĨNH riêng, không phải một route tham số — router phía client cần bản đồ
      * path → component cố định mới hydrate được (xem /docs/response).
      */
-    public const PAGES = ['foreach', 'lifecycle'];
+    public const PAGES = ['foreach', 'lifecycle', 'setup'];
 
     public function index()
     {

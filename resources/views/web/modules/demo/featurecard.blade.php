@@ -1,7 +1,7 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @vars($__ONE_CHILDREN_CONTENT__ = '')
-<?php if(!isset($number) || (!$number && $number !== false)) $number = '01'; if(!isset($title) || (!$title && $title !== false)) $title = 'Feature'; if(!isset($source) || (!$source && $source !== false)) $source = ''; if(!isset($tone) || (!$tone && $tone !== false)) $tone = 'pink'; ?>
+<?php if(!array_key_exists('number', get_defined_vars())) $number = '01'; if(!array_key_exists('title', get_defined_vars())) $title = 'Feature'; if(!array_key_exists('source', get_defined_vars())) $source = ''; if(!array_key_exists('tone', get_defined_vars())) $tone = 'pink'; ?>
 @wrapper
 <article @class([$__VIEW_ID__ . '-e1', 'se47411f2', 'feature-card', 'feature-card--pink'=> $tone === 'pink', 'feature-card--cyan'=> $tone === 'cyan', 'feature-card--yellow'=> $tone === 'yellow'])>
         <header @class([$__VIEW_ID__ . '-e11', 'se47411f2'])>

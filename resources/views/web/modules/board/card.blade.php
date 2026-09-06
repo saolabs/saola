@@ -1,6 +1,6 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
-<?php if(!isset($card) || (!$card && $card !== false)) $card = null; if(!isset($column) || (!$column && $column !== false)) $column = ''; if(!isset($busy) || (!$busy && $busy !== false)) $busy = false; if(!isset($editing) || (!$editing && $editing !== false)) $editing = false; if(!isset($draftSeed) || (!$draftSeed && $draftSeed !== false)) $draftSeed = ''; ?>
+<?php if(!array_key_exists('card', get_defined_vars())) $card = null; if(!array_key_exists('column', get_defined_vars())) $column = ''; if(!array_key_exists('busy', get_defined_vars())) $busy = false; if(!array_key_exists('editing', get_defined_vars())) $editing = false; if(!array_key_exists('draftSeed', get_defined_vars())) $draftSeed = ''; ?>
 @useState($draft, '')
 @wrapper
 <article @class([$__VIEW_ID__ . '-e1', 'kb-card']) @attr(['draggable' => 'true'])>

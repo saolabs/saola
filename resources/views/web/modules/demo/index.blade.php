@@ -26,25 +26,30 @@
         </p>
 
         <div @class([$__VIEW_ID__ . '-Bmain4', 'lab-index'])>
-            <a @class([$__VIEW_ID__ . '-Bmain41']) @attr(['href' => '/demo/await'])>
-                <span @class([$__VIEW_ID__ . '-Bmain411'])>Dữ liệu</span>
-                <strong @class([$__VIEW_ID__ . '-Bmain412'])>Nạp bất đồng bộ</strong>
-                <p @class([$__VIEW_ID__ . '-Bmain413'])>Cùng một URL trả HTML cho trình duyệt và JSON cho fetch. So sánh đường SSR với đường CSR.</p>
+            <a @class([$__VIEW_ID__ . '-Bmain41']) @attr(['href' => '/demo/setup'])>
+                <span @class([$__VIEW_ID__ . '-Bmain411'])>Compiler</span>
+                <strong @class([$__VIEW_ID__ . '-Bmain412'])>Setup typesafe</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain413'])>Đặt props, state, computed và import view cạnh TypeScript trong <code @class([$__VIEW_ID__ . '-Bmain4131'])>&lt;script setup&gt;</code>.</p>
             </a>
-            <a @class([$__VIEW_ID__ . '-Bmain42']) @attr(['href' => '/demo/foreach'])>
-                <span @class([$__VIEW_ID__ . '-Bmain421'])>Runtime</span>
-                <strong @class([$__VIEW_ID__ . '-Bmain422'])>Danh sách &amp; reconciliation</strong>
-                <p @class([$__VIEW_ID__ . '-Bmain423'])>Thêm, xoá, đảo thứ tự, refetch — xem chỗ nào giữ được DOM và chỗ nào bị dựng lại.</p>
+            <a @class([$__VIEW_ID__ . '-Bmain42']) @attr(['href' => '/demo/await'])>
+                <span @class([$__VIEW_ID__ . '-Bmain421'])>Dữ liệu</span>
+                <strong @class([$__VIEW_ID__ . '-Bmain422'])>Nạp bất đồng bộ</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain423'])>Cùng một URL trả HTML cho trình duyệt và JSON cho fetch. So sánh đường SSR với đường CSR.</p>
             </a>
-            <a @class([$__VIEW_ID__ . '-Bmain43']) @attr(['href' => '/demo/lifecycle'])>
+            <a @class([$__VIEW_ID__ . '-Bmain43']) @attr(['href' => '/demo/foreach'])>
                 <span @class([$__VIEW_ID__ . '-Bmain431'])>Runtime</span>
-                <strong @class([$__VIEW_ID__ . '-Bmain432'])>Vòng đời &amp; PageCache</strong>
-                <p @class([$__VIEW_ID__ . '-Bmain433'])>Bảy chuyển trạng thái, và state sống sót qua back/forward nhờ PageCache.</p>
+                <strong @class([$__VIEW_ID__ . '-Bmain432'])>Danh sách &amp; reconciliation</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain433'])>Thêm, xoá, đảo thứ tự, refetch — xem chỗ nào giữ được DOM và chỗ nào bị dựng lại.</p>
             </a>
-            <a @class([$__VIEW_ID__ . '-Bmain44']) @attr(['href' => '/roster'])>
-                <span @class([$__VIEW_ID__ . '-Bmain441'])>Ứng dụng thật</span>
-                <strong @class([$__VIEW_ID__ . '-Bmain442'])>Roster — CRUD qua API</strong>
-                <p @class([$__VIEW_ID__ . '-Bmain443'])>Danh sách sửa được, gọi API thật, view con báo ngược lên cha bằng <code @class([$__VIEW_ID__ . '-Bmain4431'])>App.Event</code>. Chạy trong shell <code @class([$__VIEW_ID__ . '-Bmain4432'])>workspace</code>.</p>
+            <a @class([$__VIEW_ID__ . '-Bmain44']) @attr(['href' => '/demo/lifecycle'])>
+                <span @class([$__VIEW_ID__ . '-Bmain441'])>Runtime</span>
+                <strong @class([$__VIEW_ID__ . '-Bmain442'])>Vòng đời &amp; PageCache</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain443'])>Bảy chuyển trạng thái, và state sống sót qua back/forward nhờ PageCache.</p>
+            </a>
+            <a @class([$__VIEW_ID__ . '-Bmain45']) @attr(['href' => '/roster'])>
+                <span @class([$__VIEW_ID__ . '-Bmain451'])>Ứng dụng thật</span>
+                <strong @class([$__VIEW_ID__ . '-Bmain452'])>Roster — CRUD qua API</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain453'])>Danh sách sửa được, gọi API thật, view con báo ngược lên cha bằng <code @class([$__VIEW_ID__ . '-Bmain4531'])>App.Event</code>. Chạy trong shell <code @class([$__VIEW_ID__ . '-Bmain4532'])>workspace</code>.</p>
             </a>
         </div>
 

@@ -73,7 +73,7 @@
     export default {
         name: 'LifecycleDemo',
 
-        record(hook) {
+        record(hook: string) {
             const stamp = new Date().toLocaleTimeString('vi-VN');
             setEvents([`${stamp} — ${hook}`, ...(events || [])].slice(0, 12));
         },

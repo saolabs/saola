@@ -4,11 +4,11 @@
     "type": "module",
     "scripts": {
         "build": "npm run build:web",
-        "build:web": "VITE_CONTEXT=web vite build",
-        "build:web:local": "npm --prefix ../client run build && VITE_CONTEXT=web SAOLA_LOCAL_CLIENT=true vite build",
-        "build:admin": "VITE_CONTEXT=admin vite build",
-        "build:mobile": "VITE_CONTEXT=mobile vite build",
-        "build:all": "VITE_CONTEXT=default vite build",
+        "build:web": "npm run check && VITE_CONTEXT=web vite build",
+        "build:web:local": "npm --prefix ../client run build && npm run check && VITE_CONTEXT=web SAOLA_LOCAL_CLIENT=true vite build",
+        "build:admin": "npm run check && VITE_CONTEXT=admin vite build",
+        "build:mobile": "npm run check && VITE_CONTEXT=mobile vite build",
+        "build:all": "npm run check && VITE_CONTEXT=default vite build",
         "dev": "npm run dev:web",
         "dev:container": "npm run dev:web",
         "dev:server": "php artisan serve --host=${DEV_HOST:-127.0.0.1} --port=${DEV_PORT:-8080} --no-reload",
@@ -42,7 +42,12 @@
         "saola:dev": "npm run dev:web",
         "saola:dev:admin": "npm run dev:admin",
         "saola:dev:web": "npm run dev:web",
-        "start": "npm run dev"
+        "start": "npm run dev",
+        "typecheck": "tsc --noEmit",
+        "check": "npm run build:views && npm run typecheck",
+        "test:unit": "vitest run",
+        "check:release": "npm run build && npm run test:unit && php artisan test && npm run test:e2e:required",
+        "test:e2e:required": "E2E_REQUIRED=true npm run test:e2e"
     },
     "devDependencies": {
         "@saolabs/builder": "file:../builder",
@@ -56,6 +61,7 @@
         "laravel-vite-plugin": "^1.2.0",
         "playwright": "^1.62.1",
         "tailwindcss": "^4.0.0",
+        "typescript": "^5.9.3",
         "vite": "^6.4.0",
         "vitest": "^3.0.0"
     },

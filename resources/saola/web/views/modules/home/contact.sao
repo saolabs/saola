@@ -41,12 +41,12 @@
 <script setup lang="ts">
     export default {
         name: 'ContactPage',
-        trackLength(event) {
+        trackLength(event: Event) {
             // .length phải nằm trong <script setup>: trong directive nó bị
             // preprocessor đổi sang count() của PHP rồi lọt sang đầu ra JS.
-            setMessageLength(event.target.value.length);
+            if (event.target instanceof HTMLTextAreaElement) setMessageLength(event.target.value.length);
         },
-        sendContact(event) {
+        sendContact(event: Event) {
             event.preventDefault();
             setAttempted(true);
             if (name.trim() && email.trim() && message.trim().length >= 12) setSent(true);

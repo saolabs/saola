@@ -1,4 +1,4 @@
-@vars(backlog = [], perConnection = 30)
+@vars(backlog: StreamEvent[] = [], perConnection = 30)
 
 {{-- Dữ liệu tới từ controller. Không có @await thì điều hướng SPA dựng view
      KHI CHƯA có dữ liệu: mọi @foreach ra rỗng, chỉ tải thẳng URL mới đúng.
@@ -11,7 +11,7 @@
     live: true,
     received: 0,
     pending: 0
-})
+}: {events: StreamEvent[]; connection: string; live: boolean; received: number; pending: number})
 
 <template>
     @extends(__layout__ + 'lab')
@@ -66,10 +66,12 @@
 <link rel="stylesheet" href="/static/saola/stream.css">
 
 <script setup lang="ts">
+    import type { StreamEvent } from '@web/app/services/DemoTypes';
     const MAX_ITEMS = 60;
 
     export default {
         name: 'StreamPage',
+        _source: null as EventSource | null,
 
         started() { this.connect(); },
         resumed() { if (!this._source && live) this.connect(); },
@@ -110,7 +112,7 @@
             setConnection('đã dừng');
         },
 
-        push(event) {
+        push(event: StreamEvent) {
             // Khử trùng lặp: EventSource nối lại có thể phát lại sự kiện cuối.
             if (events.some((row) => row['id'] === event.id)) return;
 

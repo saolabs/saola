@@ -1,7 +1,7 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @vars($__ONE_CHILDREN_CONTENT__ = '')
-<?php if(!isset($label) || (!$label && $label !== false)) $label = ''; if(!isset($title) || (!$title && $title !== false)) $title = ''; if(!isset($lang) || (!$lang && $lang !== false)) $lang = 'none'; if(!isset($dark) || (!$dark && $dark !== false)) $dark = false; ?>
+<?php if(!array_key_exists('label', get_defined_vars())) $label = ''; if(!array_key_exists('title', get_defined_vars())) $title = ''; if(!array_key_exists('lang', get_defined_vars())) $lang = 'none'; if(!array_key_exists('dark', get_defined_vars())) $dark = false; ?>
 @wrapper
 <div @class([$__VIEW_ID__ . '-e1', 'code-window', 'code-window-dark'=> $dark, 'code-window-plain'=> !$label && !$title])>
         @startMarker('reactive', 'e1r1', ['stateKey' => ['label', 'title'], 'type' => 'if'])

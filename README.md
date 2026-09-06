@@ -28,28 +28,19 @@
 
 ---
 
-## Quick Start
+## Bắt đầu
+
+Đây là ứng dụng trong workspace Saola Ecosystem, dùng các package sibling qua
+Composer path và npm file dependencies. Làm theo [cài đặt](docs/INSTALLATION.md),
+sau đó đọc [cách viết component `.sao`](docs/SAO_FILE.md).
 
 ```bash
-# Clone & install
-git clone <repo-url> saola && cd saola
-composer install && npm install
-
-# Environment
-cp .env.example .env
-php artisan key:generate
-
-# Docker services (PostgreSQL, Redis)
-docker-compose up -d
-
-# Database
-php artisan migrate
-
-# Development (server + vite + view compiler watcher)
-composer dev
+npm run dev       # Laravel + Vite + watchers; mặc định http://127.0.0.1:8080
+npm run check     # Compile view + typecheck
+npm run build     # Check trước khi bundle production
 ```
 
-Truy cập: `http://localhost:8000`
+Docker của workspace phục vụ ứng dụng tại `http://localhost:8686`.
 
 ---
 
@@ -80,6 +71,7 @@ docker/                        # Docker configs
 
 | Tài liệu | Nội dung |
 |-----------|----------|
+| [Component .sao](docs/SAO_FILE.md) | Cách viết mặc định, server/client, kiểu dữ liệu |
 | [Architecture](docs/ARCHITECTURE.md) | Kiến trúc hệ thống, multi-context, request flow |
 | [Installation](docs/INSTALLATION.md) | Cài đặt, cấu hình, Docker |
 | [Modules](docs/MODULES.md) | Module system, nested modules, tạo module mới |
@@ -94,7 +86,7 @@ docker/                        # Docker configs
 ```bash
 composer dev          # Dev server + Vite + view compiler watcher
 composer test         # PHP tests
-npm run dev           # Vite dev server
+npm run dev           # Laravel + Vite + watchers
 npm run build         # Production build
 npm test              # JavaScript tests
 ```

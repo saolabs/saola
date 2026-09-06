@@ -1,351 +1,164 @@
-# .sao Single-File Component
+# Viết component `.sao`
 
-## Cấu Trúc File
+`.sao` là nguồn giao diện duy nhất để compiler PHP sinh Blade cho SSR và
+JavaScript/TypeScript cho trình duyệt. Sửa file trong `resources/saola/`;
+`resources/js/saola/` và Blade do compiler sinh là đầu ra, không sửa trực tiếp.
 
-Mỗi file `.sao` gồm 4 phần logic theo thứ tự:
+## Cách viết khuyến nghị
 
-```
-┌──────────────────────────┐
-│  1. DECLARATIONS         │  @states, @props, @let, @const, @vars, @import, @await
-│     (đầu file)           │
-├──────────────────────────┤
-│  2. TEMPLATE             │  HTML + directives
-│     (phần chính)         │  Wrapper: <template>, <sao:blade>, <blade>, hoặc không
-├──────────────────────────┤
-│  3. <script setup>       │  Client-side JS/TS logic (tùy chọn)
-├──────────────────────────┤
-│  4. <style>              │  Scoped CSS (tùy chọn)
-└──────────────────────────┘
-```
+Component có logic dùng thứ tự **script setup → template → style scoped**.
+Đây là quy ước để dễ đọc; compiler vẫn chấp nhận script sau template.
+Ví dụ sau không cần API, layout hay component khác để chạy:
 
-## Template Wrapper Types
+```sao
+<script setup lang="ts">
+@props({initial: 0}: {initial: number})
+@state(count: number = initial)
+@computed(doubled: number = count * 2)
 
-Wrapper quyết định syntax mode. Chỉ wrapper đầu tiên ở level-0 được xử lý.
-
-| Wrapper | Syntax Mode | Mô tả |
-|---------|------------|-------|
-| `<template>` | **Modern** (JS-like) | Preprocessor biến đổi JS → PHP/Blade |
-| `<sao:blade>` | **Modern** (JS-like) | Tương tự `<template>` |
-| Không wrapper | **Modern** (JS-like) | Mặc định dùng modern syntax |
-| `<blade>` | **Legacy** (PHP syntax) | Pass-through, không preprocessor |
-
-**Modern syntax** dùng JS: `user.name`, `items as item`, `` `Hello ${name}` ``
-**Legacy syntax** dùng PHP: `$user->name`, `$items as $item`, `'Hello ' . $name`
-
-## Ví dụ Đầy Đủ
-
-### Modern Syntax (khuyến nghị)
-
-```saola
-@states({
-    count: 0,
-    title: 'Counter App'
-})
-
-@const([message, setMessage] = useState('Hello'))
-@import(__template__ + 'components.header')
+export default {
+    increment() { setCount(count + 1); },
+    reset() { setCount(initial); },
+};
+</script>
 
 <template>
-@extends(__layout__ + 'base')
-
-@block('content')
-<div>
-    <h1>{{ title }}</h1>
-    <p>{{ message }}</p>
-    <button @click(setCount(count + 1))>
-        Count: {{ count }}
-    </button>
-</div>
-@endblock
+    <section>
+        <p>Count: <strong id="count">{{ count }}</strong></p>
+        <p>Double: <strong id="doubled">{{ doubled }}</strong></p>
+        <button id="increment" @click(increment())>+1</button>
+        <button id="reset" @click(reset())>Reset</button>
+    </section>
 </template>
 
-<script setup lang="ts">
-export default {
-    async init() {
-        const res = await this.App.Http.get('/api/data');
-        setMessage(res.data.message);
-    },
-    increment() {
-        setCount(count + 1);
-    }
-}
-</script>
-
 <style scoped>
-button { padding: 8px 16px; }
+section { padding: 1rem; }
+button { margin-right: 0.5rem; }
 </style>
 ```
 
-### Legacy Syntax (`<blade>`)
+Component nhỏ vẫn có thể viết không cần script hay wrapper:
 
-```saola
-@useState($count, 0)
-@useState($title, "Counter App")
-
-<blade>
-@extends('web.layouts.base')
-
-@section('content')
-<div>
-    <h1>{{ $title }}</h1>
-    <button @click="setCount($count + 1)">
-        Count: {{ $count }}
-    </button>
-</div>
-@endsection
-</blade>
-```
-
-## Directives
-
-### Declarations (đầu file, ngoài wrapper)
-
-| Directive | Mô tả | Ví dụ |
-|-----------|--------|-------|
-| `@states({...})` | Reactive state (auto setter) | `@states({ count: 0, user: { name: 'Alice' } })` |
-| `@state(name = val)` | Single state | `@state(count = 0)` |
-| `@props(...)` | Component props | `@props(title, theme = 'light')` |
-| `@const(name = val)` | Immutable / useState destruct | `@const([count, setCount] = useState(0))` |
-| `@let(name = val)` | Mutable local variable | `@let(total = price * qty)` |
-| `@vars(name, ...)` | Non-reactive server vars | `@vars(users, posts)` |
-| `@import(...)` | Import .sao components | `@import(__template__ + 'counter')` |
-| `@await` | Mark async component | `@await` |
-
-#### @states / @state
-
-```saola
-@states({
-    count: 0,
-    user: { name: 'Alice', age: 25 },
-    isVisible: true
-})
-
+```sao
 @state(count = 0)
-@state(
-    editMode = false,
-    items = []
-)
+<button @click(setCount(count + 1))>{{ count }}</button>
 ```
 
-Mỗi state tự động tạo setter: `count` → `setCount()`, `isVisible` → `setIsVisible()`.
+## Những khái niệm cần học trước
 
-#### @props
+| Nhu cầu | Cách viết mặc định | Quy tắc |
+|---|---|---|
+| Nhận dữ liệu | `@props({initial: 0}: {initial: number})` | Dữ liệu từ bên ngoài, có mặc định |
+| State thay đổi | `@state(count: number = 0)` | Ghi qua `setCount(...)` |
+| Giá trị suy ra | `@computed(total = price * qty)` | Chỉ đọc, phụ thuộc state/props; không có side effect |
+| Hiển thị | `{{ count }}` | Escape HTML mặc định |
+| Tương tác | `@click(increment())` | Method đặt trong `export default` |
+| Điều kiện | `@if(visible)` … `@endif` | Đặt trong template |
+| Danh sách | `@foreach(items as item)` … `@endforeach` | Dùng `@key(item.id)` để giữ identity |
+| Component con | `@importView('web.components.card' as Card)` | Đặt trong setup; `<Card />` trong template |
 
-```saola
-@props(title, content, theme = 'light')
-@props({
-    title: 'default',
-    user: request().user()
-})
-```
+Khai báo `@...` trong setup phải ở cấp ngoài cùng, không nằm trong method,
+vòng lặp hay điều kiện. Khai báo đầu vào trước biểu thức sử dụng nó. JavaScript
+`import` và `import type` giữ nguyên cú pháp; `@importView` dành cho view `.sao`.
+Không khai báo cùng một biến ở cả setup lẫn ngoài setup.
 
-#### @const
+`@states({...}: {...})` hữu ích khi cần khai báo nhiều state cùng lúc.
+`@const` là hằng; `@let` là biến thường, không tự làm computed cập nhật.
+Trong script, đọc computed bằng `get$doubled()`; trong template dùng `doubled`.
+Đây là API hiện tại, giúp đọc được giá trị mới ngay sau setter trước khi DOM flush.
 
-```saola
-@const(API_URL = '/api/v1')
-@const(MAX_COUNT = 10)
-@const([count, setCount] = useState(0))
-@const([message, setMessage] = useState('Hello'))
-```
+## Code chạy ở đâu?
 
-#### @let
+| Phần code | Nơi chạy |
+|---|---|
+| Controller, FormRequest, Policy, database | Laravel server |
+| Khai báo dùng chung và biểu thức template | Sinh cả PHP SSR và JavaScript client |
+| Import TypeScript, method, code JS thông thường trong setup | Browser |
+| Khối `@ssr` … `@endssr` | Server |
+| `<style scoped>` | Compiler sinh CSS theo scope |
 
-```saola
-@let(total = price * qty)
-@let(n = 0)
-@let(textContent = `${message} Count is ${count}`)
-```
+Cú pháp biểu thức dùng chung là **một tập con**, không phải toàn bộ JavaScript.
+Không gọi `window`, `document`, hàm import chỉ có ở browser hay method client
+trong computed dùng chung hoặc nội suy SSR. Tính nghiệp vụ ở controller rồi
+truyền props; xử lý tương tác trong method của view.
 
-#### @vars
+Các callback collection `.filter`, `.map`, `.reduce`, `.length` có hỗ trợ trong
+computed theo [quy tắc biểu thức và kiểu](../../compiler/docs/typed-computed.md).
+`reduce` cần giá trị khởi tạo; callback dùng biểu thức, không dùng thân hàm tùy ý.
 
-```saola
-@vars(users, posts)
-@vars(users = [])
-```
+## Sự kiện và vòng đời
 
-#### @import
+Trong template gọi `@submit(save(event))`; kiểu tham số đặt ở **method**:
 
-```saola
-@import(__template__ + 'sessions.tasks')
-@import(__template__ + 'sessions.projects' as projects)
-@import({
-    counter: 'sessions.tasks.count',
-    demo: __template__ + 'demo.fetch'
-})
-@import(__layout__ + 'base' as baseLayout)
-```
-
-### Control Flow
-
-| Directive | Ví dụ |
-|-----------|-------|
-| `@if` / `@elseif` / `@else` / `@endif` | `@if(count > 0) ... @endif` |
-| `@foreach` / `@endforeach` | `@foreach(items as key => item) ... @endforeach` |
-| `@for` / `@endfor` | `@for(i = 0; i < 10; i++) ... @endfor` |
-| `@while` / `@endwhile` | `@while(condition) ... @endwhile` |
-| `@switch` / `@case` / `@default` | `@switch(status) @case('active') ... @endswitch` |
-| `@break` / `@continue` | Loop control |
-| `@ssr` / `@endssr` | Server-side only block (excluded from JS) |
-
-Aliases cho `@ssr`: `@serverSide/@endServerSide`, `@useSSR/@enduseSSR`
-
-### HTML Attribute Binding
-
-| Directive | Mô tả | Ví dụ |
-|-----------|--------|-------|
-| `@attr({...})` | Dynamic attributes | `@attr({href: link, title: docTitle})` |
-| `@class([...])` | Dynamic CSS classes | `@class(['active': isActive, 'btn'])` |
-| `@style({...})` | Dynamic inline styles | `@style({'color': textColor})` |
-| `@bind(var)` | Two-way data binding | `<input @bind(username) />` |
-| `@val(value)` | Bind value attribute | `@val(inputValue)` |
-| `@show(cond)` | Toggle display (v-show) | `<div @show(isVisible)>` |
-| `@hide(cond)` | Inverse of @show | `<div @hide(isHidden)>` |
-| `@checked(cond)` | Bind checked | `@checked(todo.completed)` |
-| `@selected(cond)` | Bind selected | `@selected(isSelected)` |
-| `@disabled(cond)` | Bind disabled | `@disabled(isLoading)` |
-| `@required(cond)` | Bind required | `@required(isRequired)` |
-| `@readonly(cond)` | Bind readonly | `@readonly(isReadonly)` |
-
-### Event Handlers
-
-Syntax: `@eventName(handler)` trực tiếp trên HTML element:
-
-```saola
-@click(increment())
-@click(setCount(count + 1))
-@change(updateVal(event))
-@submit(save())
-@keydown(check(event))
-@mouseenter(show())
-@dblclick(handler())
-@focus(onFocus())
-@blur(onBlur())
-@wheel(onWheel())
-@scroll(onScroll())
-@resize(onResize())
-@load(onLoad())
-@contextmenu(onContext())
-```
-
-### Template Architecture
-
-| Directive | Mô tả |
-|-----------|--------|
-| `@extends(layout)` | Khai báo layout cha |
-| `@block('name')` / `@endblock` | Định nghĩa content block |
-| `@section('name')` / `@endsection` | Section content |
-| `@yield('name')` | Xuất section content |
-| `@include('path')` | Include partial |
-| `@children` | Slot cho component children |
-| `@exec(expr)` | Execute silent (no output) |
-
-### Authorization & Forms
-
-| Directive | Mô tả |
-|-----------|--------|
-| `@csrf` | CSRF token |
-| `@method('PUT')` | Method spoofing |
-| `@auth` / `@endauth` | Authenticated block |
-| `@guest` / `@endguest` | Guest block |
-| `@can('perm')` / `@endcan` | Authorization |
-| `@cannot('perm')` / `@endcannot` | Negative authorization |
-| `@error('field')` / `@enderror` | Validation error |
-| `@hasSection('name')` / `@endhassection` | Check section exists |
-| `@verbatim` / `@endverbatim` | Raw output, no compilation |
-
-### Output / Expressions
-
-```saola
-{{ user.name }}              {{-- Escaped output --}}
-{!! rawHtml !!}              {{-- Unescaped/raw output --}}
-{{-- Comment --}}            {{-- Blade comment (removed from output) --}}
-```
-
-## `<script setup>` Block
-
-Client-side logic, tương tự Vue 3 `<script setup>`. Đặt **sau** template.
-
-```html
-<script setup lang="ts">
+```ts
 export default {
-    data: {},
-    increment() {
-        setCount(count + 1);    // Dùng state setter trực tiếp, không cần this.
+    save(event: Event) {
+        event.preventDefault();
     },
-    async init() {
-        // Lifecycle hook — chạy khi mount
-        const response = await this.App.Http.get('/api/users');
-        setUsers(response.data);
-    }
 }
-</script>
 ```
 
-- `lang="ts"` hoặc `lang="typescript"` → output file `.ts`
-- Methods truy cập state variables và setters trực tiếp (không cần `this.`)
-- `this.App` truy cập Saola application container
-- `__VIEW_PATH__` available as global
+Với input, kiểm tra `event.target instanceof HTMLInputElement` trước khi đọc
+`value`. Không viết `@submit(save(event: Event))`: template là lời gọi hàm.
 
-## `<style>` Block
+Field riêng của instance phải khai báo trong object để suy luận được `this`.
+Listener/timer/kết nối được mở khi view hoạt động cần được dọn khi view dừng;
+view trong PageCache có thể được resume. Ví dụ:
 
-```html
-<style scoped>
-.counter { text-align: center; }
-</style>
-
-<style>
-.global-class { color: red; }
-</style>
+```ts
+export default {
+    timer: undefined as ReturnType<typeof setInterval> | undefined,
+    started() { this.startTimer(); },
+    resumed() { this.startTimer(); },
+    paused() { this.stopTimer(); },
+    stopped() { this.stopTimer(); },
+    destroyed() { this.stopTimer(); },
+    startTimer() {
+        this.stopTimer();
+        this.timer = setInterval(() => console.log('tick'), 1000);
+    },
+    stopTimer() {
+        if (this.timer !== undefined) clearInterval(this.timer);
+        this.timer = undefined;
+    },
+}
 ```
 
-## Magic Variables
+## Kiểm tra và build
 
-| Variable | Mô tả |
-|----------|--------|
-| `__template__` | Base path cho template components |
-| `__layout__` | Base path cho layout components |
-| `__VIEW_PATH__` | Dot-notation path hiện tại (e.g. `web.pages.home`) |
-| `__VIEW_ID__` | Unique view ID cho hydration |
-| `__context__` | Context hiện tại |
-| `__base__`, `__page__`, `__component__`, `__partial__`, `__system__` | System data từ render context |
+Chạy từ thư mục ứng dụng `saola/`:
 
-## Compiler Pipeline
-
-```
-.sao file
-    │
-    ├─ parseSaoFile() [Node.js]
-    │    ├─ Extract declarations (giữ thứ tự)
-    │    ├─ Detect wrapper type → syntax mode
-    │    ├─ Extract template, @ssr blocks, <script setup>, <style>
-    │    └─ Detect TypeScript từ lang attribute
-    │
-    ├─ Preprocessor (nếu modern syntax):
-    │    ├─ Pass 1: Symbol Collection (build symbol table)
-    │    └─ Pass 2: Expression Transform
-    │         ├─ JS identifiers → $prefixed PHP vars
-    │         ├─ dot.notation → ->property / ['key']
-    │         ├─ template literals → PHP concat
-    │         └─ {k:v} → ['k'=>v]
-    │
-    ├─ OUTPUT 1: Blade file (.blade.php)
-    │    ├─ sao2blade compiler [Python]
-    │    ├─ Add hydrate IDs + @startReactive markers
-    │    └─ Resolve @import → @include
-    │
-    └─ OUTPUT 2: JS/TS View file
-         ├─ sao2js compiler [Python]
-         ├─ Generate View class + ViewController
-         ├─ State management wiring
-         └─ Registry entry
+```bash
+npm run check       # Compile các context, rồi typecheck toàn app
+npm run build       # Kiểm tra trước khi bundle production web
+npm run test:unit   # Chạy Vitest một lần
 ```
 
-## Modern vs Legacy Syntax
+Kiểu TypeScript không thay thế validation HTTP. Laravel vẫn kiểm dữ liệu đầu vào
+và quyền truy cập; dữ liệu ngoài hệ thống cần được kiểm tại nơi tiếp nhận.
+Nếu lỗi nằm trong file `.ts` sinh ra, tìm `.sao` cùng đường dẫn và sửa source.
+Ánh xạ lỗi tự động về dòng `.sao` là công việc tiếp theo, chưa có trong lệnh này.
 
-| Feature | Modern (`<template>` / `<sao:blade>` / bare) | Legacy (`<blade>`) |
-|---------|----------------------------------------------|-------------------|
-| Variables | `user.name` | `$user->name` |
-| State decl | `@states({count: 0})` | `@useState($count, 0)` |
-| Loop | `@foreach(items as item)` | `@foreach($items as $item)` |
-| Object | `{key: value}` | `['key' => $value]` |
-| Concat | `` `Hello ${name}` `` | `'Hello ' . $name` |
+## Tương thích và tài liệu tiếp theo
+
+Cú pháp cũ vẫn được hỗ trợ: khai báo ngoài setup, `<blade>` dùng PHP,
+`<sao:blade>`, `@useState` và destructuring `useState`. Dự án mới nên dùng mẫu
+ở đầu trang để tránh phải học nhiều cách diễn đạt cùng một việc.
+
+- [Khai báo trong setup](../../compiler/docs/setup-declarations.md)
+- [Kiểu dữ liệu và computed](../../compiler/docs/typed-computed.md)
+- [Module và controller](MODULES.md)
+- [Hợp đồng runtime](../../docs/RUNTIME_CONTRACT.md)
+
+## Pipeline hiện tại
+
+```text
+.sao → Builder (Node, watch/Vite) → saola/compiler (PHP)
+                                  ├── Blade + marker SSR
+                                  ├── JS/TS + marker client
+                                  └── CSS, imports, warnings
+```
+
+Compiler chạy trong PHP, không cần Python. Builder gọi một lần để nhận cả hai
+đầu ra; hai emitter dùng quy tắc marker chung và được kiểm bằng contract tests.
+Lệnh Artisan có thể biên dịch view bằng PHP; bundle frontend vẫn cần Node/Vite.

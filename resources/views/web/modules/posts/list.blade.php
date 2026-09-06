@@ -1,6 +1,6 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
-<?php if(!isset($posts) || (!$posts && $posts !== false)) $posts = []; if(!isset($title) || (!$title && $title !== false)) $title = null; ?>
+<?php if(!array_key_exists('posts', get_defined_vars())) $posts = []; if(!array_key_exists('title', get_defined_vars())) $title = null; ?>
 @wrapper
 <h1 @class([$__VIEW_ID__ . '-e1'])>@startMarker('output', 'e1o1'){{ $title }}@endMarker('output', 'e1o1')</h1>
     <ul @class([$__VIEW_ID__ . '-e2'])>

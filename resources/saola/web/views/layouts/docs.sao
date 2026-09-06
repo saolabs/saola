@@ -71,6 +71,7 @@
 
     export default {
         name: 'DocsLayout',
+        _offNav: null as (() => void) | null,
 
         // Layout được TÁI DÙNG khi điều hướng giữa các trang docs (layout diff),
         // nên started() chỉ chạy một lần — phải nghe router để đồng bộ lại.
@@ -117,7 +118,7 @@
             if (!list) return;
             list.innerHTML = '';
             
-            const headings = document.querySelectorAll('.docs-main h2, .docs-main h3');
+            const headings = document.querySelectorAll<HTMLElement>('.docs-main h2, .docs-main h3');
             if (headings.length === 0) {
                 list.innerHTML = '<li><span class="toc-empty">Chưa có mục lục</span></li>';
                 return;

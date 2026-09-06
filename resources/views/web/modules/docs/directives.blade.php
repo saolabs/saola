@@ -549,7 +549,7 @@
 @verbatim
 &#64;import(__layout__ + 'docs' as layout)
 
-&#64;extends(layout)          __BLADE_COMMENT_0__
+&#64;extends(layout)          {{-- y hệt &#64;extends(__layout__ + 'docs') --}}
                         @endverbatim
 @exec($__env->stopSection())
 @exec($__code_block__18_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_18'))
@@ -569,7 +569,7 @@
 &#64;foreach(ids as id)
     &#64;key(id)
     &#64;include('web.modules.roster.item', {uid: id, record: records[id] ?? null})
-    __BLADE_COMMENT_1__
+    {{-- hoặc, sau &#64;import(... as rosteritem): --}}
     &lt;rosteritem :uid="id" :record="records[id] ?? null" /&gt;
 &#64;endforeach
 @endverbatim
