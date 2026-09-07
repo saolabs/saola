@@ -69,73 +69,70 @@
     import type { StreamEvent } from '@web/app/services/DemoTypes';
     const MAX_ITEMS = 60;
 
-    export default {
-        name: 'StreamPage',
-        _source: null as EventSource | null,
+    let _source = null as EventSource | null;
 
-        started() { this.connect(); },
-        resumed() { if (!this._source && live) this.connect(); },
-        stopped() { this.disconnect(); },
-        destroyed() { this.disconnect(); },
+    function started() { connect(); }
+    function resumed() { if (!_source && live) connect(); }
+    function stopped() { disconnect(); }
+    function destroyed() { disconnect(); }
 
-        connect() {
-            if (this._source) return;
+    function connect() {
+        if (_source) return;
 
-            // Nối tiếp từ id lớn nhất đang có: backlog do server render cũng là
-            // sự kiện thật, không phải dữ liệu giả tách rời.
-            const last = events.length > 0 ? events[0]['id'] : 1000;
-            setConnection('đang nối…');
+        // Nối tiếp từ id lớn nhất đang có: backlog do server render cũng là
+        // sự kiện thật, không phải dữ liệu giả tách rời.
+        const last = events.length > 0 ? events[0]['id'] : 1000;
+        setConnection('đang nối…');
 
-            const source = new EventSource('/demo/stream/events?from=' + last);
-            this._source = source;
+        const source = new EventSource('/demo/stream/events?from=' + last);
+        _source = source;
 
-            source.addEventListener('open', () => setConnection('đang nhận'));
+        source.addEventListener('open', () => setConnection('đang nhận'));
 
-            source.addEventListener('message', (event) => {
-                try {
-                    this.push(JSON.parse(event.data));
-                } catch {
-                    // Gói hỏng thì bỏ gói đó, không hạ cả kết nối.
-                }
-            });
-
-            // Stream đóng theo thiết kế sau N sự kiện; EventSource tự nối lại.
-            // Chỉ báo trạng thái, KHÔNG tự gọi connect() ở đây — làm vậy là có
-            // hai kết nối cùng chạy.
-            source.addEventListener('error', () => {
-                setConnection(live ? 'đang nối lại…' : 'đã dừng');
-            });
-        },
-
-        disconnect() {
-            if (this._source) { this._source.close(); this._source = null; }
-            setConnection('đã dừng');
-        },
-
-        push(event: StreamEvent) {
-            // Khử trùng lặp: EventSource nối lại có thể phát lại sự kiện cuối.
-            if (events.some((row) => row['id'] === event.id)) return;
-
-            setEvents([event, ...events].slice(0, MAX_ITEMS));
-            setReceived(received + 1);
-
-            // Đang đọc ở dưới thì không kéo trang; đếm vào nút "N sự kiện mới".
-            if (window.scrollY > 220) setPending(pending + 1);
-        },
-
-        scrollTop() {
-            setPending(0);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        },
-
-        toggle() {
-            if (live) {
-                setLive(false);
-                this.disconnect();
-            } else {
-                setLive(true);
-                this.connect();
+        source.addEventListener('message', (event) => {
+            try {
+                push(JSON.parse(event.data));
+            } catch {
+                // Gói hỏng thì bỏ gói đó, không hạ cả kết nối.
             }
-        },
-    };
+        });
+
+        // Stream đóng theo thiết kế sau N sự kiện; EventSource tự nối lại.
+        // Chỉ báo trạng thái, KHÔNG tự gọi connect() ở đây — làm vậy là có
+        // hai kết nối cùng chạy.
+        source.addEventListener('error', () => {
+            setConnection(live ? 'đang nối lại…' : 'đã dừng');
+        });
+    }
+
+    function disconnect() {
+        if (_source) { _source.close(); _source = null; }
+        setConnection('đã dừng');
+    }
+
+    function push(event: StreamEvent) {
+        // Khử trùng lặp: EventSource nối lại có thể phát lại sự kiện cuối.
+        if (events.some((row) => row['id'] === event.id)) return;
+
+        setEvents([event, ...events].slice(0, MAX_ITEMS));
+        setReceived(received + 1);
+
+        // Đang đọc ở dưới thì không kéo trang; đếm vào nút "N sự kiện mới".
+        if (window.scrollY > 220) setPending(pending + 1);
+    }
+
+    function scrollTop() {
+        setPending(0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggle() {
+        if (live) {
+            setLive(false);
+            disconnect();
+        } else {
+            setLive(true);
+            connect();
+        }
+    }
 </script>

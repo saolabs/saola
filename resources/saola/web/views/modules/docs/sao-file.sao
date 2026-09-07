@@ -20,8 +20,9 @@
             <div class="stack-diagram">
                 <article>
                     <span>01 / DECLARATIONS</span>
-                    <strong>Đầu file</strong>
-                    <p><code class="directive-token">import</code>&nbsp; <code class="directive-token">vars</code>&nbsp; <code class="directive-token">props</code>&nbsp; <code class="directive-token">states</code>&nbsp; <code class="directive-token">const</code>&nbsp; <code class="directive-token">let</code>&nbsp; <code class="directive-token">await</code> — giữ nguyên thứ tự khai báo chuẩn.</p>
+                    <strong>Đầu file hoặc trong setup</strong>
+                    <p><code class="directive-token">import</code>&nbsp; <code class="directive-token">vars</code>&nbsp; <code class="directive-token">props</code>&nbsp; <code class="directive-token">state</code>&nbsp; <code class="directive-token">states</code>&nbsp; <code class="directive-token">computed</code>&nbsp; <code class="directive-token">const</code>&nbsp; <code class="directive-token">let</code>&nbsp; <code class="directive-token">asset</code>&nbsp; <code class="directive-token">await</code> — giữ nguyên thứ tự khai báo chuẩn.</p>
+                    <p>Viết ở đầu file, hoặc <strong>bên trong <code>&lt;script setup&gt;</code></strong>. Hai chỗ dùng chung một phạm vi, nên khai ở đâu cũng như nhau — khác biệt là trong setup bạn chú được kiểu TypeScript.</p>
                 </article>
                 <article>
                     <span>02 / TEMPLATE</span>
@@ -31,7 +32,8 @@
                 <article>
                     <span>03 / SCRIPT SETUP</span>
                     <strong>Logic Client Runtime</strong>
-                    <p>Export default một object method. Hàm đọc/ghi trực tiếp reactive state và setter trong closure mà không cần dùng tiền tố <code>this.</code>.</p>
+                    <p>Khai báo function trực tiếp. Mọi <code>function</code> ở cấp ngoài cùng trở thành method của view. Hàm đọc/ghi reactive state và setter trong closure, gọi lẫn nhau mà không cần tiền tố <code>this.</code>.</p>
+                    <p>Đây cũng là nơi đặt <code>import type</code> và khai báo có kiểu: <code>&#64;state(count: number = 0)</code>, <code>&#64;computed(doubled: number = count * 2)</code>. Biến <code>let</code>/<code>const</code> khai ở đây nằm trong phạm vi <strong>từng instance view</strong>, hợp để giữ thứ không reactive như handle của thư viện ngoài hay id timer.</p>
                 </article>
                 <article>
                     <span>04 / STYLE</span>
@@ -63,18 +65,18 @@
 @verbatim
 <!-- 1. KHAI BÁO ĐẦU FILE (Giữ đúng thứ tự) -->
 &#64;import('web.components.user-avatar')
-&#64;vars(currentUser, title = 'Hồ sơ người dùng')
-&#64;props({ theme: 'dark', showBio: true })
-&#64;states({ count: 0, isEditing: false })
-&#64;const(MAX_BIO_LENGTH = 250)
-&#64;let(canEdit = currentUser.id === 1)
+&#64;vars(currentUser: User, title: string = 'Hồ sơ người dùng')
+&#64;props({ theme: 'dark', showBio: true }: { theme: string; showBio: boolean })
+&#64;states({ count: 0, isEditing: false }: { count: number; isEditing: boolean })
+&#64;const(MAX_BIO_LENGTH: number = 250)
+&#64;let(canEdit: boolean = currentUser.id === 1)
 
 <!-- 2. TEMPLATE (Giao diện + Directives) -->
 &lt;template&gt;
     &#64;extends(__layout__ + "public")
     &#64;block('content')
         &lt;div class="profile-card profile-card--{{ theme }}"&gt;
-            &lt;user-avatar user="{{ currentUser }}" size="large" /&gt;
+            &lt;user-avatar :user="currentUser" size="large" /&gt;
             &lt;h2&gt;{{ currentUser.name }}&lt;/h2&gt;
             &lt;p class="title"&gt;{{ title }}&lt;/p&gt;
 
@@ -98,14 +100,13 @@
 
 <!-- 3. SCRIPT SETUP (Logic tương tác Client) -->
 &lt;script setup lang="ts"&gt;
-    export default {
-        started() {
-            console.log('Component mounted for user:', currentUser.name);
-        },
-        customMethod() {
-            setCount(0);
-        }
-    };
+    function started() {
+        console.log('Component mounted for user:', currentUser.name);
+    }
+
+    function customMethod() {
+        setCount(0);
+    }
 &lt;/script&gt;
 
 <!-- 4. STYLE (CSS Scoped hoặc Global) -->

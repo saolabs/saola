@@ -27,15 +27,16 @@
 
             <section @class([$__VIEW_ID__ . '-Bdoc22', 'dir-group']) @attr(['id' => 'khai-bao'])>
                 <h2 @class([$__VIEW_ID__ . '-Bdoc221'])>Khai báo</h2>
-                <p @class([$__VIEW_ID__ . '-Bdoc222'])>Nằm ở đầu file, ngoài <code @class([$__VIEW_ID__ . '-Bdoc2221'])>&lt;template&gt;</code>, và giữ nguyên thứ tự bạn viết. Đây là nơi quyết định biến nào reactive, biến nào không.</p>
+                <p @class([$__VIEW_ID__ . '-Bdoc222'])>Quyết định biến nào reactive, biến nào không. Giữ nguyên thứ tự bạn viết.</p>
+                <p @class([$__VIEW_ID__ . '-Bdoc223'])>Viết được ở <strong @class([$__VIEW_ID__ . '-Bdoc2231'])>hai chỗ</strong>, cùng một phạm vi: ngoài <code @class([$__VIEW_ID__ . '-Bdoc2232'])>&lt;template&gt;</code> như trước, hoặc <strong @class([$__VIEW_ID__ . '-Bdoc2233'])>bên trong <code @class([$__VIEW_ID__ . '-Bdoc22331'])>&lt;script setup&gt;</code></strong> — chỗ sau cho phép chú kiểu TypeScript và dùng luôn <code @class([$__VIEW_ID__ . '-Bdoc2234'])>import type</code> ở ngay trên. Xem <a @class([$__VIEW_ID__ . '-Bdoc2235']) @attr(['href' => '/demo/setup'])>bản demo setup</a>.</p>
 
-                <div @class([$__VIEW_ID__ . '-Bdoc223', 'dir-list'])>
+                <div @class([$__VIEW_ID__ . '-Bdoc224', 'dir-list'])>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2231', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22311', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc223111', 'dir-name'])>&#64;vars</span><span @class([$__VIEW_ID__ . '-Bdoc223112', 'dir-kind'])>Dữ liệu server</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22312', 'dir-sig'])>&#64;vars(tên_1, tên_2 = mặc_định, ...)</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc22313'])>Khai báo biến do controller truyền xuống view. <strong @class([$__VIEW_ID__ . '-Bdoc223131'])>Nên khai báo 1 lần duy nhất ở đầu view</strong> (ngay sau <code @class([$__VIEW_ID__ . '-Bdoc223132'])>&#64;import</code> nếu có). Có thể khai báo nhiều biến cùng lúc cách nhau bằng dấu phẩy (<code @class([$__VIEW_ID__ . '-Bdoc223133'])>,</code>) kèm giá trị mặc định. Biến server là dữ liệu tĩnh của lần render này, không có tính reactive.</p>
-                        @startMarker('component', 'Bdoc2231c1')
+                    <article @class([$__VIEW_ID__ . '-Bdoc2241', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22411', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc224111', 'dir-name'])>&#64;vars</span><span @class([$__VIEW_ID__ . '-Bdoc224112', 'dir-kind'])>Dữ liệu server</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22412', 'dir-sig'])>&#64;vars(tên_1, tên_2 = mặc_định, ...)</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22413'])>Khai báo biến do controller truyền xuống view. <strong @class([$__VIEW_ID__ . '-Bdoc224131'])>Nên khai báo 1 lần duy nhất ở đầu view</strong> (ngay sau <code @class([$__VIEW_ID__ . '-Bdoc224132'])>&#64;import</code> nếu có). Có thể khai báo nhiều biến cùng lúc cách nhau bằng dấu phẩy (<code @class([$__VIEW_ID__ . '-Bdoc224133'])>,</code>) kèm giá trị mặc định. Biến server là dữ liệu tĩnh của lần render này, không có tính reactive.</p>
+                        @startMarker('component', 'Bdoc2241c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
 @verbatim
 // controller: return $this-&gt;response(['results' =&gt; $rows, 'total' =&gt; 100]);
@@ -49,14 +50,14 @@
 @exec($__env->stopSection())
 @exec($__code_block__0_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__0_content])
-@endMarker('component', 'Bdoc2231c1')
+@endMarker('component', 'Bdoc2241c1')
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2232', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22321', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc223211', 'dir-name'])>&#64;props</span><span @class([$__VIEW_ID__ . '-Bdoc223212', 'dir-kind'])>Đầu vào component</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22322', 'dir-sig'])>&#64;props({ tên_1: mặc_định_1, tên_2: mặc_định_2, ... })</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc22323'])>Khai báo thuộc tính đầu vào của component. <strong @class([$__VIEW_ID__ . '-Bdoc223231'])>Nên khai báo 1 lần duy nhất ở đầu component</strong> dưới dạng một object chứa danh sách các prop và giá trị mặc định tương ứng. Props đóng vai trò là slot reactive: khi view cha đổi state truyền vào, runtime tự động đẩy giá trị mới vào <em @class([$__VIEW_ID__ . '-Bdoc223232'])>đúng instance con đang sống</em> mà không render lại view con.</p>
-                        @startMarker('component', 'Bdoc2232c1')
+                    <article @class([$__VIEW_ID__ . '-Bdoc2242', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22421', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc224211', 'dir-name'])>&#64;props</span><span @class([$__VIEW_ID__ . '-Bdoc224212', 'dir-kind'])>Đầu vào component</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22422', 'dir-sig'])>&#64;props({ tên_1: mặc_định_1, tên_2: mặc_định_2, ... })</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22423'])>Khai báo thuộc tính đầu vào của component. <strong @class([$__VIEW_ID__ . '-Bdoc224231'])>Nên khai báo 1 lần duy nhất ở đầu component</strong> dưới dạng một object chứa danh sách các prop và giá trị mặc định tương ứng. Props đóng vai trò là slot reactive: khi view cha đổi state truyền vào, runtime tự động đẩy giá trị mới vào <em @class([$__VIEW_ID__ . '-Bdoc224232'])>đúng instance con đang sống</em> mà không render lại view con.</p>
+                        @startMarker('component', 'Bdoc2242c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_1'))
 @verbatim
 &lt;!-- components/statcard.sao --&gt;
@@ -73,16 +74,16 @@
 @exec($__env->stopSection())
 @exec($__code_block__1_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_1'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__1_content])
-@endMarker('component', 'Bdoc2232c1')
-                        <p @class([$__VIEW_ID__ . '-Bdoc22324', 'dir-note'])>Props khi truyền ở <code @class([$__VIEW_ID__ . '-Bdoc223241'])>&lt;component-tag&gt;</code> hoặc <code @class([$__VIEW_ID__ . '-Bdoc223242'])>&#64;include</code> tuân theo cú pháp object của Saola (<code @class([$__VIEW_ID__ . '-Bdoc223243'])>khoá: giá_trị</code>), đồng bộ với <code @class([$__VIEW_ID__ . '-Bdoc223244'])>&#64;props</code> và <code @class([$__VIEW_ID__ . '-Bdoc223245'])>&#64;states</code>.</p>
+@endMarker('component', 'Bdoc2242c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc22424', 'dir-note'])>Props khi truyền ở <code @class([$__VIEW_ID__ . '-Bdoc224241'])>&lt;component-tag&gt;</code> hoặc <code @class([$__VIEW_ID__ . '-Bdoc224242'])>&#64;include</code> tuân theo cú pháp object của Saola (<code @class([$__VIEW_ID__ . '-Bdoc224243'])>khoá: giá_trị</code>), đồng bộ với <code @class([$__VIEW_ID__ . '-Bdoc224244'])>&#64;props</code> và <code @class([$__VIEW_ID__ . '-Bdoc224245'])>&#64;states</code>.</p>
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2233', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22331', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc223311', 'dir-name'])>&#64;states</span><span @class([$__VIEW_ID__ . '-Bdoc223312', 'dir-kind'])>Reactive</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22332', 'dir-sig'])>&#64;states({ key: giá_trị_khởi_tạo, ... })</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc22333'])>Khai báo khối state reactive cho view dưới dạng một object. <strong @class([$__VIEW_ID__ . '-Bdoc223331'])>Nên gom toàn bộ state của view vào 1 directive <code @class([$__VIEW_ID__ . '-Bdoc2233311'])>&#64;states</code> duy nhất ở đầu file</strong>. Mỗi khoá sinh ra ba thứ: biến đọc được trong template/script, hàm setter <code @class([$__VIEW_ID__ . '-Bdoc223332'])>setTênKhoá()</code>, và slot theo dõi phản ứng trong StateManager.</p>
-                        <p @class([$__VIEW_ID__ . '-Bdoc22334'])>Giá trị bạn viết ở đây là giá trị khởi tạo cho <em @class([$__VIEW_ID__ . '-Bdoc223341'])>cả</em> lần render server lẫn lần hydrate client.</p>
-                        @startMarker('component', 'Bdoc2233c1')
+                    <article @class([$__VIEW_ID__ . '-Bdoc2243', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22431', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc224311', 'dir-name'])>&#64;states</span><span @class([$__VIEW_ID__ . '-Bdoc224312', 'dir-kind'])>Reactive</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22432', 'dir-sig'])>&#64;states({ key: giá_trị_khởi_tạo, ... })</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22433'])>Khai báo khối state reactive cho view dưới dạng một object. <strong @class([$__VIEW_ID__ . '-Bdoc224331'])>Nên gom toàn bộ state của view vào 1 directive <code @class([$__VIEW_ID__ . '-Bdoc2243311'])>&#64;states</code> duy nhất ở đầu file</strong>. Mỗi khoá sinh ra ba thứ: biến đọc được trong template/script, hàm setter <code @class([$__VIEW_ID__ . '-Bdoc224332'])>setTênKhoá()</code>, và slot theo dõi phản ứng trong StateManager.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22434'])>Giá trị bạn viết ở đây là giá trị khởi tạo cho <em @class([$__VIEW_ID__ . '-Bdoc224341'])>cả</em> lần render server lẫn lần hydrate client.</p>
+                        @startMarker('component', 'Bdoc2243c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_2'))
 @verbatim
 &#64;states({ count: 0, name: 'Saola', items: [] })
@@ -92,15 +93,15 @@
 @exec($__env->stopSection())
 @exec($__code_block__2_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_2'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__2_content])
-@endMarker('component', 'Bdoc2233c1')
-                        <p @class([$__VIEW_ID__ . '-Bdoc22335', 'dir-note'])>Tên setter là <code @class([$__VIEW_ID__ . '-Bdoc223351'])>set</code> + tên khoá viết hoa chữ đầu: <code @class([$__VIEW_ID__ . '-Bdoc223352'])>count</code> → <code @class([$__VIEW_ID__ . '-Bdoc223353'])>setCount</code>, <code @class([$__VIEW_ID__ . '-Bdoc223354'])>isOpen</code> → <code @class([$__VIEW_ID__ . '-Bdoc223355'])>setIsOpen</code>. Gọi setter với cùng reference vẫn được nhận nếu nội dung tầng một đã đổi (ví dụ: <code @class([$__VIEW_ID__ . '-Bdoc223356'])>list.splice(i,1); setList(list)</code>).</p>
+@endMarker('component', 'Bdoc2243c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc22435', 'dir-note'])>Tên setter là <code @class([$__VIEW_ID__ . '-Bdoc224351'])>set</code> + tên khoá viết hoa chữ đầu: <code @class([$__VIEW_ID__ . '-Bdoc224352'])>count</code> → <code @class([$__VIEW_ID__ . '-Bdoc224353'])>setCount</code>, <code @class([$__VIEW_ID__ . '-Bdoc224354'])>isOpen</code> → <code @class([$__VIEW_ID__ . '-Bdoc224355'])>setIsOpen</code>. Gọi setter với cùng reference vẫn được nhận nếu nội dung tầng một đã đổi (ví dụ: <code @class([$__VIEW_ID__ . '-Bdoc224356'])>list.splice(i,1); setList(list)</code>).</p>
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2234', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22341', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc223411', 'dir-name'])>&#64;state</span><span @class([$__VIEW_ID__ . '-Bdoc223412', 'dir-kind'])>Reactive</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22342', 'dir-sig'])>&#64;state(tên = giá_trị, ...)</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc22343'])>Khai báo state reactive theo cú pháp gán đơn lẻ hoặc nhiều biến cách nhau bởi dấu phẩy (<code @class([$__VIEW_ID__ . '-Bdoc223431'])>,</code>). Dùng khi view chỉ có một vài state đơn giản mà không muốn tạo cả khối object <code @class([$__VIEW_ID__ . '-Bdoc223432'])>&#64;states</code>.</p>
-                        @startMarker('component', 'Bdoc2234c1')
+                    <article @class([$__VIEW_ID__ . '-Bdoc2244', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22441', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc224411', 'dir-name'])>&#64;state</span><span @class([$__VIEW_ID__ . '-Bdoc224412', 'dir-kind'])>Reactive</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22442', 'dir-sig'])>&#64;state(tên = giá_trị, ...)</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22443'])>Khai báo state reactive theo cú pháp gán đơn lẻ hoặc nhiều biến cách nhau bởi dấu phẩy (<code @class([$__VIEW_ID__ . '-Bdoc224431'])>,</code>). Dùng khi view chỉ có một vài state đơn giản mà không muốn tạo cả khối object <code @class([$__VIEW_ID__ . '-Bdoc224432'])>&#64;states</code>.</p>
+                        @startMarker('component', 'Bdoc2244c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_3'))
 @verbatim
 &#64;state(editMode = false, page = 1, perPage = 20)
@@ -108,14 +109,14 @@
 @exec($__env->stopSection())
 @exec($__code_block__3_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_3'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__3_content])
-@endMarker('component', 'Bdoc2234c1')
+@endMarker('component', 'Bdoc2244c1')
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2235', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22351', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc223511', 'dir-name'])>&#64;const</span><span @class([$__VIEW_ID__ . '-Bdoc223512', 'dir-kind'])>Bất biến</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22352', 'dir-sig'])>&#64;const(TÊN = giá_trị, ...)</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc22353'])>Khai báo hằng số bất biến cho view. Có thể khai báo nhiều hằng số cùng lúc trên một directive bằng dấu phẩy (<code @class([$__VIEW_ID__ . '-Bdoc223531'])>,</code>). Dạng thứ hai là destructuring kiểu React: tạo một cặp state và setter độc lập.</p>
-                        @startMarker('component', 'Bdoc2235c1')
+                    <article @class([$__VIEW_ID__ . '-Bdoc2245', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22451', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc224511', 'dir-name'])>&#64;const</span><span @class([$__VIEW_ID__ . '-Bdoc224512', 'dir-kind'])>Bất biến</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22452', 'dir-sig'])>&#64;const(TÊN = giá_trị, ...)</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22453'])>Khai báo hằng số bất biến cho view. Có thể khai báo nhiều hằng số cùng lúc trên một directive bằng dấu phẩy (<code @class([$__VIEW_ID__ . '-Bdoc224531'])>,</code>). Dạng thứ hai là destructuring kiểu React: tạo một cặp state và setter độc lập.</p>
+                        @startMarker('component', 'Bdoc2245c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_4'))
 @verbatim
 &#64;const(API = '/api/v1', LIMIT = 20, TITLE = 'Quản trị')
@@ -124,14 +125,14 @@
 @exec($__env->stopSection())
 @exec($__code_block__4_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_4'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__4_content])
-@endMarker('component', 'Bdoc2235c1')
+@endMarker('component', 'Bdoc2245c1')
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2236', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22361', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc223611', 'dir-name'])>&#64;let</span><span @class([$__VIEW_ID__ . '-Bdoc223612', 'dir-kind'])>Không reactive</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22362', 'dir-sig'])>&#64;let(tên = biểu_thức, ...)</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc22363'])>Biến cục bộ có thể gán lại nhưng <strong @class([$__VIEW_ID__ . '-Bdoc223631'])>không</strong> reactive (đổi giá trị không kích hoạt render lại). Có thể khai báo nhiều biến cùng lúc bằng dấu phẩy (<code @class([$__VIEW_ID__ . '-Bdoc223632'])>,</code>). Dùng cho giá trị dẫn xuất tính một lần lúc dựng view.</p>
-                        @startMarker('component', 'Bdoc2236c1')
+                    <article @class([$__VIEW_ID__ . '-Bdoc2246', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22461', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc224611', 'dir-name'])>&#64;let</span><span @class([$__VIEW_ID__ . '-Bdoc224612', 'dir-kind'])>Không reactive</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22462', 'dir-sig'])>&#64;let(tên = biểu_thức, ...)</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22463'])>Biến cục bộ có thể gán lại nhưng <strong @class([$__VIEW_ID__ . '-Bdoc224631'])>không</strong> reactive (đổi giá trị không kích hoạt render lại). Có thể khai báo nhiều biến cùng lúc bằng dấu phẩy (<code @class([$__VIEW_ID__ . '-Bdoc224632'])>,</code>). Dùng cho giá trị dẫn xuất tính một lần lúc dựng view.</p>
+                        @startMarker('component', 'Bdoc2246c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_5'))
 @verbatim
 &#64;let(total = price * qty, greeting = `Xin chào ${name}`)
@@ -139,21 +140,28 @@
 @exec($__env->stopSection())
 @exec($__code_block__5_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_5'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__5_content])
-@endMarker('component', 'Bdoc2236c1')
-                        <p @class([$__VIEW_ID__ . '-Bdoc22364', 'dir-note', 'dir-note--warn'])>Nếu bạn muốn giá trị tự cập nhật theo state thì đừng dùng <code @class([$__VIEW_ID__ . '-Bdoc223641'])>&#64;let</code> — viết thẳng biểu thức trong template hoặc dùng <code @class([$__VIEW_ID__ . '-Bdoc223642'])>&#64;computed</code>, compiler sẽ tự động suy ra dependency graph.</p>
+@endMarker('component', 'Bdoc2246c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc22464', 'dir-note', 'dir-note--warn'])>Nếu bạn muốn giá trị tự cập nhật theo state thì đừng dùng <code @class([$__VIEW_ID__ . '-Bdoc224641'])>&#64;let</code> — viết thẳng biểu thức trong template hoặc dùng <code @class([$__VIEW_ID__ . '-Bdoc224642'])>&#64;computed</code>, compiler sẽ tự động suy ra dependency graph.</p>
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2237', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22371', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc223711', 'dir-name'])>&#64;await</span><span @class([$__VIEW_ID__ . '-Bdoc223712', 'dir-kind'])>Async</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22372', 'dir-sig'])>&#64;await</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc22373'])>Đánh dấu view là bất đồng bộ. Compiler bật cờ <code @class([$__VIEW_ID__ . '-Bdoc223731'])>hasAwaitData</code> trong config, runtime nhờ đó biết view cần chờ dữ liệu trước khi commit state, và có thể render khối preload trong lúc chờ.</p>
+                    <article @class([$__VIEW_ID__ . '-Bdoc2247', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22471', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc224711', 'dir-name'])>&#64;await</span><span @class([$__VIEW_ID__ . '-Bdoc224712', 'dir-kind'])>Async</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22472', 'dir-sig'])>&#64;await</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22473'])>Đánh dấu view là bất đồng bộ. Compiler bật cờ <code @class([$__VIEW_ID__ . '-Bdoc224731'])>hasAwaitData</code> trong config, runtime nhờ đó biết view cần chờ dữ liệu trước khi commit state, và có thể render khối preload trong lúc chờ.</p>
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2238', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22381', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc223811', 'dir-name'])>&#64;computed</span><span @class([$__VIEW_ID__ . '-Bdoc223812', 'dir-kind'])>Dẫn xuất</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc22382', 'dir-sig'])>&#64;computed(tên = biểu_thức)</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc22383'])>State dẫn xuất có memo hoá. Chỉ tính lại khi một trong các state phụ thuộc đổi, và tính <em @class([$__VIEW_ID__ . '-Bdoc223831'])>lười</em> — đánh dấu bẩn lúc dep đổi, tính thật lúc có người đọc. Dep đổi năm lần trong một batch thì chỉ tính một lần.</p>
-                        @startMarker('component', 'Bdoc2238c1')
+                    <article @class([$__VIEW_ID__ . '-Bdoc2248', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22481', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc224811', 'dir-name'])>&#64;fetch</span><span @class([$__VIEW_ID__ . '-Bdoc224812', 'dir-kind'])>Nạp dữ liệu</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22482', 'dir-sig'])>&#64;fetch('/duong-dan', 'GET')</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22483'])>Khai báo một lần nạp dữ liệu để runtime tự gọi khi view khởi động. Khác <code @class([$__VIEW_ID__ . '-Bdoc224831'])>&#64;await</code> ở chỗ <code @class([$__VIEW_ID__ . '-Bdoc224832'])>&#64;await</code> gọi lại <strong @class([$__VIEW_ID__ . '-Bdoc224833'])>chính URL của trang</strong> để lấy JSON, còn <code @class([$__VIEW_ID__ . '-Bdoc224834'])>&#64;fetch</code> trỏ tới một URL bạn chỉ định.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22484', 'dir-note'])>Cấu hình đi vào view dưới dạng <code @class([$__VIEW_ID__ . '-Bdoc224841'])>fetch: {url, method}</code> và bật cờ <code @class([$__VIEW_ID__ . '-Bdoc224842'])>hasFetchData</code>. Chỉ chạy phía client — SSR đã có sẵn dữ liệu từ controller.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2249', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22491', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc224911', 'dir-name'])>&#64;computed</span><span @class([$__VIEW_ID__ . '-Bdoc224912', 'dir-kind'])>Dẫn xuất</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc22492', 'dir-sig'])>&#64;computed(tên = biểu_thức)</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc22493'])>State dẫn xuất có memo hoá. Chỉ tính lại khi một trong các state phụ thuộc đổi, và tính <em @class([$__VIEW_ID__ . '-Bdoc224931'])>lười</em> — đánh dấu bẩn lúc dep đổi, tính thật lúc có người đọc. Dep đổi năm lần trong một batch thì chỉ tính một lần.</p>
+                        @startMarker('component', 'Bdoc2249c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_6'))
 @verbatim
 &#64;states({ users: [] })
@@ -162,8 +170,8 @@
 @exec($__env->stopSection())
 @exec($__code_block__6_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_6'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__6_content])
-@endMarker('component', 'Bdoc2238c1')
-                        <p @class([$__VIEW_ID__ . '-Bdoc22384', 'dir-note', 'dir-note--warn'])><strong @class([$__VIEW_ID__ . '-Bdoc223841'])>Hiện chỉ chạy phía client.</strong> Directive này không được emit ở đầu ra Blade nên biến bị undefined khi render server. Trang cần SSR thì viết thẳng biểu thức trong template.</p>
+@endMarker('component', 'Bdoc2249c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc22494', 'dir-note', 'dir-note--warn'])><strong @class([$__VIEW_ID__ . '-Bdoc224941'])>Hiện chỉ chạy phía client.</strong> Directive này không được emit ở đầu ra Blade nên biến bị undefined khi render server. Trang cần SSR thì viết thẳng biểu thức trong template.</p>
                     </article>
 
                 </div>
@@ -319,6 +327,13 @@
                         <div @class([$__VIEW_ID__ . '-Bdoc24382', 'dir-sig'])>&#64;ssr … &#64;endssr</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc24383'])>Khối chỉ tồn tại ở đầu ra Blade. Compiler loại nó khỏi view JavaScript, nên nội dung bên trong xuất hiện trong HTML lần đầu rồi không bao giờ được runtime dựng lại. Hợp cho dữ liệu chỉ có ở server hoặc khối nặng không cần tương tác.</p>
                         <p @class([$__VIEW_ID__ . '-Bdoc24384', 'dir-note'])>Bí danh: <code @class([$__VIEW_ID__ . '-Bdoc243841'])>&#64;serverSide</code> / <code @class([$__VIEW_ID__ . '-Bdoc243842'])>&#64;endServerSide</code>, <code @class([$__VIEW_ID__ . '-Bdoc243843'])>&#64;useSSR</code> / <code @class([$__VIEW_ID__ . '-Bdoc243844'])>&#64;enduseSSR</code>.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2439', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24391', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243911', 'dir-name'])>&#64;csr <em @class([$__VIEW_ID__ . '-Bdoc2439111'])>· &#64;endcsr</em></span><span @class([$__VIEW_ID__ . '-Bdoc243912', 'dir-kind'])>Chỉ client</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24392', 'dir-sig'])>&#64;csr … &#64;endcsr</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24393'])>Ảnh gương của <code @class([$__VIEW_ID__ . '-Bdoc243931'])>&#64;ssr</code>: khối chỉ tồn tại ở view JavaScript. Blade bỏ qua nó nên nội dung không có trong HTML lần đầu, chỉ xuất hiện sau khi runtime dựng. Hợp cho thứ chỉ có nghĩa khi đã có JS — nút phụ thuộc tương tác, widget của thư viện ngoài.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24394', 'dir-note'])>Bí danh: <code @class([$__VIEW_ID__ . '-Bdoc243941'])>&#64;clientSide</code> / <code @class([$__VIEW_ID__ . '-Bdoc243942'])>&#64;endClientSide</code>. Cặp <code @class([$__VIEW_ID__ . '-Bdoc243943'])>&#64;ssr</code>/<code @class([$__VIEW_ID__ . '-Bdoc243944'])>&#64;csr</code> là hai chỗ SSR và CSR được phép khác nhau <strong @class([$__VIEW_ID__ . '-Bdoc243945'])>có chủ đích</strong> — mọi khác biệt còn lại đều bị cổng parity coi là lỗi.</p>
                     </article>
 
                 </div>
@@ -558,12 +573,26 @@
                     </article>
 
                     <article @class([$__VIEW_ID__ . '-Bdoc2735', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc27351', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc273511', 'dir-name'])>&#64;include</span><span @class([$__VIEW_ID__ . '-Bdoc273512', 'dir-kind'])>Component</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc27352', 'dir-sig'])>&#64;include('đường.dẫn.view')
+                        <div @class([$__VIEW_ID__ . '-Bdoc27351', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc273511', 'dir-name'])>&#64;importView</span><span @class([$__VIEW_ID__ . '-Bdoc273512', 'dir-kind'])>Trong script setup</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc27352', 'dir-sig'])>&#64;importView(__base__ + 'components.card' as Card)</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc27353'])>Bản dùng <strong @class([$__VIEW_ID__ . '-Bdoc273531'])>bên trong <code @class([$__VIEW_ID__ . '-Bdoc2735311'])>&lt;script setup&gt;</code></strong> của <code @class([$__VIEW_ID__ . '-Bdoc273532'])>&#64;import</code>. Cùng kết quả: đăng ký component vào registry để dùng thẻ <code @class([$__VIEW_ID__ . '-Bdoc273533'])>&lt;Card /&gt;</code> trong template.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc27354', 'dir-note'])>Đường dẫn nhận cả biến: khai <code @class([$__VIEW_ID__ . '-Bdoc273541'])>&#64;let(cardPath: string = __base__ + '…')</code> rồi <code @class([$__VIEW_ID__ . '-Bdoc273542'])>&#64;importView(cardPath as Card)</code>.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2736', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc27361', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc273611', 'dir-name'])>&#64;importInclude</span><span @class([$__VIEW_ID__ . '-Bdoc273612', 'dir-kind'])>Include kèm props</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc27362', 'dir-sig'])>&#64;importInclude(Card, ['title' =&gt; 'Xin chào'])</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc27363'])>Chèn component đã <code @class([$__VIEW_ID__ . '-Bdoc273631'])>&#64;import</code> và truyền props cho nó. Thẻ <code @class([$__VIEW_ID__ . '-Bdoc273632'])>&lt;Card /&gt;</code> là dạng rút gọn không props; cần truyền dữ liệu động thì dùng dạng này hoặc <code @class([$__VIEW_ID__ . '-Bdoc273633'])>:prop="biểu_thức"</code> trên thẻ.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc27364', 'dir-note'])>Attribute chuỗi trên thẻ component là <strong @class([$__VIEW_ID__ . '-Bdoc273641'])>tĩnh</strong>, không nội suy — <code @class([$__VIEW_ID__ . '-Bdoc273642'])>&lt;Card title="&#123;&#123; x &#125;&#125;"&gt;</code> không truyền giá trị của <code @class([$__VIEW_ID__ . '-Bdoc273643'])>x</code>.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2737', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc27371', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc273711', 'dir-name'])>&#64;include</span><span @class([$__VIEW_ID__ . '-Bdoc273712', 'dir-kind'])>Component</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc27372', 'dir-sig'])>&#64;include('đường.dẫn.view')
 &#64;include('đường.dẫn.view', {prop: biểu_thức})</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc27353'])>Tạo một view con thật: có ViewController riêng, state riêng, vòng đời riêng. Đây là khác biệt lớn với partial — view con sống độc lập, được start, pause, resume và destroy theo chính nó.</p>
-                        <p @class([$__VIEW_ID__ . '-Bdoc27354'])>Compiler đọc object props để suy ra view con phụ thuộc state nào của cha. Khi state đó đổi, runtime <em @class([$__VIEW_ID__ . '-Bdoc273541'])>đẩy props mới vào đúng instance đang sống</em> chứ không dựng lại view con — nên state nội bộ của nó, ví dụ một form đang mở dở, không bị thổi bay.</p>
-                        @startMarker('component', 'Bdoc2735c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc27373'])>Tạo một view con thật: có ViewController riêng, state riêng, vòng đời riêng. Đây là khác biệt lớn với partial — view con sống độc lập, được start, pause, resume và destroy theo chính nó.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc27374'])>Compiler đọc object props để suy ra view con phụ thuộc state nào của cha. Khi state đó đổi, runtime <em @class([$__VIEW_ID__ . '-Bdoc273741'])>đẩy props mới vào đúng instance đang sống</em> chứ không dựng lại view con — nên state nội bộ của nó, ví dụ một form đang mở dở, không bị thổi bay.</p>
+                        @startMarker('component', 'Bdoc2737c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_19'))
 @verbatim
 &#64;foreach(ids as id)
@@ -576,15 +605,15 @@
 @exec($__env->stopSection())
 @exec($__code_block__19_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_19'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__19_content])
-@endMarker('component', 'Bdoc2735c1')
-                        <p @class([$__VIEW_ID__ . '-Bdoc27355', 'dir-note'])>Props phải sống được qua SSR nên chỉ nhận giá trị tuần tự hoá được — không truyền được callback. Kênh từ con lên cha là bus sự kiện <code @class([$__VIEW_ID__ . '-Bdoc273551'])>App.Event</code>.</p>
+@endMarker('component', 'Bdoc2737c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc27375', 'dir-note'])>Props phải sống được qua SSR nên chỉ nhận giá trị tuần tự hoá được — không truyền được callback. Kênh từ con lên cha là bus sự kiện <code @class([$__VIEW_ID__ . '-Bdoc273751'])>App.Event</code>.</p>
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2736', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc27361', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc273611', 'dir-name'])>&#64;children</span><span @class([$__VIEW_ID__ . '-Bdoc273612', 'dir-kind'])>Slot</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc27362', 'dir-sig'])>&#64;children</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc27363'])>Chỗ đặt nội dung mà bên gọi truyền vào giữa hai thẻ. Nội dung được render lười đúng tại vị trí khai báo và giữ nguyên context của bên gọi — biến trong đó vẫn là biến của view cha, không phải của component.</p>
-                        @startMarker('component', 'Bdoc2736c1')
+                    <article @class([$__VIEW_ID__ . '-Bdoc2738', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc27381', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc273811', 'dir-name'])>&#64;children</span><span @class([$__VIEW_ID__ . '-Bdoc273812', 'dir-kind'])>Slot</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc27382', 'dir-sig'])>&#64;children</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc27383'])>Chỗ đặt nội dung mà bên gọi truyền vào giữa hai thẻ. Nội dung được render lười đúng tại vị trí khai báo và giữ nguyên context của bên gọi — biến trong đó vẫn là biến của view cha, không phải của component.</p>
+                        @startMarker('component', 'Bdoc2738c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_20'))
 @verbatim
 &lt;!-- card.sao --&gt;
@@ -596,13 +625,13 @@
 @exec($__env->stopSection())
 @exec($__code_block__20_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_20'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__20_content])
-@endMarker('component', 'Bdoc2736c1')
+@endMarker('component', 'Bdoc2738c1')
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2737', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc27371', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc273711', 'dir-name'])>&#64;exec</span><span @class([$__VIEW_ID__ . '-Bdoc273712', 'dir-kind'])>Tiện ích</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc27372', 'dir-sig'])>&#64;exec(biểu_thức)</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc27373'])>Chạy một biểu thức mà không in ra gì. Dùng để gán biến trung gian hoặc gọi hàm phụ ngay trong template.</p>
+                    <article @class([$__VIEW_ID__ . '-Bdoc2739', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc27391', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc273911', 'dir-name'])>&#64;exec</span><span @class([$__VIEW_ID__ . '-Bdoc273912', 'dir-kind'])>Tiện ích</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc27392', 'dir-sig'])>&#64;exec(biểu_thức)</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc27393'])>Chạy một biểu thức mà không in ra gì. Dùng để gán biến trung gian hoặc gọi hàm phụ ngay trong template.</p>
                     </article>
 
                 </div>
@@ -615,10 +644,18 @@
                 <div @class([$__VIEW_ID__ . '-Bdoc284', 'dir-list'])>
 
                     <article @class([$__VIEW_ID__ . '-Bdoc2841', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28411', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284111', 'dir-name'])>&#64;addCssLink</span><span @class([$__VIEW_ID__ . '-Bdoc284112', 'dir-kind'])>Asset</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28412', 'dir-sig'])>&#64;addCssLink($href, $attributes = [])</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28413'])>Đăng ký một stylesheet. Thẻ được in trong <code @class([$__VIEW_ID__ . '-Bdoc284131'])>&lt;head&gt;</code>. Trùng thì chỉ ra một thẻ — khoá so trùng là <code @class([$__VIEW_ID__ . '-Bdoc284132'])>id</code> nếu bạn đưa vào, không thì chính <code @class([$__VIEW_ID__ . '-Bdoc284133'])>href</code>; nhờ vậy layout, trang và component cùng khai báo một file cũng chỉ tốn một <code @class([$__VIEW_ID__ . '-Bdoc284134'])>&lt;link&gt;</code>.</p>
-                        @startMarker('component', 'Bdoc2841c1')
+                        <div @class([$__VIEW_ID__ . '-Bdoc28411', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284111', 'dir-name'])>&#64;asset <em @class([$__VIEW_ID__ . '-Bdoc2841111'])>· &#64;assets</em></span><span @class([$__VIEW_ID__ . '-Bdoc284112', 'dir-kind'])>Đường dẫn asset</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28412', 'dir-sig'])>&#64;asset(logo = 'images/logo.svg')<br @class([$__VIEW_ID__ . '-Bdoc284121'])>&#64;assets({icon: 'images/icon.svg', banner: 'images/b.png'})</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28413'])>Khai báo một biến trỏ tới file trong thư mục asset của context. Dùng như biến thường trong template: <code @class([$__VIEW_ID__ . '-Bdoc284131'])>&lt;img src="&#123;&#123; logo &#125;&#125;"&gt;</code>.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28414'])>Giá trị được giải cùng một tiền tố ở cả hai phía — Blade gọi <code @class([$__VIEW_ID__ . '-Bdoc284141'])>asset()</code>, JavaScript gọi <code @class([$__VIEW_ID__ . '-Bdoc284142'])>App.Helper.asset()</code> — nên đường dẫn không bao giờ lệch giữa SSR và CSR. Viết tay chuỗi đường dẫn thì mất bảo chứng đó.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28415', 'dir-note'])><code @class([$__VIEW_ID__ . '-Bdoc284151'])>&#64;assets</code> là dạng nhiều biến của <code @class([$__VIEW_ID__ . '-Bdoc284152'])>&#64;asset</code>. Cả hai khai báo được bên trong <code @class([$__VIEW_ID__ . '-Bdoc284153'])>&lt;script setup&gt;</code>.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2842', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28421', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284211', 'dir-name'])>&#64;addCssLink</span><span @class([$__VIEW_ID__ . '-Bdoc284212', 'dir-kind'])>Asset</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28422', 'dir-sig'])>&#64;addCssLink($href, $attributes = [])</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28423'])>Đăng ký một stylesheet. Thẻ được in trong <code @class([$__VIEW_ID__ . '-Bdoc284231'])>&lt;head&gt;</code>. Trùng thì chỉ ra một thẻ — khoá so trùng là <code @class([$__VIEW_ID__ . '-Bdoc284232'])>id</code> nếu bạn đưa vào, không thì chính <code @class([$__VIEW_ID__ . '-Bdoc284233'])>href</code>; nhờ vậy layout, trang và component cùng khai báo một file cũng chỉ tốn một <code @class([$__VIEW_ID__ . '-Bdoc284234'])>&lt;link&gt;</code>.</p>
+                        @startMarker('component', 'Bdoc2842c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_21'))
 @verbatim
 &#64;addCssLink('/static/saola/roster.css')
@@ -627,15 +664,15 @@
 @exec($__env->stopSection())
 @exec($__code_block__21_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_21'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__21_content])
-@endMarker('component', 'Bdoc2841c1')
-                        <p @class([$__VIEW_ID__ . '-Bdoc28414', 'dir-note'])>Đăng ký sau khi <code @class([$__VIEW_ID__ . '-Bdoc284141'])>&lt;head&gt;</code> đã render thì thẻ ra cuối <code @class([$__VIEW_ID__ . '-Bdoc284142'])>&lt;body&gt;</code> — vẫn hợp lệ và vẫn áp dụng, chỉ muộn hơn một nhịp. Đó là đường của chính layout, vì layout render sau trang con.</p>
+@endMarker('component', 'Bdoc2842c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc28424', 'dir-note'])>Đăng ký sau khi <code @class([$__VIEW_ID__ . '-Bdoc284241'])>&lt;head&gt;</code> đã render thì thẻ ra cuối <code @class([$__VIEW_ID__ . '-Bdoc284242'])>&lt;body&gt;</code> — vẫn hợp lệ và vẫn áp dụng, chỉ muộn hơn một nhịp. Đó là đường của chính layout, vì layout render sau trang con.</p>
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2842', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28421', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284211', 'dir-name'])>&#64;addScriptSrc</span><span @class([$__VIEW_ID__ . '-Bdoc284212', 'dir-kind'])>Asset</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28422', 'dir-sig'])>&#64;addScriptSrc($src, $attributes = [])</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28423'])>Đăng ký một script ngoài. Thẻ được in ở cuối <code @class([$__VIEW_ID__ . '-Bdoc284231'])>&lt;body&gt;</code>, theo đúng thứ tự đăng ký, cùng cách so trùng như trên. Attribute cờ viết <code @class([$__VIEW_ID__ . '-Bdoc284232'])>true</code>.</p>
-                        @startMarker('component', 'Bdoc2842c1')
+                    <article @class([$__VIEW_ID__ . '-Bdoc2843', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28431', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284311', 'dir-name'])>&#64;addScriptSrc</span><span @class([$__VIEW_ID__ . '-Bdoc284312', 'dir-kind'])>Asset</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28432', 'dir-sig'])>&#64;addScriptSrc($src, $attributes = [])</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28433'])>Đăng ký một script ngoài. Thẻ được in ở cuối <code @class([$__VIEW_ID__ . '-Bdoc284331'])>&lt;body&gt;</code>, theo đúng thứ tự đăng ký, cùng cách so trùng như trên. Attribute cờ viết <code @class([$__VIEW_ID__ . '-Bdoc284332'])>true</code>.</p>
+                        @startMarker('component', 'Bdoc2843c1')
                         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_22'))
 @verbatim
 &#64;addScriptSrc('https://cdn.example.com/prism.min.js', ['data-manual' =&gt; true])
@@ -643,20 +680,20 @@
 @exec($__env->stopSection())
 @exec($__code_block__22_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_22'))
 @include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__22_content])
-@endMarker('component', 'Bdoc2842c1')
+@endMarker('component', 'Bdoc2843c1')
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2843', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc28431', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284311', 'dir-name'])>Vòng đời</span><span @class([$__VIEW_ID__ . '-Bdoc284312', 'dir-kind'])>SSR · hydrate · SPA</span></div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28432'])>Thẻ do server in ra được runtime <strong @class([$__VIEW_ID__ . '-Bdoc284321'])>nhận nuôi</strong> (adopt) lúc hydrate chứ không chèn bản thứ hai. Sau đó nó đi theo vòng đời view, đếm tham chiếu:</p>
-                        <table @class([$__VIEW_ID__ . '-Bdoc28433', 'dir-mini'])>
-                            <tbody @class([$__VIEW_ID__ . '-Bdoc284331'])>
-                                <tr @class([$__VIEW_ID__ . '-Bdoc2843311'])><td @class([$__VIEW_ID__ . '-Bdoc28433111'])>mount / resume</td><td @class([$__VIEW_ID__ . '-Bdoc28433112'])>chèn khi tham chiếu 0 → 1</td></tr>
-                                <tr @class([$__VIEW_ID__ . '-Bdoc2843312'])><td @class([$__VIEW_ID__ . '-Bdoc28433121'])>unmount / pause / destroy</td><td @class([$__VIEW_ID__ . '-Bdoc28433122'])>gỡ khi tham chiếu 1 → 0</td></tr>
+                    <article @class([$__VIEW_ID__ . '-Bdoc2844', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc28441', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc284411', 'dir-name'])>Vòng đời</span><span @class([$__VIEW_ID__ . '-Bdoc284412', 'dir-kind'])>SSR · hydrate · SPA</span></div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28442'])>Thẻ do server in ra được runtime <strong @class([$__VIEW_ID__ . '-Bdoc284421'])>nhận nuôi</strong> (adopt) lúc hydrate chứ không chèn bản thứ hai. Sau đó nó đi theo vòng đời view, đếm tham chiếu:</p>
+                        <table @class([$__VIEW_ID__ . '-Bdoc28443', 'dir-mini'])>
+                            <tbody @class([$__VIEW_ID__ . '-Bdoc284431'])>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2844311'])><td @class([$__VIEW_ID__ . '-Bdoc28443111'])>mount / resume</td><td @class([$__VIEW_ID__ . '-Bdoc28443112'])>chèn khi tham chiếu 0 → 1</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2844312'])><td @class([$__VIEW_ID__ . '-Bdoc28443121'])>unmount / pause / destroy</td><td @class([$__VIEW_ID__ . '-Bdoc28443122'])>gỡ khi tham chiếu 1 → 0</td></tr>
                             </tbody>
                         </table>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28434'])>Nên rời trang là CSS của trang đó biến khỏi <code @class([$__VIEW_ID__ . '-Bdoc284341'])>&lt;head&gt;</code>: hai trang dùng chung selector với CSS khác nhau không đè lên nhau. CSS mà nhiều view cùng khai báo chỉ đi khi view cuối rời đi.</p>
-                        <p @class([$__VIEW_ID__ . '-Bdoc28435', 'dir-note'])><code @class([$__VIEW_ID__ . '-Bdoc284351'])>&lt;script&gt;</code> thì <strong @class([$__VIEW_ID__ . '-Bdoc284352'])>giữ lại</strong>. Gỡ thẻ script không hoàn tác side effect của nó, còn chèn lại là chạy lần hai — nạp lại một thư viện là xoá sạch những gì đã đăng ký vào nó giữa hai lần.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28444'])>Nên rời trang là CSS của trang đó biến khỏi <code @class([$__VIEW_ID__ . '-Bdoc284441'])>&lt;head&gt;</code>: hai trang dùng chung selector với CSS khác nhau không đè lên nhau. CSS mà nhiều view cùng khai báo chỉ đi khi view cuối rời đi.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc28445', 'dir-note'])><code @class([$__VIEW_ID__ . '-Bdoc284451'])>&lt;script&gt;</code> thì <strong @class([$__VIEW_ID__ . '-Bdoc284452'])>giữ lại</strong>. Gỡ thẻ script không hoàn tác side effect của nó, còn chèn lại là chạy lần hai — nạp lại một thư viện là xoá sạch những gì đã đăng ký vào nó giữa hai lần.</p>
                     </article>
 
                 </div>

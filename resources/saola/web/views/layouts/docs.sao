@@ -69,73 +69,70 @@
 <script setup lang="ts">
     import HighlightService from '@web/app/services/HighlightService';
 
-    export default {
-        name: 'DocsLayout',
-        _offNav: null as (() => void) | null,
+    let _offNav = null as (() => void) | null;
 
-        // Layout được TÁI DÙNG khi điều hướng giữa các trang docs (layout diff),
-        // nên started() chỉ chạy một lần — phải nghe router để đồng bộ lại.
-        //
-        // Trước đây chỗ này dùng MutationObserver + requestAnimationFrame và sai
-        // hai đường: rAF bị treo khi tab/pane ẩn (nav kẹt ở trang cũ), và khi vào
-        // docs từ layout KHÁC thì sync() chạy lúc `location.pathname` VẪN LÀ TRANG
-        // CŨ — router mount DOM trước, pushState sau — nên markCurrent() không
-        // khớp link nào và thanh nav mất highlight. afterEach chạy sau khi URL đã
-        // cập nhật, là tín hiệu tất định. Giống layouts/lab.sao.
-        started() {
-            this._offNav = App.Router.afterEach(() => this.sync());
-            this.sync();
-        },
+    // Layout được TÁI DÙNG khi điều hướng giữa các trang docs (layout diff),
+    // nên started() chỉ chạy một lần — phải nghe router để đồng bộ lại.
+    //
+    // Trước đây chỗ này dùng MutationObserver + requestAnimationFrame và sai
+    // hai đường: rAF bị treo khi tab/pane ẩn (nav kẹt ở trang cũ), và khi vào
+    // docs từ layout KHÁC thì sync() chạy lúc `location.pathname` VẪN LÀ TRANG
+    // CŨ — router mount DOM trước, pushState sau — nên markCurrent() không
+    // khớp link nào và thanh nav mất highlight. afterEach chạy sau khi URL đã
+    // cập nhật, là tín hiệu tất định. Giống layouts/lab.sao.
+    function started() {
+        _offNav = App.Router.afterEach(() => sync());
+        sync();
+    }
 
-        resumed() { this.sync(); },
+    function resumed() { sync(); }
 
-        stopped() { this.teardown(); },
-        destroyed() { this.teardown(); },
+    function stopped() { teardown(); }
+    function destroyed() { teardown(); }
 
-        teardown() {
-            if (this._offNav) { this._offNav(); this._offNav = null; }
-        },
+    function teardown() {
+        if (_offNav) { _offNav(); _offNav = null; }
+    }
 
-        sync() {
-            this.markCurrent();
-            this.generateTOC();
+    function sync() {
+        markCurrent();
+        generateTOC();
 
-            const main = document.querySelector('.docs-main');
-            if (main) {
-                HighlightService.highlight(main);
-            }
-        },
-
-        markCurrent() {
-            const here = window.location.pathname.replace(/\/+$/, '') || '/';
-            document.querySelectorAll('.docs-nav a').forEach(a => {
-                a.classList.toggle('is-current', a.getAttribute('href') === here);
-            });
-        },
-
-        generateTOC() {
-            const list = document.getElementById('docs-toc-list');
-            if (!list) return;
-            list.innerHTML = '';
-            
-            const headings = document.querySelectorAll<HTMLElement>('.docs-main h2, .docs-main h3');
-            if (headings.length === 0) {
-                list.innerHTML = '<li><span class="toc-empty">Chưa có mục lục</span></li>';
-                return;
-            }
-
-            headings.forEach(heading => {
-                if (!heading.id) {
-                    heading.id = heading.innerText.toLowerCase().replace(/[\s\W-]+/g, '-');
-                }
-                const li = document.createElement('li');
-                li.className = 'toc-item ' + (heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
-                const a = document.createElement('a');
-                a.href = '#' + heading.id;
-                a.innerText = heading.innerText;
-                li.appendChild(a);
-                list.appendChild(li);
-            });
+        const main = document.querySelector('.docs-main');
+        if (main) {
+            HighlightService.highlight(main);
         }
-    };
+    }
+
+    function markCurrent() {
+        const here = window.location.pathname.replace(/\/+$/, '') || '/';
+        document.querySelectorAll('.docs-nav a').forEach(a => {
+            a.classList.toggle('is-current', a.getAttribute('href') === here);
+        });
+    }
+
+    function generateTOC() {
+        const list = document.getElementById('docs-toc-list');
+        if (!list) return;
+        list.innerHTML = '';
+
+        const headings = document.querySelectorAll<HTMLElement>('.docs-main h2, .docs-main h3');
+        if (headings.length === 0) {
+            list.innerHTML = '<li><span class="toc-empty">Chưa có mục lục</span></li>';
+            return;
+        }
+
+        headings.forEach(heading => {
+            if (!heading.id) {
+                heading.id = heading.innerText.toLowerCase().replace(/[\s\W-]+/g, '-');
+            }
+            const li = document.createElement('li');
+            li.className = 'toc-item ' + (heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+            const a = document.createElement('a');
+            a.href = '#' + heading.id;
+            a.innerText = heading.innerText;
+            li.appendChild(a);
+            list.appendChild(li);
+        });
+    }
 </script>

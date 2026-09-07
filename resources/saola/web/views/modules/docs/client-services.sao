@@ -36,15 +36,18 @@
             <p>Props chỉ chảy từ cha xuống con. Muốn con báo ngược lên, dùng bus — cha đăng ký lúc mount và huỷ đăng ký lúc destroy.</p>
             <code-window label="TS" title="modules/roster/index.sao — &lt;script setup&gt;" lang="js">
 @verbatim
-mounted() {
-    this._off = [
+let off = [];
+
+function mounted() {
+    off = [
         App.Event.on('roster:editing', (uid, on) => { /* … */ }),
-        App.Event.on('roster:refresh', () => this.load()),
+        App.Event.on('roster:refresh', () => load()),
     ];
 }
 
-destroyed() {
-    (this._off || []).forEach(off => off());
+function destroyed() {
+    off.forEach(dispose => dispose());
+    off = [];
 }
 @endverbatim
             </code-window>

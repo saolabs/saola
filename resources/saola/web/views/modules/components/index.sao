@@ -407,19 +407,15 @@
 </template>
 
 <script setup lang="ts">
-    export default {
-        name: 'ComponentsPage',
+    function addItem() {
+        const label = draft.trim();
+        if (!label) return;
+        setItems([...items, { id: nextId, label }]);
+        setNextId(nextId + 1);
+        setDraft('');
+    }
 
-        addItem() {
-            const label = draft.trim();
-            if (!label) return;
-            setItems([...items, { id: nextId, label }]);
-            setNextId(nextId + 1);
-            setDraft('');
-        },
-
-        removeItem(id: number) {
-            setItems(items.filter((i: {id: number; label: string}) => i.id !== id));
-        }
-    };
+    function removeItem(id: number) {
+        setItems(items.filter((i: {id: number; label: string}) => i.id !== id));
+    }
 </script>

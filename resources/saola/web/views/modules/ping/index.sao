@@ -32,13 +32,10 @@
 </template>
 
 <script setup lang="ts">
-    export default {
-        name: 'PingPage',
-        reset(){
-            setCount(0);
-        },
-        addPing(){
-            setCount(count + 1);
-        }
-    };
+    function reset(){
+        setCount(0);
+    }
+    function addPing(){
+        setCount(count + 1);
+    }
 </script>

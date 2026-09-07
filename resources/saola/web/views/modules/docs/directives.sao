@@ -27,7 +27,8 @@
 
             <section class="dir-group" id="khai-bao">
                 <h2>Khai báo</h2>
-                <p>Nằm ở đầu file, ngoài <code>&lt;template&gt;</code>, và giữ nguyên thứ tự bạn viết. Đây là nơi quyết định biến nào reactive, biến nào không.</p>
+                <p>Quyết định biến nào reactive, biến nào không. Giữ nguyên thứ tự bạn viết.</p>
+                <p>Viết được ở <strong>hai chỗ</strong>, cùng một phạm vi: ngoài <code>&lt;template&gt;</code> như trước, hoặc <strong>bên trong <code>&lt;script setup&gt;</code></strong> — chỗ sau cho phép chú kiểu TypeScript và dùng luôn <code>import type</code> ở ngay trên. Xem <a href="/demo/setup">bản demo setup</a>.</p>
 
                 <div class="dir-list">
 
@@ -123,6 +124,13 @@
                         <div class="dir-head"><span class="dir-name">&#64;await</span><span class="dir-kind">Async</span></div>
                         <div class="dir-sig">&#64;await</div>
                         <p>Đánh dấu view là bất đồng bộ. Compiler bật cờ <code>hasAwaitData</code> trong config, runtime nhờ đó biết view cần chờ dữ liệu trước khi commit state, và có thể render khối preload trong lúc chờ.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;fetch</span><span class="dir-kind">Nạp dữ liệu</span></div>
+                        <div class="dir-sig">&#64;fetch('/duong-dan', 'GET')</div>
+                        <p>Khai báo một lần nạp dữ liệu để runtime tự gọi khi view khởi động. Khác <code>&#64;await</code> ở chỗ <code>&#64;await</code> gọi lại <strong>chính URL của trang</strong> để lấy JSON, còn <code>&#64;fetch</code> trỏ tới một URL bạn chỉ định.</p>
+                        <p class="dir-note">Cấu hình đi vào view dưới dạng <code>fetch: {url, method}</code> và bật cờ <code>hasFetchData</code>. Chỉ chạy phía client — SSR đã có sẵn dữ liệu từ controller.</p>
                     </article>
 
                     <article class="dir">
@@ -275,6 +283,13 @@
                         <div class="dir-sig">&#64;ssr … &#64;endssr</div>
                         <p>Khối chỉ tồn tại ở đầu ra Blade. Compiler loại nó khỏi view JavaScript, nên nội dung bên trong xuất hiện trong HTML lần đầu rồi không bao giờ được runtime dựng lại. Hợp cho dữ liệu chỉ có ở server hoặc khối nặng không cần tương tác.</p>
                         <p class="dir-note">Bí danh: <code>&#64;serverSide</code> / <code>&#64;endServerSide</code>, <code>&#64;useSSR</code> / <code>&#64;enduseSSR</code>.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;csr <em>· &#64;endcsr</em></span><span class="dir-kind">Chỉ client</span></div>
+                        <div class="dir-sig">&#64;csr … &#64;endcsr</div>
+                        <p>Ảnh gương của <code>&#64;ssr</code>: khối chỉ tồn tại ở view JavaScript. Blade bỏ qua nó nên nội dung không có trong HTML lần đầu, chỉ xuất hiện sau khi runtime dựng. Hợp cho thứ chỉ có nghĩa khi đã có JS — nút phụ thuộc tương tác, widget của thư viện ngoài.</p>
+                        <p class="dir-note">Bí danh: <code>&#64;clientSide</code> / <code>&#64;endClientSide</code>. Cặp <code>&#64;ssr</code>/<code>&#64;csr</code> là hai chỗ SSR và CSR được phép khác nhau <strong>có chủ đích</strong> — mọi khác biệt còn lại đều bị cổng parity coi là lỗi.</p>
                     </article>
 
                 </div>
@@ -482,6 +497,20 @@
                     </article>
 
                     <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;importView</span><span class="dir-kind">Trong script setup</span></div>
+                        <div class="dir-sig">&#64;importView(__base__ + 'components.card' as Card)</div>
+                        <p>Bản dùng <strong>bên trong <code>&lt;script setup&gt;</code></strong> của <code>&#64;import</code>. Cùng kết quả: đăng ký component vào registry để dùng thẻ <code>&lt;Card /&gt;</code> trong template.</p>
+                        <p class="dir-note">Đường dẫn nhận cả biến: khai <code>&#64;let(cardPath: string = __base__ + '…')</code> rồi <code>&#64;importView(cardPath as Card)</code>.</p>
+                    </article>
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;importInclude</span><span class="dir-kind">Include kèm props</span></div>
+                        <div class="dir-sig">&#64;importInclude(Card, ['title' =&gt; 'Xin chào'])</div>
+                        <p>Chèn component đã <code>&#64;import</code> và truyền props cho nó. Thẻ <code>&lt;Card /&gt;</code> là dạng rút gọn không props; cần truyền dữ liệu động thì dùng dạng này hoặc <code>:prop="biểu_thức"</code> trên thẻ.</p>
+                        <p class="dir-note">Attribute chuỗi trên thẻ component là <strong>tĩnh</strong>, không nội suy — <code>&lt;Card title="&#123;&#123; x &#125;&#125;"&gt;</code> không truyền giá trị của <code>x</code>.</p>
+                    </article>
+
+                    <article class="dir">
                         <div class="dir-head"><span class="dir-name">&#64;include</span><span class="dir-kind">Component</span></div>
                         <div class="dir-sig">&#64;include('đường.dẫn.view')
 &#64;include('đường.dẫn.view', {prop: biểu_thức})</div>
@@ -529,6 +558,14 @@
                 <p>Trong <code>.sao</code> bạn <strong>không gọi hai directive này</strong> — cứ khai báo <code>&lt;link rel="stylesheet"&gt;</code> hoặc <code>&lt;script src&gt;</code> ở cuối file, ngoài <code>&lt;template&gt;</code>, compiler tự dịch sang chúng cho nhánh Blade và sang <code>styles</code>/<code>scripts</code> cho nhánh JavaScript. Chúng là API cho Blade viết tay: layout của bạn, partial hệ thống, hay gói mở rộng.</p>
                 <p>Điểm mấu chốt: hai directive này <em>đăng ký</em> chứ không in thẻ tại chỗ. In tại chỗ là cách cũ và nó hỏng thật — với trang <code>&#64;extends</code>, phần nằm ngoài block được in TRƯỚC khi layout in <code>&lt;!DOCTYPE html&gt;</code>, mà doctype đứng sau nội dung thì trình duyệt bỏ luôn, cả trang rơi vào quirks mode.</p>
                 <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">&#64;asset <em>· &#64;assets</em></span><span class="dir-kind">Đường dẫn asset</span></div>
+                        <div class="dir-sig">&#64;asset(logo = 'images/logo.svg')<br>&#64;assets({icon: 'images/icon.svg', banner: 'images/b.png'})</div>
+                        <p>Khai báo một biến trỏ tới file trong thư mục asset của context. Dùng như biến thường trong template: <code>&lt;img src="&#123;&#123; logo &#125;&#125;"&gt;</code>.</p>
+                        <p>Giá trị được giải cùng một tiền tố ở cả hai phía — Blade gọi <code>asset()</code>, JavaScript gọi <code>App.Helper.asset()</code> — nên đường dẫn không bao giờ lệch giữa SSR và CSR. Viết tay chuỗi đường dẫn thì mất bảo chứng đó.</p>
+                        <p class="dir-note"><code>&#64;assets</code> là dạng nhiều biến của <code>&#64;asset</code>. Cả hai khai báo được bên trong <code>&lt;script setup&gt;</code>.</p>
+                    </article>
 
                     <article class="dir">
                         <div class="dir-head"><span class="dir-name">&#64;addCssLink</span><span class="dir-kind">Asset</span></div>

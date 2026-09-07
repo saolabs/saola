@@ -37,15 +37,18 @@
             @startMarker('component', 'Bdoc2c1')
             @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-window'].'_0'))
 @verbatim
-mounted() {
-    this._off = [
+let off = [];
+
+function mounted() {
+    off = [
         App.Event.on('roster:editing', (uid, on) => { /* … */ }),
-        App.Event.on('roster:refresh', () => this.load()),
+        App.Event.on('roster:refresh', () => load()),
     ];
 }
 
-destroyed() {
-    (this._off || []).forEach(off => off());
+function destroyed() {
+    off.forEach(dispose => dispose());
+    off = [];
 }
 @endverbatim
 @exec($__env->stopSection())

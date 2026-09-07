@@ -13,7 +13,3 @@
         </div>
     </section>
 </template>
-
-<script setup lang="ts">
-    export default { name: 'HomePrinciple' };
-</script>

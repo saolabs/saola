@@ -70,21 +70,17 @@
 
 <script setup lang="ts">
     // state/setter gọi trần (biến closure); method của mình thì qua `this`.
-    export default {
-        name: 'LifecycleDemo',
+    function record(hook: string) {
+        const stamp = new Date().toLocaleTimeString('vi-VN');
+        setEvents([`${stamp} — ${hook}`, ...(events || [])].slice(0, 12));
+    }
 
-        record(hook: string) {
-            const stamp = new Date().toLocaleTimeString('vi-VN');
-            setEvents([`${stamp} — ${hook}`, ...(events || [])].slice(0, 12));
-        },
+    function mounted() { record('mounted'); }
+    function started() { record('started — event và subscription đã gắn'); }
+    function paused() { record('paused — DOM đã vào PageCache'); }
+    function resumed() { record('resumed — quay lại từ PageCache, state còn nguyên'); }
+    function stopped() { console.info('[LifecycleDemo] stopped'); }
+    function destroyed() { console.info('[LifecycleDemo] destroyed'); }
 
-        mounted() { this.record('mounted'); },
-        started() { this.record('started — event và subscription đã gắn'); },
-        paused() { this.record('paused — DOM đã vào PageCache'); },
-        resumed() { this.record('resumed — quay lại từ PageCache, state còn nguyên'); },
-        stopped() { console.info('[LifecycleDemo] stopped'); },
-        destroyed() { console.info('[LifecycleDemo] destroyed'); },
-
-        goBack() { window.history.back(); }
-    };
+    function goBack() { window.history.back(); }
 </script>

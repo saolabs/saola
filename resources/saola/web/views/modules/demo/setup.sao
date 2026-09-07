@@ -8,12 +8,11 @@
     @asset(logo = 'images/logo.svg')
     @state(count: number = initial, status: GridStatusFilter = '')
     @computed(doubled: number = count * 2)
-
-    export default {
-        increment() { setCount(count + step); },
-        reset() { setCount(initial); setStatus(''); },
-        showStable() { setStatus('stable'); },
-    };
+    const maxWin: number = window.innerWidth;
+    
+    function increment() { setCount(count + step); }
+    function reset() { setCount(initial); setStatus(''); }
+    function showStable() { setStatus('stable'); }
 </script>
 
 {{-- Khai báo bên ngoài vẫn dùng chung phạm vi với setup. --}}
@@ -28,20 +27,59 @@
         <p class="lab-lead">Props, state, computed, asset và import view nằm trong script setup. Hằng số bước tăng được khai báo bên ngoài.</p>
 
         <div class="lab-toolbar">
-            <button id="setup-increment" class="button button-primary" @click(increment())>Tăng</button>
-            <button id="setup-reset" class="button" @click(reset())>Đặt lại</button>
-            <button id="setup-stable" class="button" @click(showStable())>Chọn stable</button>
+            <button id="setup-increment" class="button button-primary" @click(increment())>
+                <span>＋ Tăng (count + 1)</span>
+            </button>
+            <button id="setup-reset" class="button" @click(reset())>
+                <span>↺ Đặt lại</span>
+            </button>
+            <button id="setup-stable" class="button" @click(showStable())>
+                <span>Filter: stable</span>
+            </button>
         </div>
 
-        <p>Số lần bấm: <strong id="setup-count">{{ count }}</strong></p>
-        <p>Nhân đôi: <strong id="setup-doubled">{{ doubled }}</strong></p>
-        <p>Trạng thái: <span id="setup-status">{{ status === '' ? 'Tất cả' : status }}</span></p>
-        <p>Đường dẫn asset được phân giải: <code id="setup-asset">{{ logo }}</code></p>
-        <StatCard label="View được import qua biến hệ thống" value="SSR + client" />
+        <div class="setup-grid">
+            <div class="setup-card">
+                <span class="setup-card__label">State · Counter</span>
+                <div class="setup-card__value">
+                    <strong id="setup-count" class="setup-num">{{ count }}</strong>
+                </div>
+                <span class="setup-card__hint">Khởi tạo từ prop <code>initial: 0</code></span>
+            </div>
 
-        <h2>Mã nguồn demo</h2>
-        <p>Phần trên đang chạy trực tiếp từ cấu trúc typesafe bên dưới.</p>
-        <CodeBlock lang="sao">
+            <div class="setup-card">
+                <span class="setup-card__label">Computed · x2</span>
+                <div class="setup-card__value">
+                    <strong id="setup-doubled" class="setup-num setup-num--accent">{{ doubled }}</strong>
+                </div>
+                <span class="setup-card__hint">Tự động tính: <code>count * 2</code></span>
+            </div>
+
+            <div class="setup-card">
+                <span class="setup-card__label">Trạng thái filter</span>
+                <div class="setup-card__value">
+                    <span id="setup-status" @class({'setup-chip': true, 'setup-chip--active': status === 'stable'})>{{ status === '' ? 'Tất cả' : status }}</span>
+                </div>
+                <span class="setup-card__hint">Kiểu dữ liệu <code>GridStatusFilter</code></span>
+            </div>
+
+            <div class="setup-card">
+                <span class="setup-card__label">Asset phân giải</span>
+                <div class="setup-card__value">
+                    <code id="setup-asset" class="setup-asset-code">{{ logo }}</code>
+                </div>
+                <span class="setup-card__hint">Directive <code>&#64;asset('images/logo.svg')</code></span>
+            </div>
+        </div>
+
+        <div class="setup-import-preview">
+            <StatCard label="View được import qua biến hệ thống" value="SSR + client" />
+        </div>
+
+        <div class="setup-code-section">
+            <h2>Mã nguồn demo</h2>
+            <p class="lab-lead">Phần trên đang chạy trực tiếp từ cấu trúc typesafe bên dưới.</p>
+            <CodeBlock lang="sao">
 @verbatim
 &lt;script setup lang="ts"&gt;
     import type { GridStatusFilter } from '@web/app/services/GridData';
@@ -56,11 +94,9 @@
     &#64;state(count: number = initial, status: GridStatusFilter = '')
     &#64;computed(doubled: number = count * 2)
 
-    export default {
-        increment() { setCount(count + step); },
-        reset() { setCount(initial); setStatus(''); },
-        showStable() { setStatus('stable'); },
-    };
+    function increment() { setCount(count + step); }
+    function reset() { setCount(initial); setStatus(''); }
+    function showStable() { setStatus('stable'); }
 &lt;/script&gt;
 
 {{-- Khai báo bên ngoài vẫn dùng chung phạm vi với setup. --}}
@@ -82,6 +118,128 @@
     &#64;endblock
 &lt;/template&gt;
 @endverbatim
-        </CodeBlock>
+            </CodeBlock>
+        </div>
+    @endblock
+
+    @block('aside')
+        <h2>Đặc tính typesafe trong setup</h2>
+        <div class="directive-table">
+            <div><div class="dt-key"><code>&#64;props</code></div><span>Khai báo tham số nhận vào với kiểu dữ liệu TypeScript và giá trị mặc định.</span><b>props</b></div>
+            <div><div class="dt-key"><code>&#64;state</code></div><span>Tạo biến state kèm setter tự động (<code>setCount</code>, <code>setStatus</code>).</span><b>reactivity</b></div>
+            <div><div class="dt-key"><code>&#64;computed</code></div><span>Biến tính toán phụ thuộc state, tự động cache và cập nhật reactive.</span><b>computed</b></div>
+            <div><div class="dt-key"><code>&#64;let · &#64;const</code></div><span>Khai báo biến cục bộ hoặc hằng số có thể dùng chung ngoài template.</span><b>scope</b></div>
+            <div><div class="dt-key"><code>&#64;importView</code></div><span>Nạp component động qua biến hoặc tĩnh qua chuỗi namespace.</span><b>components</b></div>
+            <div><div class="dt-key"><code>&#64;asset</code></div><span>Tự động phân giải đường dẫn tài nguyên tĩnh theo context hiện hành.</span><b>assets</b></div>
+        </div>
+
+        <p class="lab-note">
+            Cấu trúc <code>&lt;script setup lang="ts"&gt;</code> được Saola Compiler biên dịch đồng thời:
+            sinh ra Blade Template (SSR) an toàn không eval và TypeScript Controller (CSR) tương ứng.
+        </p>
     @endblock
 </template>
+
+<style scoped>
+    .setup-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin: 20px 0 28px;
+    }
+
+    .setup-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 18px 20px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: var(--r-card);
+        box-shadow: var(--shadow-card);
+        transition: border-color .2s ease, transform .2s ease;
+    }
+
+    .setup-card:hover {
+        border-color: var(--river);
+        transform: translateY(-1px);
+    }
+
+    .setup-card__label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+    }
+
+    .setup-card__value {
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+    }
+
+    .setup-num {
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: -.03em;
+        color: var(--ink);
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+    }
+
+    .setup-num--accent {
+        color: var(--river);
+    }
+
+    .setup-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 999px;
+        background: var(--mist);
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+    .setup-chip--active {
+        background: rgba(14, 124, 134, .12);
+        color: #0e7c86;
+        border: 1px solid rgba(14, 124, 134, .3);
+    }
+
+    .setup-asset-code {
+        font-size: 12.5px;
+        padding: 4px 8px;
+        background: var(--mist);
+        border-radius: 6px;
+        color: var(--river);
+        word-break: break-all;
+    }
+
+    .setup-card__hint {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.4;
+    }
+
+    .setup-card__hint code {
+        font-size: 11px;
+    }
+
+    .setup-import-preview {
+        margin: 24px 0 36px;
+    }
+
+    .setup-code-section {
+        margin-top: 36px;
+    }
+
+    .setup-code-section h2 {
+        margin-bottom: 6px;
+    }
+</style>

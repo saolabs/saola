@@ -165,42 +165,39 @@
 </template>
 
 <script setup lang="ts">
-    export default {
-        name: 'HomeUsecase',
-        _timer: undefined as ReturnType<typeof setInterval> | undefined,
-        _listeners: null as AbortController | null,
+    let _timer = undefined as ReturnType<typeof setInterval> | undefined;
+    let _listeners = null as AbortController | null;
 
-        started() { this.activate(); },
-        resumed() { this.activate(); },
-        paused() { this.deactivate(); },
-        stopped() { this.deactivate(); },
-        destroyed() { this.deactivate(); },
+    function started() { activate(); }
+    function resumed() { activate(); }
+    function paused() { deactivate(); }
+    function stopped() { deactivate(); }
+    function destroyed() { deactivate(); }
 
-        activate() {
-            this.deactivate();
-            const container = document.querySelector('.usecase-tab-container');
-            if (!container) return;
-            this._listeners = new AbortController();
-            const options = { signal: this._listeners.signal };
-            container.addEventListener('mouseenter', () => this.stopSlides(), options);
-            container.addEventListener('mouseleave', () => this.startSlides(), options);
-            this.startSlides();
-        },
+    function activate() {
+        deactivate();
+        const container = document.querySelector('.usecase-tab-container');
+        if (!container) return;
+        _listeners = new AbortController();
+        const options = { signal: _listeners.signal };
+        container.addEventListener('mouseenter', () => stopSlides(), options);
+        container.addEventListener('mouseleave', () => startSlides(), options);
+        startSlides();
+    }
 
-        startSlides() {
-            this.stopSlides();
-            this._timer = setInterval(() => setActiveUsecase((activeUsecase + 1) % 4), 10000);
-        },
+    function startSlides() {
+        stopSlides();
+        _timer = setInterval(() => setActiveUsecase((activeUsecase + 1) % 4), 10000);
+    }
 
-        stopSlides() {
-            if (this._timer !== undefined) clearInterval(this._timer);
-            this._timer = undefined;
-        },
+    function stopSlides() {
+        if (_timer !== undefined) clearInterval(_timer);
+        _timer = undefined;
+    }
 
-        deactivate() {
-            this.stopSlides();
-            this._listeners?.abort();
-            this._listeners = null;
-        },
-    };
+    function deactivate() {
+        stopSlides();
+        _listeners?.abort();
+        _listeners = null;
+    }
 </script>

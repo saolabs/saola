@@ -100,41 +100,37 @@
 
 <script setup lang="ts">
     import type { StressUser } from '@web/app/services/DemoTypes';
-    export default {
-        name: 'StressPage',
+    /**
+     * Mô phỏng ĐÚNG một lần refetch: dữ liệu giống hệt về cấu trúc nhưng
+     * MỌI object là reference mới (như JSON.parse của response thật).
+     * Đây là đường từng làm view con của @include biến mất khỏi DOM.
+     */
+    function refreshFromServer() {
+        const next = (JSON.parse(JSON.stringify(users)) as StressUser[]).map(u => ({ ...u, rev: u.rev + 1 }));
+        setUsers(next);
+        setRefreshCount(refreshCount + 1);
+    }
 
-        /**
-         * Mô phỏng ĐÚNG một lần refetch: dữ liệu giống hệt về cấu trúc nhưng
-         * MỌI object là reference mới (như JSON.parse của response thật).
-         * Đây là đường từng làm view con của @include biến mất khỏi DOM.
-         */
-        refreshFromServer() {
-            const next = (JSON.parse(JSON.stringify(users)) as StressUser[]).map(u => ({ ...u, rev: u.rev + 1 }));
-            setUsers(next);
-            setRefreshCount(refreshCount + 1);
-        },
+    function applyQuery() {
+        const q = query.trim().toLowerCase();
+        if (!q) return;
+        setUsers(users.filter(u => u.name.toLowerCase().includes(q)));
+    }
 
-        applyQuery() {
-            const q = query.trim().toLowerCase();
-            if (!q) return;
-            setUsers(users.filter(u => u.name.toLowerCase().includes(q)));
-        },
+    function selectUser(id: number) {
+        setSelectedId(selectedId === id ? 0 : id);
+    }
 
-        selectUser(id: number) {
-            setSelectedId(selectedId === id ? 0 : id);
-        },
+    function removeUser(id: number) {
+        setUsers(users.filter(u => u.id !== id));
+    }
 
-        removeUser(id: number) {
-            setUsers(users.filter(u => u.id !== id));
-        },
+    function showBannerOnce() {
+        setBanner('Nút này đã dùng hết lượt (.once).');
+    }
 
-        showBannerOnce() {
-            setBanner('Nút này đã dùng hết lượt (.once).');
-        },
-
-        openModal() { setModalOpen(true); },
-        closeModal() { setModalOpen(false); }
-    };
+    function openModal() { setModalOpen(true); }
+    function closeModal() { setModalOpen(false); }
 </script>
 
 <style scoped>

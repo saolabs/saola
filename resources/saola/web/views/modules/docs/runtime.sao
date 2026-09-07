@@ -46,7 +46,3 @@
         </a>
     @endblock
 </template>
-
-<script setup lang="ts">
-    export default { name: 'RuntimePage' };
-</script>

@@ -10,7 +10,3 @@
         @children
     </div>
 </template>
-
-<script setup lang="ts">
-    export default { name: 'HomeOvCard' };
-</script>

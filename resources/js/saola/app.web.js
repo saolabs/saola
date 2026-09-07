@@ -1,6 +1,6 @@
 /**
  * ĐƯỢC SINH TỰ ĐỘNG bởi @saolabs/builder — đừng sửa file này.
- * Sinh lúc: 2026-09-06T11:16:26.396Z
+ * Sinh lúc: 2026-09-07T05:28:48.207Z
  *
  * Muốn thêm provider / service / helper thì sửa:
  *   resources/saola/_app/bootstrap.ts     (mọi context)

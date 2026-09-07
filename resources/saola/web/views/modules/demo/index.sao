@@ -46,6 +46,26 @@
                 <strong>Danh sách &amp; reconciliation</strong>
                 <p>Thêm, xoá, đảo thứ tự, refetch — xem chỗ nào giữ được DOM và chỗ nào bị dựng lại.</p>
             </a>
+            <a href="/demo/market">
+                <span>Ứng dụng thật</span>
+                <strong>Biểu đồ giá realtime</strong>
+                <p>Thư viện JS tự quản DOM (lightweight-charts) sống chung với hydration, cộng WebSocket Binance. Mất mạng thì tự chuyển sang feed mô phỏng.</p>
+            </a>
+            <a href="/demo/board">
+                <span>Ứng dụng thật</span>
+                <strong>Kanban kéo thả</strong>
+                <p>Khoá của thẻ di chuyển giữa hai vùng &#64;foreach khác nhau — ca khó nhất của danh sách có khoá. Cập nhật lạc quan có quay lui.</p>
+            </a>
+            <a href="/demo/grid">
+                <span>Ứng dụng thật</span>
+                <strong>Bảng 3.800 dòng</strong>
+                <p>Lọc, sắp, phân trang ở server. Trang đầu do Blade render nên đọc được khi tắt JS; thao tác sau đó chạy CSR trên cùng URL.</p>
+            </a>
+            <a href="/demo/stream">
+                <span>Ứng dụng thật</span>
+                <strong>Luồng sự kiện SSE</strong>
+                <p>Danh sách chỉ thêm vào đầu, kết nối sống đi qua điều hướng SPA, và stream có giới hạn để không bỏ đói worker PHP.</p>
+            </a>
             <a href="/demo/lifecycle">
                 <span>Runtime</span>
                 <strong>Vòng đời &amp; PageCache</strong>
@@ -180,21 +200,17 @@
 
 <script setup lang="ts">
     // state và setter là biến closure của view — gọi trần, không qua `this`.
-    export default {
-        name: 'DemoIndexPage',
+    function increment() { if (count < MAX_COUNT) setCount(count + 1); }
+    function decrement() { if (count > 0) setCount(count - 1); }
 
-        increment() { if (count < MAX_COUNT) setCount(count + 1); },
-        decrement() { if (count > 0) setCount(count - 1); },
-
-        reset() {
-            setCount(3);
-            setName('Saola');
-            setStatus('ready');
-            setIsVisible(true);
-            setIsLocked(false);
-            setAccepted(false);
-            setSelectedRuntime('blade');
-            setNote('');
-        }
-    };
+    function reset() {
+        setCount(3);
+        setName('Saola');
+        setStatus('ready');
+        setIsVisible(true);
+        setIsLocked(false);
+        setAccepted(false);
+        setSelectedRuntime('blade');
+        setNote('');
+    }
 </script>

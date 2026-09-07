@@ -18,9 +18,6 @@
     </article>
 </template>
 
-<script setup lang="ts">
-    export default { name: 'DemoFeatureCard' };
-</script>
 
 <style scoped>
     /* Cùng bảng màu với khu docs/lab — biến lấy từ demo-site.css. */

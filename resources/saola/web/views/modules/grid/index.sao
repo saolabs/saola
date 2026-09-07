@@ -117,94 +117,91 @@
     import { parseGridPageData } from '@web/app/services/GridData';
     import type { GridRow, GridStatusOption, GridStatusFilter, GridSort, GridDirection, GridQuery } from '@web/app/services/GridData';
 
-    export default {
-        name: 'GridPage',
-        _timer: undefined as ReturnType<typeof setTimeout> | undefined,
-        _ticket: 0,
-        _disposed: false,
+    let _timer = undefined as ReturnType<typeof setTimeout> | undefined;
+    let _ticket = 0;
+    let _disposed = false;
 
-        destroyed() {
-            this._disposed = true;
-            this._ticket = this._ticket + 1;
-            if (this._timer !== undefined) clearTimeout(this._timer);
-        },
+    function destroyed() {
+        _disposed = true;
+        _ticket = _ticket + 1;
+        if (_timer !== undefined) clearTimeout(_timer);
+    }
 
-        // Mũi tên sắp xếp viết THẲNG trong template bằng biểu thức ba ngôi, không
-        // gọi method. `{{ arrow('name') }}` chạy phía JS (method nằm trong scope)
-        // nhưng Blade không có hàm đó → "Call to undefined function arrow()".
-        // Đúng lớp lệch SSR/CSR: CSR xanh, SSR nổ.
+    // Mũi tên sắp xếp viết THẲNG trong template bằng biểu thức ba ngôi, không
+    // gọi method. `{{ arrow('name') }}` chạy phía JS (method nằm trong scope)
+    // nhưng Blade không có hàm đó → "Call to undefined function arrow()".
+    // Đúng lớp lệch SSR/CSR: CSR xanh, SSR nổ.
 
-        /** Hoãn rồi mới gọi: mỗi phím một request là tự tạo ra tranh chấp phản hồi. */
-        onSearch(event: Event) {
-            if (!(event.target instanceof HTMLInputElement) || this._disposed) return;
-            const value = event.target.value;
-            if (this._timer !== undefined) clearTimeout(this._timer);
-            // A response for the previous query must not win during the debounce window.
-            this._ticket = this._ticket + 1;
-            this._timer = setTimeout(() => this.fetch({ q: value, page: 1 }), 250);
-        },
+    /** Hoãn rồi mới gọi: mỗi phím một request là tự tạo ra tranh chấp phản hồi. */
+    function onSearch(event: Event) {
+        if (!(event.target instanceof HTMLInputElement) || _disposed) return;
+        const value = event.target.value;
+        if (_timer !== undefined) clearTimeout(_timer);
+        // A response for the previous query must not win during the debounce window.
+        _ticket = _ticket + 1;
+        _timer = setTimeout(() => fetch({ q: value, page: 1 }), 250);
+    }
 
-        applyStatus(key: GridStatusFilter) {
-            this.fetch({ status: key, page: 1 });
-        },
+    function applyStatus(key: GridStatusFilter) {
+        fetch({ status: key, page: 1 });
+    }
 
-        applySort(key: GridSort) {
-            const dir = sortKey === key && sortDir === 'desc' ? 'asc' : 'desc';
-            this.fetch({ sort: key, dir, page: 1 });
-        },
+    function applySort(key: GridSort) {
+        const dir = sortKey === key && sortDir === 'desc' ? 'asc' : 'desc';
+        fetch({ sort: key, dir, page: 1 });
+    }
 
-        previousPage() { this.goTo(pageNo - 1); },
-        nextPage() { this.goTo(pageNo + 1); },
+    function previousPage() { goTo(pageNo - 1); }
+    function nextPage() { goTo(pageNo + 1); }
 
-        goTo(target: number) {
-            if (target < 1 || target > pageCount || this._disposed) return;
-            if (target < pageNo && !get$canPrevious()) return;
-            if (target > pageNo && !get$canNext()) return;
-            this.fetch({ page: target });
-        },
+    function goTo(target: number) {
+        if (target < 1 || target > pageCount || _disposed) return;
+        if (target < pageNo && !get$canPrevious()) return;
+        if (target > pageNo && !get$canNext()) return;
+        fetch({ page: target });
+    }
 
-        async fetch(changes: Partial<GridQuery>) {
-            if (this._disposed) return;
-            if (this._timer !== undefined) { clearTimeout(this._timer); this._timer = undefined; }
-            const params: GridQuery = {
-                q: changes.q !== undefined ? changes.q : query,
-                status: changes.status !== undefined ? changes.status : activeStatus,
-                sort: changes.sort !== undefined ? changes.sort : sortKey,
-                dir: changes.dir !== undefined ? changes.dir : sortDir,
-                page: changes.page !== undefined ? changes.page : pageNo,
-            };
+    async function fetch(changes: Partial<GridQuery>) {
+        if (_disposed) return;
+        if (_timer !== undefined) { clearTimeout(_timer); _timer = undefined; }
+        const params: GridQuery = {
+            q: changes.q !== undefined ? changes.q : query,
+            status: changes.status !== undefined ? changes.status : activeStatus,
+            sort: changes.sort !== undefined ? changes.sort : sortKey,
+            dir: changes.dir !== undefined ? changes.dir : sortDir,
+            page: changes.page !== undefined ? changes.page : pageNo,
+        };
 
-            // Đánh số từng lượt gọi và chỉ nhận lượt MỚI NHẤT. Thiếu chốt này thì
-            // một phản hồi về trễ sẽ ghi đè lên phản hồi của thao tác sau nó.
-            const ticket = (this._ticket = this._ticket + 1);
-            setBusy(true);
-            setFailed('');
+        // Đánh số từng lượt gọi và chỉ nhận lượt MỚI NHẤT. Thiếu chốt này thì
+        // một phản hồi về trễ sẽ ghi đè lên phản hồi của thao tác sau nó.
+        const ticket = (_ticket = _ticket + 1);
+        setBusy(true);
+        setFailed('');
 
-            try {
-                const url = '/demo/grid?q=' + encodeURIComponent(params.q)
-                    + '&status=' + encodeURIComponent(params.status)
-                    + '&sort=' + params.sort + '&dir=' + params.dir + '&page=' + params.page;
+        try {
+            const url = '/demo/grid?q=' + encodeURIComponent(params.q)
+                + '&status=' + encodeURIComponent(params.status)
+                + '&sort=' + params.sort + '&dir=' + params.dir + '&page=' + params.page;
 
-                const response = await App.Http.get(url, null, {
-                    headers: { Accept: 'application/json', 'X-Sao-Response': 'json' },
-                });
-                if (ticket !== this._ticket || this._disposed) return;
+            const response = await App.Http.get(url, null, {
+                headers: { Accept: 'application/json', 'X-Sao-Response': 'json' },
+            });
+            if (ticket !== _ticket || _disposed) return;
 
-                const data = parseGridPageData(response.data.data);
-                setItems(data.rows);
-                setActiveStatus(params.status);
-                setSortKey(data.sort);
-                setSortDir(data.dir);
-                setPageNo(data.page);
-                setPageCount(data.pages);
-                setRangeFrom(data.from);
-                setRangeTo(data.to);
-                setCountText(data.totalText);
-            } catch (error) {
-                if (ticket === this._ticket && !this._disposed) setFailed('Không tải được dữ liệu: ' + (error instanceof Error ? error.message : String(error)));
-            } finally {
-                if (ticket === this._ticket && !this._disposed) setBusy(false);
-            }
-        },
-    };
+            const data = parseGridPageData(response.data.data);
+            setItems(data.rows);
+            setActiveStatus(params.status);
+            setSortKey(data.sort);
+            setSortDir(data.dir);
+            setPageNo(data.page);
+            setPageCount(data.pages);
+            setRangeFrom(data.from);
+            setRangeTo(data.to);
+            setCountText(data.totalText);
+        } catch (error) {
+            if (ticket === _ticket && !_disposed) setFailed('Không tải được dữ liệu: ' + (error instanceof Error ? error.message : String(error)));
+        } finally {
+            if (ticket === _ticket && !_disposed) setBusy(false);
+        }
+    }
 </script>

@@ -16,5 +16,4 @@
 
 <script setup lang="ts">
     let a: string = "test"
-    export default { name: 'ComponentsStatCard' };
 </script>

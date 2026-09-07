@@ -471,11 +471,9 @@ public function configureViews(): void
 &lt;/template&gt;
 
 &lt;script setup lang="ts"&gt;
-    export default {
-        mounted() {
-            console.log('Posts list view is active in SPA mode');
-        }
-    };
+    function mounted() {
+        console.log('Posts list view is active in SPA mode');
+    }
 &lt;/script&gt;
 
 &lt;style scoped&gt;

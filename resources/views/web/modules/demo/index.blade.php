@@ -41,15 +41,35 @@
                 <strong @class([$__VIEW_ID__ . '-Bmain432'])>Danh sách &amp; reconciliation</strong>
                 <p @class([$__VIEW_ID__ . '-Bmain433'])>Thêm, xoá, đảo thứ tự, refetch — xem chỗ nào giữ được DOM và chỗ nào bị dựng lại.</p>
             </a>
-            <a @class([$__VIEW_ID__ . '-Bmain44']) @attr(['href' => '/demo/lifecycle'])>
-                <span @class([$__VIEW_ID__ . '-Bmain441'])>Runtime</span>
-                <strong @class([$__VIEW_ID__ . '-Bmain442'])>Vòng đời &amp; PageCache</strong>
-                <p @class([$__VIEW_ID__ . '-Bmain443'])>Bảy chuyển trạng thái, và state sống sót qua back/forward nhờ PageCache.</p>
+            <a @class([$__VIEW_ID__ . '-Bmain44']) @attr(['href' => '/demo/market'])>
+                <span @class([$__VIEW_ID__ . '-Bmain441'])>Ứng dụng thật</span>
+                <strong @class([$__VIEW_ID__ . '-Bmain442'])>Biểu đồ giá realtime</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain443'])>Thư viện JS tự quản DOM (lightweight-charts) sống chung với hydration, cộng WebSocket Binance. Mất mạng thì tự chuyển sang feed mô phỏng.</p>
             </a>
-            <a @class([$__VIEW_ID__ . '-Bmain45']) @attr(['href' => '/roster'])>
+            <a @class([$__VIEW_ID__ . '-Bmain45']) @attr(['href' => '/demo/board'])>
                 <span @class([$__VIEW_ID__ . '-Bmain451'])>Ứng dụng thật</span>
-                <strong @class([$__VIEW_ID__ . '-Bmain452'])>Roster — CRUD qua API</strong>
-                <p @class([$__VIEW_ID__ . '-Bmain453'])>Danh sách sửa được, gọi API thật, view con báo ngược lên cha bằng <code @class([$__VIEW_ID__ . '-Bmain4531'])>App.Event</code>. Chạy trong shell <code @class([$__VIEW_ID__ . '-Bmain4532'])>workspace</code>.</p>
+                <strong @class([$__VIEW_ID__ . '-Bmain452'])>Kanban kéo thả</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain453'])>Khoá của thẻ di chuyển giữa hai vùng &#64;foreach khác nhau — ca khó nhất của danh sách có khoá. Cập nhật lạc quan có quay lui.</p>
+            </a>
+            <a @class([$__VIEW_ID__ . '-Bmain46']) @attr(['href' => '/demo/grid'])>
+                <span @class([$__VIEW_ID__ . '-Bmain461'])>Ứng dụng thật</span>
+                <strong @class([$__VIEW_ID__ . '-Bmain462'])>Bảng 3.800 dòng</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain463'])>Lọc, sắp, phân trang ở server. Trang đầu do Blade render nên đọc được khi tắt JS; thao tác sau đó chạy CSR trên cùng URL.</p>
+            </a>
+            <a @class([$__VIEW_ID__ . '-Bmain47']) @attr(['href' => '/demo/stream'])>
+                <span @class([$__VIEW_ID__ . '-Bmain471'])>Ứng dụng thật</span>
+                <strong @class([$__VIEW_ID__ . '-Bmain472'])>Luồng sự kiện SSE</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain473'])>Danh sách chỉ thêm vào đầu, kết nối sống đi qua điều hướng SPA, và stream có giới hạn để không bỏ đói worker PHP.</p>
+            </a>
+            <a @class([$__VIEW_ID__ . '-Bmain48']) @attr(['href' => '/demo/lifecycle'])>
+                <span @class([$__VIEW_ID__ . '-Bmain481'])>Runtime</span>
+                <strong @class([$__VIEW_ID__ . '-Bmain482'])>Vòng đời &amp; PageCache</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain483'])>Bảy chuyển trạng thái, và state sống sót qua back/forward nhờ PageCache.</p>
+            </a>
+            <a @class([$__VIEW_ID__ . '-Bmain49']) @attr(['href' => '/roster'])>
+                <span @class([$__VIEW_ID__ . '-Bmain491'])>Ứng dụng thật</span>
+                <strong @class([$__VIEW_ID__ . '-Bmain492'])>Roster — CRUD qua API</strong>
+                <p @class([$__VIEW_ID__ . '-Bmain493'])>Danh sách sửa được, gọi API thật, view con báo ngược lên cha bằng <code @class([$__VIEW_ID__ . '-Bmain4931'])>App.Event</code>. Chạy trong shell <code @class([$__VIEW_ID__ . '-Bmain4932'])>workspace</code>.</p>
             </a>
         </div>
 

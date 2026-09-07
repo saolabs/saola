@@ -12,7 +12,3 @@
         <code>{{ cmd }}</code>
     </li>
 </template>
-
-<script setup lang="ts">
-    export default { name: 'HomeFlowStep' };
-</script>

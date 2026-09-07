@@ -16,10 +16,8 @@ Ví dụ sau không cần API, layout hay component khác để chạy:
 @state(count: number = initial)
 @computed(doubled: number = count * 2)
 
-export default {
-    increment() { setCount(count + 1); },
-    reset() { setCount(initial); },
-};
+function increment() { setCount(count + 1); }
+function reset() { setCount(initial); }
 </script>
 
 <template>
@@ -36,6 +34,42 @@ section { padding: 1rem; }
 button { margin-right: 0.5rem; }
 </style>
 ```
+
+Mọi `function` ở cấp ngoài cùng của `<script setup>` trở thành method của view.
+Dạng cũ `export default { increment() {...} }` vẫn chạy; hai dạng dùng lẫn nhau
+được trong cùng một file.
+
+`let`/`const` khai trong setup thuộc **từng instance view**, hợp để giữ thứ
+không reactive — handle của thư viện ngoài, id timer, cờ nội bộ:
+
+```sao
+<script setup lang="ts">
+@state(count: number = 0)
+
+let clicks = 0;
+
+function increment() {
+    clicks++;
+    setCount(count + 1);
+}
+</script>
+```
+
+Đường dẫn tới file trong thư mục asset khai bằng `@asset`, đừng viết tay chuỗi:
+
+```sao
+<script setup lang="ts">
+@asset(logo = 'images/logo.svg')
+@assets({icon: 'images/icon.svg'})
+</script>
+
+<template>
+    <img src="{{ logo }}" alt=""><img src="{{ icon }}" alt="">
+</template>
+```
+
+Giá trị được giải cùng một tiền tố ở cả hai phía — Blade gọi `asset()`, JavaScript
+gọi `App.Helper.asset()` — nên đường dẫn không lệch giữa SSR và CSR.
 
 Component nhỏ vẫn có thể viết không cần script hay wrapper:
 
@@ -91,38 +125,41 @@ computed theo [quy tắc biểu thức và kiểu](../../compiler/docs/typed-com
 Trong template gọi `@submit(save(event))`; kiểu tham số đặt ở **method**:
 
 ```ts
-export default {
-    save(event: Event) {
-        event.preventDefault();
-    },
+function save(event: Event) {
+    event.preventDefault();
 }
 ```
 
 Với input, kiểm tra `event.target instanceof HTMLInputElement` trước khi đọc
 `value`. Không viết `@submit(save(event: Event))`: template là lời gọi hàm.
 
-Field riêng của instance phải khai báo trong object để suy luận được `this`.
-Listener/timer/kết nối được mở khi view hoạt động cần được dọn khi view dừng;
-view trong PageCache có thể được resume. Ví dụ:
+Trạng thái riêng của instance khai bằng `let` ngay trong setup — mỗi view một
+bản. Listener/timer/kết nối mở khi view hoạt động phải được dọn khi view dừng;
+view trong PageCache có thể được resume, nên `started` và `resumed` đều phải mở,
+còn `stopped`/`destroyed` đều phải đóng:
 
 ```ts
-export default {
-    timer: undefined as ReturnType<typeof setInterval> | undefined,
-    started() { this.startTimer(); },
-    resumed() { this.startTimer(); },
-    paused() { this.stopTimer(); },
-    stopped() { this.stopTimer(); },
-    destroyed() { this.stopTimer(); },
-    startTimer() {
-        this.stopTimer();
-        this.timer = setInterval(() => console.log('tick'), 1000);
-    },
-    stopTimer() {
-        if (this.timer !== undefined) clearInterval(this.timer);
-        this.timer = undefined;
-    },
+let timer: ReturnType<typeof setInterval> | undefined;
+
+function startTimer() {
+    stopTimer();
+    timer = setInterval(() => console.log('tick'), 1000);
 }
+
+function stopTimer() {
+    if (timer !== undefined) clearInterval(timer);
+    timer = undefined;
+}
+
+function started() { startTimer(); }
+function resumed() { startTimer(); }
+function paused() { stopTimer(); }
+function stopped() { stopTimer(); }
+function destroyed() { stopTimer(); }
 ```
+
+Dạng cũ `export default { started() { this.startTimer(); }, … }` vẫn chạy, khi
+đó field riêng khai trong chính object để suy luận được `this`.
 
 ## Kiểm tra và build
 

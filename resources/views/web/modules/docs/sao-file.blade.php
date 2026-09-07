@@ -20,8 +20,9 @@
             <div @class([$__VIEW_ID__ . '-Bdoc24', 'stack-diagram'])>
                 <article @class([$__VIEW_ID__ . '-Bdoc241'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2411'])>01 / DECLARATIONS</span>
-                    <strong @class([$__VIEW_ID__ . '-Bdoc2412'])>Đầu file</strong>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2413'])><code @class([$__VIEW_ID__ . '-Bdoc24131', 'directive-token'])>import</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24132', 'directive-token'])>vars</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24133', 'directive-token'])>props</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24134', 'directive-token'])>states</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24135', 'directive-token'])>const</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24136', 'directive-token'])>let</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24137', 'directive-token'])>await</code> — giữ nguyên thứ tự khai báo chuẩn.</p>
+                    <strong @class([$__VIEW_ID__ . '-Bdoc2412'])>Đầu file hoặc trong setup</strong>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2413'])><code @class([$__VIEW_ID__ . '-Bdoc24131', 'directive-token'])>import</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24132', 'directive-token'])>vars</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24133', 'directive-token'])>props</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24134', 'directive-token'])>state</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24135', 'directive-token'])>states</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24136', 'directive-token'])>computed</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24137', 'directive-token'])>const</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24138', 'directive-token'])>let</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24139', 'directive-token'])>asset</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc2413e10_', 'directive-token'])>await</code> — giữ nguyên thứ tự khai báo chuẩn.</p>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2414'])>Viết ở đầu file, hoặc <strong @class([$__VIEW_ID__ . '-Bdoc24141'])>bên trong <code @class([$__VIEW_ID__ . '-Bdoc241411'])>&lt;script setup&gt;</code></strong>. Hai chỗ dùng chung một phạm vi, nên khai ở đâu cũng như nhau — khác biệt là trong setup bạn chú được kiểu TypeScript.</p>
                 </article>
                 <article @class([$__VIEW_ID__ . '-Bdoc242'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2421'])>02 / TEMPLATE</span>
@@ -31,7 +32,8 @@
                 <article @class([$__VIEW_ID__ . '-Bdoc243'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2431'])>03 / SCRIPT SETUP</span>
                     <strong @class([$__VIEW_ID__ . '-Bdoc2432'])>Logic Client Runtime</strong>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2433'])>Export default một object method. Hàm đọc/ghi trực tiếp reactive state và setter trong closure mà không cần dùng tiền tố <code @class([$__VIEW_ID__ . '-Bdoc24331'])>this.</code>.</p>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2433'])>Khai báo function trực tiếp. Mọi <code @class([$__VIEW_ID__ . '-Bdoc24331'])>function</code> ở cấp ngoài cùng trở thành method của view. Hàm đọc/ghi reactive state và setter trong closure, gọi lẫn nhau mà không cần tiền tố <code @class([$__VIEW_ID__ . '-Bdoc24332'])>this.</code>.</p>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2434'])>Đây cũng là nơi đặt <code @class([$__VIEW_ID__ . '-Bdoc24341'])>import type</code> và khai báo có kiểu: <code @class([$__VIEW_ID__ . '-Bdoc24342'])>&#64;state(count: number = 0)</code>, <code @class([$__VIEW_ID__ . '-Bdoc24343'])>&#64;computed(doubled: number = count * 2)</code>. Biến <code @class([$__VIEW_ID__ . '-Bdoc24344'])>let</code>/<code @class([$__VIEW_ID__ . '-Bdoc24345'])>const</code> khai ở đây nằm trong phạm vi <strong @class([$__VIEW_ID__ . '-Bdoc24346'])>từng instance view</strong>, hợp để giữ thứ không reactive như handle của thư viện ngoài hay id timer.</p>
                 </article>
                 <article @class([$__VIEW_ID__ . '-Bdoc244'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2441'])>04 / STYLE</span>
@@ -64,18 +66,18 @@
 @verbatim
 <!-- 1. KHAI BÁO ĐẦU FILE (Giữ đúng thứ tự) -->
 &#64;import('web.components.user-avatar')
-&#64;vars(currentUser, title = 'Hồ sơ người dùng')
-&#64;props({ theme: 'dark', showBio: true })
-&#64;states({ count: 0, isEditing: false })
-&#64;const(MAX_BIO_LENGTH = 250)
-&#64;let(canEdit = currentUser.id === 1)
+&#64;vars(currentUser: User, title: string = 'Hồ sơ người dùng')
+&#64;props({ theme: 'dark', showBio: true }: { theme: string; showBio: boolean })
+&#64;states({ count: 0, isEditing: false }: { count: number; isEditing: boolean })
+&#64;const(MAX_BIO_LENGTH: number = 250)
+&#64;let(canEdit: boolean = currentUser.id === 1)
 
 <!-- 2. TEMPLATE (Giao diện + Directives) -->
 &lt;template&gt;
     &#64;extends(__layout__ + "public")
     &#64;block('content')
         &lt;div class="profile-card profile-card--{{ theme }}"&gt;
-            &lt;user-avatar user="{{ currentUser }}" size="large" /&gt;
+            &lt;user-avatar :user="currentUser" size="large" /&gt;
             &lt;h2&gt;{{ currentUser.name }}&lt;/h2&gt;
             &lt;p class="title"&gt;{{ title }}&lt;/p&gt;
 
@@ -99,14 +101,13 @@
 
 <!-- 3. SCRIPT SETUP (Logic tương tác Client) -->
 &lt;script setup lang="ts"&gt;
-    export default {
-        started() {
-            console.log('Component mounted for user:', currentUser.name);
-        },
-        customMethod() {
-            setCount(0);
-        }
-    };
+    function started() {
+        console.log('Component mounted for user:', currentUser.name);
+    }
+
+    function customMethod() {
+        setCount(0);
+    }
 &lt;/script&gt;
 
 <!-- 4. STYLE (CSS Scoped hoặc Global) -->

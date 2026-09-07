@@ -79,55 +79,51 @@
     // Quy ước .sao: state và setter của nó là BIẾN trong closure của view —
     // gọi trần (`rows`, `setRows(...)`), không qua `this`. Chỉ method do mình
     // khai báo mới nằm trên `this`.
-    export default {
-        name: 'ForeachDemo',
+    function note(text: string) {
+        const stamp = new Date().toLocaleTimeString('vi-VN');
+        setLog([`${stamp} — ${text}`, ...log].slice(0, 8));
+    }
 
-        note(text: string) {
-            const stamp = new Date().toLocaleTimeString('vi-VN');
-            setLog([`${stamp} — ${text}`, ...log].slice(0, 8));
-        },
+    function addRow() {
+        const id = nextId;
+        setNextId(id + 1);
+        setRows([...rows, { id, name: `Dòng mới ${id}`, hits: 0 }]);
+        note(`thêm #${id}`);
+    }
 
-        addRow() {
-            const id = nextId;
-            setNextId(id + 1);
-            setRows([...rows, { id, name: `Dòng mới ${id}`, hits: 0 }]);
-            this.note(`thêm #${id}`);
-        },
+    function removeRow(id: number) {
+        setRows(rows.filter(r => r.id !== id));
+        note(`xoá #${id}`);
+    }
 
-        removeRow(id: number) {
-            setRows(rows.filter(r => r.id !== id));
-            this.note(`xoá #${id}`);
-        },
+    function bump(id: number) {
+        // Sửa TẠI CHỖ rồi set lại cùng reference: StateManager đối chiếu nội
+        // dung độ sâu một nên vẫn nhận, và slot các dòng khác không đổi.
+        const row = rows.find(r => r.id === id);
+        if (!row) return;
+        row.hits += 1;
+        setRows(rows);
+        note(`+1 cho #${id} (sửa tại chỗ, giữ reference)`);
+    }
 
-        bump(id: number) {
-            // Sửa TẠI CHỖ rồi set lại cùng reference: StateManager đối chiếu nội
-            // dung độ sâu một nên vẫn nhận, và slot các dòng khác không đổi.
-            const row = rows.find(r => r.id === id);
-            if (!row) return;
-            row.hits += 1;
-            setRows(rows);
-            this.note(`+1 cho #${id} (sửa tại chỗ, giữ reference)`);
-        },
+    function renameFirst() {
+        const first = rows[0];
+        if (!first) return;
+        first.name = first.name.endsWith('*') ? first.name.slice(0, -1) : first.name + '*';
+        setRows(rows);
+        note('đổi tên dòng đầu (giữ reference)');
+    }
 
-        renameFirst() {
-            const first = rows[0];
-            if (!first) return;
-            first.name = first.name.endsWith('*') ? first.name.slice(0, -1) : first.name + '*';
-            setRows(rows);
-            this.note('đổi tên dòng đầu (giữ reference)');
-        },
+    function shuffleRows() {
+        setRows([...rows].reverse());
+        note('đảo thứ tự — key khớp nên slot được di chuyển');
+    }
 
-        shuffleRows() {
-            setRows([...rows].reverse());
-            this.note('đảo thứ tự — key khớp nên slot được di chuyển');
-        },
+    function refetch() {
+        // Mô phỏng dữ liệu vừa về từ server: CÙNG id, object mới hoàn toàn.
+        setRows(rows.map(r => ({ id: r.id, name: r.name, hits: r.hits })));
+        note('refetch — reference đổi, mỗi hàng bị dựng lại');
+    }
 
-        refetch() {
-            // Mô phỏng dữ liệu vừa về từ server: CÙNG id, object mới hoàn toàn.
-            setRows(rows.map(r => ({ id: r.id, name: r.name, hits: r.hits })));
-            this.note('refetch — reference đổi, mỗi hàng bị dựng lại');
-        },
-
-        clearLog() { setLog([]); }
-    };
+    function clearLog() { setLog([]); }
 </script>

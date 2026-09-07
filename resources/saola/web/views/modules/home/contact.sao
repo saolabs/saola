@@ -39,22 +39,19 @@
 </template>
 
 <script setup lang="ts">
-    export default {
-        name: 'ContactPage',
-        trackLength(event: Event) {
-            // .length phải nằm trong <script setup>: trong directive nó bị
-            // preprocessor đổi sang count() của PHP rồi lọt sang đầu ra JS.
-            if (event.target instanceof HTMLTextAreaElement) setMessageLength(event.target.value.length);
-        },
-        sendContact(event: Event) {
-            event.preventDefault();
-            setAttempted(true);
-            if (name.trim() && email.trim() && message.trim().length >= 12) setSent(true);
-        },
-        resetForm() {
-            setName(''); setEmail(''); setMessage(''); setMessageLength(0); setAttempted(false); setSent(false);
-        }
-    };
+    function trackLength(event: Event) {
+        // .length phải nằm trong <script setup>: trong directive nó bị
+        // preprocessor đổi sang count() của PHP rồi lọt sang đầu ra JS.
+        if (event.target instanceof HTMLTextAreaElement) setMessageLength(event.target.value.length);
+    }
+    function sendContact(event: Event) {
+        event.preventDefault();
+        setAttempted(true);
+        if (name.trim() && email.trim() && message.trim().length >= 12) setSent(true);
+    }
+    function resetForm() {
+        setName(''); setEmail(''); setMessage(''); setMessageLength(0); setAttempted(false); setSent(false);
+    }
 </script>
 
 <style scoped>

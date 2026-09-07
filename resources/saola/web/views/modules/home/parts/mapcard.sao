@@ -14,7 +14,3 @@
         <i>{{ link }}</i>
     </a>
 </template>
-
-<script setup lang="ts">
-    export default { name: 'HomeMapCard' };
-</script>

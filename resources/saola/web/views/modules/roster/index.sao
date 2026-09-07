@@ -114,127 +114,124 @@
     import { errorMessage } from '@web/app/services/Errors';
     const API = '/api/api/roster';
 
-    export default {
-        name: 'RosterPage',
-        _timer: undefined as ReturnType<typeof setInterval> | undefined,
-        _off: [] as (() => void)[],
+    let _timer = undefined as ReturnType<typeof setInterval> | undefined;
+    let _off = [] as (() => void)[];
 
-        // ─── Lifecycle ──────────────────────────────────────────
-        // started/stopped: kích hoạt & huỷ kích hoạt bình thường.
-        // resumed/paused : quay lại & rời PageCache (DOM còn, view ngủ).
-        started() { this.activate(); },
-        resumed() { this.activate(); },
-        stopped() { this.deactivate(); },
-        paused() { this.deactivate(); },
-        destroyed() { this.deactivate(); },
+    // ─── Lifecycle ──────────────────────────────────────────
+    // started/stopped: kích hoạt & huỷ kích hoạt bình thường.
+    // resumed/paused : quay lại & rời PageCache (DOM còn, view ngủ).
+    function started() { activate(); }
+    function resumed() { activate(); }
+    function stopped() { deactivate(); }
+    function paused() { deactivate(); }
+    function destroyed() { deactivate(); }
 
-        activate() {
-            if (this._timer) return;
-            this._timer = setInterval(() => this.load(), 30000);
-            this._off = [
-                // Hàng con báo lên "tôi đang mở form" — parent cần biết để KHÔNG
-                // gỡ hàng khi server đã xoá bản ghi đó.
-                App.Event.on('roster:editing', (uid: string, on: boolean) => {
-                    const next = { ...editing };
-                    if (on) next[uid] = true; else delete next[uid];
-                    setEditing(next);
-                }),
-                // Bản ghi vừa lưu do chính hàng con đẩy lên — gộp ngay để hàng
-                // không hiện dữ liệu cũ trong lúc chờ lượt fetch kế tiếp.
-                App.Event.on('roster:record', (rec: RosterRecord) => {
-                    if (!rec || !rec.uuid) return;
-                    setRecords({ ...records, [rec.uuid]: rec });
-                    if (!ids.includes(rec.uuid)) setIds([...ids, rec.uuid]);
-                }),
-                App.Event.on('roster:refresh', () => this.load())
-            ];
-            this.load();
-        },
+    function activate() {
+        if (_timer) return;
+        _timer = setInterval(() => load(), 30000);
+        _off = [
+            // Hàng con báo lên "tôi đang mở form" — parent cần biết để KHÔNG
+            // gỡ hàng khi server đã xoá bản ghi đó.
+            App.Event.on('roster:editing', (uid: string, on: boolean) => {
+                const next = { ...editing };
+                if (on) next[uid] = true; else delete next[uid];
+                setEditing(next);
+            }),
+            // Bản ghi vừa lưu do chính hàng con đẩy lên — gộp ngay để hàng
+            // không hiện dữ liệu cũ trong lúc chờ lượt fetch kế tiếp.
+            App.Event.on('roster:record', (rec: RosterRecord) => {
+                if (!rec || !rec.uuid) return;
+                setRecords({ ...records, [rec.uuid]: rec });
+                if (!ids.includes(rec.uuid)) setIds([...ids, rec.uuid]);
+            }),
+            App.Event.on('roster:refresh', () => load())
+        ];
+        load();
+    }
 
-        deactivate() {
-            clearInterval(this._timer);
-            this._timer = undefined;
-            (this._off || []).forEach(off => off());
-            this._off = [];
-        },
+    function deactivate() {
+        clearInterval(_timer);
+        _timer = undefined;
+        (_off || []).forEach(off => off());
+        _off = [];
+    }
 
-        // ─── Fetch ──────────────────────────────────────────────
-        async load() {
-            try {
-                const res = await App.Http.get(API);
-                setSyncError('');
-                this.applyServer(res.data.data || []);
-            } catch (e) {
-                setSyncError('Không tải được danh sách: ' + errorMessage(e));
-            }
-        },
-
-        /**
-         * Hoà bản server vào state hiện tại.
-         *
-         * Hai quy tắc giữ cho form đang mở không bị đập:
-         *   1. updated_at không đổi ⇒ GIỮ NGUYÊN object ref cũ. Ref không đổi
-         *      thì Component không đẩy prop, hàng đó không render lại.
-         *   2. Bản ghi biến mất mà hàng đó đang được sửa ⇒ giữ id lại trong
-         *      danh sách và đặt record = null. null chính là tín hiệu "bia mộ"
-         *      để item view hiện khối "người khác vừa xoá".
-         */
-        applyServer(list: RosterRecord[]) {
-            const byId: Record<string, RosterRecord> = {};
-            for (const u of list) byId[u.uuid] = u;
-
-            const nextIds = [];
-            for (const id of ids) {
-                if (byId[id] || editing[id]) nextIds.push(id);
-            }
-            for (const u of list) {
-                if (!ids.includes(u.uuid)) nextIds.push(u.uuid);
-            }
-
-            const nextRecords: Record<string, RosterRecord | null> = {};
-            let changed = nextIds.length !== ids.length;
-            for (let i = 0; i < nextIds.length; i++) {
-                const id = nextIds[i];
-                if (id !== ids[i]) changed = true;
-
-                const fresh = byId[id] || null;
-                const cur = records[id];
-                const same = fresh && cur && cur.updated_at === fresh.updated_at;
-                nextRecords[id] = same ? cur : fresh;
-                if (nextRecords[id] !== cur) changed = true;
-            }
-
-            if (changed) {
-                setIds(nextIds);
-                setRecords(nextRecords);
-            }
-            setLastSync(new Date().toLocaleTimeString());
-        },
-
-        // ─── Create ─────────────────────────────────────────────
-        async createUser(event: Event) {
-            event.preventDefault();
-            if (creating) return;
-            setCreating(true);
-            try {
-                await App.Http.post(API, {
-                    name: fName,
-                    email: fEmail,
-                    gender: fGender,
-                    birthdate: fBirthdate
-                });
-                setFName('');
-                setFEmail('');
-                setFBirthdate('');
-                setSyncError('');
-                await this.load();
-            } catch (e) {
-                setSyncError('Không tạo được user: ' + errorMessage(e));
-            } finally {
-                setCreating(false);
-            }
+    // ─── Fetch ──────────────────────────────────────────────
+    async function load() {
+        try {
+            const res = await App.Http.get(API);
+            setSyncError('');
+            applyServer(res.data.data || []);
+        } catch (e) {
+            setSyncError('Không tải được danh sách: ' + errorMessage(e));
         }
-    };
+    }
+
+    /**
+     * Hoà bản server vào state hiện tại.
+     *
+     * Hai quy tắc giữ cho form đang mở không bị đập:
+     *   1. updated_at không đổi ⇒ GIỮ NGUYÊN object ref cũ. Ref không đổi
+     *      thì Component không đẩy prop, hàng đó không render lại.
+     *   2. Bản ghi biến mất mà hàng đó đang được sửa ⇒ giữ id lại trong
+     *      danh sách và đặt record = null. null chính là tín hiệu "bia mộ"
+     *      để item view hiện khối "người khác vừa xoá".
+     */
+    function applyServer(list: RosterRecord[]) {
+        const byId: Record<string, RosterRecord> = {};
+        for (const u of list) byId[u.uuid] = u;
+
+        const nextIds = [];
+        for (const id of ids) {
+            if (byId[id] || editing[id]) nextIds.push(id);
+        }
+        for (const u of list) {
+            if (!ids.includes(u.uuid)) nextIds.push(u.uuid);
+        }
+
+        const nextRecords: Record<string, RosterRecord | null> = {};
+        let changed = nextIds.length !== ids.length;
+        for (let i = 0; i < nextIds.length; i++) {
+            const id = nextIds[i];
+            if (id !== ids[i]) changed = true;
+
+            const fresh = byId[id] || null;
+            const cur = records[id];
+            const same = fresh && cur && cur.updated_at === fresh.updated_at;
+            nextRecords[id] = same ? cur : fresh;
+            if (nextRecords[id] !== cur) changed = true;
+        }
+
+        if (changed) {
+            setIds(nextIds);
+            setRecords(nextRecords);
+        }
+        setLastSync(new Date().toLocaleTimeString());
+    }
+
+    // ─── Create ─────────────────────────────────────────────
+    async function createUser(event: Event) {
+        event.preventDefault();
+        if (creating) return;
+        setCreating(true);
+        try {
+            await App.Http.post(API, {
+                name: fName,
+                email: fEmail,
+                gender: fGender,
+                birthdate: fBirthdate
+            });
+            setFName('');
+            setFEmail('');
+            setFBirthdate('');
+            setSyncError('');
+            await load();
+        } catch (e) {
+            setSyncError('Không tạo được user: ' + errorMessage(e));
+        } finally {
+            setCreating(false);
+        }
+    }
 </script>
 
 <link rel="stylesheet" href="/static/saola/roster.css">

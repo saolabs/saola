@@ -54,39 +54,36 @@
 <script setup lang="ts">
     import HighlightService from '@web/app/services/HighlightService';
 
-    export default {
-        name: 'LabLayout',
-        _offNav: null as (() => void) | null,
+    let _offNav = null as (() => void) | null;
 
-        // Layout được TÁI DÙNG khi điều hướng giữa các trang demo (layout diff),
-        // nên started() chỉ chạy đúng một lần. Nội dung trong outlet đổi mà
-        // layout không có hook nào bắn ra, nên phải nghe router.
-        //
-        // KHÔNG dùng MutationObserver: callback lên lịch bằng requestAnimationFrame,
-        // mà rAF bị treo khi tab/pane ẩn — nav và mục lục kẹt ở trang cũ.
-        // afterEach là tín hiệu tất định của router, và nay nhận nhiều hook.
-        started() {
-            this._offNav = App.Router.afterEach(() => this.sync());
-            this.sync();
-        },
+    // Layout được TÁI DÙNG khi điều hướng giữa các trang demo (layout diff),
+    // nên started() chỉ chạy đúng một lần. Nội dung trong outlet đổi mà
+    // layout không có hook nào bắn ra, nên phải nghe router.
+    //
+    // KHÔNG dùng MutationObserver: callback lên lịch bằng requestAnimationFrame,
+    // mà rAF bị treo khi tab/pane ẩn — nav và mục lục kẹt ở trang cũ.
+    // afterEach là tín hiệu tất định của router, và nay nhận nhiều hook.
+    function started() {
+        _offNav = App.Router.afterEach(() => sync());
+        sync();
+    }
 
-        resumed() { this.sync(); },
+    function resumed() { sync(); }
 
-        destroyed() {
-            if (this._offNav) { this._offNav(); this._offNav = null; }
-        },
+    function destroyed() {
+        if (_offNav) { _offNav(); _offNav = null; }
+    }
 
-        sync() {
-            this.markCurrent();
-            const main = document.querySelector('.lab-main');
-            if (main) HighlightService.highlight(main);
-        },
+    function sync() {
+        markCurrent();
+        const main = document.querySelector('.lab-main');
+        if (main) HighlightService.highlight(main);
+    }
 
-        markCurrent() {
-            const here = window.location.pathname.replace(/\/+$/, '') || '/';
-            document.querySelectorAll('.docs-nav a').forEach(a => {
-                a.classList.toggle('is-current', a.getAttribute('href') === here);
-            });
-        }
-    };
+    function markCurrent() {
+        const here = window.location.pathname.replace(/\/+$/, '') || '/';
+        document.querySelectorAll('.docs-nav a').forEach(a => {
+            a.classList.toggle('is-current', a.getAttribute('href') === here);
+        });
+    }
 </script>

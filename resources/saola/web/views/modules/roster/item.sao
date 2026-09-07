@@ -144,110 +144,106 @@
     import { errorMessage, httpStatus } from '@web/app/services/Errors';
     const API = '/api/api/roster';
 
-    export default {
-        name: 'RosterItem',
+    /** Mở form: chụp lại bản server đang cầm làm mốc so sánh (base). */
+    function beginEdit() {
+        if (!record) return;
+        setBase(record);
+        setFName(record.name);
+        setFEmail(record.email);
+        setFGender(record.gender);
+        setFBirthdate(record.birthdate);
+        setNote('');
+        setEditing(true);
+        App.Event.emit('roster:editing', uid, true);
+    }
 
-        /** Mở form: chụp lại bản server đang cầm làm mốc so sánh (base). */
-        beginEdit() {
-            if (!record) return;
-            setBase(record);
-            setFName(record.name);
-            setFEmail(record.email);
-            setFGender(record.gender);
-            setFBirthdate(record.birthdate);
+    function cancelEdit() {
+        setEditing(false);
+        setBase(null);
+        setNote('');
+        App.Event.emit('roster:editing', uid, false);
+        App.Event.emit('roster:refresh');
+    }
+
+    /** Bỏ bản nháp, nạp lại nguyên bản của người kia. */
+    function takeTheirs() {
+        beginEdit();
+    }
+
+    /** Giữ nguyên form, chỉ dời mốc version để lần lưu tới không bị 409. */
+    function keepMine() {
+        setBase(record);
+        setNote('Sẽ ghi đè bản của người kia khi bạn bấm Lưu.');
+    }
+
+    async function save(event: Event) {
+        event.preventDefault();
+        if (busy) return;
+        setBusy(true);
+        try {
+            const res = await App.Http.put(API + '/' + uid, {
+                name: fName,
+                email: fEmail,
+                gender: fGender,
+                birthdate: fBirthdate,
+                version: base ? base.updated_at : null
+            });
+            // Đẩy thẳng bản vừa lưu lên cha thay vì chờ vòng fetch kế tiếp —
+            // nếu không, hàng quay về chế độ xem với `record` cũ và loé lên
+            // dữ liệu lỗi thời (tệ nhất là bản của người kia sau khi hoà giải).
+            const saved = res.data.data;
+            setBase(saved);
+            setEditing(false);
             setNote('');
-            setEditing(true);
-            App.Event.emit('roster:editing', uid, true);
-        },
+            App.Event.emit('roster:editing', uid, false);
+            App.Event.emit('roster:record', saved);
+        } catch (e) {
+            // 409/404: server đã đi trước ta. Kéo bản mới về, khối so sánh
+            // phía trên tự bật lên vì record.updated_at lệch base.
+            const code = httpStatus(e);
+            if (code === 409) {
+                setNote('Có người khác vừa sửa trước bạn — đối chiếu rồi lưu lại.');
+                App.Event.emit('roster:refresh');
+            } else if (code === 404) {
+                setNote('User đã bị xoá khỏi server.');
+                App.Event.emit('roster:refresh');
+            } else {
+                setNote('Lưu thất bại: ' + errorMessage(e));
+            }
+        } finally {
+            setBusy(false);
+        }
+    }
 
-        cancelEdit() {
+    async function remove() {
+        try {
+            await App.Http.delete(API + '/' + uid);
+        } catch (e) {
+            setNote('Xoá thất bại: ' + errorMessage(e));
+        }
+        App.Event.emit('roster:refresh');
+    }
+
+    /** Bản ghi đã mất trên server — POST lại bản nháp thành user mới. */
+    async function recreate() {
+        setBusy(true);
+        try {
+            const res = await App.Http.post(API, {
+                name: fName,
+                email: fEmail,
+                gender: fGender,
+                birthdate: fBirthdate
+            });
             setEditing(false);
             setBase(null);
             setNote('');
             App.Event.emit('roster:editing', uid, false);
+            App.Event.emit('roster:record', res.data.data);
             App.Event.emit('roster:refresh');
-        },
-
-        /** Bỏ bản nháp, nạp lại nguyên bản của người kia. */
-        takeTheirs() {
-            this.beginEdit();
-        },
-
-        /** Giữ nguyên form, chỉ dời mốc version để lần lưu tới không bị 409. */
-        keepMine() {
-            setBase(record);
-            setNote('Sẽ ghi đè bản của người kia khi bạn bấm Lưu.');
-        },
-
-        async save(event: Event) {
-            event.preventDefault();
-            if (busy) return;
-            setBusy(true);
-            try {
-                const res = await App.Http.put(API + '/' + uid, {
-                    name: fName,
-                    email: fEmail,
-                    gender: fGender,
-                    birthdate: fBirthdate,
-                    version: base ? base.updated_at : null
-                });
-                // Đẩy thẳng bản vừa lưu lên cha thay vì chờ vòng fetch kế tiếp —
-                // nếu không, hàng quay về chế độ xem với `record` cũ và loé lên
-                // dữ liệu lỗi thời (tệ nhất là bản của người kia sau khi hoà giải).
-                const saved = res.data.data;
-                setBase(saved);
-                setEditing(false);
-                setNote('');
-                App.Event.emit('roster:editing', uid, false);
-                App.Event.emit('roster:record', saved);
-            } catch (e) {
-                // 409/404: server đã đi trước ta. Kéo bản mới về, khối so sánh
-                // phía trên tự bật lên vì record.updated_at lệch base.
-                const code = httpStatus(e);
-                if (code === 409) {
-                    setNote('Có người khác vừa sửa trước bạn — đối chiếu rồi lưu lại.');
-                    App.Event.emit('roster:refresh');
-                } else if (code === 404) {
-                    setNote('User đã bị xoá khỏi server.');
-                    App.Event.emit('roster:refresh');
-                } else {
-                    setNote('Lưu thất bại: ' + errorMessage(e));
-                }
-            } finally {
-                setBusy(false);
-            }
-        },
-
-        async remove() {
-            try {
-                await App.Http.delete(API + '/' + uid);
-            } catch (e) {
-                setNote('Xoá thất bại: ' + errorMessage(e));
-            }
-            App.Event.emit('roster:refresh');
-        },
-
-        /** Bản ghi đã mất trên server — POST lại bản nháp thành user mới. */
-        async recreate() {
-            setBusy(true);
-            try {
-                const res = await App.Http.post(API, {
-                    name: fName,
-                    email: fEmail,
-                    gender: fGender,
-                    birthdate: fBirthdate
-                });
-                setEditing(false);
-                setBase(null);
-                setNote('');
-                App.Event.emit('roster:editing', uid, false);
-                App.Event.emit('roster:record', res.data.data);
-                App.Event.emit('roster:refresh');
-            } catch (e) {
-                setNote('Tạo lại thất bại: ' + errorMessage(e));
-            } finally {
-                setBusy(false);
-            }
+        } catch (e) {
+            setNote('Tạo lại thất bại: ' + errorMessage(e));
+        } finally {
+            setBusy(false);
         }
-    };
+    }
 </script>

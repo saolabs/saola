@@ -85,167 +85,164 @@
     import type { BoardColumn } from '@web/app/services/DemoTypes';
     import type { HttpResponse } from '@saolabs/client';
     import { errorMessage } from '@web/app/services/Errors';
-    export default {
-        name: 'BoardPage',
-        _off: [] as (() => void)[],
+    let _off = [] as (() => void)[];
 
-        started() {
-            // Đăng ký ở started(), gỡ ở destroyed(). Layout được tái dùng qua
-            // điều hướng SPA nên không gỡ là mỗi lượt vào lại chồng thêm listener.
-            this._off = [
-                App.Event.on('board:drag', (id: number) => setDragId(id)),
-                App.Event.on('board:edit', (id: number) => this.openEditor(id)),
-                App.Event.on('board:draft', (value: string) => setDraftText(value)),
-                App.Event.on('board:cancel', () => this.closeEditor()),
-                App.Event.on('board:rename', (payload: {id: number; title: string}) => this.rename(payload)),
-                App.Event.on('board:delete', (id: number) => this.remove(id)),
-            ];
-        },
+    function started() {
+        // Đăng ký ở started(), gỡ ở destroyed(). Layout được tái dùng qua
+        // điều hướng SPA nên không gỡ là mỗi lượt vào lại chồng thêm listener.
+        _off = [
+            App.Event.on('board:drag', (id: number) => setDragId(id)),
+            App.Event.on('board:edit', (id: number) => openEditor(id)),
+            App.Event.on('board:draft', (value: string) => setDraftText(value)),
+            App.Event.on('board:cancel', () => closeEditor()),
+            App.Event.on('board:rename', (payload: {id: number; title: string}) => rename(payload)),
+            App.Event.on('board:delete', (id: number) => remove(id)),
+        ];
+    }
 
-        destroyed() {
-            (this._off || []).forEach((off) => typeof off === 'function' && off());
-            this._off = [];
-        },
+    function destroyed() {
+        (_off || []).forEach((off) => typeof off === 'function' && off());
+        _off = [];
+    }
 
-        /**
-         * Trạng thái đang-sửa nằm ở CHA, không nằm trong thẻ.
-         *
-         * Kéo thẻ sang cột khác là chuyển khoá sang vùng @foreach khác nên
-         * instance con bị dựng lại — bản nháp giữ trong con sẽ bay mất. Giữ ở
-         * cha thì con chỉ việc soi lại từ prop trong started().
-         */
-        openEditor(id: number) {
-            const card = this.findCard(id);
-            setDraftText(card ? card['title'] : '');
-            setEditingId(id);
-        },
+    /**
+     * Trạng thái đang-sửa nằm ở CHA, không nằm trong thẻ.
+     *
+     * Kéo thẻ sang cột khác là chuyển khoá sang vùng @foreach khác nên
+     * instance con bị dựng lại — bản nháp giữ trong con sẽ bay mất. Giữ ở
+     * cha thì con chỉ việc soi lại từ prop trong started().
+     */
+    function openEditor(id: number) {
+        const card = findCard(id);
+        setDraftText(card ? card['title'] : '');
+        setEditingId(id);
+    }
 
-        closeEditor() {
-            setEditingId(0);
-            setDraftText('');
-        },
+    function closeEditor() {
+        setEditingId(0);
+        setDraftText('');
+    }
 
-        findCard(id: number) {
-            for (const col of board) {
-                const found = col['cards'].find((card) => card['id'] === id);
-                if (found) return found;
-            }
-            return null;
-        },
+    function findCard(id: number) {
+        for (const col of board) {
+            const found = col['cards'].find((card) => card['id'] === id);
+            if (found) return found;
+        }
+        return null;
+    }
 
-        allowDrop(event: DragEvent, column: string) {
-            // Không preventDefault thì trình duyệt từ chối thả — mặc định của
-            // HTML5 drag-and-drop là "không cho".
-            event.preventDefault();
-            if (overColumn !== column) setOverColumn(column);
-        },
+    function allowDrop(event: DragEvent, column: string) {
+        // Không preventDefault thì trình duyệt từ chối thả — mặc định của
+        // HTML5 drag-and-drop là "không cho".
+        event.preventDefault();
+        if (overColumn !== column) setOverColumn(column);
+    }
 
-        async onDrop(event: DragEvent, column: string) {
-            event.preventDefault();
-            setOverColumn('');
-            if (!dragId || busy) return;
+    async function onDrop(event: DragEvent, column: string) {
+        event.preventDefault();
+        setOverColumn('');
+        if (!dragId || busy) return;
 
-            const index = this.indexIn(column, event.clientY);
-            const snapshot = board;
-            setBoard(this.moveLocally(board, dragId, column, index));
+        const index = indexIn(column, event.clientY);
+        const snapshot = board;
+        setBoard(moveLocally(board, dragId, column, index));
 
-            await this.commit(
-                () => App.Http.post('/demo/board/move', { id: dragId, column, index }, this.options()),
-                snapshot,
-            );
-            setDragId(0);
-        },
+        await commit(
+            () => App.Http.post('/demo/board/move', { id: dragId, column, index }, options()),
+            snapshot,
+        );
+        setDragId(0);
+    }
 
-        /** Vị trí thả suy từ toạ độ chuột so với tâm từng thẻ đang hiển thị. */
-        indexIn(column: string, clientY: number) {
-            const body = document.querySelector('[data-col="' + column + '"] .kb-col-body');
-            if (!body) return 0;
+    /** Vị trí thả suy từ toạ độ chuột so với tâm từng thẻ đang hiển thị. */
+    function indexIn(column: string, clientY: number) {
+        const body = document.querySelector('[data-col="' + column + '"] .kb-col-body');
+        if (!body) return 0;
 
-            const cards = [...body.querySelectorAll('.kb-card')];
-            for (let i = 0; i < cards.length; i++) {
-                const box = cards[i].getBoundingClientRect();
-                if (clientY < box.top + box.height / 2) return i;
-            }
-            return cards.length;
-        },
+        const cards = [...body.querySelectorAll('.kb-card')];
+        for (let i = 0; i < cards.length; i++) {
+            const box = cards[i].getBoundingClientRect();
+            if (clientY < box.top + box.height / 2) return i;
+        }
+        return cards.length;
+    }
 
-        /** Dựng lại bảng ngay phía client để giao diện phản hồi tức thì. */
-        moveLocally(columns: BoardColumn[], id: number, target: string, index: number): BoardColumn[] {
-            const moving = columns.flatMap(col => col.cards).find(card => card.id === id);
-            if (!moving) return columns;
-            const stripped = columns.map((col) => ({
-                key: col['key'],
-                label: col['label'],
-                cards: col['cards'].filter(card => card['id'] !== id),
-            }));
+    /** Dựng lại bảng ngay phía client để giao diện phản hồi tức thì. */
+    function moveLocally(columns: BoardColumn[], id: number, target: string, index: number): BoardColumn[] {
+        const moving = columns.flatMap(col => col.cards).find(card => card.id === id);
+        if (!moving) return columns;
+        const stripped = columns.map((col) => ({
+            key: col['key'],
+            label: col['label'],
+            cards: col['cards'].filter(card => card['id'] !== id),
+        }));
 
-            return stripped.map((col) => {
-                if (col['key'] !== target) return col;
-                const cards = [...col['cards']];
-                cards.splice(Math.max(0, Math.min(index, cards.length)), 0, moving);
-                return { key: col['key'], label: col['label'], cards };
-            });
-        },
+        return stripped.map((col) => {
+            if (col['key'] !== target) return col;
+            const cards = [...col['cards']];
+            cards.splice(Math.max(0, Math.min(index, cards.length)), 0, moving);
+            return { key: col['key'], label: col['label'], cards };
+        });
+    }
 
-        async addCard(event: Event) {
-            event.preventDefault();
-            const title = note.trim();
-            if (!title || busy) return;
+    async function addCard(event: Event) {
+        event.preventDefault();
+        const title = note.trim();
+        if (!title || busy) return;
 
-            setNote('');
-            await this.commit(() => App.Http.post('/demo/board/card', { title }, this.options()), board);
-        },
+        setNote('');
+        await commit(() => App.Http.post('/demo/board/card', { title }, options()), board);
+    }
 
-        async rename(payload: {id: number; title: string}) {
-            const snapshot = board;
-            setBoard(board.map((col) => ({
-                key: col['key'],
-                label: col['label'],
-                cards: col['cards'].map((card) =>
-                    card['id'] === payload.id ? { ...card, title: payload.title } : card),
-            })));
+    async function rename(payload: {id: number; title: string}) {
+        const snapshot = board;
+        setBoard(board.map((col) => ({
+            key: col['key'],
+            label: col['label'],
+            cards: col['cards'].map((card) =>
+                card['id'] === payload.id ? { ...card, title: payload.title } : card),
+        })));
 
-            this.closeEditor();
-            await this.commit(
-                () => App.Http.put('/demo/board/card/' + payload.id, { title: payload.title }, this.options()),
-                snapshot,
-            );
-        },
+        closeEditor();
+        await commit(
+            () => App.Http.put('/demo/board/card/' + payload.id, { title: payload.title }, options()),
+            snapshot,
+        );
+    }
 
-        async remove(id: number) {
-            const snapshot = board;
-            setBoard(board.map((col) => ({
-                key: col['key'],
-                label: col['label'],
-                cards: col['cards'].filter((card) => card['id'] !== id),
-            })));
+    async function remove(id: number) {
+        const snapshot = board;
+        setBoard(board.map((col) => ({
+            key: col['key'],
+            label: col['label'],
+            cards: col['cards'].filter((card) => card['id'] !== id),
+        })));
 
-            await this.commit(() => App.Http.delete('/demo/board/card/' + id, this.options()), snapshot);
-        },
+        await commit(() => App.Http.delete('/demo/board/card/' + id, options()), snapshot);
+    }
 
-        /** Gửi mutation; hỏng thì trả bảng về đúng ảnh chụp trước khi đổi. */
-        async commit(request: () => Promise<HttpResponse<{data: {columns: BoardColumn[]}}>>, snapshot: BoardColumn[]) {
-            setBusy(true);
-            setError('');
-            try {
-                const response = await request();
-                setBoard(response.data.data.columns);
-            } catch (failure) {
-                setBoard(snapshot);
-                setError('Không lưu được, đã hoàn tác: ' + errorMessage(failure));
-            } finally {
-                setBusy(false);
-            }
-        },
+    /** Gửi mutation; hỏng thì trả bảng về đúng ảnh chụp trước khi đổi. */
+    async function commit(request: () => Promise<HttpResponse<{data: {columns: BoardColumn[]}}>>, snapshot: BoardColumn[]) {
+        setBusy(true);
+        setError('');
+        try {
+            const response = await request();
+            setBoard(response.data.data.columns);
+        } catch (failure) {
+            setBoard(snapshot);
+            setError('Không lưu được, đã hoàn tác: ' + errorMessage(failure));
+        } finally {
+            setBusy(false);
+        }
+    }
 
-        options() {
-            return {
-                headers: {
-                    Accept: 'application/json',
-                    'X-Sao-Response': 'json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-                },
-            };
-        },
-    };
+    function options() {
+        return {
+            headers: {
+                Accept: 'application/json',
+                'X-Sao-Response': 'json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+            },
+        };
+    }
 </script>

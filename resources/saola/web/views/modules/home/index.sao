@@ -12,7 +12,3 @@
         @include('web.modules.home.parts.faq')
     @endblock
 </template>
-
-<script setup lang="ts">
-    export default { name: 'HomePage' };
-</script>

@@ -149,148 +149,145 @@
 
     const MAX_TRADES = 14;
 
-    export default {
-        name: 'MarketPage',
-        _stream: null as MarketStream | null,
-        _chart: null as ChartController | null,
-        _lastClose: null as number | null,
+    let _stream = null as MarketStream | null;
+    let _chart = null as ChartController | null;
+    let _lastClose = null as number | null;
 
-        started() { this.boot(); },
+    function started() { boot(); }
 
-        // Trang được PageCache giữ lại: quay lại bằng back/forward thì started()
-        // không chạy nữa, phải nối lại luồng ở đây.
-        resumed() {
-            if (!this._stream) this.boot();
-        },
+    // Trang được PageCache giữ lại: quay lại bằng back/forward thì started()
+    // không chạy nữa, phải nối lại luồng ở đây.
+    function resumed() {
+        if (!_stream) boot();
+    }
 
-        stopped() { this.teardown(); },
-        destroyed() { this.teardown(); },
+    function stopped() { teardown(); }
+    function destroyed() { teardown(); }
 
-        /**
-         * Trên trang `@await`, `started()` và `mounted()` đều chạy TRƯỚC khi dữ
-         * liệu về — đo được: cả hai thấy `candles.length === 0` trong khi template
-         * sau đó hiện đủ 120 nến. Runtime không bắn hook nào lúc dữ liệu tới, nên
-         * view tự nạp phần nó cần, đúng khuôn `resumed() { this.load() }` của
-         * modules/home/todo.sao.
-         *
-         * Tải thẳng URL thì Blade đã điền sẵn `candles`, không tốn request nào.
-         */
-        async boot() {
-            let initial = candles;
+    /**
+     * Trên trang `@await`, `started()` và `mounted()` đều chạy TRƯỚC khi dữ
+     * liệu về — đo được: cả hai thấy `candles.length === 0` trong khi template
+     * sau đó hiện đủ 120 nến. Runtime không bắn hook nào lúc dữ liệu tới, nên
+     * view tự nạp phần nó cần, đúng khuôn `resumed() { load() }` của
+     * modules/home/todo.sao.
+     *
+     * Tải thẳng URL thì Blade đã điền sẵn `candles`, không tốn request nào.
+     */
+    async function boot() {
+        let initial = candles;
 
-            if (!initial || initial.length === 0) {
-                try {
-                    const response = await App.Http.get('/demo/market?symbol=' + activeSymbol, null, this.requestOptions());
-                    const data = response.data.data;
-                    initial = data.candles;
-                    setBids(data.book.bids);
-                    setAsks(data.book.asks);
-                    setPriceText(data.lastText);
-                    setDeltaText(data.changeText);
-                } catch (error) {
-                    setFeedSource('không nạp được nến: ' + errorMessage(error));
-                    return;
-                }
-            }
-
-            if (!initial || initial.length === 0) return;
-
-            this.openStream(initial);
-            this._chart = await ChartController.mount(document.querySelector<HTMLElement>('[data-chart-host]'), initial);
-            if (this._chart) setChartReady(true);
-        },
-
-        requestOptions() {
-            return { headers: { Accept: 'application/json', 'X-Sao-Response': 'json' } };
-        },
-
-        openStream(initialCandles: Tick[]) {
-            const seed = initialCandles[initialCandles.length - 1];
-            this._stream = new MarketStream(activeSymbol, seed, {
-                onCandle: (candle) => this.onCandle(candle),
-                onTrade: (trade) => this.onTrade(trade),
-                onSource: (name) => setFeedSource(name),
-            });
-            this._stream.start();
-        },
-
-        teardown() {
-            if (this._stream) { this._stream.stop(); this._stream = null; }
-            if (this._chart) { this._chart.destroy(); this._chart = null; }
-            setChartReady(false);
-        },
-
-        onCandle(candle: Tick) {
-            // Biểu đồ đi thẳng vào thư viện, KHÔNG qua state: mỗi tick mà chạm
-            // state là một lượt re-render vùng reactive, trong khi thư viện tự vẽ.
-            if (this._chart) this._chart.update(candle);
-
-            const previous = this._lastClose ?? candle.open;
-            this._lastClose = candle.close;
-            setRising(candle.close >= previous);
-            setPriceText(this.money(candle.close));
-
-            // Màu GIÁ theo chiều tick, màu DELTA theo dấu của chính delta. Dùng
-            // chung một cờ thì tick tăng trong một cây nến đang giảm sẽ tô xanh
-            // cho con số âm — thấy ngay trên ảnh chụp đầu tiên.
-            const open = candle.open || 1;
-            const delta = ((candle.close - open) / open) * 100;
-            setDeltaUp(delta >= 0);
-            setDeltaText((delta >= 0 ? '+' : '') + delta.toFixed(2));
-        },
-
-        onTrade(trade: Trade) {
-            // Danh sách CHỈ THÊM VÀO ĐẦU và cắt đuôi: id ổn định nên @key khớp
-            // được hàng cũ, runtime chỉ chèn một node thay vì dựng lại cả bảng.
-            const rows = [{
-                id: trade.id,
-                buy: trade.buy,
-                at: trade.at,
-                priceText: this.money(trade.price),
-                amountText: trade.amount.toFixed(3),
-            }, ...trades];
-
-            setTrades(rows.slice(0, MAX_TRADES));
-        },
-
-        /** Cùng quy tắc với number_format($v, 2) phía PHP. */
-        money(value: number) {
-            return Number(value).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-            });
-        },
-
-        async switchSymbol(code: string) {
-            if (busy || code === activeSymbol) return;
-            setBusy(true);
-            this.teardown();
-
+        if (!initial || initial.length === 0) {
             try {
-                const response = await App.Http.get('/demo/market?symbol=' + code, null, this.requestOptions());
+                const response = await App.Http.get('/demo/market?symbol=' + activeSymbol, null, requestOptions());
                 const data = response.data.data;
-
-                setActiveSymbol(data.symbol);
-                setActiveLabel(data.label);
-                setPriceText(data.lastText);
-                setDeltaText(data.changeText);
-                setFeedSource(data.source);
+                initial = data.candles;
                 setBids(data.book.bids);
                 setAsks(data.book.asks);
-                setTrades([]);
-                this._lastClose = null;
-
-                this.openStream(data.candles);
-                if (this._chart) this._chart.replace(data.candles);
-                else {
-                    this._chart = await ChartController.mount(document.querySelector<HTMLElement>('[data-chart-host]'), data.candles);
-                    if (this._chart) setChartReady(true);
-                }
+                setPriceText(data.lastText);
+                setDeltaText(data.changeText);
             } catch (error) {
-                setFeedSource('không tải được cặp mới: ' + errorMessage(error));
-            } finally {
-                setBusy(false);
+                setFeedSource('không nạp được nến: ' + errorMessage(error));
+                return;
             }
-        },
-    };
+        }
+
+        if (!initial || initial.length === 0) return;
+
+        openStream(initial);
+        _chart = await ChartController.mount(document.querySelector<HTMLElement>('[data-chart-host]'), initial);
+        if (_chart) setChartReady(true);
+    }
+
+    function requestOptions() {
+        return { headers: { Accept: 'application/json', 'X-Sao-Response': 'json' } };
+    }
+
+    function openStream(initialCandles: Tick[]) {
+        const seed = initialCandles[initialCandles.length - 1];
+        _stream = new MarketStream(activeSymbol, seed, {
+            onCandle: (candle) => onCandle(candle),
+            onTrade: (trade) => onTrade(trade),
+            onSource: (name) => setFeedSource(name),
+        });
+        _stream.start();
+    }
+
+    function teardown() {
+        if (_stream) { _stream.stop(); _stream = null; }
+        if (_chart) { _chart.destroy(); _chart = null; }
+        setChartReady(false);
+    }
+
+    function onCandle(candle: Tick) {
+        // Biểu đồ đi thẳng vào thư viện, KHÔNG qua state: mỗi tick mà chạm
+        // state là một lượt re-render vùng reactive, trong khi thư viện tự vẽ.
+        if (_chart) _chart.update(candle);
+
+        const previous = _lastClose ?? candle.open;
+        _lastClose = candle.close;
+        setRising(candle.close >= previous);
+        setPriceText(money(candle.close));
+
+        // Màu GIÁ theo chiều tick, màu DELTA theo dấu của chính delta. Dùng
+        // chung một cờ thì tick tăng trong một cây nến đang giảm sẽ tô xanh
+        // cho con số âm — thấy ngay trên ảnh chụp đầu tiên.
+        const open = candle.open || 1;
+        const delta = ((candle.close - open) / open) * 100;
+        setDeltaUp(delta >= 0);
+        setDeltaText((delta >= 0 ? '+' : '') + delta.toFixed(2));
+    }
+
+    function onTrade(trade: Trade) {
+        // Danh sách CHỈ THÊM VÀO ĐẦU và cắt đuôi: id ổn định nên @key khớp
+        // được hàng cũ, runtime chỉ chèn một node thay vì dựng lại cả bảng.
+        const rows = [{
+            id: trade.id,
+            buy: trade.buy,
+            at: trade.at,
+            priceText: money(trade.price),
+            amountText: trade.amount.toFixed(3),
+        }, ...trades];
+
+        setTrades(rows.slice(0, MAX_TRADES));
+    }
+
+    /** Cùng quy tắc với number_format($v, 2) phía PHP. */
+    function money(value: number) {
+        return Number(value).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
+    }
+
+    async function switchSymbol(code: string) {
+        if (busy || code === activeSymbol) return;
+        setBusy(true);
+        teardown();
+
+        try {
+            const response = await App.Http.get('/demo/market?symbol=' + code, null, requestOptions());
+            const data = response.data.data;
+
+            setActiveSymbol(data.symbol);
+            setActiveLabel(data.label);
+            setPriceText(data.lastText);
+            setDeltaText(data.changeText);
+            setFeedSource(data.source);
+            setBids(data.book.bids);
+            setAsks(data.book.asks);
+            setTrades([]);
+            _lastClose = null;
+
+            openStream(data.candles);
+            if (_chart) _chart.replace(data.candles);
+            else {
+                _chart = await ChartController.mount(document.querySelector<HTMLElement>('[data-chart-host]'), data.candles);
+                if (_chart) setChartReady(true);
+            }
+        } catch (error) {
+            setFeedSource('không tải được cặp mới: ' + errorMessage(error));
+        } finally {
+            setBusy(false);
+        }
+    }
 </script>

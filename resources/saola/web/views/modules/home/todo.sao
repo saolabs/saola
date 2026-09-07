@@ -78,67 +78,63 @@
     import { errorMessage } from '@web/app/services/Errors';
     const URL = '/todo-list';
 
-    export default {
-        name: 'TodoPage',
+    // @await handles first load; a cached page refreshes when resumed.
+    function resumed() { load(); }
 
-        // @await handles first load; a cached page refreshes when resumed.
-        resumed() { this.load(); },
-
-        requestOptions() {
-            return {
-                headers: {
-                    Accept: 'application/json',
-                    'X-Sao-Response': 'json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
-                }
-            };
-        },
-
-        async sync(request: () => Promise<HttpResponse<{data: {initialTodos: Todo[]; initialActiveCount: number; initialCompletedCount: number}}>>) {
-            if (busy) return false;
-            setBusy(true);
-            setSyncError('');
-            try {
-                const response = await request();
-                const data = response.data.data;
-                setTodos(data.initialTodos);
-                setActiveCount(data.initialActiveCount);
-                setCompletedCount(data.initialCompletedCount);
-                return true;
-            } catch (error) {
-                setSyncError('Could not sync tasks: ' + errorMessage(error));
-                return false;
-            } finally {
-                setBusy(false);
+    function requestOptions() {
+        return {
+            headers: {
+                Accept: 'application/json',
+                'X-Sao-Response': 'json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
             }
-        },
+        };
+    }
 
-        async load() {
-            return this.sync(() => App.Http.get(URL, null, this.requestOptions()));
-        },
-
-        async addTodo(event: Event) {
-            event.preventDefault();
-            const text = newTodo.trim();
-            if (!text) return;
-            const saved = await this.sync(() => App.Http.post(URL, { text }, this.requestOptions()));
-            if (saved && newTodo.trim() === text) setNewTodo('');
-        },
-
-        async toggleTodo(id: number) {
-            const todo = todos.find(item => item.id === id);
-            if (!todo) return;
-            return this.sync(() => App.Http.put(URL + '/' + id, { completed: !todo.completed }, this.requestOptions()));
-        },
-
-        async deleteTodo(id: number) {
-            return this.sync(() => App.Http.delete(URL + '/' + id, this.requestOptions()));
-        },
-
-        async clearCompleted() {
-            return this.sync(() => App.Http.delete(URL + '/completed', this.requestOptions()));
+    async function sync(request: () => Promise<HttpResponse<{data: {initialTodos: Todo[]; initialActiveCount: number; initialCompletedCount: number}}>>) {
+        if (busy) return false;
+        setBusy(true);
+        setSyncError('');
+        try {
+            const response = await request();
+            const data = response.data.data;
+            setTodos(data.initialTodos);
+            setActiveCount(data.initialActiveCount);
+            setCompletedCount(data.initialCompletedCount);
+            return true;
+        } catch (error) {
+            setSyncError('Could not sync tasks: ' + errorMessage(error));
+            return false;
+        } finally {
+            setBusy(false);
         }
-    };
+    }
+
+    async function load() {
+        return sync(() => App.Http.get(URL, null, requestOptions()));
+    }
+
+    async function addTodo(event: Event) {
+        event.preventDefault();
+        const text = newTodo.trim();
+        if (!text) return;
+        const saved = await sync(() => App.Http.post(URL, { text }, requestOptions()));
+        if (saved && newTodo.trim() === text) setNewTodo('');
+    }
+
+    async function toggleTodo(id: number) {
+        const todo = todos.find(item => item.id === id);
+        if (!todo) return;
+        return sync(() => App.Http.put(URL + '/' + id, { completed: !todo.completed }, requestOptions()));
+    }
+
+    async function deleteTodo(id: number) {
+        return sync(() => App.Http.delete(URL + '/' + id, requestOptions()));
+    }
+
+    async function clearCompleted() {
+        return sync(() => App.Http.delete(URL + '/completed', requestOptions()));
+    }
 </script>
 
 <style scoped>
