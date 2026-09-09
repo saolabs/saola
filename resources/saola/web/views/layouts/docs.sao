@@ -70,6 +70,7 @@
     import HighlightService from '@web/app/services/HighlightService';
 
     let _offNav = null as (() => void) | null;
+    let _offSettled = null as (() => void) | null;
 
     // Layout được TÁI DÙNG khi điều hướng giữa các trang docs (layout diff),
     // nên started() chỉ chạy một lần — phải nghe router để đồng bộ lại.
@@ -81,7 +82,10 @@
     // khớp link nào và thanh nav mất highlight. afterEach chạy sau khi URL đã
     // cập nhật, là tín hiệu tất định. Giống layouts/lab.sao.
     function started() {
+        // `view:settled` bắn khi render `@await` thay skeleton bằng nội dung
+        // thật: node cũ (đã tô màu) bị thay, phải trang trí lại lượt nữa.
         _offNav = App.Router.afterEach(() => sync());
+        _offSettled = App.Event.on('view:settled', () => sync());
         sync();
     }
 
@@ -92,6 +96,7 @@
 
     function teardown() {
         if (_offNav) { _offNav(); _offNav = null; }
+        if (_offSettled) { _offSettled(); _offSettled = null; }
     }
 
     function sync() {

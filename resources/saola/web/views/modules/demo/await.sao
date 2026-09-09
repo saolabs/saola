@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 @vars(generatedAt = '', renderedBy = '', stats = [])
 @await
 
@@ -33,5 +34,28 @@
         <p class="await-demo-note">
             Cùng một controller phục vụ cả hai: <code>$this-&gt;response($data)</code> trả HTML cho trình duyệt và JSON cho <code>fetch</code>, phân biệt bằng header <code>X-Sao-Response</code>.
         </p>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Dữ liệu bất đồng bộ: &#64;vars nhận từ controller, &#64;await bật đường fetch.</p>
+        <code-block lang="sao">
+@verbatim
+&#64;vars(generatedAt = '', renderedBy = '', stats = [])
+
+{{-- Thiếu &#64;await thì điều hướng SPA dựng view KHI CHƯA có dữ liệu:
+     mọi &#64;foreach ra rỗng, chỉ tải thẳng URL mới đúng. --}}
+&#64;await
+
+&lt;template&gt;
+    &lt;p&gt;Dữ liệu sinh lúc &lt;strong&gt;{{ generatedAt }}&lt;/strong&gt;&lt;/p&gt;
+    &lt;ul&gt;
+        &#64;foreach(stats as row)
+            &lt;li&gt;&lt;span&gt;{{ row.label }}&lt;/span&gt;&lt;b&gt;{{ row.value }}&lt;/b&gt;&lt;/li&gt;
+        &#64;endforeach
+    &lt;/ul&gt;
+&lt;/template&gt;
+@endverbatim
+        </code-block>
     @endblock
 </template>

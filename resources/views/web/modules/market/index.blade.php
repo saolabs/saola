@@ -1,5 +1,5 @@
 @addCssLink('/static/saola/market.css')
-@exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @vars($symbol = '', $label = '', $base = '', $source = '', $generatedAt = '', $candles = [], $ticker = [], $book = [], $symbols = [], $sparkline = '', $lastText = '', $changeText = '', $highText = '', $lowText = '', $volumeText = '', $risingSeed = true)
 @useState($activeSymbol, $symbol)
@@ -132,4 +132,30 @@
         <p @class([$__VIEW_ID__ . '-Baside3', 'await-demo-note'])>
             Mất mạng hay bị chặn WebSocket thì feed tự chuyển sang bộ phát mô phỏng và nói rõ ở dòng “Nguồn”. Một trang demo hỏng khi wifi chập là trang demo vô dụng.
         </p>
+    @endblock
+
+    @block('source')
+        <h2 @class([$__VIEW_ID__ . '-Bsource1', 'lab-source-title'])>Code của demo này</h2>
+        <p @class([$__VIEW_ID__ . '-Bsource2', 'lab-source-note'])>Giá realtime: state đổi liên tục, chỉ vùng phụ thuộc render lại.</p>
+        @startMarker('component', 'Bsourcec1')
+        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@verbatim
+&#64;vars(symbol = '', candles = [], ticker = [])
+&#64;await
+
+&#64;states({ activeSymbol: symbol, priceText: lastText })
+
+&lt;template&gt;
+    &#64;foreach(symbols as item)
+        &lt;button &#64;class({'is-active': activeSymbol === item['code']})
+                &#64;click(select(item['code']))&gt;{{ item['label'] }}&lt;/button&gt;
+    &#64;endforeach
+
+    &lt;strong&gt;{{ priceText }}&lt;/strong&gt;
+&lt;/template&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__0_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__0_content])
+@endMarker('component', 'Bsourcec1')
     @endblock

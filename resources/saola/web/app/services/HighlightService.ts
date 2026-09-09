@@ -129,56 +129,83 @@ export const saoGrammar = {
     'entity': /&[a-z]+;|&#\d+;|&#x[a-f\d]+;/i
 };
 
+/** Prism gọi những tên này là "không tô màu" — đừng đợi grammar không bao giờ tới. */
+const PLAIN = ['none', 'text', 'plain', 'plaintext'];
+
+const MAX_WAIT_MS = 5000;
+const POLL_MS = 50;
+
+const languageOf = (el: Element): string => {
+    const found = [...el.classList].find((c) => c.startsWith('language-'));
+
+    return found ? found.slice('language-'.length) : '';
+};
+
 export class HighlightService {
-    private static _registered = false;
-    private static _readyCallbacks: Array<() => void> = [];
-
     /**
-     * Đăng ký ngữ pháp .sao vào Prism engine
+     * Đăng ký ngữ pháp `.sao`. Trả về Prism đã sẵn sàng chưa.
+     *
+     * Gán LẠI mỗi lần thiếu chứ không dùng cờ "đã đăng ký": layout docs nạp
+     * `prism.min.js` bằng thẻ <script src>, và khi thẻ đó chạy hai lần thì
+     * `Prism.languages` được dựng lại từ đầu, xoá mất grammar .sao. Có cờ thì
+     * lần đăng ký thứ hai bị bỏ qua và mọi khối `language-sao` ra text thô.
      */
-    static register() {
+    static register(): boolean {
         const P = (window as any).Prism;
-        if (!P) {
-            this._waitForPrism();
-            return;
-        }
+        if (!P) return false;
+        if (!P.languages.sao) P.languages.sao = saoGrammar;
 
-        P.languages.sao = saoGrammar;
-        this._registered = true;
-
-        while (this._readyCallbacks.length > 0) {
-            const cb = this._readyCallbacks.shift();
-            if (cb) cb();
-        }
-    }
-
-    private static _waitForPrism() {
-        if (typeof window === 'undefined') return;
-        const check = setInterval(() => {
-            if ((window as any).Prism) {
-                clearInterval(check);
-                HighlightService.register();
-            }
-        }, 50);
-        setTimeout(() => clearInterval(check), 5000);
+        return true;
     }
 
     /**
-     * Thực hiện highlight toàn bộ hoặc trong một container cụ thể
+     * Tô màu mọi khối code trong `container`.
+     *
+     * Đợi ĐÚNG grammar mà từng khối cần, không phải chỉ đợi `window.Prism`.
+     * Lý do: layout nạp Prism lõi ở thẻ <script> ĐẦU TIÊN rồi mới tới
+     * `prism-php`, `prism-typescript`… ở các thẻ sau. `async: false` giữ được
+     * thứ tự nhưng không đảm bảo chúng đã CHẠY XONG, nên có một khoảng thời
+     * gian `Prism` đã có mà `Prism.languages.php` thì chưa. Gọi
+     * `highlightElement` đúng lúc đó: Prism lặng lẽ để nguyên text thô và
+     * KHÔNG bao giờ thử lại khi grammar tới — khối code mất màu, không lỗi,
+     * không dấu vết. Cache nguội thì gặp, cache nóng thì không: đúng kiểu hỏng
+     * lúc được lúc không.
      */
     static highlight(container: ParentNode = document) {
-        if (!this._registered) this.register();
+        const targets = [...container.querySelectorAll('pre code[class*="language-"]')]
+            .filter((el) => !PLAIN.includes(languageOf(el)));
 
+        if (targets.length > 0) this.flush(targets, Date.now());
+    }
+
+    private static flush(elements: Element[], startedAt: number) {
+        const ready = this.register();
         const P = (window as any).Prism;
-        if (!P || !this._registered) {
-            this._readyCallbacks.push(() => this.highlight(container));
-            return;
+        const waiting: Element[] = [];
+
+        for (const el of elements) {
+            if (!ready || !P.languages[languageOf(el)]) {
+                waiting.push(el);
+                continue;
+            }
+            // Đã có token = đã tô rồi. Tô LẠI trên chính node đó làm NÁT khoảng
+            // trắng: Prism đọc `textContent` của cây đã token hoá rồi dựng lại,
+            // và xuống dòng giữa các token biến mất — trong <pre> đó là thứ
+            // người dùng nhìn thấy.
+            //
+            // Kiểm Ở ĐÂY chứ không phải lúc lập danh sách: layout gọi
+            // `highlight()` nhiều lần (đổi route, và khi `@await` thay skeleton
+            // bằng nội dung thật), mỗi lần mở một vòng chờ grammar riêng. Lọc
+            // lúc lập danh sách thì cả hai vòng đều chụp được element khi nó
+            // CHƯA có token, rồi lần lượt tô — vẫn hai lần.
+            if (el.querySelector('.token') !== null) continue;
+
+            P.highlightElement(el);
         }
 
-        const elements = container.querySelectorAll('pre code[class*="language-"]');
-        elements.forEach((el) => {
-            P.highlightElement(el);
-        });
+        if (waiting.length > 0 && Date.now() - startedAt < MAX_WAIT_MS) {
+            setTimeout(() => this.flush(waiting, startedAt), POLL_MS);
+        }
     }
 }
 

@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 @import('web.modules.board.card' as boardcard)
 
 @vars(columns: BoardColumn[] = [])
@@ -55,7 +56,9 @@
                         @foreach(col['cards'] as card)
                             @key(card['id'])
                             <boardcard :card="card" :column="col['key']" :busy="busy"
-                                       :editing="editingId === card['id']" :draftSeed="draftText" />
+                                       :editing="editingId === card['id']" :draftSeed="draftText"
+                                       @drag(setDragId) @edit(openEditor) @draft(setDraftText)
+                                       @cancel(closeEditor) @rename(rename) @delete(remove) />
                         @endforeach
 
                         @if(col['cards'].length === 0)
@@ -71,11 +74,30 @@
         <h2>Trang này kiểm chứng cái gì.</h2>
         <ul class="check-list">
             <li>Khoá <code>&#64;key(card['id'])</code> rời vùng <code>&#64;foreach</code> này sang vùng khác. Runtime phải nhận ra vẫn là một thẻ, không dựng lại node mới.</li>
-            <li>Instance con <strong>bị dựng lại</strong> khi thẻ đổi cột — React và Vue cũng vậy, đây không phải giới hạn của Saola. Nên bản nháp phải do <strong>cha</strong> giữ; con soi lại từ prop trong <code>started()</code>. Mở ô <strong>Sửa</strong>, gõ dở, rồi kéo thẻ sang cột khác: nội dung đang gõ vẫn còn.</li>
+            <li>Instance con <strong>bị dựng lại</strong> khi thẻ đổi cột — React và Vue cũng vậy, đây không phải giới hạn của Saola. Nên bản nháp phải do <strong>cha</strong> giữ, con chỉ <code>&#64;bind</code> vào prop và không giữ state nào. Mở ô <strong>Sửa</strong>, gõ dở, rồi kéo thẻ sang cột khác: nội dung đang gõ vẫn còn.</li>
             <li><code>&#64;foreach</code> lồng nhau: cột lặp ngoài, thẻ lặp trong — từng có bug thiếu spread khi lồng.</li>
             <li>Cập nhật lạc quan: bảng đổi ngay khi thả, server trả về trạng thái sau cùng; hỏng thì quay lui về ảnh chụp trước đó.</li>
-            <li>Con không tự gọi API. <code>App.Event</code> là kênh con→cha duy nhất, vì chỉ cha mới giữ đủ trạng thái để quay lui.</li>
+            <li>Con không tự gọi API. Nó <code>$view.emit()</code> lên thẳng cha qua listener khai báo tại thẻ (<code>&#64;edit(openEditor)</code>) — không qua event bus, nên không phải gỡ đăng ký và hai thẻ không nghe nhầm của nhau. Chỉ cha mới giữ đủ trạng thái để quay lui.</li>
         </ul>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Kéo thả + thẻ con báo sự kiện lên cha.</p>
+        <code-block lang="sao">
+@verbatim
+&#64;import('web.modules.board.card' as boardcard)
+
+&lt;template&gt;
+    &#64;foreach(col['cards'] as card)
+        &#64;key(card['id'])
+        &lt;boardcard :card="card" :busy="busy" :editing="editingId === card['id']"
+                   &#64;drag(setDragId) &#64;edit(openEditor) &#64;draft(setDraftText)
+                   &#64;cancel(closeEditor) &#64;rename(rename) &#64;delete(remove) /&gt;
+    &#64;endforeach
+&lt;/template&gt;
+@endverbatim
+        </code-block>
     @endblock
 </template>
 
@@ -85,25 +107,6 @@
     import type { BoardColumn } from '@web/app/services/DemoTypes';
     import type { HttpResponse } from '@saolabs/client';
     import { errorMessage } from '@web/app/services/Errors';
-    let _off = [] as (() => void)[];
-
-    function started() {
-        // Đăng ký ở started(), gỡ ở destroyed(). Layout được tái dùng qua
-        // điều hướng SPA nên không gỡ là mỗi lượt vào lại chồng thêm listener.
-        _off = [
-            App.Event.on('board:drag', (id: number) => setDragId(id)),
-            App.Event.on('board:edit', (id: number) => openEditor(id)),
-            App.Event.on('board:draft', (value: string) => setDraftText(value)),
-            App.Event.on('board:cancel', () => closeEditor()),
-            App.Event.on('board:rename', (payload: {id: number; title: string}) => rename(payload)),
-            App.Event.on('board:delete', (id: number) => remove(id)),
-        ];
-    }
-
-    function destroyed() {
-        (_off || []).forEach((off) => typeof off === 'function' && off());
-        _off = [];
-    }
 
     /**
      * Trạng thái đang-sửa nằm ở CHA, không nằm trong thẻ.
@@ -194,18 +197,26 @@
         await commit(() => App.Http.post('/demo/board/card', { title }, options()), board);
     }
 
-    async function rename(payload: {id: number; title: string}) {
+    /**
+     * Bản nháp nằm ở CHA nên cha tự đọc lấy — con chỉ báo "thẻ này xin lưu".
+     * Đọc `draftText` tại đây là đọc giá trị của phím vừa gõ xong: setter chạy
+     * đồng bộ, không phải đợi vòng flush đẩy prop xuống con rồi vọng lại.
+     */
+    async function rename(id: number) {
+        const title = draftText.trim();
+        if (!title) return;
+
         const snapshot = board;
         setBoard(board.map((col) => ({
             key: col['key'],
             label: col['label'],
             cards: col['cards'].map((card) =>
-                card['id'] === payload.id ? { ...card, title: payload.title } : card),
+                card['id'] === id ? { ...card, title } : card),
         })));
 
         closeEditor();
         await commit(
-            () => App.Http.put('/demo/board/card/' + payload.id, { title: payload.title }, options()),
+            () => App.Http.put('/demo/board/card/' + id, { title }, options()),
             snapshot,
         );
     }

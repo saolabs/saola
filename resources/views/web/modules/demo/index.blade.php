@@ -1,4 +1,4 @@
-@exec($__ONE_COMPONENT_REGISTRY__ = ['featurecard' => 'web.modules.demo.featurecard']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block', 'featurecard' => 'web.modules.demo.featurecard']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @useState($count, 3)
 @useState($name, 'Saola')
@@ -231,4 +231,31 @@
             <p class="lab-note"><strong>Chỉ có trong HTML từ server:</strong> khối này nằm trong <code>&#64;ssr</code> nên compiler không đưa sang JavaScript view — điều hướng SPA vào lại trang sẽ không còn thấy nó.</p>
 
         <p @class([$__VIEW_ID__ . '-Baside3', 'lab-note'])>Fixture: <code @class([$__VIEW_ID__ . '-Baside31'])>web.modules.demo.index</code> · chữ ký đầy đủ ở <a @class([$__VIEW_ID__ . '-Baside32']) @attr(['href' => '/docs/directives'])>tham chiếu directive</a>.</p>
+    @endblock
+
+    @block('source')
+        <h2 @class([$__VIEW_ID__ . '-Bsource1', 'lab-source-title'])>Code của demo này</h2>
+        <p @class([$__VIEW_ID__ . '-Bsource2', 'lab-source-note'])>Playground: state, binding hai chiều, điều kiện.</p>
+        @startMarker('component', 'Bsourcec1')
+        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_9'))
+@verbatim
+&#64;states({ count: 3, name: 'Saola', isVisible: true })
+&#64;const(MAX_COUNT = 10)
+
+&lt;template&gt;
+    &lt;input type="text" &#64;bind(name)&gt;
+    &lt;p&gt;Xin chào {{ name }}&lt;/p&gt;
+
+    &lt;button &#64;click(setCount(count + 1)) &#64;disabled(count &gt;= MAX_COUNT)&gt;+1&lt;/button&gt;
+    &lt;strong&gt;{{ count }}&lt;/strong&gt;
+
+    &#64;if(isVisible)
+        &lt;p&gt;Khối này chỉ render lại khi `isVisible` đổi.&lt;/p&gt;
+    &#64;endif
+&lt;/template&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__9_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_9'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__9_content])
+@endMarker('component', 'Bsourcec1')
     @endblock

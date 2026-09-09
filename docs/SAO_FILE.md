@@ -90,6 +90,7 @@ Component nhỏ vẫn có thể viết không cần script hay wrapper:
 | Điều kiện | `@if(visible)` … `@endif` | Đặt trong template |
 | Danh sách | `@foreach(items as item)` … `@endforeach` | Dùng `@key(item.id)` để giữ identity |
 | Component con | `@importView('web.components.card' as Card)` | Đặt trong setup; `<Card />` trong template |
+| Con báo lên cha | `<Card @edit(openEditor(event)) />` | Con gọi `$view.emit('edit', payload)`; `event` là payload |
 
 Khai báo `@...` trong setup phải ở cấp ngoài cùng, không nằm trong method,
 vòng lặp hay điều kiện. Khai báo đầu vào trước biểu thức sử dụng nó. JavaScript
@@ -100,6 +101,143 @@ Không khai báo cùng một biến ở cả setup lẫn ngoài setup.
 `@const` là hằng; `@let` là biến thường, không tự làm computed cập nhật.
 Trong script, đọc computed bằng `get$doubled()`; trong template dùng `doubled`.
 Đây là API hiện tại, giúp đọc được giá trị mới ngay sau setter trước khi DOM flush.
+
+## `$view` — biến hệ thống của view
+
+`$view` trỏ tới chính instance view đang chạy. Nó **không phải** biến bạn khai
+báo: compiler đặt sẵn vào phạm vi của view (`const $view = this`), dùng được
+trong biểu thức handler và trong `<script setup>`.
+
+```sao
+<button @click($view.emit('edit', card['id']))>Sửa</button>
+
+<script setup>
+    function ask() {
+        if ($view.emit('confirm', card['id']) === false) return;
+        $view.emit('close', card['id']);
+    }
+</script>
+```
+
+| Thành viên | Ý nghĩa |
+|---|---|
+| `$view.emit(<tên>, …)` | Phát sự kiện lên cha đã `@include` view này |
+| `$view.path` | Đường dẫn view |
+
+**`$view` CHỈ có ở phía client.** Nó không tồn tại khi Blade render SSR, nên
+dùng nó trong biểu thức được SSR render — `{{ }}`, `@class`, `@attr`… — là lỗi
+lúc biên dịch, không phải trang trắng lúc chạy:
+
+```sao
+<p>{{ $view.path }}</p>          {{-- ✗ compiler báo lỗi ngay --}}
+<button @click($view.emit('x'))> {{-- ✓ handler chỉ chạy ở client --}}
+```
+
+### Khi nào phải viết `$view.`
+
+`emit` là **method có sẵn của view**, nên trong template nó phân giải y hệt một
+method bạn tự viết — `@click(emit('x'))` chạy được, không cần `$view.`:
+
+```sao
+<button @click(emit('edit', card['id']))>Sửa</button>        {{-- ✓ --}}
+<button @click($view.emit('edit', card['id']))>Sửa</button>  {{-- ✓ cùng nghĩa --}}
+```
+
+Trong `<script setup>` thì **bắt buộc** `$view.`: nội dung ở đó đi thẳng vào
+output, không qua trình dịch biểu thức, nên không có gì phân giải `emit` cho bạn.
+
+```sao
+<script setup>
+    function ask() {
+        $view.emit('close', card['id']);   {{-- ✓ --}}
+        emit('close', card['id']);         {{-- ✗ ReferenceError lúc chạy --}}
+    }
+</script>
+```
+
+Compiler **không** còn tự chèn một biến `emit` vào phạm vi như trước: nó khiến
+code đọc lên không biết `emit` từ đâu ra, và view viết tay thì không có nó.
+
+## Con báo sự kiện lên cha
+
+Con phát bằng `$view.emit(<tên>, <payload>)`, cha lắng nghe ngay tại thẻ — giống hệt
+`@click` trên một element thường, chỉ khác là tên sự kiện do bạn đặt:
+
+```sao
+{{-- cha --}}
+<Card :card="card" @edit(openEditor(event)) @remove(remove(card['id'])) />
+
+{{-- con --}}
+<button @click($view.emit('edit', card['id']))>Sửa</button>
+```
+
+Handler viết y như trên element, ba dạng dùng chung một luật:
+
+| Dạng | Nhận được gì |
+|---|---|
+| `@edit(openEditor(event))` | `event` là payload đầu tiên |
+| `@edit(openEditor)` | tham chiếu — nhận ĐỦ mọi đối số của `$view.emit` |
+| `@rename((id, title) => save(id, title))` | tự khai báo arity |
+
+Arrow viết kiểu gì cũng được — `(...args)`, `(a = 1)`, `({id, title})`, và thân
+khối `=> { a(); b() }`.
+
+Tên sự kiện không phải định danh hợp lệ thì dùng dạng tổng quát `@on`:
+
+```sao
+<Card @on('user:saved', reload) @on('cart.add', ({id}) => addToCart(id)) />
+```
+
+`@on('edit', h)` và `@edit(h)` ra cùng một thứ; `@on` thêm được tên có `:` hay
+`.`, và không thể đọc nhầm với một sự kiện DOM trùng tên.
+
+`$view.emit` trả về giá trị của listener, nên con hỏi được cha
+(`if ($view.emit('close') === false) return;`). Không ai nghe thì nó im lặng, như
+một DOM event không listener.
+
+### Cháu báo lên ông
+
+`$view.emit` chỉ nhảy **một tầng** — tới đúng cha đã `@include` view này. Muốn
+đi tiếp thì tầng giữa phát lại, viết gọn bằng `$view.emit` đứng trần:
+
+```sao
+{{-- tầng giữa: không xử lý gì, chỉ chuyển tiếp --}}
+<Row :row="row" @pick($view.emit) @close(emit) />
+```
+
+Viết `emit` hay `$view.emit` đều được — cả hai là bản gọn của
+`@pick((...args) => $view.emit('pick', ...args))`, nên giữ
+nguyên số đối số **và giá trị trả về** — `if ($view.emit('confirm', id) === false)`
+vẫn đúng qua nhiều tầng.
+
+Vẫn phải **liệt kê** sự kiện nào được chuyển tiếp. Đó là chủ ý: sự kiện không tự
+nổi lên như DOM event, nên không có chuyện một tổ tiên xa vô tình bắt được thứ
+không phải của nó.
+
+Với `@include` viết tay, listener nằm **cùng object data**, khoá bắt đầu bằng
+`on$`:
+
+```sao
+@include('web.components.card', {
+    card: card,
+    on$edit: openEditor,
+    on$remove: (id) => remove(id)
+})
+```
+
+Một object ở mặt chữ, nhưng compiler tách ngay lúc biên dịch: prop đi đường
+prop, listener đi đường riêng. Nên listener không nằm trong props của con,
+không sang SSR, và không khiến con nhận prop mới mỗi lần state trong thân
+handler đổi. Thẻ component sinh ra đúng biểu diễn đó — hai cách viết, một cơ
+chế.
+
+Đây là kênh trực tiếp tới ĐÚNG cha đã `@include` instance này — không phải
+`App.Event`. Hai thẻ cùng một component không nghe nhầm của nhau, và không có gì
+phải gỡ đăng ký lúc huỷ. `App.Event` vẫn dành cho việc liên lạc giữa hai nhánh
+không có quan hệ cha–con.
+
+Listener chỉ chạy ở client: SSR không có ai bấm chuột, nên `@include` phía Blade
+không mang chúng.
 
 ## Code chạy ở đâu?
 

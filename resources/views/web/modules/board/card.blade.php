@@ -1,13 +1,15 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 <?php if(!array_key_exists('card', get_defined_vars())) $card = null; if(!array_key_exists('column', get_defined_vars())) $column = ''; if(!array_key_exists('busy', get_defined_vars())) $busy = false; if(!array_key_exists('editing', get_defined_vars())) $editing = false; if(!array_key_exists('draftSeed', get_defined_vars())) $draftSeed = ''; ?>
-@useState($draft, '')
 @wrapper
-<article @class([$__VIEW_ID__ . '-e1', 'kb-card']) @attr(['draggable' => 'true'])>
+{{-- `$view` giữ nguyên đúng một '$' ở MỌI directive, kể cả `@dragstart`
+         (không nằm trong danh sách event) và `@submit.prevent` (có modifier) —
+         hai chỗ preprocessor không đụng tới. --}}
+    <article @class([$__VIEW_ID__ . '-e1', 'kb-card']) @attr(['draggable' => 'true'])>
         @startMarker('reactive', 'e1r1', ['stateKey' => ['editing'], 'type' => 'if'])
         @if($editing)
             <form @class([$__VIEW_ID__ . '-e1r1k11', 'kb-edit'])>
-                <input @class([$__VIEW_ID__ . '-e1r1k111']) @attr(['type' => 'text', 'maxlength' => '120', 'aria-label' => 'Tiêu đề thẻ']) @bind($draft)>
+                <input @class([$__VIEW_ID__ . '-e1r1k111']) @attr(['type' => 'text', 'maxlength' => '120', 'aria-label' => 'Tiêu đề thẻ']) @bind($draftSeed)>
                 <div @class([$__VIEW_ID__ . '-e1r1k112', 'kb-edit-actions'])>
                     <button @class([$__VIEW_ID__ . '-e1r1k1121', 'kb-mini']) @attr(['type' => 'submit']) @disabled($busy)>Lưu</button>
                     <button @class([$__VIEW_ID__ . '-e1r1k1122', 'kb-mini', 'kb-ghost']) @attr(['type' => 'button'])>Huỷ</button>

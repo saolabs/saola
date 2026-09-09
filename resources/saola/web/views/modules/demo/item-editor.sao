@@ -1,0 +1,668 @@
+@import('web.components.code-block')
+<script setup lang="ts">
+interface UserItem {
+    id: number;
+    name: string;
+    email: string;
+    status: string;
+}
+
+@props({
+    users: [
+        { id: 1, name: 'Nguyễn Văn An', email: 'an.nguyen@saola.dev', status: 'active' },
+        { id: 2, name: 'Trần Thị Bình', email: 'binh.tran@saola.dev', status: 'inactive' },
+        { id: 3, name: 'Lê Hoàng Cường', email: 'cuong.le@saola.dev', status: 'active' }
+    ]
+}: { users: UserItem[] })
+
+@states({
+    userList: users,
+    showForm: false,
+    isEdit: false,
+    formId: 0,
+    formName: '',
+    formEmail: '',
+    formStatus: 'active',
+    formError: '',
+    nextId: 4
+}: {
+    userList: UserItem[];
+    showForm: boolean;
+    isEdit: boolean;
+    formId: number;
+    formName: string;
+    formEmail: string;
+    formStatus: string;
+    formError: string;
+    nextId: number;
+})
+
+function showEditForm(user: UserItem) {
+    if (!user) return;
+    setFormId(user.id);
+    setFormName(user.name);
+    setFormEmail(user.email);
+    setFormStatus(user.status);
+    setFormError('');
+    setIsEdit(true);
+    setShowForm(true);
+}
+
+function handleAdd() {
+    setFormId(0);
+    setFormName('');
+    setFormEmail('');
+    setFormStatus('active');
+    setFormError('');
+    setIsEdit(false);
+    setShowForm(true);
+}
+
+function handleCancel() {
+    setShowForm(false);
+    setIsEdit(false);
+    setFormError('');
+}
+
+function handleSave() {
+    const trimmedName = formName.trim();
+    const trimmedEmail = formEmail.trim();
+
+    if (trimmedName === '') {
+        setFormError('Vui lòng nhập họ và tên.');
+        return;
+    }
+
+    if (trimmedEmail === '' || !trimmedEmail.includes('@')) {
+        setFormError('Vui lòng nhập địa chỉ email hợp lệ.');
+        return;
+    }
+
+    if (isEdit) {
+        const updated = userList.map((u: UserItem) => {
+            if (u.id === formId) {
+                return { ...u, name: trimmedName, email: trimmedEmail, status: formStatus };
+            }
+            return u;
+        });
+        setUserList(updated);
+    } else {
+        const newId = nextId;
+        setNextId(newId + 1);
+        const newUser: UserItem = {
+            id: newId,
+            name: trimmedName,
+            email: trimmedEmail,
+            status: formStatus
+        };
+        setUserList([...userList, newUser]);
+    }
+
+    setShowForm(false);
+    setIsEdit(false);
+    setFormError('');
+}
+
+function deleteUser(id: number) {
+    setUserList(userList.filter((u: UserItem) => u.id !== id));
+}
+
+function reverseUserList() {
+    setUserList([...userList].reverse());
+}
+
+function resetDefault() {
+    setUserList([
+        { id: 1, name: 'Nguyễn Văn An', email: 'an.nguyen@saola.dev', status: 'active' },
+        { id: 2, name: 'Trần Thị Bình', email: 'binh.tran@saola.dev', status: 'inactive' },
+        { id: 3, name: 'Lê Hoàng Cường', email: 'cuong.le@saola.dev', status: 'active' }
+    ]);
+    setNextId(4);
+}
+</script>
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    @block('main')
+        <p class="kicker"><span>ỨNG DỤNG THẬT · MODAL EDITOR</span></p>
+        <h1>Modal Editor &amp; Quản lý Item.</h1>
+        <p class="lab-lead">
+            Quản lý danh sách thực tế với hộp thoại modal popup, liên kết dữ liệu hai chiều qua <code>&#64;bind</code>,
+            thực hiện thêm mới, cập nhật, xoá và đảo thứ tự tức thì trên DOM với reconciliation <code>&#64;key</code>.
+        </p>
+        <div class="lab-toolbar editor-toolbar">
+            <button class="button button-primary" @click(handleAdd())>
+                <span>＋ Thêm người dùng</span>
+            </button>
+            <button class="button" @click(reverseUserList())>
+                <span>⇅ Đảo thứ tự</span>
+            </button>
+            <button class="button" @click(resetDefault())>
+                <span>↺ Đặt lại</span>
+            </button>
+            <div class="editor-pill-group">
+                <span class="editor-pill">Tổng: <strong>{{ userList.length }}</strong></span>
+            </div>
+        </div>
+
+        @if (showForm)
+            <div class="modal-overlay" @click(handleCancel())></div>
+            <div class="modal-dialog" role="dialog" aria-modal="true">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>{{ isEdit ? 'Chỉnh sửa' : 'Thêm mới' }} người dùng</h2>
+                        <button class="modal-close-btn" @click(handleCancel()) aria-label="Đóng">&times;</button>
+                    </div>
+
+                    @if (formError !== '')
+                        <div class="modal-alert" role="alert">
+                            <span>⚠️</span> {{ formError }}
+                        </div>
+                    @endif
+
+                    <div class="modal-body">
+                        <form class="modal-form" @submit.prevent(handleSave())>
+                            <div class="form-group">
+                                <label for="name">Họ và tên <span class="text-danger">*</span></label>
+                                <input type="text" id="name" placeholder="Ví dụ: Nguyễn Văn An" @bind(formName) />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Địa chỉ Email <span class="text-danger">*</span></label>
+                                <input type="email" id="email" placeholder="Ví dụ: an.nguyen@saola.dev" @bind(formEmail) />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="status">Trạng thái tài khoản</label>
+                                <select id="status" @bind(formStatus)>
+                                    <option value="active">Hoạt động (Active)</option>
+                                    <option value="inactive">Tạm khoá (Inactive)</option>
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="button" @click(handleCancel())>Huỷ bỏ</button>
+                                <button type="submit" class="button button-primary">{{ isEdit ? 'Cập nhật' : 'Lưu người dùng' }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <div class="user-list">
+            @foreach(userList as user)
+                @key(user['id'])
+                <div class="user-card">
+                    <div class="user-card__lead">
+                        <div class="user-avatar">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="user-info">
+                            <div class="user-title-row">
+                                <strong class="user-name">{{ user['name'] }}</strong>
+                                <span class="user-id">#{{ user['id'] }}</span>
+                            </div>
+                            <div class="user-email">{{ user['email'] }}</div>
+                        </div>
+                    </div>
+                    <div class="user-card__tail">
+                        <span @class({'status-badge', 'status-active': user['status'] === 'active', 'status-inactive': user['status'] !== 'active'})>
+                            {{ user['status'] === 'active' ? '● Hoạt động' : '○ Tạm khoá' }}
+                        </span>
+                        <div class="user-card__actions">
+                            <button class="btn-action btn-edit" title="Chỉnh sửa" @click(showEditForm(user))>
+                                <span>Sửa</span>
+                            </button>
+                            <button class="btn-action btn-delete" title="Xoá" @click(deleteUser(user['id']))>
+                                <span>Xoá</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        @if (userList.length === 0)
+            <div class="empty-state">
+                <div class="empty-icon">👥</div>
+                <h3>Chưa có người dùng nào</h3>
+                <p>Danh sách hiện đang trống. Hãy thêm người dùng mới hoặc bấm đặt lại.</p>
+                <button class="button button-primary" @click(handleAdd())>＋ Thêm người dùng</button>
+            </div>
+        @endif
+    @endblock
+
+    @block('aside')
+        <h2>Cơ chế hoạt động của Modal &amp; State.</h2>
+        <ul class="check-list">
+            <li><strong>2-Way Binding phẳng (<code>&#64;bind</code>):</strong> Ràng buộc trực tiếp với getter/setter của StateManager trên tầng khoá phẳng (<code>formName</code>, <code>formEmail</code>, <code>formStatus</code>), giúp dữ liệu input và state đồng bộ tức thì.</li>
+            <li><strong>Reactivity Modal với <code>&#64;if</code>:</strong> Modal được điều khiển bởi state boolean <code>showForm</code>; chỉ vùng marker của modal được mount/unmount khi trạng thái thay đổi.</li>
+            <li><strong>Danh sách Reconciliation (<code>&#64;foreach + &#64;key</code>):</strong> Giúp theo dõi danh tính từng dòng qua khoá <code>user['id']</code>, bảo toàn node DOM khi thêm, sửa hoặc đảo thứ tự thay vì vẽ lại toàn bộ mảng.</li>
+            <li><strong>Parity SSR và CSR:</strong> Cấu trúc view đồng bộ hoàn toàn giữa đầu ra Blade template (PHP) và TypeScript runtime (Client).</li>
+        </ul>
+        <p class="lab-note">
+            Khi sử dụng form trong modal, khuyến nghị gán flat state thay vì object lồng nhau để tận dụng tối đa cơ chế setter tự động và subscriptions riêng biệt của Saola StateManager.
+        </p>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Props vào, state riêng của instance, form sửa tại chỗ.</p>
+        <code-block lang="sao">
+@verbatim
+&#64;props({ users: [] }: { users: UserItem[] })
+
+&#64;states({
+    userList: users,
+    showForm: false,
+    formName: ''
+})
+
+&lt;template&gt;
+    &#64;foreach(userList as user)
+        &#64;key(user['id'])
+        &lt;tr&gt;
+            &lt;td&gt;{{ user['name'] }}&lt;/td&gt;
+            &lt;td&gt;&lt;button &#64;click(showEditForm(user))&gt;Sửa&lt;/button&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+    &#64;endforeach
+
+    &#64;if(showForm)
+        &lt;form &#64;submit.prevent(save())&gt;
+            &lt;input type="text" &#64;bind(formName)&gt;
+        &lt;/form&gt;
+    &#64;endif
+&lt;/template&gt;
+@endverbatim
+        </code-block>
+    @endblock
+</template>
+
+<style scoped>
+    .editor-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin: 24px 0 28px;
+    }
+
+    .editor-pill-group {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    .editor-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: var(--fog);
+        border: 1px solid var(--line);
+        font-size: 13px;
+        color: var(--muted);
+    }
+
+    .editor-pill strong {
+        color: var(--ink);
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* User List */
+    .user-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .user-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 20px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: var(--r-card);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+        transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .user-card:hover {
+        border-color: rgba(217, 58, 17, 0.35);
+        box-shadow: var(--shadow-card);
+        transform: translateY(-1px);
+    }
+
+    .user-card__lead {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+    }
+
+    .user-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(217, 58, 17, 0.12), rgba(255, 138, 101, 0.18));
+        color: var(--river);
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .user-title-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .user-name {
+        font-size: 15.5px;
+        font-weight: 700;
+        color: var(--ink);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-id {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 1px 7px;
+        border-radius: 999px;
+        background: var(--fog);
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .user-email {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-card__tail {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-shrink: 0;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .status-active {
+        background: rgba(16, 185, 129, 0.1);
+        color: #059669;
+        border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .status-inactive {
+        background: rgba(107, 114, 128, 0.1);
+        color: #4b5563;
+        border: 1px solid rgba(107, 114, 128, 0.25);
+    }
+
+    .user-card__actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 34px;
+        padding: 0 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        cursor: pointer;
+        transition: all .2s ease;
+        color: var(--text);
+    }
+
+    .btn-edit:hover {
+        border-color: var(--river);
+        color: var(--river);
+        background: var(--sky-soft);
+    }
+
+    .btn-delete:hover {
+        border-color: #ef4444;
+        color: #dc2626;
+        background: #fef2f2;
+    }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 56px 24px;
+        background: var(--paper);
+        border: 2px dashed var(--line);
+        border-radius: var(--r-card);
+        margin-top: 20px;
+    }
+
+    .empty-icon {
+        font-size: 44px;
+        line-height: 1;
+        margin-bottom: 12px;
+    }
+
+    .empty-state h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--ink);
+    }
+
+    .empty-state p {
+        margin: 0 0 20px;
+        font-size: 14px;
+        color: var(--muted);
+    }
+
+    /* Modal */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 1000;
+        animation: editorFadeIn .2s ease;
+    }
+
+    .modal-dialog {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1001;
+        width: min(480px, calc(100vw - 32px));
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+        background: var(--paper);
+        border-radius: var(--r-card);
+        border: 1px solid var(--line);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        animation: editorModalIn .25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .modal-header h2 {
+        margin: 0;
+        font-size: 19px;
+        font-weight: 800;
+        letter-spacing: -.02em;
+        color: var(--ink);
+    }
+
+    .modal-close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        font-size: 24px;
+        line-height: 1;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+
+    .modal-close-btn:hover {
+        background: var(--fog);
+        color: var(--ink);
+    }
+
+    .modal-alert {
+        margin: 16px 24px 0;
+        padding: 10px 14px;
+        border-radius: var(--r);
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #b91c1c;
+        font-size: 13.5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .modal-body {
+        padding: 20px 24px 24px;
+    }
+
+    .modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink);
+    }
+
+    .text-danger {
+        color: #dc2626;
+        margin-left: 2px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        height: 44px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: var(--r);
+        font-size: 14px;
+        color: var(--ink);
+        background: var(--paper);
+        transition: border-color .2s, box-shadow .2s;
+        outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: var(--river);
+        box-shadow: 0 0 0 3px rgba(217, 58, 17, 0.12);
+    }
+
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 8px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+    }
+
+    @keyframes editorFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes editorModalIn {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -46%) scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+
+    @media (max-width: 640px) {
+        .user-card {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 14px;
+        }
+
+        .user-card__tail {
+            justify-content: space-between;
+        }
+
+        .editor-pill-group {
+            margin-left: 0;
+            width: 100%;
+        }
+    }
+</style>

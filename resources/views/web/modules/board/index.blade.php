@@ -1,5 +1,5 @@
 @addCssLink('/static/saola/board.css')
-@exec($__ONE_COMPONENT_REGISTRY__ = ['boardcard' => 'web.modules.board.card']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block', 'boardcard' => 'web.modules.board.card']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @vars($columns =  [])
 @useState($board, $columns)
@@ -64,9 +64,32 @@
         <h2 @class([$__VIEW_ID__ . '-Baside1'])>Trang này kiểm chứng cái gì.</h2>
         <ul @class([$__VIEW_ID__ . '-Baside2', 'check-list'])>
             <li @class([$__VIEW_ID__ . '-Baside21'])>Khoá <code @class([$__VIEW_ID__ . '-Baside211'])>&#64;key(card['id'])</code> rời vùng <code @class([$__VIEW_ID__ . '-Baside212'])>&#64;foreach</code> này sang vùng khác. Runtime phải nhận ra vẫn là một thẻ, không dựng lại node mới.</li>
-            <li @class([$__VIEW_ID__ . '-Baside22'])>Instance con <strong @class([$__VIEW_ID__ . '-Baside221'])>bị dựng lại</strong> khi thẻ đổi cột — React và Vue cũng vậy, đây không phải giới hạn của Saola. Nên bản nháp phải do <strong @class([$__VIEW_ID__ . '-Baside222'])>cha</strong> giữ; con soi lại từ prop trong <code @class([$__VIEW_ID__ . '-Baside223'])>started()</code>. Mở ô <strong @class([$__VIEW_ID__ . '-Baside224'])>Sửa</strong>, gõ dở, rồi kéo thẻ sang cột khác: nội dung đang gõ vẫn còn.</li>
+            <li @class([$__VIEW_ID__ . '-Baside22'])>Instance con <strong @class([$__VIEW_ID__ . '-Baside221'])>bị dựng lại</strong> khi thẻ đổi cột — React và Vue cũng vậy, đây không phải giới hạn của Saola. Nên bản nháp phải do <strong @class([$__VIEW_ID__ . '-Baside222'])>cha</strong> giữ, con chỉ <code @class([$__VIEW_ID__ . '-Baside223'])>&#64;bind</code> vào prop và không giữ state nào. Mở ô <strong @class([$__VIEW_ID__ . '-Baside224'])>Sửa</strong>, gõ dở, rồi kéo thẻ sang cột khác: nội dung đang gõ vẫn còn.</li>
             <li @class([$__VIEW_ID__ . '-Baside23'])><code @class([$__VIEW_ID__ . '-Baside231'])>&#64;foreach</code> lồng nhau: cột lặp ngoài, thẻ lặp trong — từng có bug thiếu spread khi lồng.</li>
             <li @class([$__VIEW_ID__ . '-Baside24'])>Cập nhật lạc quan: bảng đổi ngay khi thả, server trả về trạng thái sau cùng; hỏng thì quay lui về ảnh chụp trước đó.</li>
-            <li @class([$__VIEW_ID__ . '-Baside25'])>Con không tự gọi API. <code @class([$__VIEW_ID__ . '-Baside251'])>App.Event</code> là kênh con→cha duy nhất, vì chỉ cha mới giữ đủ trạng thái để quay lui.</li>
+            <li @class([$__VIEW_ID__ . '-Baside25'])>Con không tự gọi API. Nó <code @class([$__VIEW_ID__ . '-Baside251'])>$view.emit()</code> lên thẳng cha qua listener khai báo tại thẻ (<code @class([$__VIEW_ID__ . '-Baside252'])>&#64;edit(openEditor)</code>) — không qua event bus, nên không phải gỡ đăng ký và hai thẻ không nghe nhầm của nhau. Chỉ cha mới giữ đủ trạng thái để quay lui.</li>
         </ul>
+    @endblock
+
+    @block('source')
+        <h2 @class([$__VIEW_ID__ . '-Bsource1', 'lab-source-title'])>Code của demo này</h2>
+        <p @class([$__VIEW_ID__ . '-Bsource2', 'lab-source-note'])>Kéo thả + thẻ con báo sự kiện lên cha.</p>
+        @startMarker('component', 'Bsourcec1')
+        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@verbatim
+&#64;import('web.modules.board.card' as boardcard)
+
+&lt;template&gt;
+    &#64;foreach(col['cards'] as card)
+        &#64;key(card['id'])
+        &lt;boardcard :card="card" :busy="busy" :editing="editingId === card['id']"
+                   &#64;drag(setDragId) &#64;edit(openEditor) &#64;draft(setDraftText)
+                   &#64;cancel(closeEditor) &#64;rename(rename) &#64;delete(remove) /&gt;
+    &#64;endforeach
+&lt;/template&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__0_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__0_content])
+@endMarker('component', 'Bsourcec1')
     @endblock

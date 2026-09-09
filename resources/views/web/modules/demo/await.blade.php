@@ -1,4 +1,4 @@
-@exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @vars($generatedAt = '', $renderedBy = '', $stats = [])
 @await
@@ -35,4 +35,31 @@
         <p @class([$__VIEW_ID__ . '-Baside3', 'await-demo-note'])>
             Cùng một controller phục vụ cả hai: <code @class([$__VIEW_ID__ . '-Baside31'])>$this-&gt;response($data)</code> trả HTML cho trình duyệt và JSON cho <code @class([$__VIEW_ID__ . '-Baside32'])>fetch</code>, phân biệt bằng header <code @class([$__VIEW_ID__ . '-Baside33'])>X-Sao-Response</code>.
         </p>
+    @endblock
+
+    @block('source')
+        <h2 @class([$__VIEW_ID__ . '-Bsource1', 'lab-source-title'])>Code của demo này</h2>
+        <p @class([$__VIEW_ID__ . '-Bsource2', 'lab-source-note'])>Dữ liệu bất đồng bộ: &#64;vars nhận từ controller, &#64;await bật đường fetch.</p>
+        @startMarker('component', 'Bsourcec1')
+        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@verbatim
+&#64;vars(generatedAt = '', renderedBy = '', stats = [])
+
+{{-- Thiếu &#64;await thì điều hướng SPA dựng view KHI CHƯA có dữ liệu:
+     mọi &#64;foreach ra rỗng, chỉ tải thẳng URL mới đúng. --}}
+&#64;await
+
+&lt;template&gt;
+    &lt;p&gt;Dữ liệu sinh lúc &lt;strong&gt;{{ generatedAt }}&lt;/strong&gt;&lt;/p&gt;
+    &lt;ul&gt;
+        &#64;foreach(stats as row)
+            &lt;li&gt;&lt;span&gt;{{ row.label }}&lt;/span&gt;&lt;b&gt;{{ row.value }}&lt;/b&gt;&lt;/li&gt;
+        &#64;endforeach
+    &lt;/ul&gt;
+&lt;/template&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__0_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__0_content])
+@endMarker('component', 'Bsourcec1')
     @endblock

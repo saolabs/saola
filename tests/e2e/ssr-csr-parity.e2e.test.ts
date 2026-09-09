@@ -26,7 +26,7 @@
  */
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Browser } from 'playwright';
-import { BASE, launchBrowser, probeServer, waitHydrated } from './support';
+import { BASE, launchBrowser, probeServer, waitDomSettled, waitHighlighted, waitHydrated, waitViewSettled } from './support';
 
 /**
  * Route được gác. Thêm route mới vào đây là cách rẻ nhất để mở rộng vùng phủ.
@@ -45,7 +45,7 @@ const ROUTES = [
     // Hai example phức tạp có dữ liệu TẤT ĐỊNH nên gác được. `/demo/market` và
     // `/demo/stream` cố ý đứng ngoài: giá chạy từng giây và mốc thời gian của
     // backlog lấy từ đồng hồ, hai lần chụp không bao giờ bằng nhau.
-    '/demo/grid', '/demo/board',
+    '/demo/grid', '/demo/board', '/demo/emit',
 ];
 
 /**
@@ -161,11 +161,20 @@ const APP_ROOT = () => {
  * sau khi networkidle, còn `sleep` đủ dài thì làm cổng chậm mà vẫn flaky.
  */
 async function settled(page: import('playwright').Page): Promise<string> {
-    await page.waitForLoadState('networkidle');
+    // BA lượt giống nhau, không phải hai: trang có `@await` đứng yên một nhịp ở
+    // trạng thái block RỖNG trong lúc chờ dữ liệu, đủ để hai lượt liền nhau
+    // bằng nhau và ảnh chụp chốt vào đúng khoảnh khắc dở dang đó.
+    const STABLE = 3;
     let prev = '';
-    for (let i = 0; i < 40; i++) {
+    let same = 0;
+    for (let i = 0; i < 60; i++) {
+        // Kiểm mạng ở MỖI nhịp, không phải một lần đầu: điều hướng SPA phát
+        // request `@await` SAU khi hàm này bắt đầu, nên gọi một lần lúc đầu là
+        // gọi lúc mạng còn rảnh và không chờ gì cả.
+        await page.waitForLoadState('networkidle');
         const now = await page.evaluate(APP_ROOT);
-        if (now && now === prev) return now;
+        same = now && now === prev ? same + 1 : 0;
+        if (same >= STABLE - 1) return now;
         prev = now;
         await page.waitForTimeout(150);
     }
@@ -178,6 +187,9 @@ async function snapshotHydrated(browser: Browser, path: string): Promise<string>
     try {
         await page.goto(`${BASE}${path}`);
         await waitHydrated(page);
+        await waitViewSettled(page);
+        await waitDomSettled(page);
+        await waitHighlighted(page);
         return await settled(page);
     } finally {
         await page.close();
@@ -192,6 +204,13 @@ async function snapshotCsr(browser: Browser, path: string): Promise<string> {
         await waitHydrated(page);
         await page.evaluate((p) => (window as any).App.Router.push(p), path);
         await page.waitForURL(`**${path}`, { timeout: 15000 });
+        // Đợi SAU khi đã tới trang đích. Đặt trước push là đợi nhầm trang xuất
+        // phát: nó không có khối code nào nên điều kiện đúng ngay, còn trang
+        // đích thì bị chụp lúc chưa tô xong.
+        await waitViewSettled(page);
+        await waitDomSettled(page);
+        await waitHighlighted(page);
+
         return await settled(page);
     } finally {
         await page.close();

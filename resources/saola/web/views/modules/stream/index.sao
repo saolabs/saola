@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 @vars(backlog: StreamEvent[] = [], perConnection = 30)
 
 {{-- Dữ liệu tới từ controller. Không có @await thì điều hướng SPA dựng view
@@ -60,6 +61,34 @@
             <li><code>Last-Event-ID</code> gửi kèm khi nối lại, nên dải sự kiện liền mạch chứ không nhảy số.</li>
             <li>Đang cuộn xuống dưới thì sự kiện mới KHÔNG kéo trang — chỉ hiện nút “N sự kiện mới”. Feed tự nhảy khi đang đọc là lỗi khó chịu nhất của loại giao diện này.</li>
         </ul>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">SSE: nguồn dữ liệu ngoài, gỡ kết nối đúng lúc trong destroyed().</p>
+        <code-block lang="sao">
+@verbatim
+&#64;vars(backlog: StreamEvent[] = [])
+&#64;await
+
+&#64;states({ events: backlog, connection: 'chưa nối', live: true })
+
+&lt;script setup lang="ts"&gt;
+    let source: EventSource | null = null;
+
+    function started() {
+        source = new EventSource('/demo/stream/events');
+        source.onmessage = (e) =&gt; setEvents([JSON.parse(e.data), ...events]);
+    }
+
+    /** Không gỡ ở đây thì mỗi lượt vào lại chồng thêm một kết nối. */
+    function destroyed() {
+        source?.close();
+        source = null;
+    }
+&lt;/script&gt;
+@endverbatim
+        </code-block>
     @endblock
 </template>
 

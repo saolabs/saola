@@ -1,0 +1,195 @@
+@import('web.components.code-block')
+@import('web.modules.emit.row' as emitrow)
+@import('web.modules.emit.group' as emitgroup)
+
+@vars(rows: RowItem[] = [])
+
+@await
+
+@states({
+    picked: 0,
+    note: 'chưa có gì',
+    bumps: 0,
+    tags: '',
+    log: []
+}: {picked: number; note: string; bumps: number; tags: string; log: string[]})
+
+<template>
+    @extends(__layout__ + 'lab')
+
+    @block('main')
+        <p class="kicker"><span>SỰ KIỆN CON → CHA</span></p>
+        <h1>Con báo, cha nghe.</h1>
+        <p class="kb-lead">
+            Cùng một view con, dựng bằng <strong>hai mặt chữ</strong>: thẻ component
+            và <code>&#64;include</code> với khoá <code>on$</code>. Hai cột phải cư xử
+            giống hệt nhau.
+        </p>
+
+        <dl class="em-readout">
+            <div class="em-readout-card">
+                <dt><span class="em-icon">🎯</span> picked</dt>
+                <dd id="out-picked">{{ picked }}</dd>
+            </div>
+            <div class="em-readout-card">
+                <dt><span class="em-icon">📝</span> note</dt>
+                <dd id="out-note">{{ note }}</dd>
+            </div>
+            <div class="em-readout-card">
+                <dt><span class="em-icon">⚡</span> bumps</dt>
+                <dd id="out-bumps">{{ bumps }}</dd>
+            </div>
+            <div class="em-readout-card">
+                <dt><span class="em-icon">🏷️</span> tags</dt>
+                <dd id="out-tags">{{ tags }}</dd>
+            </div>
+        </dl>
+
+        <div class="em-cols">
+            <section id="viaTag" class="em-col">
+                <header class="em-col-head">
+                    <span class="em-col-tag tag-orange">Thẻ Component</span>
+                    <h2>Thẻ component</h2>
+                    <p class="em-col-sub">Cú pháp &lt;emitrow&gt; với các directive &#64;event</p>
+                </header>
+                <ul class="em-list">
+                    @foreach(rows as row)
+                        @key(row['id'])
+                        <emitrow :row="row" origin="thẻ"
+                                 @pick(setPicked(event))
+                                 @rename((id, title) => rename(id, title))
+                                 @bump(bump)
+                                 @on('row:tagged', ({id, tag}) => addTag(id, tag))
+                                 @on('confirm', (id) => id !== 3)
+                                 @close((...args) => { setNote('đã đóng #' + args[0]); write('close', args) })
+                                 @refused((id, from) => write('refused', [id, from])) />
+                    @endforeach
+                </ul>
+            </section>
+
+            <section id="viaGrandchild" class="em-col">
+                <header class="em-col-head">
+                    <span class="em-col-tag tag-green">Qua tầng giữa</span>
+                    <h2>Cháu → ông</h2>
+                    <p class="em-col-sub">Tầng giữa <code>&#64;pick($view.emit)</code> chuyển tiếp, không xử lý gì</p>
+                </header>
+                <emitgroup :rows="rows" origin="cháu"
+                           @pick(setPicked(event))
+                           @rename((id, title) => rename(id, title))
+                           @bump(bump)
+                           @on('row:tagged', ({id, tag}) => addTag(id, tag))
+                           @confirm((id) => id !== 3)
+                           @close((...args) => { setNote('đã đóng #' + args[0]); write('close', args) })
+                           @refused((id, from) => write('refused', [id, from])) />
+            </section>
+
+            <section id="viaInclude" class="em-col">
+                <header class="em-col-head">
+                    <span class="em-col-tag tag-blue">&#64;include Helper</span>
+                    <h2>&#64;include với khoá on$</h2>
+                    <p class="em-col-sub">Khai báo listener trong object data qua on$</p>
+                </header>
+                <ul class="em-list">
+                    @foreach(rows as row)
+                        @key(row['id'])
+                        @include('web.modules.emit.row', {
+                            row: row,
+                            origin: 'include',
+                            on$pick: setPicked,
+                            on$rename: (id, title) => rename(id, title),
+                            on$bump: bump,
+                            'on$row:tagged': ({id, tag}) => addTag(id, tag),
+                            on$confirm: (id) => id !== 3,
+                            on$close: (...args) => { setNote('đã đóng #' + args[0]); write('close', args) },
+                            on$refused: (id, from) => write('refused', [id, from])
+                        })
+                    @endforeach
+                </ul>
+            </section>
+        </div>
+
+        <div class="em-log-box">
+            <header class="em-log-head">
+                <div class="em-terminal-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <h2>Nhật ký sự kiện (Event Log)</h2>
+                <span class="em-log-counter">{{ log.length }} bản ghi</span>
+            </header>
+            <ol id="out-log" class="em-log">
+                @foreach(log as line)
+                    <li>{{ line }}</li>
+                @endforeach
+            </ol>
+        </div>
+    @endblock
+
+    @block('aside')
+        <h2>Trang này kiểm chứng cái gì.</h2>
+        <ul class="check-list">
+            <li>Handler viết được cả ba dạng: gọi (<code>&#64;pick(setPicked(event))</code>), tham chiếu trần (<code>&#64;bump(bump)</code>), và arrow tự khai báo arity.</li>
+            <li><code>emit</code> nhiều đối số tới đủ tham số: <code>$view.emit('rename', id, title)</code> → <code>(id, title) =&gt; …</code>.</li>
+            <li>Arrow kiểu gì cũng được — gỡ rối <code>({id, tag}) =&gt; …</code>, rest <code>(...args) =&gt; …</code>, thân khối <code>=&gt; { a(); b() }</code>.</li>
+            <li>Tên sự kiện không phải định danh dùng <code>&#64;on('row:tagged', …)</code>.</li>
+            <li><code>emit</code> TRẢ VỀ giá trị listener: hàng #3 bị cha từ chối đóng, con dừng lại và báo <code>refused</code>.</li>
+            <li>Hai cột đi hai mặt chữ khác nhau nhưng ra cùng một biểu diễn — kết quả phải trùng nhau.</li>
+        </ul>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Hai mặt chữ, một cơ chế: thẻ component và &#64;include với khoá on$.</p>
+        <code-block lang="sao">
+@verbatim
+{{-- Cách 1 — thẻ component --}}
+&lt;emitrow :num="num"
+         &#64;edit(setPicked(event))
+         &#64;pair((a, b) =&gt; setPicked(a + b))
+         &#64;on('row:tagged', ({id, tag}) =&gt; addTag(id, tag)) /&gt;
+
+{{-- Cách 2 — &#64;include, listener nằm CÙNG object data --}}
+&#64;include('web.modules.emit.row', {
+    num: num,
+    on$edit: takeOne,
+    on$close: (v) =&gt; setPicked(v + 1),
+    on$pair: (a, b) =&gt; { setPicked(a); setPicked(a + b) }
+})
+
+{{-- Con phát, và ĐỌC ĐƯỢC câu trả lời của cha --}}
+&lt;button &#64;click($view.emit('pick', row['id']))&gt;chọn&lt;/button&gt;
+&lt;script setup&gt;
+    function ask() {
+        if ($view.emit('confirm', row['id']) === false) return;
+        $view.emit('close', row['id']);
+    }
+&lt;/script&gt;
+@endverbatim
+        </code-block>
+    @endblock
+</template>
+
+<link rel="stylesheet" href="/static/saola/emit.css">
+
+<script setup lang="ts">
+    interface RowItem { id: number; title: string }
+
+    function rename(id: number, title: string) {
+        setNote('#' + id + ' → ' + title);
+        write('rename', [id, title]);
+    }
+
+    function bump() {
+        setBumps(bumps + 1);
+    }
+
+    function addTag(id: number, tag: string) {
+        setTags(tags === '' ? id + ':' + tag : tags + ', ' + id + ':' + tag);
+    }
+
+    /** Gom nhật ký để test đọc được thứ tự sự kiện, không chỉ trạng thái cuối. */
+    function write(name: string, args: unknown[]) {
+        setLog([...log, name + '(' + args.join(', ') + ')']);
+    }
+</script>

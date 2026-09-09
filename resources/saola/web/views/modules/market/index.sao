@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 @vars(
     symbol = '', label = '', base = '', source = '', generatedAt = '',
     candles = [], ticker = [], book = [], symbols = [], sparkline = '',
@@ -136,6 +137,28 @@
         <p class="await-demo-note">
             Mất mạng hay bị chặn WebSocket thì feed tự chuyển sang bộ phát mô phỏng và nói rõ ở dòng “Nguồn”. Một trang demo hỏng khi wifi chập là trang demo vô dụng.
         </p>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Giá realtime: state đổi liên tục, chỉ vùng phụ thuộc render lại.</p>
+        <code-block lang="sao">
+@verbatim
+&#64;vars(symbol = '', candles = [], ticker = [])
+&#64;await
+
+&#64;states({ activeSymbol: symbol, priceText: lastText })
+
+&lt;template&gt;
+    &#64;foreach(symbols as item)
+        &lt;button &#64;class({'is-active': activeSymbol === item['code']})
+                &#64;click(select(item['code']))&gt;{{ item['label'] }}&lt;/button&gt;
+    &#64;endforeach
+
+    &lt;strong&gt;{{ priceText }}&lt;/strong&gt;
+&lt;/template&gt;
+@endverbatim
+        </code-block>
     @endblock
 </template>
 

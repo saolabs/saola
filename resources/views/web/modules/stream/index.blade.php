@@ -1,5 +1,5 @@
 @addCssLink('/static/saola/stream.css')
-@exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @vars($backlog =  [], $perConnection = 30)
 @useState($events, $backlog)
@@ -57,4 +57,36 @@
             <li @class([$__VIEW_ID__ . '-Baside24'])><code @class([$__VIEW_ID__ . '-Baside241'])>Last-Event-ID</code> gửi kèm khi nối lại, nên dải sự kiện liền mạch chứ không nhảy số.</li>
             <li @class([$__VIEW_ID__ . '-Baside25'])>Đang cuộn xuống dưới thì sự kiện mới KHÔNG kéo trang — chỉ hiện nút “N sự kiện mới”. Feed tự nhảy khi đang đọc là lỗi khó chịu nhất của loại giao diện này.</li>
         </ul>
+    @endblock
+
+    @block('source')
+        <h2 @class([$__VIEW_ID__ . '-Bsource1', 'lab-source-title'])>Code của demo này</h2>
+        <p @class([$__VIEW_ID__ . '-Bsource2', 'lab-source-note'])>SSE: nguồn dữ liệu ngoài, gỡ kết nối đúng lúc trong destroyed().</p>
+        @startMarker('component', 'Bsourcec1')
+        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@verbatim
+&#64;vars(backlog: StreamEvent[] = [])
+&#64;await
+
+&#64;states({ events: backlog, connection: 'chưa nối', live: true })
+
+&lt;script setup lang="ts"&gt;
+    let source: EventSource | null = null;
+
+    function started() {
+        source = new EventSource('/demo/stream/events');
+        source.onmessage = (e) =&gt; setEvents([JSON.parse(e.data), ...events]);
+    }
+
+    /** Không gỡ ở đây thì mỗi lượt vào lại chồng thêm một kết nối. */
+    function destroyed() {
+        source?.close();
+        source = null;
+    }
+&lt;/script&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__0_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__0_content])
+@endMarker('component', 'Bsourcec1')
     @endblock

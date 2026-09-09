@@ -5,7 +5,7 @@
 @useState($status, '')
 @const($step = 1)
 @php($doubled = $count * 2)
-@exec($__ONE_COMPONENT_REGISTRY__ = ['StatCard' => $cardPath, 'CodeBlock' => $__base__ . 'components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block', 'StatCard' => $cardPath, 'CodeBlock' => $__base__ . 'components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 @extends($__layout__ . 'lab')
 
     @block('main')
@@ -130,4 +130,30 @@
             Cấu trúc <code @class([$__VIEW_ID__ . '-Baside31', 'sfea88e94'])>&lt;script setup lang="ts"&gt;</code> được Saola Compiler biên dịch đồng thời:
             sinh ra Blade Template (SSR) an toàn không eval và TypeScript Controller (CSR) tương ứng.
         </p>
+    @endblock
+
+    @block('source')
+        <h2 @class([$__VIEW_ID__ . '-Bsource1', 'sfea88e94', 'lab-source-title'])>Code của demo này</h2>
+        <p @class([$__VIEW_ID__ . '-Bsource2', 'sfea88e94', 'lab-source-note'])>Mọi khai báo nằm gọn trong &lt;script setup&gt;, giữ nguyên kiểu TypeScript.</p>
+        @startMarker('component', 'Bsourcec1')
+        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_1'))
+@verbatim
+&lt;script setup lang="ts"&gt;
+    &#64;props({initial: 0}: {initial: number})
+    &#64;state(count: number = initial)
+    &#64;computed(doubled: number = count * 2)
+    &#64;const(step: number = 1)
+
+    function increment() { setCount(count + step); }
+&lt;/script&gt;
+
+&lt;template&gt;
+    &lt;button &#64;click(increment())&gt;+{{ step }}&lt;/button&gt;
+    &lt;p&gt;{{ count }} × 2 = {{ doubled }}&lt;/p&gt;
+&lt;/template&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__1_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_1'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__1_content])
+@endMarker('component', 'Bsourcec1')
     @endblock

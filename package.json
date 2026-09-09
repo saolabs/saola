@@ -28,7 +28,7 @@
         "test": "vitest",
         "test:ui": "vitest --ui",
         "test:coverage": "vitest --coverage",
-        "test:e2e": "vitest run --dir tests/e2e --exclude '[]'",
+        "test:e2e": "vitest run --dir tests/e2e --exclude '[]' --no-file-parallelism",
         "saola:compile": "sao-compile web",
         "saola:compile:all": "sao-compile all",
         "saola:compile:admin": "sao-compile admin",

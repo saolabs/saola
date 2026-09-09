@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 <script setup lang="ts">
     import type { GridStatusFilter } from '@web/app/services/GridData';
 
@@ -137,6 +138,28 @@
             Cấu trúc <code>&lt;script setup lang="ts"&gt;</code> được Saola Compiler biên dịch đồng thời:
             sinh ra Blade Template (SSR) an toàn không eval và TypeScript Controller (CSR) tương ứng.
         </p>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Mọi khai báo nằm gọn trong &lt;script setup&gt;, giữ nguyên kiểu TypeScript.</p>
+        <code-block lang="sao">
+@verbatim
+&lt;script setup lang="ts"&gt;
+    &#64;props({initial: 0}: {initial: number})
+    &#64;state(count: number = initial)
+    &#64;computed(doubled: number = count * 2)
+    &#64;const(step: number = 1)
+
+    function increment() { setCount(count + step); }
+&lt;/script&gt;
+
+&lt;template&gt;
+    &lt;button &#64;click(increment())&gt;+{{ step }}&lt;/button&gt;
+    &lt;p&gt;{{ count }} × 2 = {{ doubled }}&lt;/p&gt;
+&lt;/template&gt;
+@endverbatim
+        </code-block>
     @endblock
 </template>
 

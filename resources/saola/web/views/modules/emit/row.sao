@@ -1,0 +1,49 @@
+{{-- Con thuần trình bày: không state, không tự gọi API. Nó chỉ báo lên cha. --}}
+@props({
+    row: null,
+    origin: ''
+})
+
+<template>
+    <li class="em-row">
+        <div class="em-row-header">
+            <span class="em-title">{{ origin }} · {{ row['title'] }}</span>
+            <span class="em-row-id">#{{ row['id'] }}</span>
+        </div>
+
+        <div class="em-row-actions">
+            {{-- payload đơn --}}
+            <button type="button" class="em-pick" @click(dispatchEvent('pick', row['id']))>chọn</button>
+
+            {{-- HAI payload — cha phải nhận đủ cả hai --}}
+            <button type="button" class="em-rename" @click(dispatchEvent('rename', row['id'], row['title'] + ' (đã sửa)'))>sửa tên</button>
+
+            {{-- tên sự kiện có ':' + payload là object --}}
+            <button type="button" class="em-tag" @click(dispatchEvent('row:tagged', {id: row['id'], tag: 'nóng'}))>gắn nhãn</button>
+
+            {{-- không payload --}}
+            <button type="button" class="em-bump" @click(dispatchEvent('bump'))>đếm</button>
+
+            {{-- emit trong <script setup>, và cha trả lời được --}}
+            <button type="button" class="em-close" @click(ask())>đóng</button>
+        </div>
+    </li>
+</template>
+
+<script setup>
+    /**
+     * `emit` trả về giá trị listener nên con HỎI được cha trước khi làm.
+     * Không ai nghe thì `emit` trả undefined — mặc định là được phép.
+     */
+    function ask() {
+        if ($view.emit('confirm', row['id']) === false) {
+            $view.emit('refused', row['id'], origin);
+            return;
+        }
+        $view.emit('close', row['id'], origin);
+    }
+
+    function dispatchEvent(eventName, ...args) {
+        $view.emit(eventName, ...args);
+    }
+</script>

@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 @import('web.modules.demo.featurecard')
 
 @states({
@@ -195,6 +196,29 @@
         @endssr
 
         <p class="lab-note">Fixture: <code>web.modules.demo.index</code> · chữ ký đầy đủ ở <a href="/docs/directives">tham chiếu directive</a>.</p>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Playground: state, binding hai chiều, điều kiện.</p>
+        <code-block lang="sao">
+@verbatim
+&#64;states({ count: 3, name: 'Saola', isVisible: true })
+&#64;const(MAX_COUNT = 10)
+
+&lt;template&gt;
+    &lt;input type="text" &#64;bind(name)&gt;
+    &lt;p&gt;Xin chào {{ name }}&lt;/p&gt;
+
+    &lt;button &#64;click(setCount(count + 1)) &#64;disabled(count &gt;= MAX_COUNT)&gt;+1&lt;/button&gt;
+    &lt;strong&gt;{{ count }}&lt;/strong&gt;
+
+    &#64;if(isVisible)
+        &lt;p&gt;Khối này chỉ render lại khi `isVisible` đổi.&lt;/p&gt;
+    &#64;endif
+&lt;/template&gt;
+@endverbatim
+        </code-block>
     @endblock
 </template>
 

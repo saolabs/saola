@@ -52,4 +52,15 @@ class DemoController extends WebController
             ],
         ]);
     }
+
+    public function itemEditor()
+    {
+        return $this->response([
+            'users' => [
+                ['id' => 1, 'name' => 'Nguyễn Văn An', 'email' => 'an.nguyen@saola.dev', 'status' => 'active'],
+                ['id' => 2, 'name' => 'Trần Thị Bình', 'email' => 'binh.tran@saola.dev', 'status' => 'inactive'],
+                ['id' => 3, 'name' => 'Lê Hoàng Cường', 'email' => 'cuong.le@saola.dev', 'status' => 'active'],
+            ],
+        ]);
+    }
 }

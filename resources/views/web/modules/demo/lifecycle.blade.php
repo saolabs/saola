@@ -1,4 +1,4 @@
-@exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @useState($counter, 0)
 @useState($note, '')
@@ -65,4 +65,26 @@
             <code @class([$__VIEW_ID__ . '-Baside32'])>destroyed</code> không bao giờ hiện ra vì lúc nó chạy thì DOM đã đi rồi —
             muốn thấy nó thì mở console.
         </p>
+    @endblock
+
+    @block('source')
+        <h2 @class([$__VIEW_ID__ . '-Bsource1', 'lab-source-title'])>Code của demo này</h2>
+        <p @class([$__VIEW_ID__ . '-Bsource2', 'lab-source-note'])>Hook vòng đời: created → active ⇄ paused → destroyed.</p>
+        @startMarker('component', 'Bsourcec1')
+        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@verbatim
+&lt;script setup lang="ts"&gt;
+    function mounted()   { log('mounted'); }
+    function started()   { log('started'); }
+    function paused()    { log('paused — vào PageCache'); }
+    function resumed()   { log('resumed — quay lại từ PageCache'); }
+    function destroyed() { log('destroyed'); }
+
+    function log(name: string) { setEvents([...events, name]); }
+&lt;/script&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__0_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__0_content])
+@endMarker('component', 'Bsourcec1')
     @endblock

@@ -18,8 +18,10 @@
                     <p class="docs-nav-group">Ứng dụng thật</p>
                     <a href="/demo/market">Biểu đồ giá realtime</a>
                     <a href="/demo/board">Kanban — kéo thả</a>
+                    <a href="/demo/emit">Sự kiện con → cha</a>
                     <a href="/demo/grid">Bảng dữ liệu 3.800 dòng</a>
                     <a href="/demo/stream">Luồng sự kiện SSE</a>
+                    <a href="/demo/item-editor">Item Editor</a>
                     {{-- Hai trang này ở shell `workspace` (sidebar tối, khung
                          kiểu app) chứ không ở shell lab — giữ nguyên vì đó là
                          một bề mặt demo có chủ đích, chỉ nối đường vào. --}}
@@ -42,6 +44,9 @@
                      cùng id thay vì claim cặp có sẵn, nên nội dung section của
                      trang cũ nằm lại bên cạnh trang mới. Xem /docs/status. --}}
                 @useBlock('main')
+                {{-- Code ví dụ của chính trang demo, nằm ngay dưới phần chạy
+                     thật: xem được thứ vừa bấm là do đoạn nào sinh ra. --}}
+                @useBlock('source')
                 <hr class="lab-rule">
                 @useBlock('aside')
             </main>
@@ -50,11 +55,16 @@
 </template>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" data-manual></script>
+{{-- Trang lab in code `lang="ts"` ở 17 chỗ nhưng layout chưa bao giờ nạp
+     grammar này, nên chúng hiển thị KHÔNG MÀU từ đầu: Prism gặp ngôn ngữ
+     lạ thì lặng lẽ để nguyên text, không lỗi gì. --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
 
 <script setup lang="ts">
     import HighlightService from '@web/app/services/HighlightService';
 
     let _offNav = null as (() => void) | null;
+    let _offSettled = null as (() => void) | null;
 
     // Layout được TÁI DÙNG khi điều hướng giữa các trang demo (layout diff),
     // nên started() chỉ chạy đúng một lần. Nội dung trong outlet đổi mà
@@ -64,7 +74,10 @@
     // mà rAF bị treo khi tab/pane ẩn — nav và mục lục kẹt ở trang cũ.
     // afterEach là tín hiệu tất định của router, và nay nhận nhiều hook.
     function started() {
+        // `view:settled` bắn khi render `@await` thay skeleton bằng nội dung
+        // thật: node cũ (đã tô màu) bị thay, phải trang trí lại lượt nữa.
         _offNav = App.Router.afterEach(() => sync());
+        _offSettled = App.Event.on('view:settled', () => sync());
         sync();
     }
 
@@ -72,6 +85,7 @@
 
     function destroyed() {
         if (_offNav) { _offNav(); _offNav = null; }
+        if (_offSettled) { _offSettled(); _offSettled = null; }
     }
 
     function sync() {

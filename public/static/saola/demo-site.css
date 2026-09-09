@@ -795,6 +795,11 @@ code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospac
 .lab-lead { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 760px; margin: 0 0 28px; }
 .lab-note { color: var(--muted); font-size: 13.5px; line-height: 1.7; max-width: 760px; }
 .lab-rule { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+
+/* Khối "Code của demo này" — tách khỏi phần chạy thật bằng một đường kẻ,
+   để mắt hiểu ngay đây là nguồn của thứ vừa bấm ở trên. */
+.lab-source-title { margin: 48px 0 6px; padding-top: 32px; border-top: 1px solid var(--line); }
+.lab-source-note { color: var(--muted); margin: 0 0 14px; max-width: 760px; }
 .lab-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
 .button-small { padding: 4px 10px; font-size: 12px; }
 

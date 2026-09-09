@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 @states({
     rows: [
         { id: 1, name: 'Blade output', hits: 0 },
@@ -71,6 +72,33 @@
         <p class="lab-note">
             Muốn state của view con sống sót qua mỗi lần đồng bộ thì lặp trên danh sách <em>id ổn định</em> rồi truyền dữ liệu xuống bằng props, đừng lặp thẳng trên mảng vừa fetch về.
         </p>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Danh sách có khoá: slot chỉ được tái dùng khi &#64;key khớp VÀ reference không đổi.</p>
+        <code-block lang="sao">
+@verbatim
+&#64;states({ rows: [], nextId: 4 })
+
+&lt;template&gt;
+    &#64;foreach(rows as row)
+        &#64;key(row['id'])
+        &lt;li&gt;
+            &lt;span&gt;{{ row['name'] }}&lt;/span&gt;
+            &lt;button &#64;click(hit(row['id']))&gt;{{ row['hits'] }}&lt;/button&gt;
+        &lt;/li&gt;
+    &#64;endforeach
+&lt;/template&gt;
+
+&lt;script setup lang="ts"&gt;
+    /** Giữ ref cũ cho hàng không đổi → chỉ hàng thật sự đổi mới render lại. */
+    function hit(id: number) {
+        setRows(rows.map((r) =&gt; r['id'] === id ? { ...r, hits: r['hits'] + 1 } : r));
+    }
+&lt;/script&gt;
+@endverbatim
+        </code-block>
     @endblock
 </template>
 

@@ -1,0 +1,25 @@
+{{-- Tầng GIỮA: không xử lý gì, chỉ chuyển tiếp lên ông.
+
+     `$view.emit` chỉ nhảy MỘT tầng, nên cháu muốn tới ông thì tầng giữa phải
+     phát lại. `@edit($view.emit)` là dạng gọn của
+     `@edit((...args) => $view.emit('edit', ...args))` — vẫn phải LIỆT KÊ sự
+     kiện nào được chuyển tiếp, nên không có chuyện tổ tiên xa vô tình bắt được. --}}
+@import('web.modules.emit.row' as emitrow)
+
+@props({
+    rows: [],
+    origin: ''
+})
+
+<template>
+    <ul class="em-list">
+        @foreach(rows as row)
+            @key(row['id'])
+            <emitrow :row="row" :origin="origin"
+                     {{-- `emit` và `$view.emit` là một; dùng cả hai ở đây cho thấy rõ. --}}
+                     @pick(emit) @rename(emit) @bump(emit)
+                     @on('row:tagged', $view.emit)
+                     @confirm($view.emit) @close($view.emit) @refused($view.emit) />
+        @endforeach
+    </ul>
+</template>

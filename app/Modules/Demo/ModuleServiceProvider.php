@@ -20,6 +20,7 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
             ->group(function ($module) {
                 $module->get('/', 'index')->name('index');
                 $module->get('/await', 'await')->name('await');
+                $module->get('/item-editor', 'itemEditor')->name('item-editor');
 
                 foreach (DemoController::PAGES as $slug) {
                     $module->get('/'.$slug, 'page')->name($slug);

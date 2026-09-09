@@ -1,4 +1,4 @@
-@exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @useState($rows, [
         [ 'id'=> 1, 'name'=> 'Blade output', 'hits'=> 0 ],
@@ -72,4 +72,35 @@
         <p @class([$__VIEW_ID__ . '-Baside3', 'lab-note'])>
             Muốn state của view con sống sót qua mỗi lần đồng bộ thì lặp trên danh sách <em @class([$__VIEW_ID__ . '-Baside31'])>id ổn định</em> rồi truyền dữ liệu xuống bằng props, đừng lặp thẳng trên mảng vừa fetch về.
         </p>
+    @endblock
+
+    @block('source')
+        <h2 @class([$__VIEW_ID__ . '-Bsource1', 'lab-source-title'])>Code của demo này</h2>
+        <p @class([$__VIEW_ID__ . '-Bsource2', 'lab-source-note'])>Danh sách có khoá: slot chỉ được tái dùng khi &#64;key khớp VÀ reference không đổi.</p>
+        @startMarker('component', 'Bsourcec1')
+        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@verbatim
+&#64;states({ rows: [], nextId: 4 })
+
+&lt;template&gt;
+    &#64;foreach(rows as row)
+        &#64;key(row['id'])
+        &lt;li&gt;
+            &lt;span&gt;{{ row['name'] }}&lt;/span&gt;
+            &lt;button &#64;click(hit(row['id']))&gt;{{ row['hits'] }}&lt;/button&gt;
+        &lt;/li&gt;
+    &#64;endforeach
+&lt;/template&gt;
+
+&lt;script setup lang="ts"&gt;
+    /** Giữ ref cũ cho hàng không đổi → chỉ hàng thật sự đổi mới render lại. */
+    function hit(id: number) {
+        setRows(rows.map((r) =&gt; r['id'] === id ? { ...r, hits: r['hits'] + 1 } : r));
+    }
+&lt;/script&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__0_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__0_content])
+@endMarker('component', 'Bsourcec1')
     @endblock

@@ -1,5 +1,5 @@
 @addCssLink('/static/saola/grid.css')
-@exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
+@exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @vars($rows =  [], $total =  0, $totalText =  '0', $page =  1, $pages =  1, $from =  0, $to =  0, $search =  '', $status =  '', $sort =  'downloads', $dir =  'desc', $statuses =  [])
 @useState($items, $rows)
@@ -95,4 +95,30 @@
             <li @class([$__VIEW_ID__ . '-Baside23'])>Ô tìm kiếm <strong @class([$__VIEW_ID__ . '-Baside231'])>hoãn 250ms</strong> và bỏ kết quả về trễ. Không có bước này thì gõ nhanh sẽ để một phản hồi cũ đè lên phản hồi mới.</li>
             <li @class([$__VIEW_ID__ . '-Baside24'])>Dữ liệu sinh bằng bộ đếm có seed cố định, và mốc ngày KHÔNG lấy từ đồng hồ — nhờ vậy SSR và CSR cho ra đúng một bảng.</li>
         </ul>
+    @endblock
+
+    @block('source')
+        <h2 @class([$__VIEW_ID__ . '-Bsource1', 'lab-source-title'])>Code của demo này</h2>
+        <p @class([$__VIEW_ID__ . '-Bsource2', 'lab-source-note'])>Bảng lớn: dữ liệu server, lọc/sắp/phân trang không nạp lại trang.</p>
+        @startMarker('component', 'Bsourcec1')
+        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@verbatim
+&#64;vars(rows: GridRow[] = [], total: number = 0, page: number = 1)
+&#64;await
+
+&#64;states({ items: rows, query: search, activeStatus: status })
+
+&lt;template&gt;
+    &lt;input type="search" &#64;bind(query) &#64;input(reload())&gt;
+
+    &#64;foreach(items as row)
+        &#64;key(row['id'])
+        &lt;tr&gt;&lt;td&gt;{{ row['name'] }}&lt;/td&gt;&lt;td&gt;{{ row['downloads'] }}&lt;/td&gt;&lt;/tr&gt;
+    &#64;endforeach
+&lt;/template&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__0_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_0'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__0_content])
+@endMarker('component', 'Bsourcec1')
     @endblock
