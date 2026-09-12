@@ -14,6 +14,9 @@
 @php($activeCount = count(array_values(array_filter(array_values($users), fn($u) => data_get($u, 'active'), ARRAY_FILTER_USE_BOTH))))
 @php($totalRoles = array_reduce(array_values($users), fn($n, $u) => $n + count(data_get($u, 'roles')), 0))
 @extends($__layout__ . "workspace")
+    @section('meta:title', 'Stress Test Harness - Kiểm thử Tải & Hiệu năng | Saola Lab')
+    @section('meta:description', 'Môi trường kiểm thử sức tải và độ bền của Saola: Hydration, reactive updates tần suất cao, vòng lặp phức tạp và dọn dẹp bộ nhớ tự động.')
+    @section('meta:keywords', 'saola stress test, kiem thu tai, hydration performance, memory cleanup, reactive benchmark')
     @block('workspace')
         <header @class([$__VIEW_ID__ . '-Bworkspace1', 'se4890c80', 'workspace-topbar'])>
             <div @class([$__VIEW_ID__ . '-Bworkspace11', 'se4890c80'])>

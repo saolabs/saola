@@ -2,6 +2,9 @@
 
 <template>
     @extends(__layout__ + "public")
+    @section('meta:title', 'Về Saola - Nền tảng Web SPA Hiện đại trên Laravel')
+    @section('meta:description', 'Khám phá triết lý và sứ mệnh của Saola: Nền tảng web SPA một nguồn duy nhất (Single-Source) trên Laravel, không còn sự đánh đổi giữa SSR và CSR.')
+    @section('meta:keywords', 'saola, gioi thieu saola, laravel spa, ssr, single-source component, kien truc saola')
     @block('content')
         <section class="page-intro page-intro-split">
             <div><p class="eyebrow"><span>PROJECT / SAOLA</span> Vì sao dự án tồn tại</p><h1>Web hiện đại không nên<br><em>đòi hai hệ thống.</em></h1></div>

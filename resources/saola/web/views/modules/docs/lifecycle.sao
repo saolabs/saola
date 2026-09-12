@@ -1,5 +1,8 @@
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Vòng đời View và DOM Marker - Saola Docs')
+    @section('meta:description', 'Tìm hiểu vòng đời view (View Lifecycle) và cơ chế DOM Marker trong Saola: init, mount, update, destroy và cách marker giữ vị trí cấu trúc DOM.')
+    @section('meta:keywords', 'saola lifecycle, view lifecycle, dom marker, mount update destroy, marker hydration')
     @block('doc')
         <header class="page-hero">
             <div>
@@ -58,7 +61,7 @@
         </div>
 
         <a class="doc-next" href="/docs/router">
-            <div><span>Tiếp theo</span><strong>Router & dịch vụ client</strong></div>
+            <div><span>Tiếp theo</span><strong>Router & PageCache</strong></div>
             <span class="button button-primary">Đọc tiếp →</span>
         </a>
     @endblock

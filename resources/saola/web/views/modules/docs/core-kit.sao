@@ -1,6 +1,9 @@
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Hạ tầng Lõi (Core Kit) - Saola Docs')
+    @section('meta:description', 'Hạ tầng nền tảng của Saola: Router, Service Container, Event Dispatcher, Middleware và hệ sinh thái các package cốt lõi.')
+    @section('meta:keywords', 'saola core kit, ha tang loi, laravel core, service container, event dispatcher')
     @block('doc')
         <header class="page-hero">
             <div>

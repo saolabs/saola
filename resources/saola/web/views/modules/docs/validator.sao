@@ -1,6 +1,9 @@
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Validator và Kiểm tra Dữ liệu vào - Saola Docs')
+    @section('meta:description', 'Xác thực dữ liệu đầu vào mạnh mẽ với Validator trong Saola: Quy tắc xác thực, tùy biến thông báo lỗi và chuẩn hóa payload.')
+    @section('meta:keywords', 'saola validator, xac thuc du lieu, request validation, form validation, laravel validation rules')
     @block('doc')
         <header class="page-hero">
             <div>

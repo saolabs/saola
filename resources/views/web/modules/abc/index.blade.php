@@ -2,6 +2,9 @@
 
 @useState($n, 0)
 @extends($__layout__ . "public")
+    @section('meta:title', 'Context Base Resolution Test - Saola Lab')
+    @section('meta:description', 'Kiểm tra phân giải đường dẫn view theo context base trong Saola: Định tuyến đa ngữ cảnh và kế thừa layout linh hoạt.')
+    @section('meta:keywords', 'context base, saola context resolution, route mapping, context test')
     @block('content')
         <section @class([$__VIEW_ID__ . '-Bcontent1', 'ping'])>
             <h1 @class([$__VIEW_ID__ . '-Bcontent11'])>abc/index — base mặc định <code @class([$__VIEW_ID__ . '-Bcontent111'])>web</code></h1>

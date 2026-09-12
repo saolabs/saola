@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Kiến trúc Hệ thống Saola - 4 Tầng & 3 Vòng đời')
+    @section('meta:description', 'Chi tiết kiến trúc 4 tầng của Saola: Backend Laravel 13, Compiler PHP AST, Builder Node.js CLI, và Client Reactive SPA kết nối qua contract rõ ràng.')
+    @section('meta:keywords', 'kien truc saola, saola architecture, laravel 13 spa, saola compiler, runtime contract, ast compiler')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

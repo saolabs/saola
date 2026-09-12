@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Build, CLI và Cấu hình - Saola Docs')
+    @section('meta:description', 'Hướng dẫn công cụ build và CLI của Saola: Lệnh sao-compile, chế độ watch, bundle context, tối ưu hóa CSS/JS và cấu hình saola.config.json.')
+    @section('meta:keywords', 'saola build, saola cli, sao-compile, build pipeline, bundler, saola config')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

@@ -1,6 +1,9 @@
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Hàm Tiện ích trong Expression - Saola Docs')
+    @section('meta:description', 'Danh sách hàm tiện ích (Helpers) dùng được trong biểu thức {{ }} của Saola: Xử lý chuỗi, định dạng ngày tháng, số, mảng và đối tượng đồng bộ hai môi trường.')
+    @section('meta:keywords', 'saola helpers, ham tien ich, interpolation helpers, helper functions, format helpers')
     @block('doc')
         <header class="page-hero">
             <div>

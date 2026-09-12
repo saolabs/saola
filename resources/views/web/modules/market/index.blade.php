@@ -16,6 +16,9 @@
 @useState($asks, $book['asks'])
 @await
 @extends($__layout__ . 'lab')
+    @section('meta:title', 'Thị trường Giao dịch & Biểu đồ Realtime - Saola Lab')
+    @section('meta:description', 'Bảng theo dõi thị trường tài chính và biểu đồ nến thời gian thực: Cập nhật giá liên tục, sổ lệnh động (Order Book) và khớp lệnh realtime.')
+    @section('meta:keywords', 'market realtime demo, bieu do gia, order book, crypto stock ticker, saola realtime lab')
 
     @block('main')
         <p @class([$__VIEW_ID__ . '-Bmain1', 'kicker'])><span @class([$__VIEW_ID__ . '-Bmain11'])>ỨNG DỤNG THẬT · BIỂU ĐỒ REALTIME</span></p>

@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Saola Compiler - Một AST, Hai Output Đồng bộ')
+    @section('meta:description', 'Khám phá trình biên dịch Saola: Phân tích cú pháp template .sao thành AST duy nhất và sinh mã Blade SSR và TypeScript CSR hoàn toàn đồng bộ.')
+    @section('meta:keywords', 'saola compiler, ast, blade generator, typescript generator, ssr csr sync, single source')
     @block('doc')
         <section @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero', 'page-hero-compiler'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])><p @class([$__VIEW_ID__ . '-Bdoc111', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc1111'])>02 / COMPILER</span> Source synchronization</p><h1 @class([$__VIEW_ID__ . '-Bdoc112'])>Một AST.<br @class([$__VIEW_ID__ . '-Bdoc1121'])><em @class([$__VIEW_ID__ . '-Bdoc1122'])>Hai output đồng bộ.</em></h1></div>

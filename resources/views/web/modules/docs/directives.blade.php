@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Toàn bộ Directive trong Saola - Hướng dẫn Chi tiết')
+    @section('meta:description', 'Cẩm nang tra cứu toàn diện các directive trong Saola: Điều kiện @if, vòng lặp @foreach, event @click, binding @bind, layout @extends và @block.')
+    @section('meta:keywords', 'saola directives, huong dan directive, if foreach bind click, blade directives, template syntax')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>
@@ -220,17 +223,92 @@
                 <div @class([$__VIEW_ID__ . '-Bdoc243', 'dir-list'])>
 
                     <article @class([$__VIEW_ID__ . '-Bdoc2431', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24311', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243111', 'dir-name'])>&#64;if <em @class([$__VIEW_ID__ . '-Bdoc2431111'])>· &#64;elseif · &#64;else · &#64;endif</em></span><span @class([$__VIEW_ID__ . '-Bdoc243112', 'dir-kind'])>Vùng reactive</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24312', 'dir-sig'])>&#64;if(điều_kiện)
+                        <div @class([$__VIEW_ID__ . '-Bdoc24311', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243111', 'dir-name'])>#if <em @class([$__VIEW_ID__ . '-Bdoc2431111'])>· viết thẳng trên thẻ</em></span><span @class([$__VIEW_ID__ . '-Bdoc243112', 'dir-kind'])>Cách viết gọn</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24312', 'dir-sig'])>&lt;p #if="điều_kiện"&gt;…&lt;/p&gt;</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24313'])>Khi khối chỉ bọc đúng <strong @class([$__VIEW_ID__ . '-Bdoc243131'])>một thẻ</strong>, viết directive thành thuộc tính của thẻ đó cho gọn. Compiler hạ nó về đúng khối tương ứng trước khi biên dịch, nên ngữ nghĩa, marker và cách hoạt động <em @class([$__VIEW_ID__ . '-Bdoc243132'])>y hệt</em> — chỉ là hai cách viết của cùng một thứ. Xem <a @class([$__VIEW_ID__ . '-Bdoc243133']) @attr(['href' => '/demo/tag-directives'])>bản demo directive trên thẻ</a>.</p>
+                        @startMarker('component', 'Bdoc2431c1')
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_8'))
+@verbatim
+&lt;!-- hai đoạn này biên dịch ra như nhau --&gt;
+
+&#64;if(open)
+    &lt;p class="msg"&gt;{{ label }}&lt;/p&gt;
+&#64;endif
+
+&lt;p class="msg" #if="open"&gt;{{ label }}&lt;/p&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__8_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_8'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__8_content])
+@endMarker('component', 'Bdoc2431c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc24314'])>Chuỗi nhánh viết trên các thẻ <strong @class([$__VIEW_ID__ . '-Bdoc243141'])>sibling liền kề</strong>, chỉ được cách nhau bởi khoảng trắng:</p>
+                        @startMarker('component', 'Bdoc2431c2')
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_9'))
+@verbatim
+&lt;a href="#" #if="a"&gt;A&lt;/a&gt;
+&lt;p #elseif="b"&gt;B&lt;/p&gt;
+&lt;span #else&gt;C&lt;/span&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__9_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_9'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__9_content])
+@endMarker('component', 'Bdoc2431c2')
+                        <p @class([$__VIEW_ID__ . '-Bdoc24315'])><code @class([$__VIEW_ID__ . '-Bdoc243151'])>#switch</code> là ngoại lệ duy nhất — nó bọc <strong @class([$__VIEW_ID__ . '-Bdoc243152'])>ruột</strong> thẻ, không bọc thẻ. Thẻ cha vẫn render bình thường, các con phải toàn là <code @class([$__VIEW_ID__ . '-Bdoc243153'])>#case</code>/<code @class([$__VIEW_ID__ . '-Bdoc243154'])>#default</code>. <code @class([$__VIEW_ID__ . '-Bdoc243155'])>&#64;break</code> do compiler tự chèn:</p>
+                        @startMarker('component', 'Bdoc2431c3')
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_10'))
+@verbatim
+&lt;div class="tabs" #switch="tab"&gt;
+    &lt;p #case="'a'"&gt;Tab A&lt;/p&gt;
+    &lt;p #case="'b'"&gt;Tab B&lt;/p&gt;
+    &lt;span #default&gt;Chưa chọn&lt;/span&gt;
+&lt;/div&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__10_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_10'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__10_content])
+@endMarker('component', 'Bdoc2431c3')
+                        <p @class([$__VIEW_ID__ . '-Bdoc24316'])>Vòng lặp nhận kèm <code @class([$__VIEW_ID__ . '-Bdoc243161'])>#key</code>, thứ tự viết không quan trọng:</p>
+                        @startMarker('component', 'Bdoc2431c4')
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_11'))
+@verbatim
+&lt;li class="row" #foreach="items as item" #key="item['id']"&gt;
+    {{ item['label'] }}
+&lt;/li&gt;
+@endverbatim
+@exec($__env->stopSection())
+@exec($__code_block__11_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_11'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__11_content])
+@endMarker('component', 'Bdoc2431c4')
+                        <table @class([$__VIEW_ID__ . '-Bdoc24317', 'dir-table'])>
+                            <thead @class([$__VIEW_ID__ . '-Bdoc243171'])><tr @class([$__VIEW_ID__ . '-Bdoc2431711'])><th @class([$__VIEW_ID__ . '-Bdoc24317111'])>Viết trên thẻ</th><th @class([$__VIEW_ID__ . '-Bdoc24317112'])>Tương đương</th><th @class([$__VIEW_ID__ . '-Bdoc24317113'])>Bọc gì</th></tr></thead>
+                            <tbody @class([$__VIEW_ID__ . '-Bdoc243172'])>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2431721'])><td @class([$__VIEW_ID__ . '-Bdoc24317211'])><code @class([$__VIEW_ID__ . '-Bdoc243172111'])>#if</code> <code @class([$__VIEW_ID__ . '-Bdoc243172112'])>#elseif</code> <code @class([$__VIEW_ID__ . '-Bdoc243172113'])>#else</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317212'])><code @class([$__VIEW_ID__ . '-Bdoc243172121'])>&#64;if</code> <code @class([$__VIEW_ID__ . '-Bdoc243172122'])>&#64;elseif</code> <code @class([$__VIEW_ID__ . '-Bdoc243172123'])>&#64;else</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317213'])>cả thẻ</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2431722'])><td @class([$__VIEW_ID__ . '-Bdoc24317221'])><code @class([$__VIEW_ID__ . '-Bdoc243172211'])>#switch</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317222'])><code @class([$__VIEW_ID__ . '-Bdoc243172221'])>&#64;switch</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317223'])><strong @class([$__VIEW_ID__ . '-Bdoc243172231'])>ruột</strong> thẻ</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2431723'])><td @class([$__VIEW_ID__ . '-Bdoc24317231'])><code @class([$__VIEW_ID__ . '-Bdoc243172311'])>#case</code> <code @class([$__VIEW_ID__ . '-Bdoc243172312'])>#default</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317232'])><code @class([$__VIEW_ID__ . '-Bdoc243172321'])>&#64;case</code> <code @class([$__VIEW_ID__ . '-Bdoc243172322'])>&#64;default</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317233'])>cả thẻ con</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2431724'])><td @class([$__VIEW_ID__ . '-Bdoc24317241'])><code @class([$__VIEW_ID__ . '-Bdoc243172411'])>#foreach</code> <code @class([$__VIEW_ID__ . '-Bdoc243172412'])>#for</code> <code @class([$__VIEW_ID__ . '-Bdoc243172413'])>#while</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317242'])><code @class([$__VIEW_ID__ . '-Bdoc243172421'])>&#64;foreach</code> <code @class([$__VIEW_ID__ . '-Bdoc243172422'])>&#64;for</code> <code @class([$__VIEW_ID__ . '-Bdoc243172423'])>&#64;while</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317243'])>cả thẻ</td></tr>
+                                <tr @class([$__VIEW_ID__ . '-Bdoc2431725'])><td @class([$__VIEW_ID__ . '-Bdoc24317251'])><code @class([$__VIEW_ID__ . '-Bdoc243172511'])>#key</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317252'])><code @class([$__VIEW_ID__ . '-Bdoc243172521'])>&#64;key</code></td><td @class([$__VIEW_ID__ . '-Bdoc24317253'])>bổ trợ cho vòng lặp</td></tr>
+                            </tbody>
+                        </table>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24318', 'dir-note'])>Dùng dạng khối khi cần bọc <strong @class([$__VIEW_ID__ . '-Bdoc243181'])>nhiều thẻ</strong>, bọc chữ trần, hoặc bọc một vùng không trùng biên thẻ — dạng viết trên thẻ không làm được những việc đó.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24319', 'dir-note', 'dir-note--warn'])>Tên sau <code @class([$__VIEW_ID__ . '-Bdoc243191'])>#</code> là <strong @class([$__VIEW_ID__ . '-Bdoc243192'])>tập đóng</strong> — gõ sai như <code @class([$__VIEW_ID__ . '-Bdoc243193'])>#fi="x"</code> cho lỗi biên dịch ngay, không âm thầm thành thuộc tính HTML. Dấu <code @class([$__VIEW_ID__ . '-Bdoc243194'])>#</code> ở chỗ khác vẫn bình thường: <code @class([$__VIEW_ID__ . '-Bdoc243195'])>style="color: #fff"</code> hay <code @class([$__VIEW_ID__ . '-Bdoc243196'])>href="#dau-trang"</code> không bị đụng tới.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc2431e10_', 'dir-note'])>Một thẻ chỉ mang <strong @class([$__VIEW_ID__ . '-Bdoc2431e10_1'])>một</strong> directive điều khiển (<code @class([$__VIEW_ID__ . '-Bdoc2431e10_2'])>#key</code> là ngoại lệ, nó đi kèm vòng lặp). <code @class([$__VIEW_ID__ . '-Bdoc2431e10_3'])>#if</code> và <code @class([$__VIEW_ID__ . '-Bdoc2431e10_4'])>#foreach</code> cùng thẻ cho lỗi biên dịch thay vì đoán thứ tự — muốn vừa lặp vừa lọc thì đưa <code @class([$__VIEW_ID__ . '-Bdoc2431e10_5'])>#if</code> xuống thẻ con, hoặc lọc mảng trước.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc2431e11_', 'dir-note']) @attr(['style' => 'background: rgba(37, 99, 235, 0.08); border-left: 3px solid #2563eb; color: var(--ink);'])>
+                            📖 <strong @class([$__VIEW_ID__ . '-Bdoc2431e11_1'])>Xem tài liệu chuyên sâu:</strong> Cú pháp trên thẻ đã có trang tài liệu chi tiết riêng với đầy đủ quy tắc AST, 10 directive tập đóng, cơ chế switch/foreach và các bẫy cần tránh. Xem tại <a @class([$__VIEW_ID__ . '-Bdoc2431e11_2']) @attr(['href' => '/docs/tag-directives', 'style' => 'font-weight: 600; text-decoration: underline;'])>Tài liệu Directive trên thẻ (#) →</a>
+                        </p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2432', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24321', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243211', 'dir-name'])>&#64;if <em @class([$__VIEW_ID__ . '-Bdoc2432111'])>· &#64;elseif · &#64;else · &#64;endif</em></span><span @class([$__VIEW_ID__ . '-Bdoc243212', 'dir-kind'])>Vùng reactive</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24322', 'dir-sig'])>&#64;if(điều_kiện)
     …
 &#64;elseif(điều_kiện_khác)
     …
 &#64;else
     …
 &#64;endif</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24313'])>Compiler đọc biểu thức điều kiện, rút ra danh sách state trong đó và gắn vào vùng. Không có dependency tracking lúc chạy — phụ thuộc được tính sẵn lúc biên dịch.</p>
-                        @startMarker('component', 'Bdoc2431c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_8'))
+                        <p @class([$__VIEW_ID__ . '-Bdoc24323'])>Compiler đọc biểu thức điều kiện, rút ra danh sách state trong đó và gắn vào vùng. Không có dependency tracking lúc chạy — phụ thuộc được tính sẵn lúc biên dịch.</p>
+                        @startMarker('component', 'Bdoc2432c1')
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_12'))
 @verbatim
 &#64;if(status === 'ready')
     &lt;p&gt;Sẵn sàng&lt;/p&gt;
@@ -241,19 +319,19 @@
 &#64;endif
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__8_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_8'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__8_content])
-@endMarker('component', 'Bdoc2431c1')
-                        <p @class([$__VIEW_ID__ . '-Bdoc24314', 'dir-note'])>Đặt <code @class([$__VIEW_ID__ . '-Bdoc243141'])>&#64;if</code> bên trong <code @class([$__VIEW_ID__ . '-Bdoc243142'])>&#64;foreach</code> thì mỗi item có vùng marker riêng, nên đổi một item không đụng các item khác.</p>
+@exec($__code_block__12_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_12'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__12_content])
+@endMarker('component', 'Bdoc2432c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc24324', 'dir-note'])>Đặt <code @class([$__VIEW_ID__ . '-Bdoc243241'])>&#64;if</code> bên trong <code @class([$__VIEW_ID__ . '-Bdoc243242'])>&#64;foreach</code> thì mỗi item có vùng marker riêng, nên đổi một item không đụng các item khác.</p>
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2432', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24321', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243211', 'dir-name'])>&#64;foreach <em @class([$__VIEW_ID__ . '-Bdoc2432111'])>· &#64;endforeach</em></span><span @class([$__VIEW_ID__ . '-Bdoc243212', 'dir-kind'])>Vùng reactive</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24322', 'dir-sig'])>&#64;foreach(danh_sách as item)
+                    <article @class([$__VIEW_ID__ . '-Bdoc2433', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24331', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243311', 'dir-name'])>&#64;foreach <em @class([$__VIEW_ID__ . '-Bdoc2433111'])>· &#64;endforeach</em></span><span @class([$__VIEW_ID__ . '-Bdoc243312', 'dir-kind'])>Vùng reactive</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24332', 'dir-sig'])>&#64;foreach(danh_sách as item)
 &#64;foreach(danh_sách as khoá =&gt; item)</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24323'])>Lặp có <em @class([$__VIEW_ID__ . '-Bdoc243231'])>reconciliation</em>: runtime giữ một cache slot cho mỗi item. Khi danh sách đổi, item nào còn nguyên thì giữ nguyên DOM và mọi subscription của nó; item rời danh sách thì element bị destroy hẳn chứ không bỏ rơi.</p>
-                        @startMarker('component', 'Bdoc2432c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_9'))
+                        <p @class([$__VIEW_ID__ . '-Bdoc24333'])>Lặp có <em @class([$__VIEW_ID__ . '-Bdoc243331'])>reconciliation</em>: runtime giữ một cache slot cho mỗi item. Khi danh sách đổi, item nào còn nguyên thì giữ nguyên DOM và mọi subscription của nó; item rời danh sách thì element bị destroy hẳn chứ không bỏ rơi.</p>
+                        @startMarker('component', 'Bdoc2433c1')
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_13'))
 @verbatim
 &#64;foreach(items as item)
     &#64;key(item['id'])
@@ -261,79 +339,79 @@
 &#64;endforeach
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__9_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_9'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__9_content])
-@endMarker('component', 'Bdoc2432c1')
-                        <p @class([$__VIEW_ID__ . '-Bdoc24324', 'dir-note', 'dir-note--warn'])>Slot chỉ được tái dùng khi khoá khớp <strong @class([$__VIEW_ID__ . '-Bdoc243241'])>và</strong> reference của item không đổi — vì output biên dịch đóng gói thẳng object item vào closure. Refetch từ server trả object mới sẽ dựng lại hàng đó. Muốn giữ state của view con qua mỗi lần đồng bộ thì lặp trên danh sách id ổn định rồi truyền dữ liệu qua props.</p>
-                    </article>
-
-                    <article @class([$__VIEW_ID__ . '-Bdoc2433', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24331', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243311', 'dir-name'])>&#64;key</span><span @class([$__VIEW_ID__ . '-Bdoc243312', 'dir-kind'])>Bổ trợ vòng lặp</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24332', 'dir-sig'])>&#64;key(biểu_thức)</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24333'])>Đặt ngay dòng đầu thân vòng lặp. Nó cho cache biết lấy gì làm định danh của item. Không có <code @class([$__VIEW_ID__ . '-Bdoc243331'])>&#64;key</code> thì runtime dùng chính reference object làm khoá, và hậu tố id của marker rơi về chỉ số vòng lặp — phải khớp với phía SSR thì hydrate mới không lệch.</p>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24334'])>Khoá còn giúp phân biệt các item trùng nhau trong danh sách nguyên thuỷ, ví dụ <code @class([$__VIEW_ID__ . '-Bdoc243341'])>['a', 'b', 'a']</code>.</p>
+@exec($__code_block__13_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_13'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__13_content])
+@endMarker('component', 'Bdoc2433c1')
+                        <p @class([$__VIEW_ID__ . '-Bdoc24334', 'dir-note', 'dir-note--warn'])>Slot chỉ được tái dùng khi khoá khớp <strong @class([$__VIEW_ID__ . '-Bdoc243341'])>và</strong> reference của item không đổi — vì output biên dịch đóng gói thẳng object item vào closure. Refetch từ server trả object mới sẽ dựng lại hàng đó. Muốn giữ state của view con qua mỗi lần đồng bộ thì lặp trên danh sách id ổn định rồi truyền dữ liệu qua props.</p>
                     </article>
 
                     <article @class([$__VIEW_ID__ . '-Bdoc2434', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24341', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243411', 'dir-name'])>&#64;forelse <em @class([$__VIEW_ID__ . '-Bdoc2434111'])>· &#64;empty · &#64;endforelse</em></span><span @class([$__VIEW_ID__ . '-Bdoc243412', 'dir-kind'])>Vùng reactive</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24342', 'dir-sig'])>&#64;forelse(danh_sách as item)
+                        <div @class([$__VIEW_ID__ . '-Bdoc24341', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243411', 'dir-name'])>&#64;key</span><span @class([$__VIEW_ID__ . '-Bdoc243412', 'dir-kind'])>Bổ trợ vòng lặp</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24342', 'dir-sig'])>&#64;key(biểu_thức)</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24343'])>Đặt ngay dòng đầu thân vòng lặp. Nó cho cache biết lấy gì làm định danh của item. Không có <code @class([$__VIEW_ID__ . '-Bdoc243431'])>&#64;key</code> thì runtime dùng chính reference object làm khoá, và hậu tố id của marker rơi về chỉ số vòng lặp — phải khớp với phía SSR thì hydrate mới không lệch.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24344'])>Khoá còn giúp phân biệt các item trùng nhau trong danh sách nguyên thuỷ, ví dụ <code @class([$__VIEW_ID__ . '-Bdoc243441'])>['a', 'b', 'a']</code>.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc2435', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24351', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243511', 'dir-name'])>&#64;forelse <em @class([$__VIEW_ID__ . '-Bdoc2435111'])>· &#64;empty · &#64;endforelse</em></span><span @class([$__VIEW_ID__ . '-Bdoc243512', 'dir-kind'])>Vùng reactive</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24352', 'dir-sig'])>&#64;forelse(danh_sách as item)
     …
 &#64;empty
     …
 &#64;endforelse</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24343'])>Như <code @class([$__VIEW_ID__ . '-Bdoc243431'])>&#64;foreach</code> nhưng có sẵn nhánh cho danh sách rỗng, khỏi phải viết thêm một <code @class([$__VIEW_ID__ . '-Bdoc243432'])>&#64;if</code> đếm phần tử.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24353'])>Như <code @class([$__VIEW_ID__ . '-Bdoc243531'])>&#64;foreach</code> nhưng có sẵn nhánh cho danh sách rỗng, khỏi phải viết thêm một <code @class([$__VIEW_ID__ . '-Bdoc243532'])>&#64;if</code> đếm phần tử.</p>
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2435', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24351', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243511', 'dir-name'])>&#64;for <em @class([$__VIEW_ID__ . '-Bdoc2435111'])>· &#64;while</em></span><span @class([$__VIEW_ID__ . '-Bdoc243512', 'dir-kind'])>Vùng reactive</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24352', 'dir-sig'])>&#64;for(i = 0; i &lt; n; i++) … &#64;endfor
+                    <article @class([$__VIEW_ID__ . '-Bdoc2436', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24361', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243611', 'dir-name'])>&#64;for <em @class([$__VIEW_ID__ . '-Bdoc2436111'])>· &#64;while</em></span><span @class([$__VIEW_ID__ . '-Bdoc243612', 'dir-kind'])>Vùng reactive</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24362', 'dir-sig'])>&#64;for(i = 0; i &lt; n; i++) … &#64;endfor
 &#64;while(điều_kiện) … &#64;endwhile</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24353'])>Vòng lặp đếm và vòng lặp điều kiện. <code @class([$__VIEW_ID__ . '-Bdoc243531'])>&#64;while</code> có trần lặp ở runtime để một điều kiện sai không treo trình duyệt.</p>
-                        @startMarker('component', 'Bdoc2435c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_10'))
+                        <p @class([$__VIEW_ID__ . '-Bdoc24363'])>Vòng lặp đếm và vòng lặp điều kiện. <code @class([$__VIEW_ID__ . '-Bdoc243631'])>&#64;while</code> có trần lặp ở runtime để một điều kiện sai không treo trình duyệt.</p>
+                        @startMarker('component', 'Bdoc2436c1')
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_14'))
 @verbatim
 &#64;for(i = 0; i &lt; count; i++)
     &lt;li&gt;Ping #{{ i + 1 }}&lt;/li&gt;
 &#64;endfor
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__10_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_10'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__10_content])
-@endMarker('component', 'Bdoc2435c1')
+@exec($__code_block__14_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_14'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__14_content])
+@endMarker('component', 'Bdoc2436c1')
                     </article>
 
-                    <article @class([$__VIEW_ID__ . '-Bdoc2436', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24361', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243611', 'dir-name'])>&#64;switch <em @class([$__VIEW_ID__ . '-Bdoc2436111'])>· &#64;case · &#64;default · &#64;break</em></span><span @class([$__VIEW_ID__ . '-Bdoc243612', 'dir-kind'])>Vùng reactive</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24362', 'dir-sig'])>&#64;switch(biểu_thức)
+                    <article @class([$__VIEW_ID__ . '-Bdoc2437', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24371', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243711', 'dir-name'])>&#64;switch <em @class([$__VIEW_ID__ . '-Bdoc2437111'])>· &#64;case · &#64;default · &#64;break</em></span><span @class([$__VIEW_ID__ . '-Bdoc243712', 'dir-kind'])>Vùng reactive</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24372', 'dir-sig'])>&#64;switch(biểu_thức)
     &#64;case('a')
         …
         &#64;break
     &#64;default
         …
 &#64;endswitch</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24363'])>Nhiều nhánh gói trong một vùng marker duy nhất. Nhớ <code @class([$__VIEW_ID__ . '-Bdoc243631'])>&#64;break</code> ở cuối mỗi <code @class([$__VIEW_ID__ . '-Bdoc243632'])>&#64;case</code>, đúng ngữ nghĩa switch chứ không phải if-else.</p>
-                    </article>
-
-                    <article @class([$__VIEW_ID__ . '-Bdoc2437', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24371', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243711', 'dir-name'])>&#64;continue <em @class([$__VIEW_ID__ . '-Bdoc2437111'])>· &#64;break</em></span><span @class([$__VIEW_ID__ . '-Bdoc243712', 'dir-kind'])>Điều khiển</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24372', 'dir-sig'])>&#64;continue
-&#64;break
-&#64;continue(điều_kiện)</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24373'])>Bỏ qua vòng hiện tại hoặc thoát vòng lặp. Nhận điều kiện tuỳ chọn để khỏi bọc thêm một <code @class([$__VIEW_ID__ . '-Bdoc243731'])>&#64;if</code>.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24373'])>Nhiều nhánh gói trong một vùng marker duy nhất. Nhớ <code @class([$__VIEW_ID__ . '-Bdoc243731'])>&#64;break</code> ở cuối mỗi <code @class([$__VIEW_ID__ . '-Bdoc243732'])>&#64;case</code>, đúng ngữ nghĩa switch chứ không phải if-else.</p>
                     </article>
 
                     <article @class([$__VIEW_ID__ . '-Bdoc2438', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24381', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243811', 'dir-name'])>&#64;ssr <em @class([$__VIEW_ID__ . '-Bdoc2438111'])>· &#64;endssr</em></span><span @class([$__VIEW_ID__ . '-Bdoc243812', 'dir-kind'])>Chỉ server</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24382', 'dir-sig'])>&#64;ssr … &#64;endssr</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24383'])>Khối chỉ tồn tại ở đầu ra Blade. Compiler loại nó khỏi view JavaScript, nên nội dung bên trong xuất hiện trong HTML lần đầu rồi không bao giờ được runtime dựng lại. Hợp cho dữ liệu chỉ có ở server hoặc khối nặng không cần tương tác.</p>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24384', 'dir-note'])>Bí danh: <code @class([$__VIEW_ID__ . '-Bdoc243841'])>&#64;serverSide</code> / <code @class([$__VIEW_ID__ . '-Bdoc243842'])>&#64;endServerSide</code>, <code @class([$__VIEW_ID__ . '-Bdoc243843'])>&#64;useSSR</code> / <code @class([$__VIEW_ID__ . '-Bdoc243844'])>&#64;enduseSSR</code>.</p>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24381', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243811', 'dir-name'])>&#64;continue <em @class([$__VIEW_ID__ . '-Bdoc2438111'])>· &#64;break</em></span><span @class([$__VIEW_ID__ . '-Bdoc243812', 'dir-kind'])>Điều khiển</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24382', 'dir-sig'])>&#64;continue
+&#64;break
+&#64;continue(điều_kiện)</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24383'])>Bỏ qua vòng hiện tại hoặc thoát vòng lặp. Nhận điều kiện tuỳ chọn để khỏi bọc thêm một <code @class([$__VIEW_ID__ . '-Bdoc243831'])>&#64;if</code>.</p>
                     </article>
 
                     <article @class([$__VIEW_ID__ . '-Bdoc2439', 'dir'])>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24391', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243911', 'dir-name'])>&#64;csr <em @class([$__VIEW_ID__ . '-Bdoc2439111'])>· &#64;endcsr</em></span><span @class([$__VIEW_ID__ . '-Bdoc243912', 'dir-kind'])>Chỉ client</span></div>
-                        <div @class([$__VIEW_ID__ . '-Bdoc24392', 'dir-sig'])>&#64;csr … &#64;endcsr</div>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24393'])>Ảnh gương của <code @class([$__VIEW_ID__ . '-Bdoc243931'])>&#64;ssr</code>: khối chỉ tồn tại ở view JavaScript. Blade bỏ qua nó nên nội dung không có trong HTML lần đầu, chỉ xuất hiện sau khi runtime dựng. Hợp cho thứ chỉ có nghĩa khi đã có JS — nút phụ thuộc tương tác, widget của thư viện ngoài.</p>
-                        <p @class([$__VIEW_ID__ . '-Bdoc24394', 'dir-note'])>Bí danh: <code @class([$__VIEW_ID__ . '-Bdoc243941'])>&#64;clientSide</code> / <code @class([$__VIEW_ID__ . '-Bdoc243942'])>&#64;endClientSide</code>. Cặp <code @class([$__VIEW_ID__ . '-Bdoc243943'])>&#64;ssr</code>/<code @class([$__VIEW_ID__ . '-Bdoc243944'])>&#64;csr</code> là hai chỗ SSR và CSR được phép khác nhau <strong @class([$__VIEW_ID__ . '-Bdoc243945'])>có chủ đích</strong> — mọi khác biệt còn lại đều bị cổng parity coi là lỗi.</p>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24391', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243911', 'dir-name'])>&#64;ssr <em @class([$__VIEW_ID__ . '-Bdoc2439111'])>· &#64;endssr</em></span><span @class([$__VIEW_ID__ . '-Bdoc243912', 'dir-kind'])>Chỉ server</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc24392', 'dir-sig'])>&#64;ssr … &#64;endssr</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24393'])>Khối chỉ tồn tại ở đầu ra Blade. Compiler loại nó khỏi view JavaScript, nên nội dung bên trong xuất hiện trong HTML lần đầu rồi không bao giờ được runtime dựng lại. Hợp cho dữ liệu chỉ có ở server hoặc khối nặng không cần tương tác.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24394', 'dir-note'])>Bí danh: <code @class([$__VIEW_ID__ . '-Bdoc243941'])>&#64;serverSide</code> / <code @class([$__VIEW_ID__ . '-Bdoc243942'])>&#64;endServerSide</code>, <code @class([$__VIEW_ID__ . '-Bdoc243943'])>&#64;useSSR</code> / <code @class([$__VIEW_ID__ . '-Bdoc243944'])>&#64;enduseSSR</code>.</p>
+                    </article>
+
+                    <article @class([$__VIEW_ID__ . '-Bdoc243e10_', 'dir'])>
+                        <div @class([$__VIEW_ID__ . '-Bdoc243e10_1', 'dir-head'])><span @class([$__VIEW_ID__ . '-Bdoc243e10_11', 'dir-name'])>&#64;csr <em @class([$__VIEW_ID__ . '-Bdoc243e10_111'])>· &#64;endcsr</em></span><span @class([$__VIEW_ID__ . '-Bdoc243e10_12', 'dir-kind'])>Chỉ client</span></div>
+                        <div @class([$__VIEW_ID__ . '-Bdoc243e10_2', 'dir-sig'])>&#64;csr … &#64;endcsr</div>
+                        <p @class([$__VIEW_ID__ . '-Bdoc243e10_3'])>Ảnh gương của <code @class([$__VIEW_ID__ . '-Bdoc243e10_31'])>&#64;ssr</code>: khối chỉ tồn tại ở view JavaScript. Blade bỏ qua nó nên nội dung không có trong HTML lần đầu, chỉ xuất hiện sau khi runtime dựng. Hợp cho thứ chỉ có nghĩa khi đã có JS — nút phụ thuộc tương tác, widget của thư viện ngoài.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc243e10_4', 'dir-note'])>Bí danh: <code @class([$__VIEW_ID__ . '-Bdoc243e10_41'])>&#64;clientSide</code> / <code @class([$__VIEW_ID__ . '-Bdoc243e10_42'])>&#64;endClientSide</code>. Cặp <code @class([$__VIEW_ID__ . '-Bdoc243e10_43'])>&#64;ssr</code>/<code @class([$__VIEW_ID__ . '-Bdoc243e10_44'])>&#64;csr</code> là hai chỗ SSR và CSR được phép khác nhau <strong @class([$__VIEW_ID__ . '-Bdoc243e10_45'])>có chủ đích</strong> — mọi khác biệt còn lại đều bị cổng parity coi là lỗi.</p>
                     </article>
 
                 </div>
@@ -349,13 +427,13 @@
                         <div @class([$__VIEW_ID__ . '-Bdoc25312', 'dir-sig'])>&#64;attr({ tên: giá_trị, ... })</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc25313'])>Thuộc tính động. Giá trị <code @class([$__VIEW_ID__ . '-Bdoc253131'])>null</code>, <code @class([$__VIEW_ID__ . '-Bdoc253132'])>undefined</code> hoặc <code @class([$__VIEW_ID__ . '-Bdoc253133'])>false</code> làm runtime <em @class([$__VIEW_ID__ . '-Bdoc253134'])>gỡ hẳn</em> thuộc tính khỏi thẻ chứ không đặt chuỗi rỗng.</p>
                         @startMarker('component', 'Bdoc2531c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_11'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_15'))
 @verbatim
 &lt;a &#64;attr({ href: link, title: docTitle })&gt;…&lt;/a&gt;
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__11_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_11'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__11_content])
+@exec($__code_block__15_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_15'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__15_content])
 @endMarker('component', 'Bdoc2531c1')
                     </article>
 
@@ -364,13 +442,13 @@
                         <div @class([$__VIEW_ID__ . '-Bdoc25322', 'dir-sig'])>&#64;class({'tĩnh', 'có-điều-kiện': biểu_thức})</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc25323'])>Trộn class tĩnh với class có điều kiện. Runtime chỉ bật tắt đúng những class có điều kiện, không ghi đè cả thuộc tính <code @class([$__VIEW_ID__ . '-Bdoc253231'])>class</code> — nên class do code khác thêm vào vẫn còn.</p>
                         @startMarker('component', 'Bdoc2532c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_12'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_16'))
 @verbatim
 &lt;div &#64;class({'card', 'card--active': isActive, 'card--gone': record === null})&gt;
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__12_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_12'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__12_content])
+@exec($__code_block__16_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_16'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__16_content])
 @endMarker('component', 'Bdoc2532c1')
                         <p @class([$__VIEW_ID__ . '-Bdoc25324', 'dir-note', 'dir-note--warn'])>Tránh dấu <code @class([$__VIEW_ID__ . '-Bdoc253241'])>&gt;</code> hoặc <code @class([$__VIEW_ID__ . '-Bdoc253242'])>&lt;</code> trong biểu thức: bộ phân tích thẻ ở đầu ra Blade đóng thẻ sớm tại đó. Viết <code @class([$__VIEW_ID__ . '-Bdoc253243'])>count !== 0</code> thay cho <code @class([$__VIEW_ID__ . '-Bdoc253244'])>count &gt; 0</code>.</p>
                     </article>
@@ -387,15 +465,15 @@
                         <div @class([$__VIEW_ID__ . '-Bdoc25342', 'dir-sig'])>&#64;bind(tên_state)</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc25343'])>Binding hai chiều. Runtime tự chọn cách đọc ghi theo loại input: <code @class([$__VIEW_ID__ . '-Bdoc253431'])>checked</code> cho checkbox, so khớp <code @class([$__VIEW_ID__ . '-Bdoc253432'])>value</code> cho radio, <code @class([$__VIEW_ID__ . '-Bdoc253433'])>valueAsNumber</code> cho number và range, còn lại là <code @class([$__VIEW_ID__ . '-Bdoc253434'])>value</code>. Với <code @class([$__VIEW_ID__ . '-Bdoc253435'])>&lt;select&gt;</code>, việc gán giá trị được hoãn một microtask vì <code @class([$__VIEW_ID__ . '-Bdoc253436'])>&lt;option&gt;</code> chưa kịp có mặt lúc thẻ vừa tạo.</p>
                         @startMarker('component', 'Bdoc2534c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_13'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_17'))
 @verbatim
 &lt;input type="text" &#64;bind(name)&gt;
 &lt;input type="checkbox" &#64;bind(agree)&gt;
 &lt;select &#64;bind(tone)&gt;…&lt;/select&gt;
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__13_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_13'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__13_content])
+@exec($__code_block__17_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_17'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__17_content])
 @endMarker('component', 'Bdoc2534c1')
                         <p @class([$__VIEW_ID__ . '-Bdoc25344', 'dir-note', 'dir-note--warn'])>Chỉ nhận khoá phẳng. <code @class([$__VIEW_ID__ . '-Bdoc253441'])>&#64;bind(user.name)</code> đọc được giá trị ban đầu nhưng không ghi ngược và không nhận thay đổi, vì setter và subscription chỉ tồn tại ở tầng khoá gốc. Tách thành state phẳng như <code @class([$__VIEW_ID__ . '-Bdoc253442'])>userName</code>.</p>
                     </article>
@@ -429,7 +507,7 @@
                         <div @class([$__VIEW_ID__ . '-Bdoc25372', 'dir-sig'])>&#64;transition('tên')</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc25373'])>Gắn tiền tố class enter/leave cho phần tử khi nó vào hoặc rời một vùng reactive. Bạn định nghĩa <code @class([$__VIEW_ID__ . '-Bdoc253731'])>.tên-enter-active</code>, <code @class([$__VIEW_ID__ . '-Bdoc253732'])>.tên-enter-from</code>, <code @class([$__VIEW_ID__ . '-Bdoc253733'])>.tên-leave-active</code>, <code @class([$__VIEW_ID__ . '-Bdoc253734'])>.tên-leave-to</code> trong CSS.</p>
                         @startMarker('component', 'Bdoc2537c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_14'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_18'))
 @verbatim
 &lt;article &#64;transition('row')&gt;…&lt;/article&gt;
 
@@ -437,8 +515,8 @@
 .row-enter-from,   .row-leave-to     { opacity: 0; }
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__14_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_14'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__14_content])
+@exec($__code_block__18_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_18'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__18_content])
 @endMarker('component', 'Bdoc2537c1')
                     </article>
 
@@ -458,7 +536,7 @@
                         <p @class([$__VIEW_ID__ . '-Bdoc26313'])>Có hai dạng. Dạng thứ nhất là tên method: compiler ghi lại tên rồi runtime tra trên view instance và bind <code @class([$__VIEW_ID__ . '-Bdoc263131'])>this</code> về view. Dạng thứ hai là biểu thức, được gói thành closure ngay tại chỗ.</p>
                         <p @class([$__VIEW_ID__ . '-Bdoc26314'])>Biến <code @class([$__VIEW_ID__ . '-Bdoc263141'])>event</code> có sẵn trong biểu thức, truyền vào method thì nhận nguyên object sự kiện.</p>
                         @startMarker('component', 'Bdoc2631c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_15'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_19'))
 @verbatim
 &lt;form &#64;submit(save(event))&gt;
     &lt;input &#64;bind(name) &#64;keydown(onKey(event))&gt;
@@ -466,8 +544,8 @@
 &lt;/form&gt;
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__15_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_15'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__15_content])
+@exec($__code_block__19_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_19'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__19_content])
 @endMarker('component', 'Bdoc2631c1')
                         <table @class([$__VIEW_ID__ . '-Bdoc26315', 'dir-mini'])>
                             <tbody @class([$__VIEW_ID__ . '-Bdoc263151'])>
@@ -518,7 +596,7 @@
 &#64;useBlock('content')</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc27323'])>Trang <em @class([$__VIEW_ID__ . '-Bdoc273231'])>đăng ký</em> nội dung, layout <em @class([$__VIEW_ID__ . '-Bdoc273232'])>tạo chỗ trống</em>. BlockManager nối hai bên theo tên. Nhờ tách rời như vậy, nội dung block được dựng lười đúng vị trí outlet chứ không phải append mù vào cuối thẻ chứa.</p>
                         @startMarker('component', 'Bdoc2732c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_16'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_20'))
 @verbatim
 &lt;!-- layouts/docs.sao --&gt;
 &#64;extends(__layout__ + "public")
@@ -528,8 +606,8 @@
 &#64;endblock
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__16_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_16'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__16_content])
+@exec($__code_block__20_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_20'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__20_content])
 @endMarker('component', 'Bdoc2732c1')
                     </article>
 
@@ -547,28 +625,28 @@
 &#64;import({ a: 'path.a', b: __template__ + 'b' })</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc27343'])>Nạp view khác vào phạm vi hiện tại và đăng ký nó vào registry component của file. Sau khi import, có thể dùng như thẻ tuỳ chỉnh trong template thay vì gọi <code @class([$__VIEW_ID__ . '-Bdoc273431'])>&#64;include</code> mỗi lần.</p>
                         @startMarker('component', 'Bdoc2734c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_17'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_21'))
 @verbatim
 &#64;import(__template__ + 'demo.featurecard')
 
 &lt;featurecard number="01" title="Reactive state"&gt;…&lt;/featurecard&gt;
                         @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__17_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_17'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__17_content])
+@exec($__code_block__21_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_21'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__21_content])
 @endMarker('component', 'Bdoc2734c1')
                         <p @class([$__VIEW_ID__ . '-Bdoc27344', 'dir-note'])>Thuộc tính không tiền tố là chuỗi tĩnh; thêm <code @class([$__VIEW_ID__ . '-Bdoc273441'])>:</code> trước tên để truyền biểu thức (<code @class([$__VIEW_ID__ . '-Bdoc273442'])>:value="count"</code>). Dạng <code @class([$__VIEW_ID__ . '-Bdoc273443'])>:</code> sinh ra đúng cùng một lời gọi như <code @class([$__VIEW_ID__ . '-Bdoc273444'])>&#64;include</code> với object props — kể cả stateKeys, nên prop vẫn được đẩy lại khi state đổi.</p>
                         <p @class([$__VIEW_ID__ . '-Bdoc27345'])>Alias đặt bằng <code @class([$__VIEW_ID__ . '-Bdoc273451'])>as</code> còn dùng được ở chỗ khác cần đường dẫn view: <code @class([$__VIEW_ID__ . '-Bdoc273452'])>&#64;extends</code> và <code @class([$__VIEW_ID__ . '-Bdoc273453'])>&#64;include</code>. Nó là <em @class([$__VIEW_ID__ . '-Bdoc273454'])>điểm neo lúc biên dịch</em>, không phải biến — compiler thay alias bằng chính biểu thức đường dẫn trước khi sinh code, nên Blade và JS không thể trỏ hai nơi khác nhau.</p>
                         @startMarker('component', 'Bdoc2734c2')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_18'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_22'))
 @verbatim
 &#64;import(__layout__ + 'docs' as layout)
 
 &#64;extends(layout)          {{-- y hệt &#64;extends(__layout__ + 'docs') --}}
                         @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__18_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_18'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__18_content])
+@exec($__code_block__22_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_22'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__22_content])
 @endMarker('component', 'Bdoc2734c2')
                     </article>
 
@@ -593,7 +671,7 @@
                         <p @class([$__VIEW_ID__ . '-Bdoc27373'])>Tạo một view con thật: có ViewController riêng, state riêng, vòng đời riêng. Đây là khác biệt lớn với partial — view con sống độc lập, được start, pause, resume và destroy theo chính nó.</p>
                         <p @class([$__VIEW_ID__ . '-Bdoc27374'])>Compiler đọc object props để suy ra view con phụ thuộc state nào của cha. Khi state đó đổi, runtime <em @class([$__VIEW_ID__ . '-Bdoc273741'])>đẩy props mới vào đúng instance đang sống</em> chứ không dựng lại view con — nên state nội bộ của nó, ví dụ một form đang mở dở, không bị thổi bay.</p>
                         @startMarker('component', 'Bdoc2737c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_19'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_23'))
 @verbatim
 &#64;foreach(ids as id)
     &#64;key(id)
@@ -603,8 +681,8 @@
 &#64;endforeach
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__19_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_19'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__19_content])
+@exec($__code_block__23_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_23'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__23_content])
 @endMarker('component', 'Bdoc2737c1')
                         <p @class([$__VIEW_ID__ . '-Bdoc27375', 'dir-note'])>Props phải sống được qua SSR nên chỉ nhận giá trị tuần tự hoá được — không truyền được callback. Kênh từ con lên cha là bus sự kiện <code @class([$__VIEW_ID__ . '-Bdoc273751'])>App.Event</code>.</p>
                     </article>
@@ -614,7 +692,7 @@
                         <div @class([$__VIEW_ID__ . '-Bdoc27382', 'dir-sig'])>&#64;children</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc27383'])>Chỗ đặt nội dung mà bên gọi truyền vào giữa hai thẻ. Nội dung được render lười đúng tại vị trí khai báo và giữ nguyên context của bên gọi — biến trong đó vẫn là biến của view cha, không phải của component.</p>
                         @startMarker('component', 'Bdoc2738c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_20'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_24'))
 @verbatim
 &lt;!-- card.sao --&gt;
 &lt;article class="card"&gt;&lt;h3&gt;{{ title }}&lt;/h3&gt;&#64;children&lt;/article&gt;
@@ -623,8 +701,8 @@
 &lt;card title="Ví dụ"&gt;&lt;p&gt;Nội dung này đi qua slot&lt;/p&gt;&lt;/card&gt;
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__20_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_20'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__20_content])
+@exec($__code_block__24_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_24'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__24_content])
 @endMarker('component', 'Bdoc2738c1')
                     </article>
 
@@ -656,14 +734,14 @@
                         <div @class([$__VIEW_ID__ . '-Bdoc28422', 'dir-sig'])>&#64;addCssLink($href, $attributes = [])</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc28423'])>Đăng ký một stylesheet. Thẻ được in trong <code @class([$__VIEW_ID__ . '-Bdoc284231'])>&lt;head&gt;</code>. Trùng thì chỉ ra một thẻ — khoá so trùng là <code @class([$__VIEW_ID__ . '-Bdoc284232'])>id</code> nếu bạn đưa vào, không thì chính <code @class([$__VIEW_ID__ . '-Bdoc284233'])>href</code>; nhờ vậy layout, trang và component cùng khai báo một file cũng chỉ tốn một <code @class([$__VIEW_ID__ . '-Bdoc284234'])>&lt;link&gt;</code>.</p>
                         @startMarker('component', 'Bdoc2842c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_21'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_25'))
 @verbatim
 &#64;addCssLink('/static/saola/roster.css')
 &#64;addCssLink(asset('css/theme.css'), ['id' =&gt; 'theme', 'media' =&gt; 'print'])
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__21_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_21'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__21_content])
+@exec($__code_block__25_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_25'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__25_content])
 @endMarker('component', 'Bdoc2842c1')
                         <p @class([$__VIEW_ID__ . '-Bdoc28424', 'dir-note'])>Đăng ký sau khi <code @class([$__VIEW_ID__ . '-Bdoc284241'])>&lt;head&gt;</code> đã render thì thẻ ra cuối <code @class([$__VIEW_ID__ . '-Bdoc284242'])>&lt;body&gt;</code> — vẫn hợp lệ và vẫn áp dụng, chỉ muộn hơn một nhịp. Đó là đường của chính layout, vì layout render sau trang con.</p>
                     </article>
@@ -673,13 +751,13 @@
                         <div @class([$__VIEW_ID__ . '-Bdoc28432', 'dir-sig'])>&#64;addScriptSrc($src, $attributes = [])</div>
                         <p @class([$__VIEW_ID__ . '-Bdoc28433'])>Đăng ký một script ngoài. Thẻ được in ở cuối <code @class([$__VIEW_ID__ . '-Bdoc284331'])>&lt;body&gt;</code>, theo đúng thứ tự đăng ký, cùng cách so trùng như trên. Attribute cờ viết <code @class([$__VIEW_ID__ . '-Bdoc284332'])>true</code>.</p>
                         @startMarker('component', 'Bdoc2843c1')
-                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_22'))
+                        @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_26'))
 @verbatim
 &#64;addScriptSrc('https://cdn.example.com/prism.min.js', ['data-manual' =&gt; true])
 @endverbatim
 @exec($__env->stopSection())
-@exec($__code_block__22_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_22'))
-@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__22_content])
+@exec($__code_block__26_content = $__env->yieldContent($__ONE_COMPONENT_REGISTRY__['code-block'].'_26'))
+@include('web.components.code-block', ['lang' => "sao", '__ONE_CHILDREN_CONTENT__' => $__code_block__26_content])
 @endMarker('component', 'Bdoc2843c1')
                     </article>
 
@@ -767,8 +845,8 @@
             </section>
         </div>
 
-        <a @class([$__VIEW_ID__ . '-Bdoc3', 'doc-next']) @attr(['href' => '/docs/reactivity'])>
-            <div @class([$__VIEW_ID__ . '-Bdoc31'])><span @class([$__VIEW_ID__ . '-Bdoc311'])>Tiếp theo</span><strong @class([$__VIEW_ID__ . '-Bdoc312'])>State &amp; reactivity</strong></div>
+        <a @class([$__VIEW_ID__ . '-Bdoc3', 'doc-next']) @attr(['href' => '/docs/tag-directives'])>
+            <div @class([$__VIEW_ID__ . '-Bdoc31'])><span @class([$__VIEW_ID__ . '-Bdoc311'])>Tiếp theo</span><strong @class([$__VIEW_ID__ . '-Bdoc312'])>Directive trên thẻ (#)</strong></div>
             <span @class([$__VIEW_ID__ . '-Bdoc32', 'button', 'button-primary'])>Đọc tiếp →</span>
         </a>
     @endblock

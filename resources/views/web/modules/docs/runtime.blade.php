@@ -2,6 +2,9 @@
 
 @useState($activePhase, 'hydrate')
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Runtime, DOM Ownership & Lifecycle - Saola Docs')
+    @section('meta:description', 'Nguyên lý Runtime của Saola: Chiếm quyền kiểm soát DOM đã SSR (DOM Ownership), tiến trình Hydration không render lại những gì đã có, và giải phóng bộ nhớ sạch.')
+    @section('meta:keywords', 'saola runtime, dom ownership, hydration, client lifecycle, memory management')
     @block('doc')
         <section @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero', 'page-hero-runtime'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])><p @class([$__VIEW_ID__ . '-Bdoc111', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc1111'])>03 / RUNTIME</span> DOM ownership & lifecycle</p><h1 @class([$__VIEW_ID__ . '-Bdoc112'])>Không render lại<br @class([$__VIEW_ID__ . '-Bdoc1121'])><em @class([$__VIEW_ID__ . '-Bdoc1122'])>điều đã có.</em></h1></div>

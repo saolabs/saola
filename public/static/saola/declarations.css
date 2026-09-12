@@ -1,0 +1,243 @@
+/* /demo/declarations — demo khai báo State, Props & Computed */
+
+/* Thanh điều khiển bước tăng (Stepper) cân đối */
+.dc-step-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 0 2px;
+}
+.dc-step-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--muted, #64748b);
+}
+.dc-step-label code {
+    font-size: 13px;
+    color: var(--accent, #ea580c);
+    background: rgba(234, 88, 12, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.dc-stepper {
+    display: inline-flex;
+    align-items: center;
+    background: var(--paper, #fff);
+    border: 1px solid var(--line, #e2e8f0);
+    border-radius: 999px;
+    padding: 3px 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.dc-step-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: var(--paper-subtle, #f1f5f9);
+    color: var(--river, #0f172a);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .15s ease;
+    padding: 0;
+}
+.dc-step-btn:hover {
+    background: var(--accent, #ea580c);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
+}
+.dc-step-btn:active {
+    transform: scale(0.92);
+}
+.dc-step-display {
+    min-width: 44px;
+    text-align: center;
+    padding: 0 4px;
+}
+#dc-step {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--river, #0f172a);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Khối ví dụ chính (Hero) */
+.dc-hero-container {
+    max-width: 680px;
+    margin: 20px 0 40px;
+}
+.dc-hero-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--paper, #fff);
+    border: 2px solid var(--accent, #ea580c);
+    border-radius: var(--r-card, 14px);
+    padding: 24px;
+    box-shadow: 0 10px 30px -5px rgba(234, 88, 12, 0.12), var(--shadow-card);
+}
+.dc-card-badge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+}
+.badge-recommended {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(234, 88, 12, 0.12);
+    color: var(--accent, #ea580c);
+}
+.badge-alt {
+    display: inline-flex;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--line, #e2e8f0);
+    color: var(--muted, #64748b);
+}
+
+/* Khối mã nguồn đi liền theo từng demo */
+.dc-demo-code {
+    margin-top: 14px;
+}
+.dc-code-label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--muted, #64748b);
+    margin-bottom: 6px;
+}
+
+/* Khối tham khảo phụ */
+.dc-reference-section {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px dashed var(--line, #e2e8f0);
+    max-width: 900px;
+}
+.dc-ref-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--river, #0f172a);
+}
+.dc-ref-subtitle {
+    font-size: 13px;
+    color: var(--muted, #64748b);
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+.dc-reference-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 20px;
+}
+.dc-ref-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--paper-subtle, #f8fafc);
+    border: 1px solid var(--line, #e2e8f0);
+    border-radius: var(--r-card, 12px);
+    padding: 20px;
+}
+
+.dc-col__note {
+    margin: 6px 2px 0;
+    font-size: 12.5px;
+    color: var(--muted, #64748b);
+    line-height: 1.45;
+}
+
+/* Card bên trong các subview */
+.dc-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px 20px;
+    background: var(--paper, #fff);
+    border: 1px solid var(--line, #e2e8f0);
+    border-radius: var(--r-card, 10px);
+    box-shadow: var(--shadow-card);
+}
+.dc-card__label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted, #64748b);
+}
+.dc-num {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    color: var(--river, #0f172a);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+.dc-meta {
+    font-size: 12.5px;
+    color: var(--muted, #64748b);
+}
+.dc-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+.dc-actions .button {
+    min-height: 40px;
+    padding: 0 20px;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 999px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all .2s ease;
+}
+.dc-actions .button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+.dc-bump {
+    color: white !important;
+    background: var(--river, #ea580c) !important;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.22);
+}
+.dc-bump:hover:not(:disabled) {
+    background: #c2410c !important;
+    box-shadow: 0 6px 16px rgba(234, 88, 12, 0.32);
+}
+.dc-reset {
+    color: var(--river, #0f172a) !important;
+    background: #f1f5f9 !important;
+    border: 1px solid var(--line, #cbd5e1) !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+.dc-reset:hover:not(:disabled) {
+    background: #e2e8f0 !important;
+    border-color: #94a3b8 !important;
+    color: var(--river, #0f172a) !important;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+

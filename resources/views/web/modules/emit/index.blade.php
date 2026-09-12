@@ -9,6 +9,9 @@
 @useState($log, [])
 @await
 @extends($__layout__ . 'lab')
+    @section('meta:title', 'Sự kiện Component Con → Cha (Emit) - Saola Lab')
+    @section('meta:description', 'Truyền sự kiện từ component con lên component cha với event emit trong Saola: Hỗ trợ thẻ component tự đóng và cú pháp @include với on$.')
+    @section('meta:keywords', 'saola emit, su kien component, child to parent event, event handler, on$ event prop')
 
     @block('main')
         <p @class([$__VIEW_ID__ . '-Bmain1', 'kicker'])><span @class([$__VIEW_ID__ . '-Bmain11'])>SỰ KIỆN CON → CHA</span></p>

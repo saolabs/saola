@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Response và Thương lượng Đầu ra - Saola Docs')
+    @section('meta:description', 'Xử lý phản hồi và thương lượng nội dung (Content Negotiation) trong Saola: Tự động trả về HTML cho SSR hoặc JSON cho SPA và API.')
+    @section('meta:keywords', 'saola response, content negotiation, ssr html, spa json, response factory')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

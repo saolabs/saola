@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Repository và Quản lý Dữ liệu - Saola Docs')
+    @section('meta:description', 'Mô hình Repository trong Saola: Tách biệt truy vấn dữ liệu khỏi Controller, hỗ trợ Eloquent Model, phân trang và truy vấn tối ưu.')
+    @section('meta:keywords', 'saola repository, quan ly du lieu, data repository pattern, eloquent repository, truy van du lieu')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

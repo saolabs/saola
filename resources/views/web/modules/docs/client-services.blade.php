@@ -1,10 +1,13 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Dịch vụ Phía Client - Saola Docs')
+    @section('meta:description', 'Tập hợp các client service tích hợp trong Saola: HttpService, StorageService, EventBus, HeadService và cách sử dụng trong component.')
+    @section('meta:keywords', 'saola client services, httpservice, storage, eventbus, headservice, client runtime services')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>
-                <p @class([$__VIEW_ID__ . '-Bdoc111', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc1111'])>12</span> RUNTIME</p>
+                <p @class([$__VIEW_ID__ . '-Bdoc111', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc1111'])>08</span> RUNTIME</p>
                 <h1 @class([$__VIEW_ID__ . '-Bdoc112'])>Dịch vụ phía client.</h1>
             </div>
             <div @class([$__VIEW_ID__ . '-Bdoc12', 'page-hero-aside'])>
@@ -66,5 +69,22 @@ function destroyed() {
                 <div @class([$__VIEW_ID__ . '-Bdoc293'])><div @class([$__VIEW_ID__ . '-Bdoc2931', 'dt-key'])>Phải sống qua lần tải lại</div><span @class([$__VIEW_ID__ . '-Bdoc2932'])><code @class([$__VIEW_ID__ . '-Bdoc29321'])>App.Storage</code></span><b @class([$__VIEW_ID__ . '-Bdoc2933'])>storage</b></div>
                 <div @class([$__VIEW_ID__ . '-Bdoc294'])><div @class([$__VIEW_ID__ . '-Bdoc2941', 'dt-key'])>Báo một sự việc, không giữ giá trị</div><span @class([$__VIEW_ID__ . '-Bdoc2942'])><code @class([$__VIEW_ID__ . '-Bdoc29421'])>App.Event</code></span><b @class([$__VIEW_ID__ . '-Bdoc2943'])>event</b></div>
             </div>
+
+            <p @class([$__VIEW_ID__ . '-Bdoc2e10_', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc2e10_1'])>DỊCH VỤ NỘI BỘ</span> Không phơi ra App</p>
+            <h2 @class([$__VIEW_ID__ . '-Bdoc2e11_'])>Chạy ngầm, gọi qua cơ chế khác.</h2>
+            <p @class([$__VIEW_ID__ . '-Bdoc2e12_'])>Nhiều dịch vụ làm việc nặng nhưng cố tình không cho view gọi trực tiếp. Chúng sống qua lifecycle hooks, compiler sinh mã gọi, hoặc thẻ đặc biệt.</p>
+            <div @class([$__VIEW_ID__ . '-Bdoc2e13_', 'tag-cloud'])>
+                <span @class([$__VIEW_ID__ . '-Bdoc2e13_1', 'tag'])><code @class([$__VIEW_ID__ . '-Bdoc2e13_11'])>AssetManager</code> nạp lười css/js</span>
+                <span @class([$__VIEW_ID__ . '-Bdoc2e13_2', 'tag'])><code @class([$__VIEW_ID__ . '-Bdoc2e13_21'])>BlockManager</code> ghép slot của layout</span>
+                <span @class([$__VIEW_ID__ . '-Bdoc2e13_3', 'tag'])><code @class([$__VIEW_ID__ . '-Bdoc2e13_31'])>SectionManager</code> gom nội dung theo tên</span>
+                <span @class([$__VIEW_ID__ . '-Bdoc2e13_4', 'tag'])><code @class([$__VIEW_ID__ . '-Bdoc2e13_41'])>DomService</code> vá DOM khi hydrate</span>
+                <span @class([$__VIEW_ID__ . '-Bdoc2e13_5', 'tag'])><code @class([$__VIEW_ID__ . '-Bdoc2e13_51'])>ForeachSlotCache</code> tái sử dụng DOM lặp</span>
+                <span @class([$__VIEW_ID__ . '-Bdoc2e13_6', 'tag'])><code @class([$__VIEW_ID__ . '-Bdoc2e13_61'])>ElementManager</code> bọc phần tử thật</span>
+            </div>
         </div>
+
+        <a @class([$__VIEW_ID__ . '-Bdoc3', 'doc-next']) @attr(['href' => '/docs/build'])>
+            <div @class([$__VIEW_ID__ . '-Bdoc31'])><span @class([$__VIEW_ID__ . '-Bdoc311'])>Tiếp theo</span><strong @class([$__VIEW_ID__ . '-Bdoc312'])>Build, CLI &amp; cấu hình</strong></div>
+            <span @class([$__VIEW_ID__ . '-Bdoc32', 'button', 'button-primary'])>Đọc tiếp →</span>
+        </a>
     @endblock

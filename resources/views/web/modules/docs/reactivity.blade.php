@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'State và Element API - Hệ thống Phản ứng Saola')
+    @section('meta:description', 'Cơ chế phản ứng (Reactivity) trong Saola: Khai báo @states, cập nhật trạng thái tự động, Element API và đồng bộ DOM hai chiều.')
+    @section('meta:keywords', 'saola reactivity, state management, element api, states directive, phan ung du lieu')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

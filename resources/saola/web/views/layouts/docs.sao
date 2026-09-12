@@ -24,6 +24,7 @@
                     <p class="docs-nav-group">Viết view</p>
                     <a href="/docs/sao-file">Cấu trúc file .sao</a>
                     <a href="/docs/directives">Tham chiếu directive</a>
+                    <a href="/docs/tag-directives">Directive trên thẻ (#)</a>
                     <a href="/docs/reactivity">State &amp; reactivity</a>
                     <a href="/docs/system-vars">Biến hệ thống</a>
                     <a href="/docs/helpers">Hàm dùng trong biểu thức</a>
@@ -31,7 +32,7 @@
                     <p class="docs-nav-group">Runtime</p>
                     <a href="/docs/runtime">Runtime &amp; hydration</a>
                     <a href="/docs/lifecycle">Vòng đời &amp; marker</a>
-                    <a href="/docs/router">Router &amp; dịch vụ client</a>
+                    <a href="/docs/router">Router &amp; PageCache</a>
                     <a href="/docs/client-services">Dịch vụ phía client</a>
 
                     <p class="docs-nav-group">Vận hành</p>

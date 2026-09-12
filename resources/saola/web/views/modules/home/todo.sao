@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 @vars(initialTodos: Todo[] = [], initialActiveCount = 0, initialCompletedCount = 0)
 @await
 @states({
@@ -11,17 +12,21 @@
 }: {todos: Todo[]; newTodo: string; filter: string; activeCount: number; completedCount: number; busy: boolean; syncError: string})
 
 <template>
-    @extends(__layout__ + "workspace")
-    @block('workspace')
-        <header class="workspace-topbar">
+    @extends(__layout__ + 'lab')
+    @section('meta:title', 'Todo App Demo - State Cục bộ & Phản ứng Tức thì | Saola')
+    @section('meta:description', 'Trải nghiệm ứng dụng Todo mẫu xây dựng trên Saola: State cục bộ ở client instance, cập nhật tức thì với @bind, giữ nguyên qua điều hướng back/forward.')
+    @section('meta:keywords', 'saola todo demo, quan ly cong viec, reactive state, bind directive, pagecache')
+    @block('main')
+        <p class="kicker"><span>ỨNG DỤNG THẬT · STATE CỤC BỘ</span></p>
+        <div class="workspace-topbar">
             <div>
-                <p class="eyebrow"><span>01</span> Personal queue</p>
-                <h1>Good morning.</h1>
+                <h1>Todo — State cục bộ.</h1>
+                <p class="lab-lead">State nằm trọn vẹn ở client instance, cập nhật tức thì với <code>&#64;bind</code> và giữ nguyên qua điều hướng back/forward nhờ PageCache.</p>
             </div>
             <div class="completion-ring">
                 <strong>{{ completedCount }}/{{ todos.length }}</strong><span>complete</span>
             </div>
-        </header>
+        </div>
 
         <section class="todo-board">
             @if(syncError !== '')
@@ -69,6 +74,48 @@
             </div>
             <footer class="todo-summary"><p><span>{{ activeCount }}</span> items still need attention.</p><a href="/about">Why Saola handles this differently →</a></footer>
         </section>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Tương tác hai chiều, cập nhật lạc quan và quản lý danh sách có khoá.</p>
+        <code-block lang="sao">
+@verbatim
+&#64;vars(initialTodos: Todo[] = [])
+&#64;await
+&#64;states({
+    todos: initialTodos,
+    newTodo: '',
+    filter: 'all'
+})
+
+&lt;template&gt;
+    &lt;form &#64;submit(addTodo(event))&gt;
+        &lt;input type="text" &#64;bind(newTodo)&gt;
+        &lt;button type="submit"&gt;Add task +&lt;/button&gt;
+    &lt;/form&gt;
+
+    &#64;foreach(todos as todo)
+        &#64;key(todo['id'])
+        &lt;article &#64;class({'completed': todo['completed']})&gt;
+            &lt;button &#64;click(toggleTodo(todo['id']))&gt;✓&lt;/button&gt;
+            &lt;strong&gt;{{ todo['text'] }}&lt;/strong&gt;
+            &lt;button &#64;click(deleteTodo(todo['id']))&gt;×&lt;/button&gt;
+        &lt;/article&gt;
+    &#64;endforeach
+&lt;/template&gt;
+@endverbatim
+        </code-block>
+    @endblock
+
+    @block('aside')
+        <h2>Trang này kiểm chứng cái gì.</h2>
+        <ul class="check-list">
+            <li><strong>Nạp bất đồng bộ với <code>&#64;await</code>:</strong> Lần đầu tải trang SSR trả về HTML đầy đủ từ cơ sở dữ liệu. Khi điều hướng SPA, client gọi API lấy JSON và hydrate vào view.</li>
+            <li><strong>Two-way binding (<code>&#64;bind</code>):</strong> Ô nhập gắn trực tiếp với state <code>newTodo</code>, tự đồng bộ khi gõ.</li>
+            <li><strong>Danh sách có khoá (<code>&#64;key(todo['id'])</code>):</strong> Thêm/xóa task chỉ thay đổi đúng DOM node tương ứng, không dựng lại cả danh sách.</li>
+            <li><strong>Lưu trữ qua PageCache:</strong> Khi điều hướng sang trang khác rồi bấm Back, trạng thái danh sách và form đang gõ dở vẫn được bảo toàn nguyên vẹn.</li>
+        </ul>
     @endblock
 </template>
 

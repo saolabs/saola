@@ -12,6 +12,9 @@
 @useState($draftText, '')
 @await
 @extends($__layout__ . 'lab')
+    @section('meta:title', 'Bảng Kanban Kéo Thả Trực Quan - Saola Lab')
+    @section('meta:description', 'Ứng dụng bảng Kanban tương tác kéo thả mượt mà trên Saola: Di chuyển thẻ giữa các danh sách có khoá @key, đồng bộ server bất đồng bộ.')
+    @section('meta:keywords', 'kanban saola, drag and drop, keo tha the, kanban board demo, cross list key reconciliation')
 
     @block('main')
         <p @class([$__VIEW_ID__ . '-Bmain1', 'kicker'])><span @class([$__VIEW_ID__ . '-Bmain11'])>ỨNG DỤNG THẬT · KÉO THẢ</span></p>

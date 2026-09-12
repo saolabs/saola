@@ -1,6 +1,9 @@
 @import('web.components.code-block')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Cấu trúc File .sao - Single-File Component của Saola')
+    @section('meta:description', 'Chi tiết cấu trúc file Single-File Component .sao trong Saola: Khai báo directive, @template, @script, @style và quy trình biên dịch.')
+    @section('meta:keywords', 'file sao, single file component, sao syntax, template sao, script sao, style sao, saola sfc')
     @block('doc')
         <header class="page-hero">
             <div>
@@ -21,24 +24,32 @@
                 <article>
                     <span>01 / DECLARATIONS</span>
                     <strong>Đầu file hoặc trong setup</strong>
-                    <p><code class="directive-token">import</code>&nbsp; <code class="directive-token">vars</code>&nbsp; <code class="directive-token">props</code>&nbsp; <code class="directive-token">state</code>&nbsp; <code class="directive-token">states</code>&nbsp; <code class="directive-token">computed</code>&nbsp; <code class="directive-token">const</code>&nbsp; <code class="directive-token">let</code>&nbsp; <code class="directive-token">asset</code>&nbsp; <code class="directive-token">await</code> — giữ nguyên thứ tự khai báo chuẩn.</p>
-                    <p>Viết ở đầu file, hoặc <strong>bên trong <code>&lt;script setup&gt;</code></strong>. Hai chỗ dùng chung một phạm vi, nên khai ở đâu cũng như nhau — khác biệt là trong setup bạn chú được kiểu TypeScript.</p>
+                    <div class="stack-detail">
+                        <p><code class="directive-token">import</code>&nbsp; <code class="directive-token">vars</code>&nbsp; <code class="directive-token">props</code>&nbsp; <code class="directive-token">state</code>&nbsp; <code class="directive-token">states</code>&nbsp; <code class="directive-token">computed</code>&nbsp; <code class="directive-token">const</code>&nbsp; <code class="directive-token">let</code>&nbsp; <code class="directive-token">asset</code>&nbsp; <code class="directive-token">await</code> — giữ nguyên thứ tự khai báo chuẩn.</p>
+                        <p>Viết ở đầu file, hoặc <strong>bên trong <code>&lt;script setup&gt;</code></strong>. Hai chỗ dùng chung một phạm vi, nên khai ở đâu cũng như nhau — khác biệt là trong setup bạn chú được kiểu TypeScript.</p>
+                    </div>
                 </article>
                 <article>
                     <span>02 / TEMPLATE</span>
                     <strong>HTML + Directives</strong>
-                    <p><code>&lt;template&gt;</code> hoặc <code>&lt;sao:blade&gt;</code> kích hoạt <em>modern syntax</em> (cú pháp JS hiện đại); <code>&lt;blade&gt;</code> là legacy pass-through cú pháp PHP Blade truyền thống.</p>
+                    <div class="stack-detail">
+                        <p><code>&lt;template&gt;</code> hoặc <code>&lt;sao:blade&gt;</code> kích hoạt <em>modern syntax</em> (cú pháp JS hiện đại); <code>&lt;blade&gt;</code> là legacy pass-through cú pháp PHP Blade truyền thống.</p>
+                    </div>
                 </article>
                 <article>
                     <span>03 / SCRIPT SETUP</span>
                     <strong>Logic Client Runtime</strong>
-                    <p>Khai báo function trực tiếp. Mọi <code>function</code> ở cấp ngoài cùng trở thành method của view. Hàm đọc/ghi reactive state và setter trong closure, gọi lẫn nhau mà không cần tiền tố <code>this.</code>.</p>
-                    <p>Đây cũng là nơi đặt <code>import type</code> và khai báo có kiểu: <code>&#64;state(count: number = 0)</code>, <code>&#64;computed(doubled: number = count * 2)</code>. Biến <code>let</code>/<code>const</code> khai ở đây nằm trong phạm vi <strong>từng instance view</strong>, hợp để giữ thứ không reactive như handle của thư viện ngoài hay id timer.</p>
+                    <div class="stack-detail">
+                        <p>Khai báo function trực tiếp. Mọi <code>function</code> ở cấp ngoài cùng trở thành method của view. Hàm đọc/ghi reactive state và setter trong closure, gọi lẫn nhau mà không cần tiền tố <code>this.</code>.</p>
+                        <p>Đây cũng là nơi đặt <code>import type</code> và khai báo có kiểu: <code>&#64;state(count: number = 0)</code>, <code>&#64;computed(doubled: number = count * 2)</code>. Biến <code>let</code>/<code>const</code> khai ở đây nằm trong phạm vi <strong>từng instance view</strong>, hợp để giữ thứ không reactive như handle của thư viện ngoài hay id timer.</p>
+                    </div>
                 </article>
                 <article>
                     <span>04 / STYLE</span>
                     <strong>CSS của View</strong>
-                    <p><code>&lt;style scoped&gt;</code> tự động cô lập CSS theo subtree của view; <code>&lt;style&gt;</code> áp dụng global cho toàn trang. Cùng chỗ này khai báo được asset ngoài: <code>&lt;link rel="stylesheet"&gt;</code> và <code>&lt;script src&gt;</code> — compiler dịch sang <code>&#64;addCssLink</code>/<code>&#64;addScriptSrc</code> để thẻ ra đúng <code>&lt;head&gt;</code>, không trùng, và CSS được gỡ khi rời trang.</p>
+                    <div class="stack-detail">
+                        <p><code>&lt;style scoped&gt;</code> tự động cô lập CSS theo subtree của view; <code>&lt;style&gt;</code> áp dụng global cho toàn trang. Cùng chỗ này khai báo được asset ngoài: <code>&lt;link rel="stylesheet"&gt;</code> và <code>&lt;script src&gt;</code> — compiler dịch sang <code>&#64;addCssLink</code>/<code>&#64;addScriptSrc</code> để thẻ ra đúng <code>&lt;head&gt;</code>, không trùng, và CSS được gỡ khi rời trang.</p>
+                    </div>
                 </article>
             </div>
 

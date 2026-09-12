@@ -1,0 +1,21 @@
+{{-- Mặt chữ 2: phẳng — kiểu và mặc định trên từng tên, không object. --}}
+<script setup lang="ts">
+    @props(label: string = 'Phẳng', step: number = 1)
+    @state(count: number = 0, history: number[] = [])
+    @computed(doubled: number = count * 2)
+
+    function bump() { setCount(count + step); setHistory([...history, step]); }
+    function reset() { setCount(0); setHistory([]); }
+</script>
+
+<template>
+    <article class="dc-card">
+        <span class="dc-card__label">{{ label }}</span>
+        <strong class="dc-num">{{ count }}</strong>
+        <span class="dc-meta">×2 = {{ doubled }} · {{ history.length }} lần bấm</span>
+        <div class="dc-actions">
+            <button type="button" class="button button-primary dc-bump" @click(bump())><span>＋ {{ step }}</span></button>
+            <button type="button" class="button button-light dc-reset" @click(reset()) title="Đặt lại về 0"><span>↺ Đặt lại</span></button>
+        </div>
+    </article>
+</template>

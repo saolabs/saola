@@ -1,6 +1,9 @@
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Repository và Quản lý Dữ liệu - Saola Docs')
+    @section('meta:description', 'Mô hình Repository trong Saola: Tách biệt truy vấn dữ liệu khỏi Controller, hỗ trợ Eloquent Model, phân trang và truy vấn tối ưu.')
+    @section('meta:keywords', 'saola repository, quan ly du lieu, data repository pattern, eloquent repository, truy van du lieu')
     @block('doc')
         <header class="page-hero">
             <div>

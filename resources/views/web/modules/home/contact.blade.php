@@ -8,6 +8,9 @@
 @useState($attempted, false)
 @useState($sent, false)
 @extends($__layout__ . "public")
+    @section('meta:title', 'Liên hệ - Saola Ecosystem')
+    @section('meta:description', 'Liên hệ với đội ngũ phát triển Saola để trao đổi về giải pháp kiến trúc, tư vấn tích hợp SPA trên Laravel hoặc đóng góp ý kiến.')
+    @section('meta:keywords', 'lien he saola, contact saola, tu van kien truc laravel, ho tro saola')
     @block('content')
         <section @class([$__VIEW_ID__ . '-Bcontent1', 's44ffe7d2', 'contact-grid'])>
             <div @class([$__VIEW_ID__ . '-Bcontent11', 's44ffe7d2', 'contact-aside'])>

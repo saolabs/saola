@@ -1,10 +1,13 @@
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Dịch vụ Phía Client - Saola Docs')
+    @section('meta:description', 'Tập hợp các client service tích hợp trong Saola: HttpService, StorageService, EventBus, HeadService và cách sử dụng trong component.')
+    @section('meta:keywords', 'saola client services, httpservice, storage, eventbus, headservice, client runtime services')
     @block('doc')
         <header class="page-hero">
             <div>
-                <p class="kicker"><span>12</span> RUNTIME</p>
+                <p class="kicker"><span>08</span> RUNTIME</p>
                 <h1>Dịch vụ phía client.</h1>
             </div>
             <div class="page-hero-aside">
@@ -62,6 +65,23 @@ function destroyed() {
                 <div><div class="dt-key">Phải sống qua lần tải lại</div><span><code>App.Storage</code></span><b>storage</b></div>
                 <div><div class="dt-key">Báo một sự việc, không giữ giá trị</div><span><code>App.Event</code></span><b>event</b></div>
             </div>
+
+            <p class="kicker"><span>DỊCH VỤ NỘI BỘ</span> Không phơi ra App</p>
+            <h2>Chạy ngầm, gọi qua cơ chế khác.</h2>
+            <p>Nhiều dịch vụ làm việc nặng nhưng cố tình không cho view gọi trực tiếp. Chúng sống qua lifecycle hooks, compiler sinh mã gọi, hoặc thẻ đặc biệt.</p>
+            <div class="tag-cloud">
+                <span class="tag"><code>AssetManager</code> nạp lười css/js</span>
+                <span class="tag"><code>BlockManager</code> ghép slot của layout</span>
+                <span class="tag"><code>SectionManager</code> gom nội dung theo tên</span>
+                <span class="tag"><code>DomService</code> vá DOM khi hydrate</span>
+                <span class="tag"><code>ForeachSlotCache</code> tái sử dụng DOM lặp</span>
+                <span class="tag"><code>ElementManager</code> bọc phần tử thật</span>
+            </div>
         </div>
+
+        <a class="doc-next" href="/docs/build">
+            <div><span>Tiếp theo</span><strong>Build, CLI &amp; cấu hình</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
     @endblock
 </template>

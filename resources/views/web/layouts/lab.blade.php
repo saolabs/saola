@@ -13,27 +13,26 @@
                     <p @class([$__VIEW_ID__ . '-Bcontent1113', 'docs-nav-group'])>Dữ liệu</p>
                     <a @class([$__VIEW_ID__ . '-Bcontent1114']) @attr(['href' => '/demo/await'])>Nạp dữ liệu bất đồng bộ</a>
 
-                    <p @class([$__VIEW_ID__ . '-Bcontent1115', 'docs-nav-group'])>Runtime</p>
+                    <p @class([$__VIEW_ID__ . '-Bcontent1115', 'docs-nav-group'])>Cú pháp &amp; Runtime</p>
                     <a @class([$__VIEW_ID__ . '-Bcontent1116']) @attr(['href' => '/demo/setup'])>Setup typesafe</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent1117']) @attr(['href' => '/demo/foreach'])>Danh sách &amp; reconciliation</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent1118']) @attr(['href' => '/demo/lifecycle'])>Vòng đời &amp; PageCache</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent1117']) @attr(['href' => '/demo/declarations'])>Khai báo State & Props</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent1118']) @attr(['href' => '/demo/tag-directives'])>Directive viết trên thẻ</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent1119']) @attr(['href' => '/demo/foreach'])>Danh sách &amp; reconciliation</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e10_']) @attr(['href' => '/demo/lifecycle'])>Vòng đời &amp; PageCache</a>
 
-                    <p @class([$__VIEW_ID__ . '-Bcontent1119', 'docs-nav-group'])>Ứng dụng thật</p>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e10_']) @attr(['href' => '/demo/market'])>Biểu đồ giá realtime</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e11_']) @attr(['href' => '/demo/board'])>Kanban — kéo thả</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e12_']) @attr(['href' => '/demo/emit'])>Sự kiện con → cha</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e13_']) @attr(['href' => '/demo/grid'])>Bảng dữ liệu 3.800 dòng</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e14_']) @attr(['href' => '/demo/stream'])>Luồng sự kiện SSE</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e15_']) @attr(['href' => '/demo/item-editor'])>Item Editor</a>
-                    {{-- Hai trang này ở shell `workspace` (sidebar tối, khung
-                         kiểu app) chứ không ở shell lab — giữ nguyên vì đó là
-                         một bề mặt demo có chủ đích, chỉ nối đường vào. --}}
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e16_']) @attr(['href' => '/roster'])>Roster — CRUD qua API</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e17_']) @attr(['href' => '/todo-list'])>Todo — state cục bộ</a>
+                    <p @class([$__VIEW_ID__ . '-Bcontent111e11_', 'docs-nav-group'])>Ứng dụng thật</p>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e12_']) @attr(['href' => '/demo/market'])>Biểu đồ giá realtime</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e13_']) @attr(['href' => '/demo/board'])>Kanban — kéo thả</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e14_']) @attr(['href' => '/demo/emit'])>Sự kiện con → cha</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e15_']) @attr(['href' => '/demo/grid'])>Bảng dữ liệu 3.800 dòng</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e16_']) @attr(['href' => '/demo/stream'])>Luồng sự kiện SSE</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e17_']) @attr(['href' => '/demo/item-editor'])>Item Editor</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e18_']) @attr(['href' => '/roster'])>Roster — CRUD qua API</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e19_']) @attr(['href' => '/todo-list'])>Todo — state cục bộ</a>
 
-                    <p @class([$__VIEW_ID__ . '-Bcontent111e18_', 'docs-nav-group'])>Tài liệu</p>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e19_']) @attr(['href' => '/docs/directives'])>Tham chiếu directive</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e20_']) @attr(['href' => '/docs/status'])>Giới hạn đã biết</a>
+                    <p @class([$__VIEW_ID__ . '-Bcontent111e20_', 'docs-nav-group'])>Tài liệu</p>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e21_']) @attr(['href' => '/docs/directives'])>Tham chiếu directive</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e22_']) @attr(['href' => '/docs/status'])>Giới hạn đã biết</a>
                 </div>
             </aside>
 

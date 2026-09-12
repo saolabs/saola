@@ -1,6 +1,9 @@
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Service và Tầng Nghiệp vụ - Saola Docs')
+    @section('meta:description', 'Thiết kế Service layer trong Saola: Đóng gói logic nghiệp vụ, tái sử dụng giữa Web và API Controller, quản lý dependency injection.')
+    @section('meta:keywords', 'saola service, business logic, service layer, dependency injection laravel, service controller')
     @block('doc')
         <header class="page-hero">
             <div>

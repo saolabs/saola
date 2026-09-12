@@ -1,6 +1,9 @@
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Mask, Model và Collection - Saola Docs')
+    @section('meta:description', 'Chuẩn hóa cấu trúc dữ liệu trả về với Mask trong Saola: Định dạng JSON an toàn, che giấu trường nhạy cảm, chuyển đổi Model và Collection.')
+    @section('meta:keywords', 'saola mask, data mask, json resource, model collection mask, data transformation')
     @block('doc')
         <header class="page-hero">
             <div>

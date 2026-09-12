@@ -1,6 +1,9 @@
 @import('web.components.code-block')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Toàn bộ Directive trong Saola - Hướng dẫn Chi tiết')
+    @section('meta:description', 'Cẩm nang tra cứu toàn diện các directive trong Saola: Điều kiện @if, vòng lặp @foreach, event @click, binding @bind, layout @extends và @block.')
+    @section('meta:keywords', 'saola directives, huong dan directive, if foreach bind click, blade directives, template syntax')
     @block('doc')
         <header class="page-hero">
             <div>
@@ -186,6 +189,65 @@
                 <h2>Điều khiển luồng</h2>
                 <p>Mỗi khối trở thành một <em>vùng reactive</em>: một cặp marker trong DOM cộng danh sách state mà điều kiện phụ thuộc. State đổi thì chỉ nội dung giữa hai marker đó được dựng lại.</p>
                 <div class="dir-list">
+
+                    <article class="dir">
+                        <div class="dir-head"><span class="dir-name">#if <em>· viết thẳng trên thẻ</em></span><span class="dir-kind">Cách viết gọn</span></div>
+                        <div class="dir-sig">&lt;p #if="điều_kiện"&gt;…&lt;/p&gt;</div>
+                        <p>Khi khối chỉ bọc đúng <strong>một thẻ</strong>, viết directive thành thuộc tính của thẻ đó cho gọn. Compiler hạ nó về đúng khối tương ứng trước khi biên dịch, nên ngữ nghĩa, marker và cách hoạt động <em>y hệt</em> — chỉ là hai cách viết của cùng một thứ. Xem <a href="/demo/tag-directives">bản demo directive trên thẻ</a>.</p>
+                        <code-block lang="sao">
+@verbatim
+&lt;!-- hai đoạn này biên dịch ra như nhau --&gt;
+
+&#64;if(open)
+    &lt;p class="msg"&gt;{{ label }}&lt;/p&gt;
+&#64;endif
+
+&lt;p class="msg" #if="open"&gt;{{ label }}&lt;/p&gt;
+@endverbatim
+                        </code-block>
+                        <p>Chuỗi nhánh viết trên các thẻ <strong>sibling liền kề</strong>, chỉ được cách nhau bởi khoảng trắng:</p>
+                        <code-block lang="sao">
+@verbatim
+&lt;a href="#" #if="a"&gt;A&lt;/a&gt;
+&lt;p #elseif="b"&gt;B&lt;/p&gt;
+&lt;span #else&gt;C&lt;/span&gt;
+@endverbatim
+                        </code-block>
+                        <p><code>#switch</code> là ngoại lệ duy nhất — nó bọc <strong>ruột</strong> thẻ, không bọc thẻ. Thẻ cha vẫn render bình thường, các con phải toàn là <code>#case</code>/<code>#default</code>. <code>&#64;break</code> do compiler tự chèn:</p>
+                        <code-block lang="sao">
+@verbatim
+&lt;div class="tabs" #switch="tab"&gt;
+    &lt;p #case="'a'"&gt;Tab A&lt;/p&gt;
+    &lt;p #case="'b'"&gt;Tab B&lt;/p&gt;
+    &lt;span #default&gt;Chưa chọn&lt;/span&gt;
+&lt;/div&gt;
+@endverbatim
+                        </code-block>
+                        <p>Vòng lặp nhận kèm <code>#key</code>, thứ tự viết không quan trọng:</p>
+                        <code-block lang="sao">
+@verbatim
+&lt;li class="row" #foreach="items as item" #key="item['id']"&gt;
+    {{ item['label'] }}
+&lt;/li&gt;
+@endverbatim
+                        </code-block>
+                        <table class="dir-table">
+                            <thead><tr><th>Viết trên thẻ</th><th>Tương đương</th><th>Bọc gì</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>#if</code> <code>#elseif</code> <code>#else</code></td><td><code>&#64;if</code> <code>&#64;elseif</code> <code>&#64;else</code></td><td>cả thẻ</td></tr>
+                                <tr><td><code>#switch</code></td><td><code>&#64;switch</code></td><td><strong>ruột</strong> thẻ</td></tr>
+                                <tr><td><code>#case</code> <code>#default</code></td><td><code>&#64;case</code> <code>&#64;default</code></td><td>cả thẻ con</td></tr>
+                                <tr><td><code>#foreach</code> <code>#for</code> <code>#while</code></td><td><code>&#64;foreach</code> <code>&#64;for</code> <code>&#64;while</code></td><td>cả thẻ</td></tr>
+                                <tr><td><code>#key</code></td><td><code>&#64;key</code></td><td>bổ trợ cho vòng lặp</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="dir-note">Dùng dạng khối khi cần bọc <strong>nhiều thẻ</strong>, bọc chữ trần, hoặc bọc một vùng không trùng biên thẻ — dạng viết trên thẻ không làm được những việc đó.</p>
+                        <p class="dir-note dir-note--warn">Tên sau <code>#</code> là <strong>tập đóng</strong> — gõ sai như <code>#fi="x"</code> cho lỗi biên dịch ngay, không âm thầm thành thuộc tính HTML. Dấu <code>#</code> ở chỗ khác vẫn bình thường: <code>style="color: #fff"</code> hay <code>href="#dau-trang"</code> không bị đụng tới.</p>
+                        <p class="dir-note">Một thẻ chỉ mang <strong>một</strong> directive điều khiển (<code>#key</code> là ngoại lệ, nó đi kèm vòng lặp). <code>#if</code> và <code>#foreach</code> cùng thẻ cho lỗi biên dịch thay vì đoán thứ tự — muốn vừa lặp vừa lọc thì đưa <code>#if</code> xuống thẻ con, hoặc lọc mảng trước.</p>
+                        <p class="dir-note" style="background: rgba(37, 99, 235, 0.08); border-left: 3px solid #2563eb; color: var(--ink);">
+                            📖 <strong>Xem tài liệu chuyên sâu:</strong> Cú pháp trên thẻ đã có trang tài liệu chi tiết riêng với đầy đủ quy tắc AST, 10 directive tập đóng, cơ chế switch/foreach và các bẫy cần tránh. Xem tại <a href="/docs/tag-directives" style="font-weight: 600; text-decoration: underline;">Tài liệu Directive trên thẻ (#) →</a>
+                        </p>
+                    </article>
 
                     <article class="dir">
                         <div class="dir-head"><span class="dir-name">&#64;if <em>· &#64;elseif · &#64;else · &#64;endif</em></span><span class="dir-kind">Vùng reactive</span></div>
@@ -675,8 +737,8 @@
             </section>
         </div>
 
-        <a class="doc-next" href="/docs/reactivity">
-            <div><span>Tiếp theo</span><strong>State &amp; reactivity</strong></div>
+        <a class="doc-next" href="/docs/tag-directives">
+            <div><span>Tiếp theo</span><strong>Directive trên thẻ (#)</strong></div>
             <span class="button button-primary">Đọc tiếp →</span>
         </a>
     @endblock

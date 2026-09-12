@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Mask, Model và Collection - Saola Docs')
+    @section('meta:description', 'Chuẩn hóa cấu trúc dữ liệu trả về với Mask trong Saola: Định dạng JSON an toàn, che giấu trường nhạy cảm, chuyển đổi Model và Collection.')
+    @section('meta:keywords', 'saola mask, data mask, json resource, model collection mask, data transformation')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

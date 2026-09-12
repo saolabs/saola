@@ -46,6 +46,9 @@ const ROUTES = [
     // `/demo/stream` cố ý đứng ngoài: giá chạy từng giây và mốc thời gian của
     // backlog lấy từ đồng hồ, hai lần chụp không bao giờ bằng nhau.
     '/demo/grid', '/demo/board', '/demo/emit',
+    // Dựng cùng một nội dung bằng directive khối và directive viết trên thẻ.
+    // Dữ liệu tất định, không có đồng hồ.
+    '/demo/tag-directives',
 ];
 
 /**

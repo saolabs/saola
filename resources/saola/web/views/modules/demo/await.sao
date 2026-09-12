@@ -4,6 +4,9 @@
 
 <template>
     @extends(__layout__ + 'lab')
+    @section('meta:title', 'Nạp Dữ liệu Bất đồng bộ (@await) Demo - Saola')
+    @section('meta:description', 'Kiểm chứng chỉ thị @await trong Saola: Render Blade sẵn phía SSR và nạp dữ liệu bất đồng bộ mượt mà phía CSR.')
+    @section('meta:keywords', 'saola await demo, bat dong bo, async data loading, ssr csr prerender, saola lab')
 
     {{-- PHỤ THUỘC dữ liệu await → nằm trong render().
          SSR: Blade điền sẵn. CSR: chờ App.Http.get() xong mới có. --}}

@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Validator và Kiểm tra Dữ liệu vào - Saola Docs')
+    @section('meta:description', 'Xác thực dữ liệu đầu vào mạnh mẽ với Validator trong Saola: Quy tắc xác thực, tùy biến thông báo lỗi và chuẩn hóa payload.')
+    @section('meta:keywords', 'saola validator, xac thuc du lieu, request validation, form validation, laravel validation rules')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

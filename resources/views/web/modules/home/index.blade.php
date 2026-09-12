@@ -1,6 +1,8 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "public")
+    @section('meta:title', 'Saola - Nền tảng Web SPA Hiện đại trên Laravel')
+    @section('meta:description', 'Saola là hệ sinh thái web SPA đời mới dựa trên Laravel làm backend, kiến trúc đa ngữ cảnh, SSR và CSR đồng bộ.')
     @block('content')
         @startMarker('component', 'Bcontentc1')
         @include('web.modules.home.parts.hero')

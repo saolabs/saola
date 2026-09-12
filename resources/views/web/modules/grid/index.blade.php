@@ -18,6 +18,9 @@
 @php($canNext = !$busy && $pageNo < $pageCount)
 @await
 @extends($__layout__ . 'lab')
+    @section('meta:title', 'Data Grid Server-Side Filtering - Saola Lab')
+    @section('meta:description', 'Bảng dữ liệu hàng ngàn bản ghi với bộ lọc, phân trang và sắp xếp phía server: SSR render tức thì, CSR cập nhật cục bộ mượt mà không tải lại trang.')
+    @section('meta:keywords', 'data grid saola, server side filter, phan trang server, bang du lieu, ssr csr hybrid grid')
 
     @block('main')
         <p @class([$__VIEW_ID__ . '-Bmain1', 'kicker'])><span @class([$__VIEW_ID__ . '-Bmain11'])>ỨNG DỤNG THẬT · BẢNG DỮ LIỆU</span></p>

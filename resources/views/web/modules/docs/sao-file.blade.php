@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Cấu trúc File .sao - Single-File Component của Saola')
+    @section('meta:description', 'Chi tiết cấu trúc file Single-File Component .sao trong Saola: Khai báo directive, @template, @script, @style và quy trình biên dịch.')
+    @section('meta:keywords', 'file sao, single file component, sao syntax, template sao, script sao, style sao, saola sfc')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>
@@ -21,24 +24,32 @@
                 <article @class([$__VIEW_ID__ . '-Bdoc241'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2411'])>01 / DECLARATIONS</span>
                     <strong @class([$__VIEW_ID__ . '-Bdoc2412'])>Đầu file hoặc trong setup</strong>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2413'])><code @class([$__VIEW_ID__ . '-Bdoc24131', 'directive-token'])>import</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24132', 'directive-token'])>vars</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24133', 'directive-token'])>props</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24134', 'directive-token'])>state</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24135', 'directive-token'])>states</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24136', 'directive-token'])>computed</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24137', 'directive-token'])>const</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24138', 'directive-token'])>let</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24139', 'directive-token'])>asset</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc2413e10_', 'directive-token'])>await</code> — giữ nguyên thứ tự khai báo chuẩn.</p>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2414'])>Viết ở đầu file, hoặc <strong @class([$__VIEW_ID__ . '-Bdoc24141'])>bên trong <code @class([$__VIEW_ID__ . '-Bdoc241411'])>&lt;script setup&gt;</code></strong>. Hai chỗ dùng chung một phạm vi, nên khai ở đâu cũng như nhau — khác biệt là trong setup bạn chú được kiểu TypeScript.</p>
+                    <div @class([$__VIEW_ID__ . '-Bdoc2413', 'stack-detail'])>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24131'])><code @class([$__VIEW_ID__ . '-Bdoc241311', 'directive-token'])>import</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc241312', 'directive-token'])>vars</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc241313', 'directive-token'])>props</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc241314', 'directive-token'])>state</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc241315', 'directive-token'])>states</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc241316', 'directive-token'])>computed</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc241317', 'directive-token'])>const</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc241318', 'directive-token'])>let</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc241319', 'directive-token'])>asset</code>&nbsp; <code @class([$__VIEW_ID__ . '-Bdoc24131e10_', 'directive-token'])>await</code> — giữ nguyên thứ tự khai báo chuẩn.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24132'])>Viết ở đầu file, hoặc <strong @class([$__VIEW_ID__ . '-Bdoc241321'])>bên trong <code @class([$__VIEW_ID__ . '-Bdoc2413211'])>&lt;script setup&gt;</code></strong>. Hai chỗ dùng chung một phạm vi, nên khai ở đâu cũng như nhau — khác biệt là trong setup bạn chú được kiểu TypeScript.</p>
+                    </div>
                 </article>
                 <article @class([$__VIEW_ID__ . '-Bdoc242'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2421'])>02 / TEMPLATE</span>
                     <strong @class([$__VIEW_ID__ . '-Bdoc2422'])>HTML + Directives</strong>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2423'])><code @class([$__VIEW_ID__ . '-Bdoc24231'])>&lt;template&gt;</code> hoặc <code @class([$__VIEW_ID__ . '-Bdoc24232'])>&lt;sao:blade&gt;</code> kích hoạt <em @class([$__VIEW_ID__ . '-Bdoc24233'])>modern syntax</em> (cú pháp JS hiện đại); <code @class([$__VIEW_ID__ . '-Bdoc24234'])>&lt;blade&gt;</code> là legacy pass-through cú pháp PHP Blade truyền thống.</p>
+                    <div @class([$__VIEW_ID__ . '-Bdoc2423', 'stack-detail'])>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24231'])><code @class([$__VIEW_ID__ . '-Bdoc242311'])>&lt;template&gt;</code> hoặc <code @class([$__VIEW_ID__ . '-Bdoc242312'])>&lt;sao:blade&gt;</code> kích hoạt <em @class([$__VIEW_ID__ . '-Bdoc242313'])>modern syntax</em> (cú pháp JS hiện đại); <code @class([$__VIEW_ID__ . '-Bdoc242314'])>&lt;blade&gt;</code> là legacy pass-through cú pháp PHP Blade truyền thống.</p>
+                    </div>
                 </article>
                 <article @class([$__VIEW_ID__ . '-Bdoc243'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2431'])>03 / SCRIPT SETUP</span>
                     <strong @class([$__VIEW_ID__ . '-Bdoc2432'])>Logic Client Runtime</strong>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2433'])>Khai báo function trực tiếp. Mọi <code @class([$__VIEW_ID__ . '-Bdoc24331'])>function</code> ở cấp ngoài cùng trở thành method của view. Hàm đọc/ghi reactive state và setter trong closure, gọi lẫn nhau mà không cần tiền tố <code @class([$__VIEW_ID__ . '-Bdoc24332'])>this.</code>.</p>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2434'])>Đây cũng là nơi đặt <code @class([$__VIEW_ID__ . '-Bdoc24341'])>import type</code> và khai báo có kiểu: <code @class([$__VIEW_ID__ . '-Bdoc24342'])>&#64;state(count: number = 0)</code>, <code @class([$__VIEW_ID__ . '-Bdoc24343'])>&#64;computed(doubled: number = count * 2)</code>. Biến <code @class([$__VIEW_ID__ . '-Bdoc24344'])>let</code>/<code @class([$__VIEW_ID__ . '-Bdoc24345'])>const</code> khai ở đây nằm trong phạm vi <strong @class([$__VIEW_ID__ . '-Bdoc24346'])>từng instance view</strong>, hợp để giữ thứ không reactive như handle của thư viện ngoài hay id timer.</p>
+                    <div @class([$__VIEW_ID__ . '-Bdoc2433', 'stack-detail'])>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24331'])>Khai báo function trực tiếp. Mọi <code @class([$__VIEW_ID__ . '-Bdoc243311'])>function</code> ở cấp ngoài cùng trở thành method của view. Hàm đọc/ghi reactive state và setter trong closure, gọi lẫn nhau mà không cần tiền tố <code @class([$__VIEW_ID__ . '-Bdoc243312'])>this.</code>.</p>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24332'])>Đây cũng là nơi đặt <code @class([$__VIEW_ID__ . '-Bdoc243321'])>import type</code> và khai báo có kiểu: <code @class([$__VIEW_ID__ . '-Bdoc243322'])>&#64;state(count: number = 0)</code>, <code @class([$__VIEW_ID__ . '-Bdoc243323'])>&#64;computed(doubled: number = count * 2)</code>. Biến <code @class([$__VIEW_ID__ . '-Bdoc243324'])>let</code>/<code @class([$__VIEW_ID__ . '-Bdoc243325'])>const</code> khai ở đây nằm trong phạm vi <strong @class([$__VIEW_ID__ . '-Bdoc243326'])>từng instance view</strong>, hợp để giữ thứ không reactive như handle của thư viện ngoài hay id timer.</p>
+                    </div>
                 </article>
                 <article @class([$__VIEW_ID__ . '-Bdoc244'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2441'])>04 / STYLE</span>
                     <strong @class([$__VIEW_ID__ . '-Bdoc2442'])>CSS của View</strong>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2443'])><code @class([$__VIEW_ID__ . '-Bdoc24431'])>&lt;style scoped&gt;</code> tự động cô lập CSS theo subtree của view; <code @class([$__VIEW_ID__ . '-Bdoc24432'])>&lt;style&gt;</code> áp dụng global cho toàn trang. Cùng chỗ này khai báo được asset ngoài: <code @class([$__VIEW_ID__ . '-Bdoc24433'])>&lt;link rel="stylesheet"&gt;</code> và <code @class([$__VIEW_ID__ . '-Bdoc24434'])>&lt;script src&gt;</code> — compiler dịch sang <code @class([$__VIEW_ID__ . '-Bdoc24435'])>&#64;addCssLink</code>/<code @class([$__VIEW_ID__ . '-Bdoc24436'])>&#64;addScriptSrc</code> để thẻ ra đúng <code @class([$__VIEW_ID__ . '-Bdoc24437'])>&lt;head&gt;</code>, không trùng, và CSS được gỡ khi rời trang.</p>
+                    <div @class([$__VIEW_ID__ . '-Bdoc2443', 'stack-detail'])>
+                        <p @class([$__VIEW_ID__ . '-Bdoc24431'])><code @class([$__VIEW_ID__ . '-Bdoc244311'])>&lt;style scoped&gt;</code> tự động cô lập CSS theo subtree của view; <code @class([$__VIEW_ID__ . '-Bdoc244312'])>&lt;style&gt;</code> áp dụng global cho toàn trang. Cùng chỗ này khai báo được asset ngoài: <code @class([$__VIEW_ID__ . '-Bdoc244313'])>&lt;link rel="stylesheet"&gt;</code> và <code @class([$__VIEW_ID__ . '-Bdoc244314'])>&lt;script src&gt;</code> — compiler dịch sang <code @class([$__VIEW_ID__ . '-Bdoc244315'])>&#64;addCssLink</code>/<code @class([$__VIEW_ID__ . '-Bdoc244316'])>&#64;addScriptSrc</code> để thẻ ra đúng <code @class([$__VIEW_ID__ . '-Bdoc244317'])>&lt;head&gt;</code>, không trùng, và CSS được gỡ khi rời trang.</p>
+                    </div>
                 </article>
             </div>
 

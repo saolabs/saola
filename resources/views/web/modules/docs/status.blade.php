@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Trạng thái Dự án & Giới hạn đã biết - Saola Docs')
+    @section('meta:description', 'Báo cáo trạng thái triển khai thực tế của Saola Ecosystem: Tính năng đã hoàn thiện, giới hạn kỹ thuật đã biết và lộ trình nâng cấp tiếp theo.')
+    @section('meta:keywords', 'saola status, trang thai du an, gioi han ky thuat, roadmap, saola ecosystem status')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

@@ -15,6 +15,9 @@
 @useState($formError, '')
 @useState($nextId, 4)
 @extends($__layout__ . 'lab')
+    @section('meta:title', 'Modal Editor & Quản lý Item Demo - Saola')
+    @section('meta:description', 'Ứng dụng quản lý item thực tế với popup modal, liên kết dữ liệu hai chiều qua @bind và reconciliation @key tức thì trên DOM.')
+    @section('meta:keywords', 'saola modal editor, quan ly item, bind directive, key reconciliation, crud demo')
 
     @block('main')
         <p @class([$__VIEW_ID__ . '-Bmain1', 'sb5479736', 'kicker'])><span @class([$__VIEW_ID__ . '-Bmain11', 'sb5479736'])>ỨNG DỤNG THẬT · MODAL EDITOR</span></p>

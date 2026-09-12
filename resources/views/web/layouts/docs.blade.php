@@ -31,22 +31,23 @@
                     <p @class([$__VIEW_ID__ . '-Bcontent111e15_', 'docs-nav-group'])>Viết view</p>
                     <a @class([$__VIEW_ID__ . '-Bcontent111e16_']) @attr(['href' => '/docs/sao-file'])>Cấu trúc file .sao</a>
                     <a @class([$__VIEW_ID__ . '-Bcontent111e17_']) @attr(['href' => '/docs/directives'])>Tham chiếu directive</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e18_']) @attr(['href' => '/docs/reactivity'])>State &amp; reactivity</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e19_']) @attr(['href' => '/docs/system-vars'])>Biến hệ thống</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e20_']) @attr(['href' => '/docs/helpers'])>Hàm dùng trong biểu thức</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e18_']) @attr(['href' => '/docs/tag-directives'])>Directive trên thẻ (#)</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e19_']) @attr(['href' => '/docs/reactivity'])>State &amp; reactivity</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e20_']) @attr(['href' => '/docs/system-vars'])>Biến hệ thống</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e21_']) @attr(['href' => '/docs/helpers'])>Hàm dùng trong biểu thức</a>
 
-                    <p @class([$__VIEW_ID__ . '-Bcontent111e21_', 'docs-nav-group'])>Runtime</p>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e22_']) @attr(['href' => '/docs/runtime'])>Runtime &amp; hydration</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e23_']) @attr(['href' => '/docs/lifecycle'])>Vòng đời &amp; marker</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e24_']) @attr(['href' => '/docs/router'])>Router &amp; dịch vụ client</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e25_']) @attr(['href' => '/docs/client-services'])>Dịch vụ phía client</a>
+                    <p @class([$__VIEW_ID__ . '-Bcontent111e22_', 'docs-nav-group'])>Runtime</p>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e23_']) @attr(['href' => '/docs/runtime'])>Runtime &amp; hydration</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e24_']) @attr(['href' => '/docs/lifecycle'])>Vòng đời &amp; marker</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e25_']) @attr(['href' => '/docs/router'])>Router &amp; PageCache</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e26_']) @attr(['href' => '/docs/client-services'])>Dịch vụ phía client</a>
 
-                    <p @class([$__VIEW_ID__ . '-Bcontent111e26_', 'docs-nav-group'])>Vận hành</p>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e27_']) @attr(['href' => '/docs/build'])>Build, CLI &amp; cấu hình</a>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e28_']) @attr(['href' => '/docs/status'])>Giới hạn đã biết</a>
+                    <p @class([$__VIEW_ID__ . '-Bcontent111e27_', 'docs-nav-group'])>Vận hành</p>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e28_']) @attr(['href' => '/docs/build'])>Build, CLI &amp; cấu hình</a>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e29_']) @attr(['href' => '/docs/status'])>Giới hạn đã biết</a>
 
-                    <p @class([$__VIEW_ID__ . '-Bcontent111e29_', 'docs-nav-group'])>Thực hành</p>
-                    <a @class([$__VIEW_ID__ . '-Bcontent111e30_']) @attr(['href' => '/components'])>Thư viện component</a>
+                    <p @class([$__VIEW_ID__ . '-Bcontent111e30_', 'docs-nav-group'])>Thực hành</p>
+                    <a @class([$__VIEW_ID__ . '-Bcontent111e31_']) @attr(['href' => '/components'])>Thư viện component</a>
                 </div>
             </aside>
 

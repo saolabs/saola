@@ -89,6 +89,7 @@ Component nhỏ vẫn có thể viết không cần script hay wrapper:
 | Tương tác | `@click(increment())` | Method đặt trong `export default` |
 | Điều kiện | `@if(visible)` … `@endif` | Đặt trong template |
 | Danh sách | `@foreach(items as item)` … `@endforeach` | Dùng `@key(item.id)` để giữ identity |
+| Gọn trên thẻ | `<p #if="visible">…</p>` | Dạng viết khác của `@if` khi khối chỉ bọc **một** thẻ |
 | Component con | `@importView('web.components.card' as Card)` | Đặt trong setup; `<Card />` trong template |
 | Con báo lên cha | `<Card @edit(openEditor(event)) />` | Con gọi `$view.emit('edit', payload)`; `event` là payload |
 

@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Biến Hệ thống - Saola Docs')
+    @section('meta:description', 'Tra cứu các biến hệ thống có sẵn trong Saola: __context__, __module__, __view__, __layout__, __session__, __auth__, __locale__ và cách truy cập.')
+    @section('meta:keywords', 'bien he thong saola, system vars, __context__, __layout__, __module__, global variables')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

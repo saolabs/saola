@@ -4,6 +4,9 @@
 @useState($note, '')
 @useState($events, [])
 @extends($__layout__ . 'lab')
+    @section('meta:title', 'Vòng đời View & PageCache Demo - Saola')
+    @section('meta:description', 'Theo dõi chu trình sống của ViewController trong Saola: Trực quan hóa các sự kiện created, active, paused, destroyed và bộ nhớ đệm PageCache.')
+    @section('meta:keywords', 'saola lifecycle demo, viewcontroller state machine, pagecache demo, active paused destroyed, spa hooks')
 
     @block('main')
         <p @class([$__VIEW_ID__ . '-Bmain1', 'kicker'])><span @class([$__VIEW_ID__ . '-Bmain11'])>RUNTIME · VÒNG ĐỜI</span></p>

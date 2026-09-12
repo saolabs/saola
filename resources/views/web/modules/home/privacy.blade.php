@@ -2,6 +2,9 @@
 
 @useState($activeSection, 'collection')
 @extends($__layout__ . "public")
+    @section('meta:title', 'Chính sách Quyền riêng tư - Saola Ecosystem')
+    @section('meta:description', 'Chính sách quyền riêng tư minh bạch của Saola: Thu thập thông tin, mục đích sử dụng và quyền kiểm soát dữ liệu người dùng.')
+    @section('meta:keywords', 'chinh sach quyen rieng tu, privacy policy, saola privacy, bao mat thong tin')
     @block('content')
         <section @class([$__VIEW_ID__ . '-Bcontent1', 'legal-hero'])>
             <p @class([$__VIEW_ID__ . '-Bcontent11', 'eyebrow'])><span @class([$__VIEW_ID__ . '-Bcontent111'])>01</span> Legal / Privacy</p>

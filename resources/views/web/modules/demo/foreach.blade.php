@@ -8,6 +8,9 @@
 @useState($nextId, 4)
 @useState($log, [])
 @extends($__layout__ . 'lab')
+    @section('meta:title', 'Vòng lặp & Reconciliation (@foreach) Demo - Saola')
+    @section('meta:description', 'Trực quan hóa cơ chế DOM reconciliation của @foreach trong Saola: Tái sử dụng slot với @key và bảo toàn DOM marker.')
+    @section('meta:keywords', 'saola foreach demo, dom reconciliation, key directive, marker slot, danh sach du lieu')
 
     @block('main')
         <p @class([$__VIEW_ID__ . '-Bmain1', 'kicker'])><span @class([$__VIEW_ID__ . '-Bmain11'])>RUNTIME · DANH SÁCH</span></p>

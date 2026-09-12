@@ -1,5 +1,8 @@
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Trạng thái Dự án & Giới hạn đã biết - Saola Docs')
+    @section('meta:description', 'Báo cáo trạng thái triển khai thực tế của Saola Ecosystem: Tính năng đã hoàn thiện, giới hạn kỹ thuật đã biết và lộ trình nâng cấp tiếp theo.')
+    @section('meta:keywords', 'saola status, trang thai du an, gioi han ky thuat, roadmap, saola ecosystem status')
     @block('doc')
         <header class="page-hero">
             <div>

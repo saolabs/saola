@@ -10,8 +10,10 @@
                     <p class="docs-nav-group">Dữ liệu</p>
                     <a href="/demo/await">Nạp dữ liệu bất đồng bộ</a>
 
-                    <p class="docs-nav-group">Runtime</p>
+                    <p class="docs-nav-group">Cú pháp &amp; Runtime</p>
                     <a href="/demo/setup">Setup typesafe</a>
+                    <a href="/demo/declarations">Khai báo State & Props</a>
+                    <a href="/demo/tag-directives">Directive viết trên thẻ</a>
                     <a href="/demo/foreach">Danh sách &amp; reconciliation</a>
                     <a href="/demo/lifecycle">Vòng đời &amp; PageCache</a>
 
@@ -22,9 +24,6 @@
                     <a href="/demo/grid">Bảng dữ liệu 3.800 dòng</a>
                     <a href="/demo/stream">Luồng sự kiện SSE</a>
                     <a href="/demo/item-editor">Item Editor</a>
-                    {{-- Hai trang này ở shell `workspace` (sidebar tối, khung
-                         kiểu app) chứ không ở shell lab — giữ nguyên vì đó là
-                         một bề mặt demo có chủ đích, chỉ nối đường vào. --}}
                     <a href="/roster">Roster — CRUD qua API</a>
                     <a href="/todo-list">Todo — state cục bộ</a>
 

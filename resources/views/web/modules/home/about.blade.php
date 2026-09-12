@@ -2,6 +2,9 @@
 
 @useState($activeValue, 0)
 @extends($__layout__ . "public")
+    @section('meta:title', 'Về Saola - Nền tảng Web SPA Hiện đại trên Laravel')
+    @section('meta:description', 'Khám phá triết lý và sứ mệnh của Saola: Nền tảng web SPA một nguồn duy nhất (Single-Source) trên Laravel, không còn sự đánh đổi giữa SSR và CSR.')
+    @section('meta:keywords', 'saola, gioi thieu saola, laravel spa, ssr, single-source component, kien truc saola')
     @block('content')
         <section @class([$__VIEW_ID__ . '-Bcontent1', 'page-intro', 'page-intro-split'])>
             <div @class([$__VIEW_ID__ . '-Bcontent11'])><p @class([$__VIEW_ID__ . '-Bcontent111', 'eyebrow'])><span @class([$__VIEW_ID__ . '-Bcontent1111'])>PROJECT / SAOLA</span> Vì sao dự án tồn tại</p><h1 @class([$__VIEW_ID__ . '-Bcontent112'])>Web hiện đại không nên<br @class([$__VIEW_ID__ . '-Bcontent1121'])><em @class([$__VIEW_ID__ . '-Bcontent1122'])>đòi hai hệ thống.</em></h1></div>

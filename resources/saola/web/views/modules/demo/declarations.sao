@@ -1,0 +1,202 @@
+@import('web.components.code-block')
+@import('web.modules.demo.counter-object' as counterobject)
+@import('web.modules.demo.counter-flat' as counterflat)
+@import('web.modules.demo.counter-quick' as counterquick)
+
+<script setup lang="ts">
+    @states({step = 1}: {step: number})
+
+    function faster() { setStep(step + 1); }
+    function slower() { setStep(Math.max(1, step - 1)); }
+</script>
+
+<template>
+    @extends(__layout__ + 'lab')
+    @section('meta:title', 'Khai báo State & Props Demo - Saola')
+    @section('meta:description', 'Demo khai báo state, props và computed trong Saola bằng script setup với TypeScript và kiểm tra kiểu dữ liệu tĩnh type-safe.')
+    @section('meta:keywords', 'saola script setup, state props demo, khai bao state, type safe component, saola counter demo')
+
+    @block('main')
+        <p class="kicker"><span>CÚ PHÁP · CƠ BẢN</span></p>
+        <h1>Khai báo State & Props</h1>
+        <p class="lab-lead">
+            Ví dụ cơ bản về khai báo state, props và computed trong Saola bằng
+            <code style="white-space: nowrap;">&lt;script setup lang="ts"&gt;</code>. Đây là chuẩn khuyến nghị giúp code rõ ràng,
+            trực quan và được kiểm tra kiểu dữ liệu tĩnh (type-safe) đầy đủ.
+        </p>
+
+        <div class="dc-hero-container">
+            <div class="dc-step-bar">
+                <span class="dc-step-label">Bước tăng (mỗi lần bấm):</span>
+                <div class="dc-stepper">
+                    <button id="dc-slower" type="button" class="dc-step-btn" @click(slower()) title="Giảm bước tăng">
+                        <span>−</span>
+                    </button>
+                    <div class="dc-step-display">
+                        <strong id="dc-step">{{ step }}</strong>
+                    </div>
+                    <button id="dc-faster" type="button" class="dc-step-btn" @click(faster()) title="Tăng bước tăng">
+                        <span>＋</span>
+                    </button>
+                </div>
+            </div>
+
+            <section id="dc-object" class="dc-hero-card">
+                <header class="dc-card-badge">
+                    <span class="badge-recommended">★ Chuẩn khuyến nghị</span>
+                </header>
+                <counterobject :step="step" label="Bộ đếm Counter" />
+                <p class="dc-col__note">Khai báo chuẩn TypeScript trong <code>&lt;script setup lang="ts"&gt;</code>: IDE kiểm tra kiểu tĩnh, báo lỗi ngay khi gõ nhầm.</p>
+
+                <div class="dc-demo-code">
+                    <span class="dc-code-label">Mã nguồn component (counter-object.sao):</span>
+                    <code-block lang="sao">
+@verbatim
+&lt;script setup lang="ts"&gt;
+    &#64;props({label = 'Bộ đếm', step = 1}: {
+        label: string;
+        step: number;
+    })
+    &#64;states({count = 0, history = []}: {
+        count: number;
+        history: number[];
+    })
+    &#64;computed(doubled: number = count * 2)
+
+    function bump() {
+        setCount(count + step);
+        setHistory([...history, step]);
+    }
+    function reset() {
+        setCount(0);
+        setHistory([]);
+    }
+&lt;/script&gt;
+
+&lt;template&gt;
+    &lt;article class="dc-card"&gt;
+        &lt;span class="dc-card__label"&gt;{{ label }}&lt;/span&gt;
+        &lt;strong class="dc-num"&gt;{{ count }}&lt;/strong&gt;
+        &lt;span class="dc-meta"&gt;×2 = {{ doubled }} · {{ history.length }} lần bấm&lt;/span&gt;
+        &lt;div class="dc-actions"&gt;
+            &lt;button type="button" class="button button-primary dc-bump" &#64;click(bump())&gt;&lt;span&gt;＋ {{ step }}&lt;/span&gt;&lt;/button&gt;
+            &lt;button type="button" class="button button-light dc-reset" &#64;click(reset()) title="Đặt lại về 0"&gt;&lt;span&gt;↺ Đặt lại&lt;/span&gt;&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/article&gt;
+&lt;/template&gt;
+@endverbatim
+                    </code-block>
+                </div>
+            </section>
+        </div>
+
+        <div class="dc-reference-section">
+            <div class="dc-ref-header">
+                <h2>Cú pháp tương đương (Tham khảo)</h2>
+                <p class="dc-ref-subtitle">
+                    Dành cho trường hợp viết nhanh hoặc component đơn giản. Compiler đều chuẩn hóa về cùng một kết quả:
+                </p>
+            </div>
+
+            <div class="dc-reference-grid">
+                <section id="dc-flat" class="dc-ref-col">
+                    <header class="dc-card-badge">
+                        <span class="badge-alt">Cú pháp phẳng</span>
+                    </header>
+                    <counterflat :step="step" label="Khai báo phẳng" />
+                    <p class="dc-col__note">Kiểu và mặc định khai báo trên từng biến. Thích hợp khi component chỉ có 1–2 state đơn giản.</p>
+
+                    <div class="dc-demo-code">
+                        <span class="dc-code-label">Mã nguồn (counter-flat.sao):</span>
+                        <code-block lang="sao">
+@verbatim
+&lt;script setup lang="ts"&gt;
+    &#64;props(label: string = 'Khai báo phẳng', step: number = 1)
+    &#64;state(count: number = 0, history: number[] = [])
+    &#64;computed(doubled: number = count * 2)
+
+    function bump() {
+        setCount(count + step);
+        setHistory([...history, step]);
+    }
+    function reset() {
+        setCount(0);
+        setHistory([]);
+    }
+&lt;/script&gt;
+
+&lt;template&gt;
+    &lt;article class="dc-card"&gt;
+        &lt;span class="dc-card__label"&gt;{{ label }}&lt;/span&gt;
+        &lt;strong class="dc-num"&gt;{{ count }}&lt;/strong&gt;
+        &lt;span class="dc-meta"&gt;×2 = {{ doubled }} · {{ history.length }} lần bấm&lt;/span&gt;
+        &lt;div class="dc-actions"&gt;
+            &lt;button type="button" class="button button-primary dc-bump" &#64;click(bump())&gt;&lt;span&gt;＋ {{ step }}&lt;/span&gt;&lt;/button&gt;
+            &lt;button type="button" class="button button-light dc-reset" &#64;click(reset()) title="Đặt lại về 0"&gt;&lt;span&gt;↺ Đặt lại&lt;/span&gt;&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/article&gt;
+&lt;/template&gt;
+@endverbatim
+                        </code-block>
+                    </div>
+                </section>
+
+                <section id="dc-quick" class="dc-ref-col">
+                    <header class="dc-card-badge">
+                        <span class="badge-alt">Cú pháp rút gọn</span>
+                    </header>
+                    <counterquick :step="step" label="Gõ nhanh ngoài script" />
+                    <p class="dc-col__note">Khai báo dạng object ngoài thẻ <code>&lt;script&gt;</code>. Tiện gõ nhanh khi làm prototype không cần định kiểu.</p>
+
+                    <div class="dc-demo-code">
+                        <span class="dc-code-label">Mã nguồn (counter-quick.sao):</span>
+                        <code-block lang="sao">
+@verbatim
+&#64;props({label: 'Gõ nhanh ngoài script', step: 1})
+&#64;states({count: 0, history: []})
+&#64;computed(doubled = count * 2)
+
+&lt;template&gt;
+    &lt;article class="dc-card"&gt;
+        &lt;span class="dc-card__label"&gt;{{ label }}&lt;/span&gt;
+        &lt;strong class="dc-num"&gt;{{ count }}&lt;/strong&gt;
+        &lt;span class="dc-meta"&gt;×2 = {{ doubled }} · {{ history.length }} lần bấm&lt;/span&gt;
+        &lt;div class="dc-actions"&gt;
+            &lt;button type="button" class="button button-primary dc-bump" &#64;click(bump())&gt;&lt;span&gt;＋ {{ step }}&lt;/span&gt;&lt;/button&gt;
+            &lt;button type="button" class="button button-light dc-reset" &#64;click(reset()) title="Đặt lại về 0"&gt;&lt;span&gt;↺ Đặt lại&lt;/span&gt;&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/article&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+    function bump() {
+        setCount(count + step);
+        setHistory([...history, step]);
+    }
+    function reset() {
+        setCount(0);
+        setHistory([]);
+    }
+&lt;/script&gt;
+@endverbatim
+                        </code-block>
+                    </div>
+                </section>
+            </div>
+        </div>
+    @endblock
+
+    @block('aside')
+        <h2>Tóm tắt cú pháp</h2>
+        <div class="directive-table">
+            <div><div class="dt-key"><code>{a = 1}: {a: number}</code></div><span>Khai báo chuẩn trong <code>&lt;script setup lang="ts"&gt;</code>. Kiểm tra kiểu tĩnh đầy đủ, sinh setter typesafe (như <code>setCount</code>).</span><b>Khuyến nghị</b></div>
+            <div><div class="dt-key"><code>a: number = 1</code></div><span>Cú pháp phẳng. Kiểu và mặc định trên từng biến riêng lẻ. Hợp khi component chỉ có 1–2 biến.</span><b>Tham khảo</b></div>
+            <div><div class="dt-key"><code>{a: 1}</code></div><span>Cú pháp rút gọn ngoài script. Phù hợp viết prototype nhanh không cần định nghĩa kiểu dữ liệu.</span><b>Gõ nhanh</b></div>
+        </div>
+        <p class="lab-note">
+            <strong>Khuyến nghị:</strong> Luôn ưu tiên dùng cú pháp chuẩn <code>{count = 0}: {count: number}</code> trong <code>&lt;script setup lang="ts"&gt;</code> để đảm bảo an toàn kiểu dữ liệu và trải nghiệm phát triển tốt nhất.
+        </p>
+    @endblock
+</template>
+
+<link rel="stylesheet" href="/static/saola/declarations.css">

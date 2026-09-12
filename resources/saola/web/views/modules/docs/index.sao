@@ -1,5 +1,8 @@
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Tài liệu Saola - Tổng quan và Bắt đầu')
+    @section('meta:description', 'Tổng quan toàn diện về tài liệu hệ sinh thái Saola: 4 gói độc lập, hợp đồng Runtime Contract, kiến trúc SPA một nguồn duy nhất trên Laravel.')
+    @section('meta:keywords', 'tai lieu saola, docs saola, laravel spa docs, kien truc saola, runtime contract, huong dan saola')
     @block('doc')
         <header class="page-hero">
             <div>
@@ -125,6 +128,11 @@
                     <h3>Tham chiếu directive →</h3>
                     <p>Bảy nhóm directive, từ khai báo tới quyền và biến ma thuật.</p>
                 </a>
+                <a class="ov-card" href="/docs/tag-directives">
+                    <span>Viết view</span>
+                    <h3>Directive trên thẻ (#) →</h3>
+                    <p>Cú pháp viết thuộc tính #if, #switch, #foreach, cơ chế hạ AST và quy tắc bất biến.</p>
+                </a>
                 <a class="ov-card" href="/docs/reactivity">
                     <span>Viết view</span>
                     <h3>State &amp; reactivity →</h3>
@@ -142,8 +150,13 @@
                 </a>
                 <a class="ov-card" href="/docs/router">
                     <span>Runtime</span>
-                    <h3>Router &amp; dịch vụ client →</h3>
-                    <p>PageCache, layout diff và bộ service trên Application container.</p>
+                    <h3>Router &amp; PageCache →</h3>
+                    <p>Điều hướng SPA, PageCache theo LRU, Layout diffing và navigation guards.</p>
+                </a>
+                <a class="ov-card" href="/docs/client-services">
+                    <span>Runtime</span>
+                    <h3>Dịch vụ phía client →</h3>
+                    <p>Hệ sinh thái dịch vụ trên container App: Event bus, Store, Storage, Http.</p>
                 </a>
                 <a class="ov-card" href="/docs/build">
                     <span>Vận hành</span>

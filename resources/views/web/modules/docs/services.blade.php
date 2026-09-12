@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Service và Tầng Nghiệp vụ - Saola Docs')
+    @section('meta:description', 'Thiết kế Service layer trong Saola: Đóng gói logic nghiệp vụ, tái sử dụng giữa Web và API Controller, quản lý dependency injection.')
+    @section('meta:keywords', 'saola service, business logic, service layer, dependency injection laravel, service controller')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

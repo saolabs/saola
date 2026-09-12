@@ -1,3 +1,4 @@
+@import('web.components.code-block')
 @import('web.modules.roster.item' as rosteritem)
 @states({
     ids: [],
@@ -13,18 +14,23 @@
 }: {ids: string[]; records: Record<string, RosterRecord | null>; editing: Record<string, boolean>; lastSync: string; syncError: string; creating: boolean; fName: string; fEmail: string; fGender: string; fBirthdate: string})
 
 <template>
-    @extends(__layout__ + "workspace")
-    @block('workspace')
+    @extends(__layout__ + 'lab')
+    @section('meta:title', 'Roster CRUD & Concurrent Sync Demo - Saola Lab')
+    @section('meta:description', 'Ứng dụng mẫu Roster quản lý người dùng qua API: Đồng bộ ngầm định kỳ, biên tập đồng thời với state cô lập ở component con không bị gián đoạn.')
+    @section('meta:keywords', 'roster demo, concurrent editing, saola crud, api sync, component state isolation')
+
+    @block('main')
         <div class="rs-page">
-            <header class="workspace-topbar">
+            <p class="kicker"><span>ỨNG DỤNG THẬT · ĐỒNG BỘ CONCURRENT</span></p>
+            <div class="workspace-topbar">
                 <div>
-                    <p class="eyebrow"><span>05</span> Concurrent editing</p>
-                    <h1>Danh sách người dùng</h1>
+                    <h1>Roster — CRUD qua API.</h1>
+                    <p class="lab-lead">Danh sách đồng bộ ngầm định kỳ 30 giây, hỗ trợ concurrent editing: view con giữ form nháp riêng không bị mất khi view cha refetch.</p>
                 </div>
                 <div class="completion-ring">
                     <strong>{{ ids.length }}</strong><span>users</span>
                 </div>
-            </header>
+            </div>
 
             <p class="rs-lead">Danh sách tự kéo lại mỗi 30 giây. Mỗi hàng có form sửa riêng — nếu người khác sửa hoặc xoá đúng bản ghi bạn đang mở, bản nháp của bạn được giữ nguyên và bạn được hỏi trước khi mất bất cứ thứ gì.</p>
 
@@ -106,6 +112,39 @@
                 <p class="rs-empty">Chưa có ai trong danh sách. Thêm người dùng đầu tiên ở form phía trên.</p>
             @endif
         </div>
+    @endblock
+
+    @block('source')
+        <h2 class="lab-source-title">Code của demo này</h2>
+        <p class="lab-source-note">Parent quản lý danh sách ID, view con giữ form sửa và state riêng.</p>
+        <code-block lang="sao">
+@verbatim
+@import('web.modules.roster.item' as rosteritem)
+@states({ ids: [], records: {} })
+
+<template>
+    <div class="rs-list">
+        @foreach(ids as id)
+            @key(id)
+            <div class="rs-slot">
+                {{-- Prop mới truyền vào đúng instance con đang sống --}}
+                <rosteritem :uid="id" :record="records[id] ?? null" />
+            </div>
+        @endforeach
+    </div>
+</template>
+@endverbatim
+        </code-block>
+    @endblock
+
+    @block('aside')
+        <h2>Trang này kiểm chứng cái gì.</h2>
+        <ul class="check-list">
+            <li><strong>ForeachSlotCache &amp; Identity:</strong> Vòng lặp dựa trên <code>ids</code> với <code>@key(id)</code>. Khi bấm "Đồng bộ ngay", server trả về tham chiếu object mới nhưng runtime tái dùng đúng component con tương ứng.</li>
+            <li><strong>Bảo toàn bản nháp (Draft Preservation):</strong> Mỗi hàng nhúng một view con mang <code>@states</code> form riêng. Dù cha có fetch dữ liệu mới, form đang mở dở của con không bị reset.</li>
+            <li><strong>Sự kiện vòng đời:</strong> Tự động kích hoạt timer polling 30s trong <code>started()</code> và dọn dẹp trong <code>stopped()</code> / <code>destroyed()</code>.</li>
+            <li><strong>Optimistic Update &amp; Conflict Handling:</strong> Cha lắng nghe sự kiện <code>roster:editing</code> để không bao giờ xoá nhầm bản ghi mà người dùng đang thao tác dở.</li>
+        </ul>
     @endblock
 </template>
 

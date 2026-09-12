@@ -4,6 +4,9 @@
 @useState($name, 'Saola')
 @useState($pings, [])
 @extends($__layout__ . "public")
+    @section('meta:title', 'Ping Module - Hydration & Reactivity Test | Saola Lab')
+    @section('meta:description', 'Trang kiểm thử Hydration và tương tác phản ứng tối giản trong Saola: State hai chiều @bind, bộ đếm số lần bấm và vòng lặp phản hồi tức thì.')
+    @section('meta:keywords', 'ping test, hydration test, saola ping, reactive test, minimal test bed')
     @block('content')
         <section @class([$__VIEW_ID__ . '-Bcontent1', 'ping', 'active'=> $count !== 0])>
             <h1 @class([$__VIEW_ID__ . '-Bcontent11'])>Ping Module — Hydration Test</h1>

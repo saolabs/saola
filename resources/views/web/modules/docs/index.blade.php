@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Tài liệu Saola - Tổng quan và Bắt đầu')
+    @section('meta:description', 'Tổng quan toàn diện về tài liệu hệ sinh thái Saola: 4 gói độc lập, hợp đồng Runtime Contract, kiến trúc SPA một nguồn duy nhất trên Laravel.')
+    @section('meta:keywords', 'tai lieu saola, docs saola, laravel spa docs, kien truc saola, runtime contract, huong dan saola')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>
@@ -126,35 +129,45 @@
                     <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_62'])>Tham chiếu directive →</h3>
                     <p @class([$__VIEW_ID__ . '-Bdoc2e13_63'])>Bảy nhóm directive, từ khai báo tới quyền và biến ma thuật.</p>
                 </a>
-                <a @class([$__VIEW_ID__ . '-Bdoc2e13_7', 'ov-card']) @attr(['href' => '/docs/reactivity'])>
+                <a @class([$__VIEW_ID__ . '-Bdoc2e13_7', 'ov-card']) @attr(['href' => '/docs/tag-directives'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2e13_71'])>Viết view</span>
-                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_72'])>State &amp; reactivity →</h3>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_73'])>Setter, batching theo khung hình, computed và element API.</p>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_72'])>Directive trên thẻ (#) →</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_73'])>Cú pháp viết thuộc tính #if, #switch, #foreach, cơ chế hạ AST và quy tắc bất biến.</p>
                 </a>
-                <a @class([$__VIEW_ID__ . '-Bdoc2e13_8', 'ov-card']) @attr(['href' => '/docs/runtime'])>
-                    <span @class([$__VIEW_ID__ . '-Bdoc2e13_81'])>Runtime</span>
-                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_82'])>Runtime &amp; hydration →</h3>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_83'])>Claim DOM, reactive update, page cache và dọn tài nguyên.</p>
+                <a @class([$__VIEW_ID__ . '-Bdoc2e13_8', 'ov-card']) @attr(['href' => '/docs/reactivity'])>
+                    <span @class([$__VIEW_ID__ . '-Bdoc2e13_81'])>Viết view</span>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_82'])>State &amp; reactivity →</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_83'])>Setter, batching theo khung hình, computed và element API.</p>
                 </a>
-                <a @class([$__VIEW_ID__ . '-Bdoc2e13_9', 'ov-card']) @attr(['href' => '/docs/lifecycle'])>
+                <a @class([$__VIEW_ID__ . '-Bdoc2e13_9', 'ov-card']) @attr(['href' => '/docs/runtime'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2e13_91'])>Runtime</span>
-                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_92'])>Vòng đời &amp; marker →</h3>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_93'])>Bảy chuyển trạng thái và hợp đồng marker giữa server với client.</p>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_92'])>Runtime &amp; hydration →</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_93'])>Claim DOM, reactive update, page cache và dọn tài nguyên.</p>
                 </a>
-                <a @class([$__VIEW_ID__ . '-Bdoc2e13_e10_', 'ov-card']) @attr(['href' => '/docs/router'])>
+                <a @class([$__VIEW_ID__ . '-Bdoc2e13_e10_', 'ov-card']) @attr(['href' => '/docs/lifecycle'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2e13_e10_1'])>Runtime</span>
-                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_e10_2'])>Router &amp; dịch vụ client →</h3>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_e10_3'])>PageCache, layout diff và bộ service trên Application container.</p>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_e10_2'])>Vòng đời &amp; marker →</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_e10_3'])>Bảy chuyển trạng thái và hợp đồng marker giữa server với client.</p>
                 </a>
-                <a @class([$__VIEW_ID__ . '-Bdoc2e13_e11_', 'ov-card']) @attr(['href' => '/docs/build'])>
-                    <span @class([$__VIEW_ID__ . '-Bdoc2e13_e11_1'])>Vận hành</span>
-                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_e11_2'])>Build, CLI &amp; cấu hình →</h3>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_e11_3'])>Hai chặng build, bốn file cấu hình và bộ kiểm thử.</p>
+                <a @class([$__VIEW_ID__ . '-Bdoc2e13_e11_', 'ov-card']) @attr(['href' => '/docs/router'])>
+                    <span @class([$__VIEW_ID__ . '-Bdoc2e13_e11_1'])>Runtime</span>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_e11_2'])>Router &amp; PageCache →</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_e11_3'])>Điều hướng SPA, PageCache theo LRU, Layout diffing và navigation guards.</p>
                 </a>
-                <a @class([$__VIEW_ID__ . '-Bdoc2e13_e12_', 'ov-card']) @attr(['href' => '/docs/status'])>
-                    <span @class([$__VIEW_ID__ . '-Bdoc2e13_e12_1'])>Vận hành</span>
-                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_e12_2'])>Giới hạn đã biết →</h3>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_e12_3'])>Cái gì đang chạy đầy đủ, cái gì còn dở và cách đi vòng.</p>
+                <a @class([$__VIEW_ID__ . '-Bdoc2e13_e12_', 'ov-card']) @attr(['href' => '/docs/client-services'])>
+                    <span @class([$__VIEW_ID__ . '-Bdoc2e13_e12_1'])>Runtime</span>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_e12_2'])>Dịch vụ phía client →</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_e12_3'])>Hệ sinh thái dịch vụ trên container App: Event bus, Store, Storage, Http.</p>
+                </a>
+                <a @class([$__VIEW_ID__ . '-Bdoc2e13_e13_', 'ov-card']) @attr(['href' => '/docs/build'])>
+                    <span @class([$__VIEW_ID__ . '-Bdoc2e13_e13_1'])>Vận hành</span>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_e13_2'])>Build, CLI &amp; cấu hình →</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_e13_3'])>Hai chặng build, bốn file cấu hình và bộ kiểm thử.</p>
+                </a>
+                <a @class([$__VIEW_ID__ . '-Bdoc2e13_e14_', 'ov-card']) @attr(['href' => '/docs/status'])>
+                    <span @class([$__VIEW_ID__ . '-Bdoc2e13_e14_1'])>Vận hành</span>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e13_e14_2'])>Giới hạn đã biết →</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2e13_e14_3'])>Cái gì đang chạy đầy đủ, cái gì còn dở và cách đi vòng.</p>
                 </a>
             </div>
 

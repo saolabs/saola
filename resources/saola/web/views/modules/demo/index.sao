@@ -22,6 +22,9 @@
 
 <template>
     @extends(__layout__ + 'lab')
+    @section('meta:title', 'Live Demos & Fixtures - Saola Ecosystem')
+    @section('meta:description', 'Tổng hợp các bản demo trực quan của Saola: Trải nghiệm cú pháp đang chạy thật, kiểm thử compiler fixture, reactivity, hydration và component.')
+    @section('meta:keywords', 'saola demo, live demo saola, compiler fixture, laravel spa demo, reactive components')
 
     @block('main')
         <p class="kicker"><span>DEMO · TỔNG QUAN</span></p>
@@ -36,6 +39,11 @@
                 <span>Compiler</span>
                 <strong>Setup typesafe</strong>
                 <p>Đặt props, state, computed và import view cạnh TypeScript trong <code>&lt;script setup&gt;</code>.</p>
+            </a>
+            <a href="/demo/declarations">
+                <span>Cú pháp</span>
+                <strong>Khai báo State & Props</strong>
+                <p>Ví dụ khai báo state, props và computed chuẩn TypeScript trong <code>&lt;script setup&gt;</code>, kèm các cú pháp tương đương.</p>
             </a>
             <a href="/demo/await">
                 <span>Dữ liệu</span>
@@ -66,6 +74,11 @@
                 <span>Ứng dụng thật</span>
                 <strong>Luồng sự kiện SSE</strong>
                 <p>Danh sách chỉ thêm vào đầu, kết nối sống đi qua điều hướng SPA, và stream có giới hạn để không bỏ đói worker PHP.</p>
+            </a>
+            <a href="/demo/tag-directives">
+                <span>Cú pháp</span>
+                <strong>Directive viết trên thẻ</strong>
+                <p>Cùng một nội dung dựng hai lần — cột trái <code>&#64;if</code>/<code>&#64;switch</code>/<code>&#64;foreach</code>, cột phải <code>#if</code>/<code>#switch</code>/<code>#foreach</code>. Hai cột phải ra chữ giống hệt nhau.</p>
             </a>
             <a href="/demo/lifecycle">
                 <span>Runtime</span>

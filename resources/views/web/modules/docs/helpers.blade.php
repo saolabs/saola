@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-window' => 'web.components.code-window']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Hàm Tiện ích trong Expression - Saola Docs')
+    @section('meta:description', 'Danh sách hàm tiện ích (Helpers) dùng được trong biểu thức {{  }} của Saola: Xử lý chuỗi, định dạng ngày tháng, số, mảng và đối tượng đồng bộ hai môi trường.')
+    @section('meta:keywords', 'saola helpers, ham tien ich, interpolation helpers, helper functions, format helpers')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

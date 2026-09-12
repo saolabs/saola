@@ -22,6 +22,9 @@
 @useState($price, 120)
 @useState($qty, 2)
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Thư viện Component Mẫu - Saola')
+    @section('meta:description', 'Bộ sưu tập component giao diện mẫu trong Saola: Nút bấm, biểu mẫu, thẻ thông tin, danh sách tương tác và các pattern UI phổ biến.')
+    @section('meta:keywords', 'saola components, thu vien component, ui library, button card form, saola design system')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>

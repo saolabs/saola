@@ -1,6 +1,9 @@
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Context, Module và Controller - Saola Docs')
+    @section('meta:description', 'Tổ chức ứng dụng với Context, Module và Controller trong Saola: Phân chia không gian route, cô lập asset bundles và module discovery.')
+    @section('meta:keywords', 'saola context, module laravel, controller saola, module discovery, context registry')
     @block('doc')
         <header class="page-hero">
             <div>

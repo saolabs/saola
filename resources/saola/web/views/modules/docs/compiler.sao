@@ -1,6 +1,9 @@
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Saola Compiler - Một AST, Hai Output Đồng bộ')
+    @section('meta:description', 'Khám phá trình biên dịch Saola: Phân tích cú pháp template .sao thành AST duy nhất và sinh mã Blade SSR và TypeScript CSR hoàn toàn đồng bộ.')
+    @section('meta:keywords', 'saola compiler, ast, blade generator, typescript generator, ssr csr sync, single source')
     @block('doc')
         <section class="page-hero page-hero-compiler">
             <div><p class="kicker"><span>02 / COMPILER</span> Source synchronization</p><h1>Một AST.<br><em>Hai output đồng bộ.</em></h1></div>

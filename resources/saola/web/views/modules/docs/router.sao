@@ -1,13 +1,16 @@
 <template>
     @extends(__layout__ + "docs")
+    @section('meta:title', 'Router & PageCache - Điều hướng Client mượt mà | Saola Docs')
+    @section('meta:description', 'Hệ thống điều hướng Router và bộ đệm trang PageCache của Saola: Chuyển trang tức thì không reload, giữ nguyên trạng thái view và quản lý history.')
+    @section('meta:keywords', 'saola router, pagecache, dieu huong spa, client navigation, spa routing, history state')
     @block('doc')
         <header class="page-hero">
             <div>
                 <p class="kicker"><span>07</span> RUNTIME</p>
-                <h1>Router và dịch vụ client.</h1>
+                <h1>Router &amp; PageCache.</h1>
             </div>
             <div class="page-hero-aside">
-                <p>Ba cửa vào đều đổ về một hàm xử lý route, và việc đầu tiên router làm là hỏi PageCache. Application là một container service có thứ tự nạp được resolve tự động.</p>
+                <p>Ba cửa vào đều đổ về một hàm xử lý route: nạp trang đầu, click link SPA và lịch sử browser. PageCache LRU và Layout Diffing đảm bảo chuyển trang mượt mà không re-render dư thừa.</p>
             </div>
         </header>
 
@@ -38,35 +41,25 @@
                 </div>
             </div>
 
-            <p class="kicker"><span>SERVICES</span> Container phía client</p>
-            <h2>Application là một container có thứ tự.</h2>
-            <p>Service đăng ký qua service provider có khai báo phụ thuộc, thứ tự nạp được resolve chứ không phải viết tay. Truy cập qua <code>App.&lt;Tên&gt;</code>.</p>
+            <p class="kicker"><span>NAVIGATION API</span> Điều khiển chương trình</p>
+            <h2>Phương thức chính của <code>App.Router</code></h2>
+            <p>Trong controller hoặc hàm tương tác, bạn có thể chủ động chuyển trang hoặc can thiệp luồng điều hướng:</p>
             <div class="directive-table">
-                <div><div class="dt-key"><code>App.Http</code></div><span>Fetch client: base URL, interceptor, timeout, tự huỷ request trùng, tự gắn header revision của view</span><b>network</b></div>
-                <div><div class="dt-key"><code>App.Event</code></div><span>Bus sự kiện: một hoặc nhiều event, <code>once</code>, trả về hàm huỷ đăng ký</span><b>bus</b></div>
-                <div><div class="dt-key"><code>App.Store</code> / <code>App.Storage</code></div><span>Kho theo khoá có TTL, subscribe theo khoá và callback lúc hết hạn</span><b>state</b></div>
-                <div><div class="dt-key"><code>App.Head</code></div><span>Quản lý thẻ head: title, meta, link theo từng view</span><b>document</b></div>
-                <div><div class="dt-key"><code>App.Router</code> / <code>App.View</code></div><span>Router và ViewManager — mount, hydrate, pause, resume view chain</span><b>core</b></div>
-                <div><div class="dt-key"><code>App.Helper</code></div><span>Hàm tiện ích mà output biên dịch gọi tới, ví dụ <code>count()</code></span><b>utility</b></div>
-                <div><div class="dt-key"><code>App.API</code></div><span>ApiClient dựng trên HttpService cho lớp gọi API có cấu trúc</span><b>network</b></div>
-                <div><div class="dt-key"><code>App.Logger</code></div><span>Log theo cấp, tắt được ở production</span><b>diagnostics</b></div>
-                <div><div class="dt-key"><code>App.Marker</code> / <code>App.Registry</code></div><span>Truy vấn và đăng ký marker, nền của hydration</span><b>internal</b></div>
-                <div><div class="dt-key"><code>App.Devtools</code></div><span>Phát sự kiện vòng đời view cho inspector</span><b>diagnostics</b></div>
+                <div><div class="dt-key"><code>App.Router.push(url)</code></div><span>Chuyển tới URL mới, đẩy vào lịch sử trình duyệt và kích hoạt tải/render view.</span><b>navigate</b></div>
+                <div><div class="dt-key"><code>App.Router.replace(url)</code></div><span>Thay thế URL hiện tại trên thanh địa chỉ mà không tạo thêm bước lùi lịch sử (history entry).</span><b>navigate</b></div>
+                <div><div class="dt-key"><code>App.Router.back()</code></div><span>Quay lại trang trước, tự động ưu tiên lấy view từ PageCache LRU.</span><b>history</b></div>
+                <div><div class="dt-key"><code>App.Router.beforeEach(fn)</code></div><span>Đăng ký navigation guard toàn cục, nhận <code>(to, from)</code>, trả về <code>false</code> để chặn hoặc URL để redirect.</span><b>guard</b></div>
+                <div><div class="dt-key"><code>App.Router.afterEach(fn)</code></div><span>Chạy sau khi trang đã mount/resume thành công (dùng để cuộn trang, gắn tracking hoặc đồng bộ highlight).</span><b>hook</b></div>
+                <div><div class="dt-key"><code>App.Router.current()</code></div><span>Trả về thông tin route hiện hành: <code>path</code>, <code>params</code>, <code>query</code>.</span><b>state</b></div>
             </div>
-            <p class="ov-sub">Dịch vụ nội bộ không nằm trên container</p>
-            <div class="ov-tags">
-                <span class="ov-tag">AssetManager — ref-count style &amp; script</span>
-                <span class="ov-tag">BlockManager — nối block với outlet</span>
-                <span class="ov-tag">SectionManager</span>
-                <span class="ov-tag">PageCache</span>
-                <span class="ov-tag">DomService</span>
-                <span class="ov-tag">ForeachSlotCache</span>
-                <span class="ov-tag">ElementManager</span>
+
+            <div class="ov-note" style="margin-top: 32px;">
+                <strong>Hệ sinh thái dịch vụ client:</strong> Ngoài Router, runtime của Saola cung cấp sẵn các dịch vụ dùng chung như <code>App.Event</code>, <code>App.Store</code>, <code>App.Storage</code>, <code>App.Http</code>, <code>App.Head</code>... Xem danh mục đầy đủ và hướng dẫn sử dụng chi tiết ở trang kế tiếp.
             </div>
         </div>
 
-        <a class="doc-next" href="/docs/build">
-            <div><span>Tiếp theo</span><strong>Build, CLI & cấu hình</strong></div>
+        <a class="doc-next" href="/docs/client-services">
+            <div><span>Tiếp theo</span><strong>Dịch vụ phía client</strong></div>
             <span class="button button-primary">Đọc tiếp →</span>
         </a>
     @endblock

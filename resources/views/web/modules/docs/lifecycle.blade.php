@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = []) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Vòng đời View và DOM Marker - Saola Docs')
+    @section('meta:description', 'Tìm hiểu vòng đời view (View Lifecycle) và cơ chế DOM Marker trong Saola: init, mount, update, destroy và cách marker giữ vị trí cấu trúc DOM.')
+    @section('meta:keywords', 'saola lifecycle, view lifecycle, dom marker, mount update destroy, marker hydration')
     @block('doc')
         <header @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])>
@@ -59,7 +62,7 @@
         </div>
 
         <a @class([$__VIEW_ID__ . '-Bdoc3', 'doc-next']) @attr(['href' => '/docs/router'])>
-            <div @class([$__VIEW_ID__ . '-Bdoc31'])><span @class([$__VIEW_ID__ . '-Bdoc311'])>Tiếp theo</span><strong @class([$__VIEW_ID__ . '-Bdoc312'])>Router & dịch vụ client</strong></div>
+            <div @class([$__VIEW_ID__ . '-Bdoc31'])><span @class([$__VIEW_ID__ . '-Bdoc311'])>Tiếp theo</span><strong @class([$__VIEW_ID__ . '-Bdoc312'])>Router & PageCache</strong></div>
             <span @class([$__VIEW_ID__ . '-Bdoc32', 'button', 'button-primary'])>Đọc tiếp →</span>
         </a>
     @endblock

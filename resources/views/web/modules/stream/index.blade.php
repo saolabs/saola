@@ -9,6 +9,9 @@
 @useState($pending, 0)
 @await
 @extends($__layout__ . 'lab')
+    @section('meta:title', 'Feed Realtime qua Server-Sent Events (SSE) - Saola Lab')
+    @section('meta:description', 'Luồng sự kiện thời gian thực bằng SSE (Server-Sent Events) trong Saola: Backlog nạp sẵn qua SSR, đẩy dữ liệu liên tục và cập nhật DOM không giật lag.')
+    @section('meta:keywords', 'server-sent events saola, sse feed, realtime stream, event stream laravel, saola stream lab')
 
     @block('main')
         <p @class([$__VIEW_ID__ . '-Bmain1', 'kicker'])><span @class([$__VIEW_ID__ . '-Bmain11'])>ỨNG DỤNG THẬT · LUỒNG SỰ KIỆN</span></p>

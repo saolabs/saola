@@ -1,5 +1,5 @@
 {
-    "nextId": 16,
+    "nextId": 20,
     "cards": [
         {
             "id": 2,
@@ -7,18 +7,18 @@
             "column": "done"
         },
         {
-            "id": 8,
-            "title": "Dọn 8 cổng parity đỏ sẵn",
+            "id": 4,
+            "title": "Biểu đồ giá realtime",
             "column": "done"
         },
         {
-            "id": 5,
-            "title": "Bảng dữ liệu lọc\/sắp\/phân trang",
+            "id": 6,
+            "title": "Luồng sự kiện SSE",
             "column": "doing"
         },
         {
-            "id": 4,
-            "title": "Biểu đồ giá realtime",
+            "id": 19,
+            "title": "Kanban",
             "column": "doing"
         },
         {
@@ -27,18 +27,23 @@
             "column": "doing"
         },
         {
+            "id": 5,
+            "title": "Bảng dữ liệu lọc\/sắp\/phân trang",
+            "column": "doing"
+        },
+        {
             "id": 1,
             "title": "Cổng parity SSR↔CSR",
             "column": "doing"
         },
         {
-            "id": 3,
-            "title": "Giữ whitespace khi sinh JS",
+            "id": 8,
+            "title": "Dọn 8 cổng parity đỏ sẵn",
             "column": "todo"
         },
         {
-            "id": 6,
-            "title": "Luồng sự kiện SSE",
+            "id": 3,
+            "title": "Giữ whitespace khi sinh JS",
             "column": "todo"
         }
     ]

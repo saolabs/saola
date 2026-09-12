@@ -11,6 +11,9 @@
 
 <template>
     @extends(__layout__ + 'lab')
+    @section('meta:title', 'Vòng lặp & Reconciliation (@foreach) Demo - Saola')
+    @section('meta:description', 'Trực quan hóa cơ chế DOM reconciliation của @foreach trong Saola: Tái sử dụng slot với @key và bảo toàn DOM marker.')
+    @section('meta:keywords', 'saola foreach demo, dom reconciliation, key directive, marker slot, danh sach du lieu')
 
     @block('main')
         <p class="kicker"><span>RUNTIME · DANH SÁCH</span></p>

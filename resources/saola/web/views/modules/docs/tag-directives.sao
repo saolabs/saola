@@ -1,0 +1,237 @@
+@import('web.components.code-block')
+<template>
+    @extends(__layout__ + "docs")
+    @section('meta:title', 'Directive trên Thẻ (#) - Cú pháp Ngắn gọn | Saola Docs')
+    @section('meta:description', 'Tìm hiểu cú pháp directive trên thẻ (#) của Saola: #if, #foreach, #await viết trực tiếp trên tag HTML, tinh gọn markup và tối ưu DOM marker.')
+    @section('meta:keywords', 'tag directives saola, cu phap the hashtag, #if, #foreach, #await, tag syntax saola')
+    @block('doc')
+        <header class="page-hero">
+            <div>
+                <p class="kicker"><span>05</span> VIẾT VIEW</p>
+                <h1>Directive trên thẻ (#).</h1>
+            </div>
+            <div class="page-hero-aside">
+                <p>Cú pháp viết thuộc tính trực tiếp trên thẻ HTML: <code>#if</code>, <code>#switch</code>, <code>#foreach</code>... Compiler tự động hạ cú pháp về khối tương ứng trong bước tiền xử lý — gọn hơn hai dòng, cấu trúc template phẳng hơn mà không sinh thêm phụ tải runtime hay thay đổi hợp đồng marker.</p>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <p class="kicker"><span>BẢN CHẤT</span> Tiền xử lý &amp; Hạ AST</p>
+            <h2>Sugar syntax thuần — Bản chất là khối directive tương ứng.</h2>
+            <p>Viết <code>&lt;p #if="open"&gt;…&lt;/p&gt;</code> là cách viết khác của <code>&#64;if(open) &lt;p&gt;…&lt;/p&gt; &#64;endif</code>. Hàm tiền xử lý <code>Support\Html::expandTagDirectives()</code> quét cây template và hạ toàn bộ thuộc tính <code>#</code> về các khối <code>&#64;</code> tương ứng trước khi AST Parser và bộ dịch biểu thức chạy.</p>
+            
+            <div class="ov-grid">
+                <div class="ov-card">
+                    <span>Không runtime mới</span>
+                    <h3>Hạ ở tầng mã nguồn</h3>
+                    <p>Bộ hạ cú pháp phát ra đúng cấu trúc <code>&#64;if</code>, <code>&#64;switch</code>, <code>&#64;foreach</code>. Compiler downstream không cần biết template ban đầu được viết theo kiểu nào.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Đồng bộ 100%</span>
+                    <h3>Bảo toàn Marker &amp; ID Parity</h3>
+                    <p>Vì cùng hạ thành một cây khối trước khi sinh mã, cấu trúc comment marker (<code>&lt;!--s:r:...--&gt;</code>) và định danh DOM (<code>e1r1k11</code>) giữa Blade SSR và TypeScript Client luôn trùng khớp tuyệt đối.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Biểu thức an toàn</span>
+                    <h3>Tự động đổi biến state</h3>
+                    <p>Biểu thức trong <code>#if="cond"</code> đi qua cùng bộ tiền xử lý như <code>&#64;if</code>: tự động gắn <code>$cond</code> ở Blade SSR và giữ nguyên <code>cond</code> ở client reactive closure.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Tránh lỗi gõ nhầm</span>
+                    <h3>Tập đóng an toàn</h3>
+                    <p>Chỉ 10 từ khoá được phép sau <code>#</code>. Gõ nhầm như <code>#fi="x"</code> sẽ báo lỗi biên dịch ngay lập tức, không bao giờ bị lọt thành thuộc tính HTML rác.</p>
+                </div>
+            </div>
+
+            <p class="ov-sub">So sánh khi nào dùng cú pháp nào</p>
+            <div class="directive-table">
+                <div>
+                    <div class="dt-key">Dùng cú pháp trên thẻ <code>#</code></div>
+                    <span>Khi điều kiện hoặc vòng lặp áp dụng trọn vẹn cho <strong>đúng một phần tử HTML</strong> hoặc component (kể cả phần tử cha có cây con nhiều tầng). Giúp template phẳng, giảm thụt lề và bớt hai dòng đóng/mở.</span>
+                    <b>Khuyến nghị</b>
+                </div>
+                <div>
+                    <div class="dt-key">Dùng cú pháp khối <code>&#64;</code></div>
+                    <span>Bắt buộc khi cần bọc <strong>nhiều thẻ đồng cấp</strong> (sibling) mà không muốn thêm thẻ <code>&lt;div&gt;</code> bao ngoài thừa, khi bọc đoạn văn bản trần (raw text), hoặc khi vùng logic không trùng biên thẻ HTML.</span>
+                    <b>Khối rộng</b>
+                </div>
+            </div>
+
+            <p class="kicker"><span>TẬP ĐÓNG</span> Danh mục directive hỗ trợ</p>
+            <h2>Mười chỉ thị duy nhất được phép sau dấu #.</h2>
+            <p>Ký hiệu <code>#</code> trên thẻ là một <strong>tập đóng tuyệt đối (closed set)</strong>. Mọi từ khoá lạ không nằm trong bảng dưới đây đều kích hoạt <code>CompileException</code>:</p>
+
+            <div class="directive-table">
+                <div><div class="dt-key"><code>#if="expr"</code></div><span>Điều kiện rẽ nhánh đầu tiên. Bọc toàn bộ phần tử mang nó.</span><b>rẽ nhánh</b></div>
+                <div><div class="dt-key"><code>#elseif="expr"</code></div><span>Nhánh rẽ tiếp theo. Bắt buộc đứng trên thẻ anh em (sibling) liền kề ngay sau <code>#if</code> hoặc <code>#elseif</code>.</span><b>rẽ nhánh</b></div>
+                <div><div class="dt-key"><code>#else</code></div><span>Nhánh mặc định cuối cùng. Không nhận giá trị biểu thức. Bắt buộc là sibling liền kề.</span><b>rẽ nhánh</b></div>
+                <div><div class="dt-key"><code>#switch="expr"</code></div><span>Rẽ nhánh đa trường hợp. <strong>Đặc thù:</strong> Bọc ruột container (thẻ cha vẫn render bình thường).</span><b>chọn giá trị</b></div>
+                <div><div class="dt-key"><code>#case="val"</code></div><span>Trường hợp cụ thể trong <code>#switch</code>, phải là con trực tiếp. Tự động chèn <code>&#64;break</code>.</span><b>chọn giá trị</b></div>
+                <div><div class="dt-key"><code>#default</code></div><span>Trường hợp mặc định trong <code>#switch</code>, không nhận giá trị. Tự động chèn <code>&#64;break</code>.</span><b>chọn giá trị</b></div>
+                <div><div class="dt-key"><code>#foreach="arr as item"</code></div><span>Vòng lặp duyệt mảng hoặc collection. Bọc toàn bộ thẻ mang nó.</span><b>vòng lặp</b></div>
+                <div><div class="dt-key"><code>#for="init; cond; step"</code></div><span>Vòng lặp số đếm truyền thống. Bọc toàn bộ thẻ mang nó.</span><b>vòng lặp</b></div>
+                <div><div class="dt-key"><code>#while="cond"</code></div><span>Vòng lặp theo điều kiện. Bọc toàn bộ thẻ mang nó.</span><b>vòng lặp</b></div>
+                <div><div class="dt-key"><code>#key="expr"</code></div><span>Bổ trợ vòng lặp (đi kèm <code>#foreach</code>/<code>#for</code>), khai báo khoá định danh ổn định DOM slot.</span><b>định danh</b></div>
+            </div>
+
+            <div class="ov-note" style="margin-top: 24px;">
+                <strong>Lưu ý về dấu <code>#</code> trong HTML và CSS:</strong> Compiler chỉ xử lý ký tự <code>#</code> khi nó xuất hiện ở vị trí <strong>tên thuộc tính</strong> bắt đầu bằng <code>#</code>. Các trường hợp như mã màu CSS (<code>style="color: #fff"</code>), liên kết neo (<code>href="#top"</code>), hay chuỗi văn bản bên trong biểu thức <code>&#123;&#123; ... &#125;&#125;</code> đều được giữ nguyên 100%.
+            </div>
+
+            <p class="kicker"><span>RẼ NHÁNH</span> #if · #elseif · #else</p>
+            <h2>Điều kiện linh hoạt từ thẻ đơn tới cả cây con.</h2>
+            
+            <p><strong>1. Thẻ đơn giản:</strong> Bọc trọn một phần tử duy nhất.</p>
+            <code-block lang="sao">
+@verbatim
+<!-- Viết trên thẻ -->
+&lt;p class="notice" #if="hasError"&gt;{{ errorMessage }}&lt;/p&gt;
+
+<!-- Compiler hạ thành -->
+&#64;if(hasError)
+&lt;p class="notice"&gt;{{ errorMessage }}&lt;/p&gt;
+&#64;endif
+@endverbatim
+            </code-block>
+
+            <p><strong>2. Chuỗi rẽ nhánh anh em liền kề (Sibling Chaining):</strong> Các nhánh <code>#elseif</code> và <code>#else</code> phải là các thẻ anh em đứng kế tiếp nhau, chỉ được phép cách nhau bởi khoảng trắng hoặc comment.</p>
+            <code-block lang="sao">
+@verbatim
+&lt;div class="status-wrap"&gt;
+    &lt;span class="badge success" #if="status === 'done'"&gt;Hoàn tất&lt;/span&gt;
+    &lt;span class="badge warning" #elseif="status === 'pending'"&gt;Đang chờ&lt;/span&gt;
+    &lt;span class="badge danger" #else&gt;Thất bại&lt;/span&gt;
+&lt;/div&gt;
+@endverbatim
+            </code-block>
+
+            <p><strong>3. Thẻ cha bao bọc cây con nhiều tầng:</strong> Khi gắn <code>#if</code> lên thẻ bao ngoài, compiler tìm đúng thẻ đóng của chính thẻ đó và bọc toàn bộ cây. Chỉ sinh <strong>một reactive scope duy nhất</strong> cho điều kiện ngoài cùng; các binding bên trong cây con vẫn giữ subscription độc lập mà không bị re-render thừa.</p>
+            <code-block lang="sao">
+@verbatim
+&lt;div class="modal-backdrop" #if="isOpen"&gt;
+    &lt;div class="modal-dialog"&gt;
+        &lt;header class="modal-head"&gt;
+            &lt;h3&gt;{{ modalTitle }}&lt;/h3&gt;
+            &lt;button &#64;click(closeModal())&gt;✕&lt;/button&gt;
+        &lt;/header&gt;
+        &lt;div class="modal-body"&gt;
+            &lt;p&gt;Nội dung bên trong giữ nguyên tính năng reactivity độc lập.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@endverbatim
+            </code-block>
+
+            <p class="kicker"><span>SWITCH</span> #switch · #case · #default</p>
+            <h2>Bọc ruột container và tự động ngắt break.</h2>
+            <p><code>#switch</code> có cơ chế hoạt động khác biệt so với <code>#if</code>: nó <strong>không bọc chính thẻ mang nó</strong> mà bọc <strong>phần ruột bên trong</strong>. Thẻ cha vẫn luôn render ra DOM bình thường, chỉ có các thẻ con bên trong được rẽ nhánh theo giá trị.</p>
+
+            <code-block lang="sao">
+@verbatim
+&lt;!-- Thẻ div.tab-content luôn hiện diện trong DOM --&gt;
+&lt;div class="tab-content" #switch="currentTab"&gt;
+    &lt;section class="pane" #case="'overview'"&gt;Tổng quan hệ thống&lt;/section&gt;
+    &lt;section class="pane" #case="'analytics'"&gt;Báo cáo số liệu&lt;/section&gt;
+    &lt;section class="pane" #case="'settings'"&gt;Cấu hình tài khoản&lt;/section&gt;
+    &lt;section class="pane" #default&gt;Vui lòng chọn tab hợp lệ&lt;/section&gt;
+&lt;/div&gt;
+@endverbatim
+            </code-block>
+
+            <p>Sau khi hạ cú pháp, compiler tự động phát <code>&#64;break</code> sau mỗi nhánh, bạn không bao giờ phải viết <code>&#64;break</code> bằng tay:</p>
+            <code-block lang="sao">
+@verbatim
+&lt;div class="tab-content"&gt;
+    &#64;switch(currentTab)
+    &#64;case('overview')
+    &lt;section class="pane"&gt;Tổng quan hệ thống&lt;/section&gt;
+    &#64;break
+    &#64;case('analytics')
+    &lt;section class="pane"&gt;Báo cáo số liệu&lt;/section&gt;
+    &#64;break
+    &#64;case('settings')
+    &lt;section class="pane"&gt;Cấu hình tài khoản&lt;/section&gt;
+    &#64;break
+    &#64;default
+    &lt;section class="pane"&gt;Vui lòng chọn tab hợp lệ&lt;/section&gt;
+    &#64;endswitch
+&lt;/div&gt;
+@endverbatim
+            </code-block>
+
+            <div class="ov-note">
+                <strong>Ràng buộc bắt buộc của #switch:</strong> Mọi thẻ con trực tiếp của thẻ mang <code>#switch</code> phải mang <code>#case</code> hoặc <code>#default</code>. Nếu để text node trần hoặc thẻ không điều kiện xen vào giữa các nhánh trong <code>#switch</code>, compiler sẽ báo lỗi biên dịch ngay để ngăn ngừa tình trạng lệch trạng thái SSR/CSR.
+            </div>
+
+            <p class="kicker"><span>VÒNG LẶP</span> #foreach · #for · #while và #key</p>
+            <h2>Duyệt danh sách ngắn gọn trên thẻ lặp.</h2>
+            <p>Viết <code>#foreach</code> trực tiếp trên thẻ lặp (như <code>&lt;li&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;div.card&gt;</code>). Đi kèm là <code>#key</code> để chỉ định thuộc tính định danh duy nhất cho từng phần tử trong danh sách:</p>
+
+            <code-block lang="sao">
+@verbatim
+&lt;ul class="user-list"&gt;
+    &lt;li class="user-row" #foreach="users as user" #key="user['id']"&gt;
+        &lt;span class="name"&gt;{{ user['name'] }}&lt;/span&gt;
+        &lt;span class="role"&gt;{{ user['role'] }}&lt;/span&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+@endverbatim
+            </code-block>
+
+            <div class="ov-grid">
+                <div class="ov-card">
+                    <span>Thứ tự tự do</span>
+                    <h3>#key đi trước hoặc sau</h3>
+                    <p>Bạn có thể viết <code>#key</code> trước hoặc sau <code>#foreach</code> trên cùng một thẻ: <code>&lt;tr #key="r.id" #foreach="rows as r"&gt;</code> đều hợp lệ.</p>
+                </div>
+                <div class="ov-card">
+                    <span>Hiệu năng DOM</span>
+                    <h3>ForeachSlotCache</h3>
+                    <p>Khoá <code>#key</code> cho phép runtime giữ nguyên các node DOM cũ khi danh sách bị xáo trộn hoặc thêm mới, tránh tạo lại thẻ và giật giao diện.</p>
+                </div>
+            </div>
+
+            <p class="kicker"><span>QUY TẮC</span> Bốn bất biến cần ghi nhớ</p>
+            <h2>Thiết kế an toàn, bắt lỗi sớm lúc compile.</h2>
+
+            <div class="directive-table">
+                <div>
+                    <div class="dt-key">1. Một thẻ — Một directive điều khiển</div>
+                    <span>Không được kết hợp <code>#if</code> và <code>#foreach</code> trên cùng một thẻ. Saola chủ động cấm điều này để tránh bẫy thứ tự ưu tiên khó đoán. <em>Cách khắc phục:</em> Đưa <code>#if</code> xuống thẻ con hoặc lọc mảng trong controller/computed trước.</span>
+                    <b>bắt buộc</b>
+                </div>
+                <div>
+                    <div class="dt-key">2. Thẻ mang # phải có thẻ đóng tường minh</div>
+                    <span>Thẻ mang <code>#</code> không được bỏ lửng. Thẻ có con phải có thẻ đóng mở đầy đủ (<code>&lt;div&gt;...&lt;/div&gt;</code>); thẻ void element phải tự đóng (<code>&lt;img ... /&gt;</code>).</span>
+                    <b>cú pháp</b>
+                </div>
+                <div>
+                    <div class="dt-key">3. Chuỗi rẽ nhánh phải là sibling liền kề</div>
+                    <span>Không được chèn bất kỳ thẻ HTML nào khác vào giữa thẻ mang <code>#if</code> và <code>#elseif</code>/<code>#else</code>. Chúng phải đứng sát nhau trong cùng một thẻ cha.</span>
+                    <b>cấu trúc</b>
+                </div>
+                <div>
+                    <div class="dt-key">4. Không bắt chéo biên thẻ và biên khối</div>
+                    <span>Không được mở <code>&#64;if</code> bên ngoài rồi đóng thẻ mang <code>#</code> bên trong hoặc ngược lại. Cấu trúc lồng nhau phải phân tầng rõ ràng.</span>
+                    <b>lồng nhau</b>
+                </div>
+            </div>
+
+            <p class="kicker"><span>TRẢI NGHIỆM</span> Tương tác &amp; So sánh trực tiếp</p>
+            <h2>Thử nghiệm thực tế trên Interactive Demo.</h2>
+            <p>Trang Lab đã có sẵn bài demo tương tác hai chiều kiểm tra tính tương đương của directive khối và directive trên thẻ. Bạn có thể bấm đổi trạng thái, tăng số đếm và so sánh song song mã nguồn của cả hai cách viết:</p>
+
+            <div class="ov-note" style="margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+                <div>
+                    <strong>Demo Directive viết trên thẻ:</strong> Trải nghiệm bộ nút chuyển đổi <code>mode = a | b | x</code>, lặp bảng dữ liệu và xem cấu trúc mã nguồn đối đầu giữa cú pháp <code>&#64;</code> và <code>#</code>.
+                </div>
+                <a href="/demo/tag-directives" class="button button-primary" style="white-space: nowrap;">Mở Demo tương tác ↗</a>
+            </div>
+        </div>
+
+        <a class="doc-next" href="/docs/reactivity">
+            <div><span>Tiếp theo</span><strong>State &amp; reactivity</strong></div>
+            <span class="button button-primary">Đọc tiếp →</span>
+        </a>
+    @endblock
+</template>

@@ -7,6 +7,9 @@
 @php($doubled = $count * 2)
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block', 'StatCard' => $cardPath, 'CodeBlock' => $__base__ . 'components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 @extends($__layout__ . 'lab')
+    @section('meta:title', 'Cú pháp Script Setup Demo - Saola')
+    @section('meta:description', 'Khám phá cú pháp script setup hiện đại trong Saola: Định nghĩa props, state, computed, imports và phương thức xử lý sự kiện tinh gọn.')
+    @section('meta:keywords', 'saola script setup demo, cu phap setup, modern component, props state computed, typescript setup')
 
     @block('main')
         <p @class([$__VIEW_ID__ . '-Bmain1', 'sfea88e94', 'kicker'])><span @class([$__VIEW_ID__ . '-Bmain11', 'sfea88e94'])>CÚ PHÁP · SETUP</span></p>
@@ -74,7 +77,7 @@
 &lt;script setup lang="ts"&gt;
     import type { GridStatusFilter } from '@web/app/services/GridData';
 
-    &#64;props({initial: 0, title: 'Khai báo trong setup'}: {
+    &#64;props({initial = 0, title = 'Khai báo trong setup'}: {
         initial: number;
         title: string;
     })
@@ -139,7 +142,7 @@
         @exec($__env->startSection($__ONE_COMPONENT_REGISTRY__['code-block'].'_1'))
 @verbatim
 &lt;script setup lang="ts"&gt;
-    &#64;props({initial: 0}: {initial: number})
+    &#64;props({initial = 0}: {initial: number})
     &#64;state(count: number = initial)
     &#64;computed(doubled: number = count * 2)
     &#64;const(step: number = 1)

@@ -1,6 +1,9 @@
 @exec($__ONE_COMPONENT_REGISTRY__ = ['code-block' => 'web.components.code-block']) {{-- Khai báo để sử dụng các component đã đăng ký trong $__ONE_COMPONENT_REGISTRY__ --}}
 
 @extends($__layout__ . "docs")
+    @section('meta:title', 'Bắt đầu với Saola - Hướng dẫn Từng bước từ Route đến SPA')
+    @section('meta:description', 'Hướng dẫn cài đặt và thiết lập dự án Saola từ route đầu tiên: composer require, npm install, module, view .sao, biên dịch và kiểm tra.')
+    @section('meta:keywords', 'bat dau saola, getting started saola, cai dat saola, saoc, npm saolabs builder, laravel spa tutorial')
     @block('doc')
         <section @class([$__VIEW_ID__ . '-Bdoc1', 'page-hero', 'page-hero-start'])>
             <div @class([$__VIEW_ID__ . '-Bdoc11'])><p @class([$__VIEW_ID__ . '-Bdoc111', 'kicker'])><span @class([$__VIEW_ID__ . '-Bdoc1111'])>04 / GETTING STARTED</span> Từ route đầu tiên</p><h1 @class([$__VIEW_ID__ . '-Bdoc112'])>Giữ cách Laravel nghĩ.<br @class([$__VIEW_ID__ . '-Bdoc1121'])><em @class([$__VIEW_ID__ . '-Bdoc1122'])>Thêm cách SPA chạy.</em></h1></div>

@@ -18,6 +18,9 @@
 
 <template>
     @extends(__layout__ + "workspace")
+    @section('meta:title', 'Stress Test Harness - Kiểm thử Tải & Hiệu năng | Saola Lab')
+    @section('meta:description', 'Môi trường kiểm thử sức tải và độ bền của Saola: Hydration, reactive updates tần suất cao, vòng lặp phức tạp và dọn dẹp bộ nhớ tự động.')
+    @section('meta:keywords', 'saola stress test, kiem thu tai, hydration performance, memory cleanup, reactive benchmark')
     @block('workspace')
         <header class="workspace-topbar">
             <div>

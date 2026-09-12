@@ -3,6 +3,9 @@
 @useState($accepted, false)
 @useState($expanded, 1)
 @extends($__layout__ . "public")
+    @section('meta:title', 'Điều khoản Sử dụng - Saola Ecosystem')
+    @section('meta:description', 'Điều khoản sử dụng và quy định trải nghiệm nguyên mẫu của Saola: Phạm vi bản thử nghiệm, bảo mật dữ liệu và quyền sở hữu.')
+    @section('meta:keywords', 'dieu khoan su dung, terms of service, saola terms, quy dinh su dung')
     @block('content')
         <section @class([$__VIEW_ID__ . '-Bcontent1', 'legal-hero', 'legal-hero-compact'])>
             <p @class([$__VIEW_ID__ . '-Bcontent11', 'eyebrow'])><span @class([$__VIEW_ID__ . '-Bcontent111'])>01</span> Legal / Terms</p>
