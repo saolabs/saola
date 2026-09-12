@@ -31,13 +31,13 @@
         <p class="lab-lead">Props, state, computed, asset và import view nằm trong script setup. Hằng số bước tăng được khai báo bên ngoài.</p>
 
         <div class="lab-toolbar">
-            <button id="setup-increment" class="button button-primary" @click(increment())>
+            <button id="setup-increment" class="button button-sm button-primary" @click(increment())>
                 <span>＋ Tăng (count + 1)</span>
             </button>
-            <button id="setup-reset" class="button" @click(reset())>
+            <button id="setup-reset" class="button button-sm" @click(reset())>
                 <span>↺ Đặt lại</span>
             </button>
-            <button id="setup-stable" class="button" @click(showStable())>
+            <button id="setup-stable" class="button button-sm" @click(showStable())>
                 <span>Filter: stable</span>
             </button>
         </div>

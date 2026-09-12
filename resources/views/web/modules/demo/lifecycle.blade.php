@@ -18,9 +18,11 @@
         </p>
 
         <div @class([$__VIEW_ID__ . '-Bmain4', 'lab-counter'])>
-            <button @class([$__VIEW_ID__ . '-Bmain41', 'button'])>−</button>
-            <strong @class([$__VIEW_ID__ . '-Bmain42'])>@startMarker('output', 'Bmain42o1'){{ $counter }}@endMarker('output', 'Bmain42o1')</strong>
-            <button @class([$__VIEW_ID__ . '-Bmain43', 'button'])>+</button>
+            <div @class([$__VIEW_ID__ . '-Bmain41', 'sao-stepper']) @attr(['style' => 'padding: 4px;'])>
+                <button @class([$__VIEW_ID__ . '-Bmain411', 'sao-stepper-btn']) @attr(['type' => 'button', 'aria-label' => 'Giảm'])>−</button>
+                <span @class([$__VIEW_ID__ . '-Bmain412', 'sao-stepper-val']) @attr(['style' => 'min-width: 60px; font-size: 24px;'])>@startMarker('output', 'Bmain412o1'){{ $counter }}@endMarker('output', 'Bmain412o1')</span>
+                <button @class([$__VIEW_ID__ . '-Bmain413', 'sao-stepper-btn']) @attr(['type' => 'button', 'aria-label' => 'Tăng'])>+</button>
+            </div>
         </div>
 
         <label @class([$__VIEW_ID__ . '-Bmain5', 'lab-field'])>
@@ -29,8 +31,8 @@
         </label>
 
         <div @class([$__VIEW_ID__ . '-Bmain6', 'lab-toolbar'])>
-            <a @class([$__VIEW_ID__ . '-Bmain61', 'button', 'button-primary']) @attr(['href' => '/demo/foreach'])>Rời trang (sang Danh sách)</a>
-            <button @class([$__VIEW_ID__ . '-Bmain62', 'button'])>Quay lại bằng history.back()</button>
+            <a @class([$__VIEW_ID__ . '-Bmain61', 'button', 'button-sm', 'button-primary']) @attr(['href' => '/demo/foreach'])>Rời trang (sang Danh sách)</a>
+            <button @class([$__VIEW_ID__ . '-Bmain62', 'button', 'button-sm'])>Quay lại bằng history.back()</button>
         </div>
 
         <p @class([$__VIEW_ID__ . '-Bmain7', 'lab-note'])>

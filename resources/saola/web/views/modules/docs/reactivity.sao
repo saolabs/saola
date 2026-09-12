@@ -1,3 +1,6 @@
+@import('web.components.code-block')
+@states({ demoCount: 5, demoName: 'Saola' }: { demoCount: number; demoName: string })
+
 <template>
     @extends(__layout__ + "docs")
     @section('meta:title', 'State và Element API - Hệ thống Phản ứng Saola')
@@ -44,6 +47,55 @@
                 <strong>Không phải deep reactivity.</strong> Đây là lựa chọn có chủ đích: không Proxy, không dep tracking runtime, granularity dừng ở tầng key. Đổi lại là output biên dịch đọc được và chi phí runtime gần như bằng không.
             </div>
 
+            <p class="kicker"><span>VÍ DỤ TRỰC QUAN</span> Thao tác State &amp; Binding trực tiếp</p>
+            <h2>Ví dụ chạy thật: Bộ đếm &amp; Liên kết hai chiều.</h2>
+            <p>Widget bên dưới chạy trực tiếp trên Saola Runtime. Khi bấm nút hoặc nhập dữ liệu, runtime kích hoạt Element API và cập nhật đúng vùng marker tương ứng mà không cần render lại toàn bộ component:</p>
+
+            <div class="ov-card" style="margin-bottom: 2rem; border-color: var(--primary, #0284c7); padding: 1.5rem;">
+                <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start;">
+                    <div style="flex: 1; min-width: 260px;">
+                        <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--primary, #0284c7); margin-bottom: 0.5rem; text-transform: uppercase;">Live Component Sandbox</span>
+                        <div style="margin-bottom: 1.25rem;">
+                            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">1. State số đếm (<code>&#64;states</code>):</label>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div class="sao-stepper">
+                                    <button type="button" class="sao-stepper-btn" @click(setDemoCount(demoCount - 1)) aria-label="Giảm">−</button>
+                                    <span class="sao-stepper-val">{{ demoCount }}</span>
+                                    <button type="button" class="sao-stepper-btn" @click(setDemoCount(demoCount + 1)) aria-label="Tăng">+</button>
+                                </div>
+                                <button type="button" class="button button-sm button-light" @click(setDemoCount(0))>↺ Đặt lại</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">2. Liên kết 2 chiều (<code>&#64;bind</code>):</label>
+                            <input type="text" @bind(demoName) placeholder="Nhập tên..." style="width: 100%; max-width: 320px; padding: 0.5rem 0.75rem; border: 1px solid var(--border, #ccc); border-radius: 6px; margin-bottom: 0.5rem; font-size: 0.9rem;" />
+                            <p style="margin: 0; font-size: 0.95rem;">Xin chào, <strong>{{ demoName }}</strong>! 👋</p>
+                        </div>
+                    </div>
+
+                    <div style="flex: 1; min-width: 280px;">
+                        <span style="display: block; font-size: 0.75rem; font-weight: 700; color: #6b7280; margin-bottom: 0.5rem; text-transform: uppercase;">Mã nguồn .sao tương ứng</span>
+                        <code-block lang="sao">
+@verbatim
+&#64;states({ demoCount: 5, demoName: 'Saola' })
+
+&lt;template&gt;
+    &lt;!-- 1. Cập nhật state --&gt;
+    &lt;button &#64;click(setDemoCount(demoCount - 1))&gt;−&lt;/button&gt;
+    &lt;span&gt;{{ demoCount }}&lt;/span&gt;
+    &lt;button &#64;click(setDemoCount(demoCount + 1))&gt;+&lt;/button&gt;
+
+    &lt;!-- 2. Two-way binding --&gt;
+    &lt;input type="text" &#64;bind(demoName) /&gt;
+    &lt;p&gt;Xin chào, {{ demoName }}! 👋&lt;/p&gt;
+&lt;/template&gt;
+@endverbatim
+                        </code-block>
+                    </div>
+                </div>
+            </div>
+
             <p class="kicker"><span>RUNTIME</span> Element API</p>
             <h2>Compiler chỉ gọi mười mấy hàm.</h2>
             <p>Output biên dịch không sinh chuỗi HTML. Nó gọi một tập method cố định trên ViewController, mỗi method trả về một element có vòng đời riêng.</p>
@@ -70,8 +122,8 @@
             </div>
         </div>
 
-        <a class="doc-next" href="/docs/runtime">
-            <div><span>Tiếp theo</span><strong>Runtime & hydration</strong></div>
+        <a class="doc-next" href="/docs/lifecycle">
+            <div><span>Tiếp theo</span><strong>Vòng đời &amp; marker</strong></div>
             <span class="button button-primary">Đọc tiếp →</span>
         </a>
     @endblock

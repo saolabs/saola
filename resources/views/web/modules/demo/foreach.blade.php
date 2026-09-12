@@ -22,11 +22,11 @@
         </p>
 
         <div @class([$__VIEW_ID__ . '-Bmain4', 'lab-toolbar'])>
-            <button @class([$__VIEW_ID__ . '-Bmain41', 'button', 'button-primary'])>Thêm dòng</button>
-            <button @class([$__VIEW_ID__ . '-Bmain42', 'button'])>Đảo thứ tự</button>
-            <button @class([$__VIEW_ID__ . '-Bmain43', 'button'])>Đổi tên dòng đầu</button>
-            <button @class([$__VIEW_ID__ . '-Bmain44', 'button'])>Refetch (object mới)</button>
-            <button @class([$__VIEW_ID__ . '-Bmain45', 'button'])>Xoá nhật ký</button>
+            <button @class([$__VIEW_ID__ . '-Bmain41', 'button', 'button-sm', 'button-primary'])>Thêm dòng</button>
+            <button @class([$__VIEW_ID__ . '-Bmain42', 'button', 'button-sm'])>Đảo thứ tự</button>
+            <button @class([$__VIEW_ID__ . '-Bmain43', 'button', 'button-sm'])>Đổi tên dòng đầu</button>
+            <button @class([$__VIEW_ID__ . '-Bmain44', 'button', 'button-sm'])>Refetch (object mới)</button>
+            <button @class([$__VIEW_ID__ . '-Bmain45', 'button', 'button-sm'])>Xoá nhật ký</button>
         </div>
 
         {{-- Đọc bằng NGOẶC VUÔNG, không phải dấu chấm: `row.id` biên dịch thành
@@ -40,8 +40,8 @@
                     <span @class([$__VIEW_ID__ . "-Bmain5l111-{$row['id']}", 'lab-row-id'])>#@startMarker('output', "Bmain5l111o1-{$row['id']}"){{ $row['id'] }}@endMarker('output', "Bmain5l111o1-{$row['id']}")</span>
                     <span @class([$__VIEW_ID__ . "-Bmain5l112-{$row['id']}", 'lab-row-name'])>@startMarker('output', "Bmain5l112o1-{$row['id']}"){{ $row['name'] }}@endMarker('output', "Bmain5l112o1-{$row['id']}")</span>
                     <span @class([$__VIEW_ID__ . "-Bmain5l113-{$row['id']}", 'lab-row-hits'])>@startMarker('output', "Bmain5l113o1-{$row['id']}"){{ $row['hits'] }}@endMarker('output', "Bmain5l113o1-{$row['id']}") lượt</span>
-                    <button @class([$__VIEW_ID__ . "-Bmain5l114-{$row['id']}", 'button', 'button-small'])>+1</button>
-                    <button @class([$__VIEW_ID__ . "-Bmain5l115-{$row['id']}", 'button', 'button-small'])>Xoá</button>
+                    <button @class([$__VIEW_ID__ . "-Bmain5l114-{$row['id']}", 'button', 'button-xs'])>+1</button>
+                    <button @class([$__VIEW_ID__ . "-Bmain5l115-{$row['id']}", 'button', 'button-xs'])>Xoá</button>
                 </li>
             @endforeach
             @endMarker('reactive', 'Bmain5l1')

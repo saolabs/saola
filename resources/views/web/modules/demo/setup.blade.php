@@ -17,13 +17,13 @@
         <p @class([$__VIEW_ID__ . '-Bmain3', 'sfea88e94', 'lab-lead'])>Props, state, computed, asset và import view nằm trong script setup. Hằng số bước tăng được khai báo bên ngoài.</p>
 
         <div @class([$__VIEW_ID__ . '-Bmain4', 'sfea88e94', 'lab-toolbar'])>
-            <button @class([$__VIEW_ID__ . '-Bmain41', 'sfea88e94', 'button', 'button-primary']) @attr(['id' => 'setup-increment'])>
+            <button @class([$__VIEW_ID__ . '-Bmain41', 'sfea88e94', 'button', 'button-sm', 'button-primary']) @attr(['id' => 'setup-increment'])>
                 <span @class([$__VIEW_ID__ . '-Bmain411', 'sfea88e94'])>＋ Tăng (count + 1)</span>
             </button>
-            <button @class([$__VIEW_ID__ . '-Bmain42', 'sfea88e94', 'button']) @attr(['id' => 'setup-reset'])>
+            <button @class([$__VIEW_ID__ . '-Bmain42', 'sfea88e94', 'button', 'button-sm']) @attr(['id' => 'setup-reset'])>
                 <span @class([$__VIEW_ID__ . '-Bmain421', 'sfea88e94'])>↺ Đặt lại</span>
             </button>
-            <button @class([$__VIEW_ID__ . '-Bmain43', 'sfea88e94', 'button']) @attr(['id' => 'setup-stable'])>
+            <button @class([$__VIEW_ID__ . '-Bmain43', 'sfea88e94', 'button', 'button-sm']) @attr(['id' => 'setup-stable'])>
                 <span @class([$__VIEW_ID__ . '-Bmain431', 'sfea88e94'])>Filter: stable</span>
             </button>
         </div>

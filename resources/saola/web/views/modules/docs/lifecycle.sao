@@ -1,3 +1,5 @@
+@states({ hookCount: 1 }: { hookCount: number })
+
 <template>
     @extends(__layout__ + "docs")
     @section('meta:title', 'Vòng đời View và DOM Marker - Saola Docs')
@@ -28,7 +30,33 @@
                 <div><div class="dt-key"><code>destroying · destroyed</code></div><span>Dọn toàn bộ: abort event, huỷ subscription, destroy con theo thứ tự ngược</span><b>destroy</b></div>
             </div>
             <div class="ov-note">
+                <strong>Cú pháp chuẩn:</strong> Các hook được khai báo trực tiếp dưới dạng <code>function</code> ở cấp ngoài cùng của <code>&lt;script setup lang="ts"&gt;</code> (ví dụ: <code>function started() &#123; ... &#125;</code>), không cần bọc trong <code>export default</code>.<br><br>
                 Alias tương thích bản cũ vẫn chạy: <code>onMounted</code> ≈ <code>started</code>, <code>onPause</code> ≈ <code>paused</code>, <code>onResume</code> ≈ <code>resumed</code>, <code>onDeactivated</code> ≈ <code>stopped</code>, <code>onDestroy</code> ≈ <code>destroyed</code>. Hook async không chặn điều hướng nhưng promise bị reject vẫn được log.
+            </div>
+
+            <p class="kicker"><span>VÍ DỤ TRỰC QUAN</span> State Machine trong thực tế</p>
+            <h2>Quan sát Vòng đời View tương tác.</h2>
+            <p>View bạn đang đọc chính là một instance của <code>ViewController</code> đang ở trạng thái <code>active</code>. Khi bấm nút kích hoạt re-render, Element API chỉ cập nhật đúng node nội suy và kích hoạt micro-tick:</p>
+
+            <div class="ov-card" style="margin-bottom: 2rem; border-color: var(--primary, #0284c7); padding: 1.5rem;">
+                <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--primary, #0284c7); margin-bottom: 0.5rem; text-transform: uppercase;">Trạng thái View Instance Hiện Tại</span>
+                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></span>
+                            <strong style="font-size: 1.05rem;">Trạng thái: <code>active</code></strong>
+                            <span style="font-size: 0.8rem; color: #6b7280;">(DOM mounted &amp; subscribed)</span>
+                        </div>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-secondary, #4b5563);">
+                            Số lượt tương tác: <strong>{{ hookCount }}</strong> · Vùng marker: <code>&lt;!--s:o:...-s--&gt;</code> được cập nhật tức thì.
+                        </p>
+                    </div>
+                    <div>
+                        <button type="button" class="button button-sm button-primary" @click(setHookCount(hookCount + 1))>
+                            <span>Bắn sự kiện update (+1)</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <p class="kicker"><span>HYDRATION</span> Nhận DOM thay vì dựng lại</p>

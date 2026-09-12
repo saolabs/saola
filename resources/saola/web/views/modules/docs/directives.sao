@@ -1,4 +1,6 @@
 @import('web.components.code-block')
+@states({ activeTab: 'all' }: { activeTab: string })
+
 <template>
     @extends(__layout__ + "docs")
     @section('meta:title', 'Toàn bộ Directive trong Saola - Hướng dẫn Chi tiết')
@@ -16,6 +18,28 @@
         </header>
 
         <div class="doc-body">
+            <div class="ov-card" style="margin-bottom: 2rem; border-color: var(--primary, #0284c7); padding: 1.5rem;">
+                <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--primary, #0284c7); margin-bottom: 0.5rem; text-transform: uppercase;">Ví dụ Trực quan: Thao tác &#64;if, &#64;click &amp; &#64;class</span>
+                <h3 style="margin: 0 0 0.5rem 0; font-size: 1.15rem;">Trải nghiệm các directive cốt lõi trực tiếp</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-secondary, #4b5563);">Bấm thử các nút tab bên dưới để quan sát cách <code>&#64;click</code>, <code>&#64;class</code> và <code>&#64;if</code> cùng nhau kiểm soát vùng hiển thị:</p>
+
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                    <button type="button" class="button button-sm" @class({'button-primary': activeTab === 'all'}) @click(setActiveTab('all'))>Tất cả</button>
+                    <button type="button" class="button button-sm" @class({'button-primary': activeTab === 'ssr'}) @click(setActiveTab('ssr'))>Nhóm Server (SSR)</button>
+                    <button type="button" class="button button-sm" @class({'button-primary': activeTab === 'csr'}) @click(setActiveTab('csr'))>Nhóm Client (SPA)</button>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.03); border-radius: 8px; padding: 1rem; font-size: 0.9rem;">
+                    @if(activeTab === 'all')
+                        <p style="margin: 0;">🌐 <strong>Tất cả Directive:</strong> Toàn bộ 43 directive có hiệu lực đồng bộ ở cả SSR (Server Blade) và CSR (Client SPA).</p>
+                    @elseif(activeTab === 'ssr')
+                        <p style="margin: 0;">🖥️ <strong>Phía Server (Blade):</strong> <code>&#64;extends</code>, <code>&#64;block</code>, <code>&#64;include</code> dựng sẵn khung HTML ban đầu chuẩn SEO và khả năng truy cập ngay khi chưa tải JS.</p>
+                    @else
+                        <p style="margin: 0;">⚡ <strong>Phía Client (Runtime):</strong> <code>&#64;bind</code>, <code>&#64;click</code>, <code>&#64;class</code> tiếp quản DOM và cập nhật tức thì theo micro-tick mà không cần tải lại trang.</p>
+                    @endif
+                </div>
+            </div>
+
             <nav class="dir-toc" aria-label="Nhóm directive">
                 <a href="#khai-bao" data-nav="disabled">Khai báo</a>
                 <a href="#xuat-gia-tri" data-nav="disabled">Xuất giá trị</a>

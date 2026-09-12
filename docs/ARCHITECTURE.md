@@ -324,10 +324,10 @@ Ví dụ nhanh:
 </div>
 </template>
 
-<script setup>
-export default {
-    init() { console.log('mounted'); }
-}
+<script setup lang="ts">
+    function started() {
+        console.log('Component mounted/started');
+    }
 </script>
 ```
 

@@ -21,9 +21,11 @@
         </p>
 
         <div class="lab-counter">
-            <button class="button" @click(setCounter(counter - 1))>−</button>
-            <strong>{{ counter }}</strong>
-            <button class="button" @click(setCounter(counter + 1))>+</button>
+            <div class="sao-stepper" style="padding: 4px;">
+                <button type="button" class="sao-stepper-btn" @click(setCounter(counter - 1)) aria-label="Giảm">−</button>
+                <span class="sao-stepper-val" style="min-width: 60px; font-size: 24px;">{{ counter }}</span>
+                <button type="button" class="sao-stepper-btn" @click(setCounter(counter + 1)) aria-label="Tăng">+</button>
+            </div>
         </div>
 
         <label class="lab-field">
@@ -32,8 +34,8 @@
         </label>
 
         <div class="lab-toolbar">
-            <a class="button button-primary" href="/demo/foreach">Rời trang (sang Danh sách)</a>
-            <button class="button" @click(goBack())>Quay lại bằng history.back()</button>
+            <a class="button button-sm button-primary" href="/demo/foreach">Rời trang (sang Danh sách)</a>
+            <button class="button button-sm" @click(goBack())>Quay lại bằng history.back()</button>
         </div>
 
         <p class="lab-note">

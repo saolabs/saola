@@ -25,11 +25,11 @@
         </p>
 
         <div class="lab-toolbar">
-            <button class="button button-primary" @click(addRow())>Thêm dòng</button>
-            <button class="button" @click(shuffleRows())>Đảo thứ tự</button>
-            <button class="button" @click(renameFirst())>Đổi tên dòng đầu</button>
-            <button class="button" @click(refetch())>Refetch (object mới)</button>
-            <button class="button" @click(clearLog())>Xoá nhật ký</button>
+            <button class="button button-sm button-primary" @click(addRow())>Thêm dòng</button>
+            <button class="button button-sm" @click(shuffleRows())>Đảo thứ tự</button>
+            <button class="button button-sm" @click(renameFirst())>Đổi tên dòng đầu</button>
+            <button class="button button-sm" @click(refetch())>Refetch (object mới)</button>
+            <button class="button button-sm" @click(clearLog())>Xoá nhật ký</button>
         </div>
 
         {{-- Đọc bằng NGOẶC VUÔNG, không phải dấu chấm: `row.id` biên dịch thành
@@ -43,8 +43,8 @@
                     <span class="lab-row-id">#{{ row['id'] }}</span>
                     <span class="lab-row-name">{{ row['name'] }}</span>
                     <span class="lab-row-hits">{{ row['hits'] }} lượt</span>
-                    <button class="button button-small" @click(bump(row['id']))>+1</button>
-                    <button class="button button-small" @click(removeRow(row['id']))>Xoá</button>
+                    <button class="button button-xs" @click(bump(row['id']))>+1</button>
+                    <button class="button button-xs" @click(removeRow(row['id']))>Xoá</button>
                 </li>
             @endforeach
         </ul>

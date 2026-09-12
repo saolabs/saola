@@ -104,13 +104,34 @@ code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospac
 /* ---- Nguyên tố dùng chung ---- */
 .kicker, .eyebrow { margin: 0 0 18px; display: inline-flex; align-items: center; gap: 9px; padding: 0; border: 0; background: none; color: var(--muted); font-size: 11.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .kicker span, .eyebrow span { color: var(--river); font-weight: 700; }
-.button { min-height: 52px; padding: 0 26px; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid transparent; border-radius: 999px; cursor: pointer; font-size: 15px; font-weight: 700; transition: all .3s ease; }
-.button:hover:not(:disabled) { transform: translateY(-2px); }
-.button-primary { color: white; background: var(--river); box-shadow: var(--shadow-brand); }
-.button-primary:hover { background: var(--blue); box-shadow: 0 16px 34px rgba(217,58,17,.35); }
-.button-light { color: var(--ink); background: var(--paper); border-color: rgba(23,23,23,.1); box-shadow: 0 4px 12px rgba(23,23,23,.05); }
-.button-light:hover { border-color: rgba(23,23,23,.16); box-shadow: 0 8px 24px rgba(23,23,23,.09); }
-.button:disabled { opacity: .45; cursor: not-allowed; }
+.button { min-height: 40px; padding: 0 18px; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line, #cbd5e1); border-radius: 8px; background: var(--paper, #ffffff); color: var(--ink, #0f172a); cursor: pointer; font-size: 14px; font-weight: 600; text-decoration: none; transition: all .2s ease; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04); }
+.button:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; color: var(--ink, #0f172a); transform: translateY(-1px); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); }
+.button:active:not(:disabled) { transform: translateY(0); }
+.button:disabled { opacity: .45; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+/* Kích cỡ nút */
+.button-lg, .hero-actions .button, .start-cta .button, .ex-card-footer .button { min-height: 52px; padding: 0 26px; font-size: 15px; font-weight: 700; border-radius: 999px; }
+.button-sm, .button-small { min-height: 34px; padding: 0 14px; font-size: 13px; font-weight: 600; border-radius: 6px; }
+.button-xs { min-height: 26px; padding: 0 10px; font-size: 11.5px; font-weight: 600; border-radius: 4px; }
+.button-icon { width: 36px; height: 36px; min-height: 36px; padding: 0; font-size: 16px; font-weight: 700; border-radius: 8px; flex-shrink: 0; }
+.button-icon.button-sm { width: 32px; height: 32px; min-height: 32px; font-size: 15px; border-radius: 6px; }
+
+/* Biến thể màu */
+.button-primary { color: #ffffff !important; background: var(--river, #d93a11) !important; border-color: transparent !important; box-shadow: var(--shadow-brand, 0 8px 24px rgba(217,58,17,.28)) !important; }
+.button-primary:hover:not(:disabled) { background: var(--blue, #b3300a) !important; color: #ffffff !important; box-shadow: 0 12px 28px rgba(217,58,17,.35) !important; }
+.button-light, .button-secondary { color: var(--ink, #0f172a); background: var(--paper, #ffffff); border: 1px solid var(--line, #cbd5e1); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04); }
+.button-light:hover:not(:disabled), .button-secondary:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; }
+.button-ghost { background: transparent; border-color: transparent; color: var(--muted, #64748b); box-shadow: none; }
+.button-ghost:hover:not(:disabled) { background: rgba(0, 0, 0, 0.05); color: var(--ink, #0f172a); }
+.button-outline { background: transparent; border-color: var(--river, #d93a11); color: var(--river, #d93a11); }
+.button-outline:hover:not(:disabled) { background: rgba(217, 58, 17, 0.08); }
+
+/* Stepper widget dùng cho counter demo & docs */
+.sao-stepper { display: inline-flex; align-items: center; background: var(--paper, #ffffff); border: 1px solid var(--line, #cbd5e1); border-radius: 8px; padding: 3px; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04); gap: 4px; }
+.sao-stepper-btn { width: 32px; height: 32px; min-height: 32px; padding: 0; border-radius: 6px; border: 1px solid transparent; background: #f1f5f9; color: var(--river, #0f172a); font-size: 16px; font-weight: 700; line-height: 1; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all .15s ease; }
+.sao-stepper-btn:hover:not(:disabled) { background: var(--river, #d93a11); color: #ffffff; box-shadow: 0 2px 6px rgba(217, 58, 17, 0.25); }
+.sao-stepper-btn:active:not(:disabled) { transform: scale(0.92); }
+.sao-stepper-val { min-width: 48px; text-align: center; font-size: 15px; font-weight: 750; color: var(--ink, #0f172a); font-variant-numeric: tabular-nums; padding: 0 6px; }
 .text-link { padding: 6px 0; display: inline-flex; align-items: center; gap: 10px; color: var(--river); border: 0; border-bottom: 1px solid rgba(217,58,17,.4); background: transparent; cursor: pointer; font-size: 15px; font-weight: 700; transition: color .2s ease; }
 .text-link:hover { color: var(--blue); }
 

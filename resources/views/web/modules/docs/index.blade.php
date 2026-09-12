@@ -175,10 +175,10 @@
             <h2 @class([$__VIEW_ID__ . '-Bdoc2e15_'])>Bốn trang đang chạy thật.</h2>
             <p @class([$__VIEW_ID__ . '-Bdoc2e16_'])>Mỗi trang dưới đây là một fixture có chủ đích, không phải ảnh chụp. Mở DevTools xem HTML lần đầu để thấy nội dung đã có sẵn trước khi JavaScript chạy.</p>
             <div @class([$__VIEW_ID__ . '-Bdoc2e17_', 'ov-grid'])>
-                <a @class([$__VIEW_ID__ . '-Bdoc2e17_1', 'ov-card']) @attr(['href' => '/demo'])>
-                    <span @class([$__VIEW_ID__ . '-Bdoc2e17_11'])>Fixture cú pháp</span>
-                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e17_12'])>Interactive demo →</h3>
-                    <p @class([$__VIEW_ID__ . '-Bdoc2e17_13'])>Chín nhóm cú pháp trong một trang: state, event, binding, điều kiện, vòng lặp, switch, props, import và children.</p>
+                <a @class([$__VIEW_ID__ . '-Bdoc2e17_1', 'ov-card']) @attr(['href' => '/examples'])>
+                    <span @class([$__VIEW_ID__ . '-Bdoc2e17_11'])>Ứng dụng thực tế</span>
+                    <h3 @class([$__VIEW_ID__ . '-Bdoc2e17_12'])>Examples Showcase →</h3>
+                    <p @class([$__VIEW_ID__ . '-Bdoc2e17_13'])>Tuyển tập các mô hình ứng dụng quy mô thực tế: Data Grid 3.800 dòng, Kanban kéo thả, Modal CRUD, Realtime Ticker và Event Stream.</p>
                 </a>
                 <a @class([$__VIEW_ID__ . '-Bdoc2e17_2', 'ov-card']) @attr(['href' => '/todo-list'])>
                     <span @class([$__VIEW_ID__ . '-Bdoc2e17_21'])>Layout dùng chung</span>

@@ -1,3 +1,4 @@
+@states({ clientMode: 'browser' }: { clientMode: string })
 @import('web.components.code-window')
 <template>
     @extends(__layout__ + "docs")
@@ -35,6 +36,108 @@ class RosterController extends WebController
             <div class="directive-table">
                 <div><div class="dt-key">Trình duyệt</div><span>Accept là HTML → render Blade của route rồi trả trang</span><b>view</b></div>
                 <div><div class="dt-key">Fetch / API</div><span>Accept là JSON, hoặc context <code>api</code> không có view → trả JSON</span><b>json</b></div>
+            </div>
+
+            <p class="kicker"><span>MINH HỌA TRỰC QUAN</span> Content Negotiation trong thực tế</p>
+            <h2>Mô phỏng cơ chế phản hồi theo ngữ cảnh gọi.</h2>
+            <p>Hãy bấm chuyển chế độ bên dưới để xem cách <code>$this->response($data)</code> tự động biến hoá payload phù hợp:</p>
+
+            <div class="ov-card" style="margin-bottom: 2.5rem; border-color: var(--primary, #0284c7); padding: 1.5rem;">
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap;">
+                    <button type="button" class="button button-sm" @class({'button-primary': clientMode === 'browser'}) @click(setClientMode('browser'))>
+                        Trình duyệt (Initial Page Load / SSR)
+                    </button>
+                    <button type="button" class="button button-sm" @class({'button-primary': clientMode === 'spa'}) @click(setClientMode('spa'))>
+                        SPA Client Fetch (Navigation)
+                    </button>
+                    <button type="button" class="button button-sm" @class({'button-primary': clientMode === 'api'}) @click(setClientMode('api'))>
+                        API Client / Mobile App (forceJson)
+                    </button>
+                </div>
+
+                @if(clientMode === 'browser')
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <div style="color: #38bdf8; font-family: monospace; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">[REQUEST HEADERS TỪ BROWSER]</div>
+                        <pre style="margin: 0; font-size: 0.82rem; color: #94a3b8; font-family: monospace; white-space: pre-wrap;">GET /products/42 HTTP/1.1
+Host: saola.test
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+User-Agent: Mozilla/5.0 ... Chrome/128.0</pre>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;">
+                        <div style="color: #34d399; font-family: monospace; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">[RESPONSE TỪ SAOLA: 200 OK — Rendered HTML]</div>
+                        <pre style="margin: 0; font-size: 0.82rem; color: #cbd5e1; font-family: monospace; white-space: pre-wrap;">HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+  &lt;head&gt;&lt;title&gt;Sản phẩm #42 - Saola Ecosystem&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="app"&gt;
+      &lt;!--s:v:web.products.show-s--&gt;
+      &lt;div class="product-detail"&gt;
+        &lt;h1&gt;Bàn phím cơ Saola Pro&lt;/h1&gt;
+        &lt;span class="badge"&gt;120.00 USD&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;!--s:v:web.products.show-e--&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </div>
+                @elseif(clientMode === 'spa')
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <div style="color: #38bdf8; font-family: monospace; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">[REQUEST HEADERS TỪ SPA ROUTER]</div>
+                        <pre style="margin: 0; font-size: 0.82rem; color: #94a3b8; font-family: monospace; white-space: pre-wrap;">GET /products/42 HTTP/1.1
+Host: saola.test
+Accept: application/json
+X-Requested-With: XMLHttpRequest
+X-Saola-Navigation: true</pre>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;">
+                        <div style="color: #34d399; font-family: monospace; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">[RESPONSE TỪ SAOLA: 200 OK — JSON Data + View metadata]</div>
+                        <pre style="margin: 0; font-size: 0.82rem; color: #cbd5e1; font-family: monospace; white-space: pre-wrap;">HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+
+{
+  "code": 200,
+  "view": "web.products.show",
+  "data": {
+    "item": {
+      "id": 42,
+      "title": "Bàn phím cơ Saola Pro",
+      "price": 120.00
+    }
+  },
+  "meta": {
+    "title": "Sản phẩm #42 - Saola Ecosystem"
+  }
+}</pre>
+                    </div>
+                @else
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <div style="color: #38bdf8; font-family: monospace; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">[REQUEST HEADERS TỪ API CLIENT]</div>
+                        <pre style="margin: 0; font-size: 0.82rem; color: #94a3b8; font-family: monospace; white-space: pre-wrap;">GET /api/v1/products/42 HTTP/1.1
+Host: saola.test
+Accept: application/json
+Authorization: Bearer saola_token_xyz</pre>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;">
+                        <div style="color: #34d399; font-family: monospace; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">[RESPONSE TỪ SAOLA: 200 OK — Pure JSON Payload]</div>
+                        <pre style="margin: 0; font-size: 0.82rem; color: #cbd5e1; font-family: monospace; white-space: pre-wrap;">HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "item": {
+      "id": 42,
+      "title": "Bàn phím cơ Saola Pro",
+      "price": 120.00
+    }
+  }
+}</pre>
+                    </div>
+                @endif
             </div>
 
             <p class="kicker"><span>PHÂN GIẢI</span> View đến từ tên route</p>
@@ -79,3 +182,4 @@ $this->response(array $data = [], ?string $bladePath = null, array $options = []
         </div>
     @endblock
 </template>
+

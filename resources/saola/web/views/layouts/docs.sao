@@ -4,43 +4,39 @@
         <div class="docs-shell">
             <aside class="docs-nav" aria-label="Điều hướng tài liệu">
                 <div class="docs-nav-inner">
-                    <p class="docs-nav-group">Bắt đầu</p>
-                    <a href="/docs">Giới thiệu</a>
+                    <p class="docs-nav-group">Bắt đầu &amp; Nền tảng</p>
+                    <a href="/docs">Tổng quan &amp; Hợp đồng</a>
                     <a href="/docs/getting-started">Cài đặt &amp; route đầu tiên</a>
+                    <a href="/docs/architecture">Kiến trúc hệ thống 4 tầng</a>
+                    <a href="/docs/sao-file">Cấu trúc file .sao</a>
 
-                    <p class="docs-nav-group">Nền tảng</p>
-                    <a href="/docs/architecture">Kiến trúc hệ thống</a>
+                    <p class="docs-nav-group">Cú pháp View &amp; Template</p>
+                    <a href="/docs/directives">Tham chiếu directive (@)</a>
+                    <a href="/docs/tag-directives">Directive trên thẻ (#)</a>
+                    <a href="/docs/system-vars">Biến hệ thống</a>
+                    <a href="/docs/helpers">Hàm dùng trong biểu thức</a>
+
+                    <p class="docs-nav-group">Reactivity &amp; Client Runtime</p>
+                    <a href="/docs/reactivity">State &amp; Reactivity</a>
+                    <a href="/docs/lifecycle">Vòng đời View &amp; Marker</a>
+                    <a href="/docs/runtime">Runtime &amp; Hydration</a>
+                    <a href="/docs/router">Router &amp; PageCache</a>
+                    <a href="/docs/client-services">Dịch vụ phía client</a>
+
+                    <p class="docs-nav-group">Kiến trúc Backend Laravel</p>
                     <a href="/docs/contexts">Context, module &amp; controller</a>
-                    <a href="/docs/compiler">Compiler &amp; AST</a>
-
-                    <p class="docs-nav-group">Backend</p>
                     <a href="/docs/services">Service &amp; tầng nghiệp vụ</a>
                     <a href="/docs/repository">Repository &amp; truy vấn</a>
                     <a href="/docs/mask">Mask, model &amp; collection</a>
                     <a href="/docs/validator">Validator &amp; dữ liệu vào</a>
-                    <a href="/docs/response">Response &amp; đầu ra</a>
-                    <a href="/docs/core-kit">Hạ tầng lõi</a>
+                    <a href="/docs/response">Response &amp; thương lượng đầu ra</a>
+                    <a href="/docs/core-kit">Hạ tầng lõi Core Kit</a>
 
-                    <p class="docs-nav-group">Viết view</p>
-                    <a href="/docs/sao-file">Cấu trúc file .sao</a>
-                    <a href="/docs/directives">Tham chiếu directive</a>
-                    <a href="/docs/tag-directives">Directive trên thẻ (#)</a>
-                    <a href="/docs/reactivity">State &amp; reactivity</a>
-                    <a href="/docs/system-vars">Biến hệ thống</a>
-                    <a href="/docs/helpers">Hàm dùng trong biểu thức</a>
-
-                    <p class="docs-nav-group">Runtime</p>
-                    <a href="/docs/runtime">Runtime &amp; hydration</a>
-                    <a href="/docs/lifecycle">Vòng đời &amp; marker</a>
-                    <a href="/docs/router">Router &amp; PageCache</a>
-                    <a href="/docs/client-services">Dịch vụ phía client</a>
-
-                    <p class="docs-nav-group">Vận hành</p>
+                    <p class="docs-nav-group">Công cụ &amp; Vận hành</p>
+                    <a href="/docs/compiler">Compiler &amp; AST Engine</a>
                     <a href="/docs/build">Build, CLI &amp; cấu hình</a>
-                    <a href="/docs/status">Giới hạn đã biết</a>
-
-                    <p class="docs-nav-group">Thực hành</p>
                     <a href="/components">Thư viện component</a>
+                    <a href="/docs/status">Giới hạn kỹ thuật &amp; Roadmap</a>
                 </div>
             </aside>
 

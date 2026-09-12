@@ -4,30 +4,27 @@
         <div class="lab-shell">
             <aside class="docs-nav" aria-label="Điều hướng trang demo">
                 <div class="docs-nav-inner">
-                    <p class="docs-nav-group">Bắt đầu</p>
-                    <a href="/demo">Tổng quan &amp; playground</a>
+                    <p class="docs-nav-group">Examples / Ứng dụng thật</p>
+                    <a href="/examples">Tất cả ví dụ thực tế</a>
+                    <a href="/demo/board">Kanban — Kéo thả</a>
+                    <a href="/demo/grid">Bảng dữ liệu 3.800 dòng</a>
+                    <a href="/demo/item-editor">Item Editor &amp; CRUD</a>
+                    <a href="/demo/market">Biểu đồ giá Realtime</a>
+                    <a href="/demo/stream">Luồng sự kiện SSE</a>
+                    <a href="/roster">Roster — Concurrent Sync</a>
+                    <a href="/todo-list">Todo — State &amp; PageCache</a>
 
-                    <p class="docs-nav-group">Dữ liệu</p>
-                    <a href="/demo/await">Nạp dữ liệu bất đồng bộ</a>
-
-                    <p class="docs-nav-group">Cú pháp &amp; Runtime</p>
+                    <p class="docs-nav-group">Minh họa Cú pháp &amp; Runtime</p>
                     <a href="/demo/setup">Setup typesafe</a>
-                    <a href="/demo/declarations">Khai báo State & Props</a>
+                    <a href="/demo/declarations">Khai báo State &amp; Props</a>
                     <a href="/demo/tag-directives">Directive viết trên thẻ</a>
                     <a href="/demo/foreach">Danh sách &amp; reconciliation</a>
                     <a href="/demo/lifecycle">Vòng đời &amp; PageCache</a>
-
-                    <p class="docs-nav-group">Ứng dụng thật</p>
-                    <a href="/demo/market">Biểu đồ giá realtime</a>
-                    <a href="/demo/board">Kanban — kéo thả</a>
+                    <a href="/demo/await">Nạp dữ liệu bất đồng bộ</a>
                     <a href="/demo/emit">Sự kiện con → cha</a>
-                    <a href="/demo/grid">Bảng dữ liệu 3.800 dòng</a>
-                    <a href="/demo/stream">Luồng sự kiện SSE</a>
-                    <a href="/demo/item-editor">Item Editor</a>
-                    <a href="/roster">Roster — CRUD qua API</a>
-                    <a href="/todo-list">Todo — state cục bộ</a>
 
-                    <p class="docs-nav-group">Tài liệu</p>
+                    <p class="docs-nav-group">Tài liệu liên quan</p>
+                    <a href="/docs">Tài liệu Saola ↗</a>
                     <a href="/docs/directives">Tham chiếu directive</a>
                     <a href="/docs/status">Giới hạn đã biết</a>
                 </div>

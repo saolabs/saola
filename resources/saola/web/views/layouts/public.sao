@@ -13,7 +13,7 @@
                         <div class="site-header-collapse">
                             <nav class="site-nav" aria-label="Điều hướng chính">
                                 <a href="/docs">Tài liệu</a>
-                                <a href="/demo">Demo</a>
+                                <a href="/examples">Examples</a>
                                 <a href="/about">Dự án</a>
                             </nav>
                             <div class="site-header-actions">
@@ -25,7 +25,7 @@
                             <summary aria-label="Mở menu">☰</summary>
                             <nav aria-label="Điều hướng di động">
                                 <a href="/docs">Tài liệu</a>
-                                <a href="/demo">Interactive demo</a>
+                                <a href="/examples">Ví dụ thực tế (Examples)</a>
                                 <a href="/todo-list">Todo workspace</a>
                                 <a href="/roster">Roster sync</a>
                                 <a href="/about">Về dự án</a>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="footer-map">
                     <div><span>TÀI LIỆU</span><a href="/docs">Mục lục</a><a href="/docs/getting-started">Bắt đầu</a><a href="/docs/directives">Directive</a><a href="/docs/status">Giới hạn đã biết</a></div>
-                    <div><span>THỰC HÀNH</span><a href="/components">Thư viện component</a><a href="/demo">Interactive demo</a><a href="/roster">Roster sync</a><a href="/about">Về Saola</a></div>
+                    <div><span>THỰC HÀNH</span><a href="/components">Thư viện component</a><a href="/examples">Ví dụ thực tế</a><a href="/roster">Roster sync</a><a href="/about">Về Saola</a></div>
                     <div><span>PHÁP LÝ</span><a href="/privacy">Privacy</a><a href="/terms">Terms</a><small>© 2026 SaoLabs</small></div>
                 </div>
             </footer>

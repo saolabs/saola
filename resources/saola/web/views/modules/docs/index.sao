@@ -174,10 +174,10 @@
             <h2>Bốn trang đang chạy thật.</h2>
             <p>Mỗi trang dưới đây là một fixture có chủ đích, không phải ảnh chụp. Mở DevTools xem HTML lần đầu để thấy nội dung đã có sẵn trước khi JavaScript chạy.</p>
             <div class="ov-grid">
-                <a class="ov-card" href="/demo">
-                    <span>Fixture cú pháp</span>
-                    <h3>Interactive demo →</h3>
-                    <p>Chín nhóm cú pháp trong một trang: state, event, binding, điều kiện, vòng lặp, switch, props, import và children.</p>
+                <a class="ov-card" href="/examples">
+                    <span>Ứng dụng thực tế</span>
+                    <h3>Examples Showcase →</h3>
+                    <p>Tuyển tập các mô hình ứng dụng quy mô thực tế: Data Grid 3.800 dòng, Kanban kéo thả, Modal CRUD, Realtime Ticker và Event Stream.</p>
                 </a>
                 <a class="ov-card" href="/todo-list">
                     <span>Layout dùng chung</span>

@@ -35,9 +35,8 @@ button { margin-right: 0.5rem; }
 </style>
 ```
 
-Mọi `function` ở cấp ngoài cùng của `<script setup>` trở thành method của view.
-Dạng cũ `export default { increment() {...} }` vẫn chạy; hai dạng dùng lẫn nhau
-được trong cùng một file.
+Mọi `function` ở cấp ngoài cùng của `<script setup>` trở thành method của view (không cần `export default`).
+Dạng cũ `export default { increment() {...} }` vẫn chạy để tương thích ngược nhưng không còn khuyến nghị trong code mới.
 
 `let`/`const` khai trong setup thuộc **từng instance view**, hợp để giữ thứ
 không reactive — handle của thư viện ngoài, id timer, cờ nội bộ:
@@ -86,7 +85,7 @@ Component nhỏ vẫn có thể viết không cần script hay wrapper:
 | State thay đổi | `@state(count: number = 0)` | Ghi qua `setCount(...)` |
 | Giá trị suy ra | `@computed(total = price * qty)` | Chỉ đọc, phụ thuộc state/props; không có side effect |
 | Hiển thị | `{{ count }}` | Escape HTML mặc định |
-| Tương tác | `@click(increment())` | Method đặt trong `export default` |
+| Tương tác | `@click(increment())` | Function trực tiếp trong `<script setup>` (không cần `export default`) |
 | Điều kiện | `@if(visible)` … `@endif` | Đặt trong template |
 | Danh sách | `@foreach(items as item)` … `@endforeach` | Dùng `@key(item.id)` để giữ identity |
 | Gọn trên thẻ | `<p #if="visible">…</p>` | Dạng viết khác của `@if` khi khối chỉ bọc **một** thẻ |
@@ -297,8 +296,7 @@ function stopped() { stopTimer(); }
 function destroyed() { stopTimer(); }
 ```
 
-Dạng cũ `export default { started() { this.startTimer(); }, … }` vẫn chạy, khi
-đó field riêng khai trong chính object để suy luận được `this`.
+Cú pháp hiện tại khai báo trực tiếp các hàm hook ở cấp ngoài cùng của setup. Dạng cũ `export default { started() { this.startTimer(); }, … }` vẫn chạy khi cần tương thích component cũ, nhưng không khuyến khích trong mã mới.
 
 ## Kiểm tra và build
 
